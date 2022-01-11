@@ -1,0 +1,9 @@
+.highl td {
+  animation: highlight 400ms ease-out 2 alternate;
+}
+
+@keyframes highlight {
+  100% {
+    background-color: rgba($color: #000000, $alpha: 0.16);
+  }
+}

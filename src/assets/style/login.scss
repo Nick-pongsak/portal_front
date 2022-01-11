@@ -1,0 +1,200 @@
+#login ,
+#maintenance{
+  font-family: "Roboto";
+  width: 100vw;
+  height: 100vh;
+  background: $white-smoke2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#login-box {
+  width: 333px;
+  min-height: 450px;
+  height: fit-content;
+  background: white;
+  box-shadow: 0 3px 6px rgba($black, 0.16);
+
+  .part-top {
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    border-bottom: 1px solid $light_grey;
+
+    .logo {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: $light_grey;
+      box-shadow: 0 3px 6px rgba($black, 0.16);
+    }
+
+    h1.company-name {
+      min-height: 24px;
+      font-size: 20px;
+      font-weight: normal;
+      color: $dim_grey;
+      margin: 14px 0;
+    }
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 50px 38px 44px 38px;
+    box-sizing: border-box;
+  }
+
+  input[type='text'], [type='password'] {
+    width: 222px;
+    border: none;
+    border-bottom: 1px solid #B1B1B1;
+    font-size: 16px;
+    line-height: 1.4;
+    &:hover, &:focus {
+      outline: none;
+    }
+    &::placeholder {
+      color: #B1B1B1;
+    }
+  }
+  .input-with-icon {
+    width: 222px;
+    margin-top: 25px;
+    position: relative;
+    .eye {
+      cursor: pointer;
+      width: 22px;
+      // height: 14.52px;
+      top: 5px;
+      // top: calc(50% - 5px);
+      right: 0;
+      position: absolute;
+      &.eye-hided {
+        width: 22px;
+        top: 5.5px;
+        right: -0.2px;
+      }
+    }
+  }
+  .checkbox-custom {
+    margin-top: 14px;
+    width: 222px;
+    // align-self: flex-start;
+    display: flex;
+    align-items: center;
+    // width: 25px;
+    // margin: 20px 100px;
+    position: relative;
+    input {
+      opacity: 0;
+      display: none;
+    }
+    label {
+      cursor: pointer;
+      position: absolute;
+      width: 11px;
+      height: 11px;
+      top: 0;
+      left: 0;
+      background: white;
+      color: $dim_grey;
+      border:1px solid #BBBBBB;
+      .text {
+        padding-left: 20px;
+        width: 150px;
+        font-size: 12px;
+        margin-top: -2px;
+      }
+      &:after {
+        opacity: 0;
+        content: '';
+        position: absolute;
+        width: 6px;
+        height: 5px;
+        background: transparent;
+        top: 1.5px;
+        left: 1.5px;
+        border: 1.5px solid #333;
+        border-top: none;
+        border-right: none;
+        transform: rotate(-45deg);
+      }
+    }
+    input[type=checkbox]:checked + label:after {
+        opacity: 1;
+    }
+  }
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 18px;
+    width: 90%;
+    height: 31px;
+    background: #5EBEF0;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+    box-shadow: 0 3px 6px rgba($black, 0.16);
+    border-radius: 30px;
+    border-style: none;
+    user-select: none;
+    cursor: pointer;
+    &:hover {
+      background: $summer_sky2;
+    }
+    &:focus {
+      background: $summer_sky;
+      outline: none;
+    }
+  }
+
+  .login-error {
+    // width: 100%;
+    margin-top: 10px;
+    color: #FF0404;
+    opacity: 0;
+    font-size: 14px;
+    &.active {
+      opacity: 1;
+    }
+  }
+
+  input[type=password]::-ms-reveal, input[type=password]::-ms-clear
+  {
+      display: none;
+  }
+
+  #menu-display {
+    margin-top: 25px;
+    width: 100%;
+    text-align: center;
+    .switch{
+      width: 90%;
+      height: 22px;
+      .slider:before {
+        height: 18px;
+        width: 18px;
+        top:2px;
+      }
+      .slider.round {
+        justify-content: center;
+        color: white;
+        background-color :#C6C6C6;
+      }
+      input:checked + .slider {
+        background-color :#C6C6C6;
+      }
+      input:checked + .slider:before {
+        transform: translateX(206px) ;
+        background-color :white;
+      }
+    }
+  }
+}
