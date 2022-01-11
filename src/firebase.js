@@ -14,7 +14,7 @@ if (process.env.VUE_APP_FIREBASE_API_KEY == undefined) {
   alert('WARNING!! No firebase config!')
 }
 
-export const fb = firebase.initializeApp(conf)
-export const db = fb.database();
+// export const fb = firebase.initializeApp(conf)
+// export const db = fb.database();
 
-export const messagesRef = db.ref("messages")
+// export const messagesRef = db.ref("messages")
