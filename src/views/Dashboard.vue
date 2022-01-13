@@ -7,6 +7,9 @@
       <div class="line-page"></div>
     </div>
     <div>
+      <div class="icon-line justify-end">
+        <img src="@/assets/icons/sort_black.svg" alt="sort" class="sort" />
+      </div>
       <v-row no-gutters>
         <v-col
           v-for="(item, index) in list"
@@ -30,9 +33,8 @@
                   ></div>
                 </div>
               </v-img>
-              <!-- :src="'@/assets/icons/logo.png'" -->
               <v-card-text>{{ item.sys_desc }} </v-card-text>
-              <v-card-actions>
+              <v-card-actions class="justify-end">
                 <v-btn text @click="openLogin">
                   เข้าสู่ระบบ
                 </v-btn>

@@ -1,7 +1,7 @@
 <template>
   <div id="login">
     <div id="login-box">
-      <div class="part-top">
+      <div class="part-top justify-center">
         <div class="logo">
           <img src="@/assets/icons/logo.png" />
         </div>
