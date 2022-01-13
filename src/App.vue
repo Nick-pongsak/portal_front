@@ -10,8 +10,8 @@
 export default {
   name: 'App',
   components: {},
-  data: () => ({ }),
-};
+  data: () => ({})
+}
 </script>
 
 <style src="@/assets/style/index.scss" lang="scss"></style>
