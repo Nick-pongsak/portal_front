@@ -27,8 +27,7 @@
     position: relative;
   }
 
-  #role-menu-panel,
-  #page-menu-panel {
+  #role-menu-panel {
     padding: 15px 15px 0px 15px;
     position: absolute;
     // left: 178px;
@@ -101,15 +100,17 @@
         }
 
         .n-body_desc {
+          color: #414141;
           margin-left: 15px;
           width: 80%;
-          font-size: 13px;
-          overflow-x: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          display: block;
-          padding-right: 6px;
-          padding-top: 3px;
+          font-size: 10px;
+          font-family: Roboto;
+          // overflow-x: hidden;
+          // text-overflow: ellipsis;
+          // white-space: nowrap;
+          // display: block;
+          // padding-right: 6px;
+          // padding-top: 3px;
         }
         .n-body_icon {
           width: 10%;
@@ -290,7 +291,7 @@
 
   &::-webkit-scrollbar {
     width: 20px;
-    background-color: #F5F5F5;
+    background-color: #f5f5f5;
     // width: 0px;
     // background-color: transparent;
     overflow: auto;
@@ -329,7 +330,7 @@
   z-index: 52;
   // background: red;
   // opacity: 0.3;
-  background: #FFFFFF;
+  background: #ffffff;
   opacity: 0;
 }
 

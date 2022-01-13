@@ -10,9 +10,9 @@ let conf = {
   appId: process.env.VUE_APP_FIREBASE_APP_ID
 }
 
-if (process.env.VUE_APP_FIREBASE_API_KEY == undefined) {
-  alert('WARNING!! No firebase config!')
-}
+// if (process.env.VUE_APP_FIREBASE_API_KEY == undefined) {
+//   alert('WARNING!! No firebase config!')
+// }
 
 // export const fb = firebase.initializeApp(conf)
 // export const db = fb.database();

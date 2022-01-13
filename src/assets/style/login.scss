@@ -1,9 +1,10 @@
-#login ,
-#maintenance{
+#login,
+#maintenance {
   font-family: "Roboto";
   width: 100vw;
   height: 100vh;
-  background: $white-smoke2;
+  background-image: url("@/assets/icons/background-logo.png");
+  // background: $white-smoke2;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,34 +12,37 @@
 
 #login-box {
   width: 333px;
-  min-height: 450px;
-  height: fit-content;
-  background: white;
-  box-shadow: 0 3px 6px rgba($black, 0.16);
+  width: 431px;
+  height: 520px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px $red;
+  border: 1px solid $dark_red;
+  border-radius: 6px;
+  opacity: 1;
 
   .part-top {
-    height: 180px;
+    // height: 205px;
+    margin-top: 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    border-bottom: 1px solid $light_grey;
 
     .logo {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background: $light_grey;
-      box-shadow: 0 3px 6px rgba($black, 0.16);
+      width: 102px;
+      height: 120px;
     }
 
-    h1.company-name {
-      min-height: 24px;
-      font-size: 20px;
-      font-weight: normal;
-      color: $dim_grey;
-      margin: 14px 0;
+    .system-name {
+      font-size: 26px;
+      font-weight: bold;
+      font-family: Georgia;
+      color: #000000;
+      margin-top: 2px;
     }
+  }
+  .part-bottom {
+    margin-top: 15px;
   }
 
   form {
@@ -46,40 +50,65 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    padding: 50px 38px 44px 38px;
+    // padding: 30px;
+    padding: 0px 30px 30px 30px;
     box-sizing: border-box;
   }
 
-  input[type='text'], [type='password'] {
-    width: 222px;
-    border: none;
-    border-bottom: 1px solid #B1B1B1;
-    font-size: 16px;
+  input[type="text"],
+  [type="password"] {
+    width: 200px;
+    height: 36px;
+    background: #ffffff;
+    // border: 0.5px solid #707070a6;
+    border-radius: 4px;
+    opacity: 1;
+    text-align: left;
+    font-size: 13px;
+    font-family: Roboto;
+    letter-spacing: 0px;
+    color: #11111169;
+    opacity: 1;
     line-height: 1.4;
-    &:hover, &:focus {
+    // padding-top: 10px;
+    padding: 8px;
+    &:hover,
+    &:focus {
       outline: none;
     }
     &::placeholder {
-      color: #B1B1B1;
+      color: #11111169;
     }
   }
   .input-with-icon {
     width: 222px;
-    margin-top: 25px;
+    margin-top: 18px;
     position: relative;
-    .eye {
+    border: 0.5px solid #707070a6;
+    border-radius: 4px;
+    .eye,
+    .account {
+      color: #3a3a3a91;
       cursor: pointer;
       width: 22px;
-      // height: 14.52px;
-      top: 5px;
-      // top: calc(50% - 5px);
-      right: 0;
+      height: 20px;
+      top: 11px;
+      right: 5px;
       position: absolute;
       &.eye-hided {
+        right: 5px;
+        color: #3a3a3a91;
         width: 22px;
-        top: 5.5px;
-        right: -0.2px;
+        height: 22px;
+        top: 11px;
       }
+    }
+    .account {
+      height: 18px;
+      top: 8px;
+    }
+    &.active {
+      border: 0.5px solid $red;
     }
   }
   .checkbox-custom {
@@ -104,7 +133,7 @@
       left: 0;
       background: white;
       color: $dim_grey;
-      border:1px solid #BBBBBB;
+      border: 1px solid #bbbbbb;
       .text {
         padding-left: 20px;
         width: 150px;
@@ -113,7 +142,7 @@
       }
       &:after {
         opacity: 0;
-        content: '';
+        content: "";
         position: absolute;
         width: 6px;
         height: 5px;
@@ -126,74 +155,95 @@
         transform: rotate(-45deg);
       }
     }
-    input[type=checkbox]:checked + label:after {
-        opacity: 1;
+    input[type="checkbox"]:checked + label:after {
+      opacity: 1;
     }
   }
   button {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 18px;
-    width: 90%;
-    height: 31px;
-    background: #5EBEF0;
+    margin-top: 12px;
+    width: 200px;
+    height: 25px;
+    background: $red;
     color: white;
-    font-size: 16px;
+    font-size: 10px;
     text-align: center;
-    box-shadow: 0 3px 6px rgba($black, 0.16);
-    border-radius: 30px;
-    border-style: none;
+    font-weight: bold;
+    font-family: Roboto;
     user-select: none;
+    border-radius: 4px;
     cursor: pointer;
     &:hover {
-      background: $summer_sky2;
+      // background: $summer_sky2;
     }
     &:focus {
-      background: $summer_sky;
+      // background: $summer_sky;
       outline: none;
     }
   }
 
   .login-error {
     // width: 100%;
-    margin-top: 10px;
-    color: #FF0404;
+    margin-top: 0px;
+    color: $red;
     opacity: 0;
-    font-size: 14px;
+    font-size: 10px;
     &.active {
       opacity: 1;
     }
   }
 
-  input[type=password]::-ms-reveal, input[type=password]::-ms-clear
-  {
-      display: none;
+  .creater {
+    color: #414141;
+    font-family: Roboto;
+    font-size: 10px;
+    margin-top: 35px;
   }
 
-  #menu-display {
-    margin-top: 25px;
-    width: 100%;
-    text-align: center;
-    .switch{
-      width: 90%;
-      height: 22px;
-      .slider:before {
-        height: 18px;
-        width: 18px;
-        top:2px;
+  input[type="password"]::-ms-reveal,
+  input[type="password"]::-ms-clear {
+    display: none;
+  }
+
+  .radio-group {
+    // width: 80%;
+    .v-input--radio-group__input {
+      flex-direction: inherit;
+    }
+    .v-messages {
+      display: none;
+    }
+    .n-body {
+      // width: 100%;
+      padding: 3px 10px 3px 18px;
+      display: flex;
+      .v-input--selection-controls__input {
+        .v-icon {
+          font-size: 20px !important;
+        }
+        .primary--text,
+        .accent--text {
+          color: #000000 !important;
+          caret-color: #000000 !important;
+        }
       }
-      .slider.round {
-        justify-content: center;
-        color: white;
-        background-color :#C6C6C6;
+
+      .n-body_desc {
+        color: #414141;
+        margin-left: 8px;
+        width: 80%;
+        font-size: 10px;
+        font-family: Roboto;
+        padding-top: 5px;
       }
-      input:checked + .slider {
-        background-color :#C6C6C6;
-      }
-      input:checked + .slider:before {
-        transform: translateX(206px) ;
-        background-color :white;
+      .n-body_icon {
+        width: 10%;
+        v-icon {
+          color: #000000;
+          font-weight: bold;
+        }
       }
     }
   }
