@@ -70,14 +70,14 @@
       // height: 140px;
       // word-break: break-all;
       // white-space: nowrap;
-      // text-overflow: ellipsis;
+      // text-overflow: ellipsis; 
       // display: block;
       // overflow: hidden;
     }
     .v-responsive__content {
       display: flex;
       justify-content: center;
-      align-items: end;
+      align-items: flex-end;
       .sys-text {
         width: 100%;
         background: #00000099;

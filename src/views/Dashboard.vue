@@ -1,6 +1,5 @@
 <template>
   <div id="dashboard">
-    <modal />
     <!-- <v-container class="grey lighten-5"> -->
     <div class="name-page">
       Product Manager (IT) Services
@@ -14,7 +13,7 @@
         <v-col
           v-for="(item, index) in list"
           :key="'cadr-' + item.sys_code"
-          cols="4"
+          cols="6"
           xs="2"
           sm="3"
           md="3"
@@ -48,12 +47,9 @@
 </template>
 
 <script>
-import Modal from './../components/Modal'
 export default {
   name: 'dashboard',
-  components: {
-    Modal
-  },
+  components: {},
   data () {
     return {
       list: [

@@ -3,10 +3,41 @@
   width: 1920px;
   height: 81px;
   color: white;
-  padding: 12px 10px 10px 30px;
+  padding: 12px 30px 10px 30px;
   top: 0px;
   left: 0px;
   position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .sys-name {
+    padding-left: 11px;
+    padding-top: 15px;
+    font-family: Georgia;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  .right-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 14px;
+    .account-name {
+      font-family: $kanit;
+    }
+    .deafult-name {
+      text-align: center;
+      padding-top: 10px;
+      background: #810000;
+      color: white;
+      font-family: Georgia;
+      font-size: 17px;
+      width: 43px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid #ffffff;
+    }
+  }
 }
 .body-main {
   height: calc(100% - 100px);
@@ -33,24 +64,133 @@
 .footer-main {
   width: 100%;
 }
-
-.loading-bar,
-.loading-white-bar {
-  z-index: 100000;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+#account-menu {
+  right: 0px;
+  top: 80px;
 }
-.loading-bar {
-  background: rgba($color: #000000, $alpha: 0.25);
+#account-menu-body {
+  width: 410px;
+  height: 333px;
+  border-radius: 6px;
+  box-shadow: 0px 19px 38px #0000007f;
+  border: 1px solid #95989a;
+  .logo-line {
+    padding-top: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .deafult-name {
+    text-align: center;
+    padding-top: 25px;
+    background: #810000;
+    color: white;
+    font-family: Georgia;
+    font-size: 48px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 1px solid #ffffff;
+  }
+  .account {
+    padding: 20px 38px 5px 38px;
+    .account-name,
+    .position-name {
+      text-align: center;
+      font-family: $kanit;
+    }
+    .account-name {
+      color: #414141;
+      font-size: 18px;
+    }
+    .position-name {
+      padding-top: 5px;
+      color: #727272;
+      font-size: 14px;
+    }
+  }
+  .account-chip {
+    color: white;
+    font-size: 14px;
+    font-family: $kanit;
+    background: $red;
+  }
+  .line-page {
+    height: 1px;
+    width: 100%;
+    background: #a8a8a8;
+    opacity: 0.5;
+  }
+  .account-button {
+    font-family: $kanit;
+    border-radius: 5px;
+    padding: 20px 35px 20px 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    button {
+      height: 32px;
+    }
+    .ok-btn {
+      background: #ffffff;
+      color: $dark_red;
+      border: 1px solid $dark_red;
+    }
+    .cancel-btn {
+      color: white;
+      background: $dark_red;
+      border: 1px solid $dark_red;
+    }
+  }
 }
-.loading-white-bar {
-  z-index: 52;
-  background: #ffffff;
-  opacity: 0;
+#change-pic-dialogs {
+  padding: 25px;
+  .profile-desc {
+    width: 100%;
+    color: #797979;
+    font-size: 24px;
+    font-family: kanit;
+    font-weight: 400;
+    margin-top: 30px;
+    text-align: center;
+  }
+  .deafult-name {
+    text-align: center;
+    padding-top: 105px;
+    background: #810000;
+    color: white;
+    font-family: Georgia;
+    font-size: 48px;
+    width: 230px;
+    height: 230px;
+    border-radius: 50%;
+    border: 1px solid #ffffff;
+  }
+  .cancel-btn,
+  .ok-btn {
+    font-size: 14px;
+    font-family: $kanit;
+    padding: 10px 55px 10px 55px;
+    button {
+      height: 32px;
+    }
+  }
+  .cancel-btn {
+    color: white;
+    background: $dark_red;
+    border: 1px solid $dark_red;
+    border-radius: 5px;
+  }
+  .ok-btn {
+    background: #ffffff;
+    color: $dark_red;
+    border: 1px solid $dark_red;
+  }
+  .v-card__actions {
+    display: flex;
+    margin-top: 50px;
+    margin-bottom: 60px;
+  }
 }
