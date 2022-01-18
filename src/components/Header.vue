@@ -107,6 +107,7 @@
                 class="ok-btn"
                 style="margin-right:35px"
                 v-show="permissinoAccount"
+                @click="ChangePassword()"
               >
                 {{ okBtn }}
               </v-btn>
@@ -120,11 +121,11 @@
     </v-row>
 
     <!---Dialogs-->
-    <v-dialog v-model="dialog" width="500" :no-click-animation="false">
+    <v-dialog v-model="picDialog" width="600" :no-click-animation="false">
       <v-card id="change-pic-dialogs">
         <v-card-text style="padding:unset">
           <div class="justify-end" style="display: flex;">
-            <v-btn icon @click="dialog = false" style="height:20px;width:20px">
+            <v-btn icon @click="CloseDialogs()" style="height:20px;width:20px">
               <v-img src="@/assets/icons/close.svg"></v-img>
             </v-btn>
           </div>
@@ -135,37 +136,114 @@
                     padding-top:20px"
           >
             <v-avatar v-show="!showDefaultAccount" size="230">
-              <v-img src="@/assets/icons/account_demo.png"></v-img>
+              <v-img src="@/assets/icons/account_demo.png"> </v-img>
+              <!-- <img :src="`${profilePicPath}`"/> -->
+              <!-- <img src="@/assets/icons/account_demo.png"/> -->
+              <!-- <v-img :src="`${profilePicPath}`"></v-img> -->
+              <!-- <v-img :src="`${profilePicPath}`"></v-img> -->
             </v-avatar>
             <div v-show="showDefaultAccount" class="deafult-name">
               {{ accountNameEng }}
             </div>
           </div>
           <div class="profile-desc">
-            {{ profileDesc }}
+            {{ renderProfileDesc() }}
           </div>
         </v-card-text>
         <v-card-actions class="justify-center">
           <v-btn
-            v-show="showEditPic"
+            v-show="showEditPic && stepChangePic != 3"
             text
-            @click="ChangePic()"
+            @click="DeletePic()"
             class="ok-btn"
-            style="margin-right:35px;"
+            :style="{ 'margin-right': stepChangePic == 4 ? '' : '35px' }"
           >
             <v-img
+              v-show="stepChangePic == 1"
               src="@/assets/icons/delete.svg"
               style="margin-right:5px;height:18px;width:18px"
             ></v-img>
-            {{ deleteBtn }}
+            {{ renderBtnLeft() }}
           </v-btn>
 
-          <v-btn text @click="ChangePic()" class="cancel-btn">
+          <v-btn
+            text
+            @click="ChangePic()"
+            class="cancel-btn"
+            v-show="stepChangePic < 2"
+          >
             <v-img
               src="@/assets/icons/edit.svg"
               style="margin-right:5px;height:19px;width:19px"
             ></v-img>
-            {{ changeBtn }}
+            {{ 'เปลี่ยน' }}
+          </v-btn>
+
+          <div v-show="stepChangePic == 2 && stepChangePic != 3">
+            <v-btn
+              class="cancel-btn"
+              :loading="isSelecting"
+              @click="onButtonClick"
+            >
+              {{ 'อัปโหลด' }}
+            </v-btn>
+            <input
+              ref="uploader"
+              class="d-none"
+              type="file"
+              accept="image/*"
+              @change="onFileChanged"
+            />
+          </div>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="pwdDialog" width="600" :no-click-animation="false">
+      <v-card id="change-pwd-dialogs">
+        <v-card-text style="padding:unset">
+          <div
+            style="color:#797979;
+                      font-size:24px;
+                      font-family:kanit;
+                      text-align:center"
+          >
+            {{ 'กรุณายืนยันตัวตน' }}
+          </div>
+          <div
+            style="color:##414141;
+                      font-size:18px;
+                      font-family:kanit;
+                      padding-top:90px;
+                      display:flex"
+          >
+            <div style="padding-top:8px">{{ 'รหัสผ่านปัจจุบัน' }}</div>
+            <div class="input-with-icon" :class="{ active: error }">
+              <input
+                type="password"
+                v-model="password"
+                :placeholder="'โปรดระบุ'"
+              />
+            </div>
+          </div>
+        </v-card-text>
+        <v-card-actions class="justify-center" style="padding-top:80px">
+          <v-btn
+            text
+            @click="ClosePwdDialogs()"
+            class="ok-btn"
+            :style="{ 'margin-right': '35px' }"
+          >
+            {{ 'ยกเลิก' }}
+          </v-btn>
+
+          <v-btn
+            text
+            @click="confirmDialogs()"
+            class="cancel-btn"
+            :disabled="disPwdBtn"
+          >
+            {{ 'ยืนยัน' }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -179,6 +257,7 @@ export default {
   props: {},
   data () {
     return {
+      profilePicPath: '@/assets/icons/account_demo.png',
       language: 'TH',
       accountName: 'กิตติชัย กำแพงทอง',
       accountNameEng: 'K',
@@ -186,26 +265,121 @@ export default {
       okBtn: 'เปลี่ยนรหัสผ่าน',
       cancelBtn: 'ออกจากระบบ',
       status_account: 'ผู้ดูแลระบบ',
-      changeBtn: 'เปลี่ยน',
-      showDefaultAccount: true,
+      stepChangePic: 0,
+      showDefaultAccount: false,
       permissinoAccount: true,
-      dialog: false,
-      profileDesc: 'รูปโปรไฟล์',
+      picDialog: false,
       showEditPic: false,
-      deleteBtn: 'ลบ'
+      selectedFile: null,
+      isSelecting: false,
+      pwdDialog: false,
+      password: null,
+      error: false,
+      disPwdBtn: true
+    }
+  },
+  watch: {
+    password (newValue) {
+      if (newValue.length > 6) {
+        this.disPwdBtn = false
+      } else {
+        this.disPwdBtn = true
+      }
     }
   },
   computed: {},
   methods: {
+    confirmDialogs () {
+      console.log('confirmDialogs =>')
+    },
+    ClosePwdDialogs () {
+      this.pwdDialog = false
+    },
+    ChangePassword () {
+      this.pwdDialog = true
+    },
+    renderProfileDesc () {
+      if (this.stepChangePic == 0 || this.stepChangePic == 1) {
+        return 'รูปโปรไฟล์'
+      } else if (this.stepChangePic == 2) {
+        return 'อัปโหลดรูปโปรไฟล์'
+      } else if (this.stepChangePic == 3) {
+        return 'กำลังลบรูปภาพ...'
+      } else if (this.stepChangePic == 4) {
+        return 'ลบรูปโปรไฟล์สำเร็จ'
+      } else {
+      }
+    },
+    renderBtnLeft () {
+      if (this.stepChangePic == 0 || this.stepChangePic == 1) {
+        return 'ลบ'
+      } else if (this.stepChangePic == 2) {
+        return 'ยกเลิก'
+      } else if (this.stepChangePic == 3) {
+        // return 'กำลังลบรูปภาพ...'
+      } else if (this.stepChangePic == 4) {
+        return 'ปิด'
+      } else {
+      }
+    },
+    onButtonClick () {
+      this.isSelecting = true
+      window.addEventListener(
+        'focus',
+        () => {
+          this.isSelecting = false
+        },
+        { once: true }
+      )
+
+      this.$refs.uploader.click()
+    },
+    onFileChanged (e) {
+      this.selectedFile = e.target.files[0]
+      setTimeout(() => {
+        console.log(e.target.files[0].name)
+      }, 2000)
+
+      // do something
+    },
     ChangePic () {
       this.showEditPic = true
+      if (this.stepChangePic == 0) {
+        //CHANHE
+        this.stepChangePic = 1
+      } else if (this.stepChangePic == 1) {
+        //CHANHE 2
+        this.stepChangePic = 2
+      } else if (this.stepChangePic == 2) {
+        //UPLOAD PIC
+        this.stepChangePic = 3
+      }
+      console.log('ChangePic', this.stepChangePic)
+    },
+    DeletePic () {
+      console.log('DeletePic', this.stepChangePic)
+      if (this.stepChangePic == 1) {
+        this.showDefaultAccount = true
+        this.stepChangePic = 3
+        setTimeout(() => {
+          this.stepChangePic = 4
+        }, 1000)
+      } else if (this.stepChangePic == 2) {
+      } else if (this.stepChangePic == 3) {
+      } else if (this.stepChangePic == 4) {
+        this.CloseDialogs()
+      }
     },
     LoginOut () {
       this.$router.push('/login')
     },
     UploadPic () {
-      this.dialog = true
-      console.log('UploadPic')
+      this.picDialog = true
+    },
+    CloseDialogs () {
+      this.picDialog = false
+      this.showEditPic = false
+      this.stepChangePic = 0
     }
   }
 }

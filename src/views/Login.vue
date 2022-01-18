@@ -100,7 +100,7 @@ export default {
         password: ''
       },
       firstname: '',
-      error: true,
+      error: false,
       radio: false,
       objA: { name: 'a' },
       objB: { name: 'b' },
@@ -116,7 +116,6 @@ export default {
   methods: {
     login () {
       this.$router.push('/dashboard')
-      console.log('==========>')
     }
   },
   created () {},

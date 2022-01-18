@@ -145,6 +145,15 @@
     }
   }
 }
+.input-with-icon {
+  width: 222px;
+  position: relative;
+  border: 0.5px solid #707070a6;
+  border-radius: 4px;
+  &.active {
+    border: 0.5px solid $red;
+  }
+}
 #change-pic-dialogs {
   padding: 25px;
   .profile-desc {
@@ -168,6 +177,35 @@
     border-radius: 50%;
     border: 1px solid #ffffff;
   }
+  .v-card__actions {
+    display: flex;
+    margin-top: 50px;
+    margin-bottom: 60px;
+  }
+}
+#change-pwd-dialogs {
+  padding: 90px 70px 70px 70px;
+  .input-with-icon {
+    margin-left: 55px;
+    padding: 7px 8px 5px 8px;
+    box-shadow: 0px 0px 3px #00000080;
+    border-radius: 4px;
+    border: hidden;
+
+    input[type="password"] {
+      width: 330px;
+      &:hover,
+      &:focus {
+        outline: none;
+      }
+      &::placeholder {
+        color: #11111169;
+      }
+    }
+  }
+}
+#change-pic-dialogs,
+#change-pwd-dialogs {
   .cancel-btn,
   .ok-btn {
     font-size: 14px;
@@ -175,6 +213,13 @@
     padding: 10px 55px 10px 55px;
     button {
       height: 32px;
+    }
+    &.v-btn--disabled {
+      background: #ce121280;
+      border: 1px solid #a8a8a8;
+      .v-btn__content {
+        color: white;
+      }
     }
   }
   .cancel-btn {
@@ -187,10 +232,5 @@
     background: #ffffff;
     color: $dark_red;
     border: 1px solid $dark_red;
-  }
-  .v-card__actions {
-    display: flex;
-    margin-top: 50px;
-    margin-bottom: 60px;
   }
 }

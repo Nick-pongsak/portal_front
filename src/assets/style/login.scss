@@ -67,7 +67,6 @@
     font-size: 13px;
     letter-spacing: 0px;
     color: #11111169;
-    opacity: 1;
     line-height: 1.4;
     // padding-top: 10px;
     padding: 8px;
@@ -80,11 +79,11 @@
     }
   }
   .input-with-icon {
-    width: 222px;
+    // width: 222px;
     margin-top: 18px;
-    position: relative;
-    border: 0.5px solid #707070a6;
-    border-radius: 4px;
+    // position: relative;
+    // border: 0.5px solid #707070a6;
+    // border-radius: 4px;
     .eye,
     .account {
       color: #3a3a3a91;
@@ -106,9 +105,9 @@
       height: 18px;
       top: 8px;
     }
-    &.active {
-      border: 0.5px solid $red;
-    }
+    // &.active {
+    //   border: 0.5px solid $red;
+    // }
   }
   .checkbox-custom {
     margin-top: 14px;
