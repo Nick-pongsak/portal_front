@@ -202,10 +202,15 @@
         color: #11111169;
       }
     }
+    &.active {
+      border: 0.5px solid $red;
+      box-shadow: none;
+    }
   }
 }
 #change-pic-dialogs,
-#change-pwd-dialogs {
+#change-pwd-dialogs,
+#detail-dashboard-dialogs {
   .cancel-btn,
   .ok-btn {
     font-size: 14px;
@@ -232,5 +237,40 @@
     background: #ffffff;
     color: $dark_red;
     border: 1px solid $dark_red;
+  }
+}
+#detail-dashboard-dialogs {
+  .sys-name {
+    color: $dark_red;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: $roboto;
+    text-align: center;
+    padding-top: 20px;
+  }
+  .details {
+    color: #767676;
+    font-size: 14px;
+    font-family: $kanit;
+    padding-top: 18px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 150px;
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+    &::-webkit-scrollbar:horizontal {
+      height: 8px;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background: #e3e3e3;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background: rgb(145, 145, 145);
+    }
   }
 }

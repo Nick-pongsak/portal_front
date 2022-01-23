@@ -100,7 +100,7 @@ export default {
         password: ''
       },
       firstname: '',
-      error: false,
+      error: true,
       radio: false,
       objA: { name: 'a' },
       objB: { name: 'b' },

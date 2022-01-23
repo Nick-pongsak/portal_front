@@ -201,7 +201,7 @@
 
     <v-dialog v-model="pwdDialog" width="600" :no-click-animation="false">
       <v-card id="change-pwd-dialogs">
-        <v-card-text style="padding:unset">
+        <v-card-text v-if="stepChangePwd == 0" style="padding:unset">
           <div
             style="color:#797979;
                       font-size:24px;
@@ -211,19 +211,131 @@
             {{ 'กรุณายืนยันตัวตน' }}
           </div>
           <div
-            style="color:##414141;
+            style="color:#414141;
                       font-size:18px;
                       font-family:kanit;
                       padding-top:90px;
                       display:flex"
           >
             <div style="padding-top:8px">{{ 'รหัสผ่านปัจจุบัน' }}</div>
-            <div class="input-with-icon" :class="{ active: error }">
+            <div class="input-with-icon" :class="{ active: errorPwd }">
               <input
                 type="password"
                 v-model="password"
+                @keypress="IsNumber"
                 :placeholder="'โปรดระบุ'"
               />
+            </div>
+          </div>
+          <div
+            v-show="errorPwd"
+            style="padding-left:175px;
+                    padding-top:8px;
+                    color: #ED2024;
+                    font-family:kanit;
+                    font-size:14px"
+          >
+            รหัสผ่านไม่ถูกต้อง
+          </div>
+        </v-card-text>
+        <v-card-text v-else style="padding:unset">
+          <div v-show="stepChangePwd < 2">
+            <div
+              style="color:#414141;
+                      font-size:18px;
+                      font-family:kanit;
+                      display:flex"
+            >
+              <div style="padding-top:8px">{{ 'รหัสผ่านใหม่' }}</div>
+              <div
+                class="input-with-icon"
+                style="margin-left:72px"
+                :class="{ active: errorNewPassword }"
+              >
+                <input
+                  type="password"
+                  v-model="newPassword"
+                  :placeholder="'โปรดระบุ'"
+                  @keypress="IsNumber"
+                  @keyup="InCondition"
+                />
+              </div>
+            </div>
+            <!-- <div
+              v-show="errorNewPassword"
+              style="padding-left:163px;
+                    padding-top:8px;
+                    color: #ED2024;
+                    font-family:kanit;
+                    font-size:14px"
+            >
+              รหัสผ่านไม่ถูกต้อง
+            </div> -->
+          </div>
+          <div v-show="stepChangePwd < 2">
+            <div
+              style="color:#414141;
+                      font-size:18px;
+                      font-family:kanit;
+                      padding-top:30px;
+                      display:flex"
+            >
+              <div style="padding-top:8px">{{ 'ยืนยันรหัสผ่าน' }}</div>
+              <div
+                class="input-with-icon"
+                :class="{ active: errorCfNewPassword }"
+              >
+                <input
+                  type="password"
+                  v-model="cfNewPassword"
+                  @keypress="IsNumber"
+                  :placeholder="'โปรดระบุ'"
+                />
+              </div>
+            </div>
+            <!-- <div
+              v-show="errorCfNewPassword"
+              style="padding-left:163px;
+                    padding-top:8px;
+                    color: #ED2024;
+                    font-family:kanit;
+                    font-size:14px"
+            >
+              รหัสผ่านไม่ถูกต้อง
+            </div> -->
+          </div>
+          <div
+            v-show="stepChangePwd < 2"
+            style="
+                    padding-top:30px;
+                    color: #767676;
+                    font-family:kanit;
+                    font-size:14px"
+          >
+            หมายเหตุ - รหัสผ่านต้องยาวอย่างน้อย 6 ตัวอักษรและประกอบไปด้วย<br />
+            1) ตัวเลข 0 - 9 <br />
+            2) ตัวอักษรภาษาอังกฤษตัวพิมพ์เล็กหรือพิมพ์ใหญ่
+          </div>
+          <div v-show="stepChangePwd == 2">
+            <div
+              style="display: flex;
+                  align-items: center;
+                  justify-content: center"
+            >
+              <v-avatar style="background:#66BB6A;width:90px;height:90px">
+                <v-icon style="color:white">
+                  mdi-check
+                </v-icon>
+              </v-avatar>
+            </div>
+            <div
+              style="color:#797979;
+                      font-size:24px;
+                      margin-top:50px;
+                      font-family:kanit;
+                      text-align:center"
+            >
+              {{ 'เปลี่ยนรหัสผ่านสำเร็จ' }}
             </div>
           </div>
         </v-card-text>
@@ -232,18 +344,19 @@
             text
             @click="ClosePwdDialogs()"
             class="ok-btn"
-            :style="{ 'margin-right': '35px' }"
+            :style="{ 'margin-right': stepChangePwd == 2 ? '0px' : '35px' }"
           >
-            {{ 'ยกเลิก' }}
+            {{ stepChangePwd == 2 ? 'ปิด' : 'ยกเลิก' }}
           </v-btn>
 
           <v-btn
+            v-show="stepChangePwd < 2"
             text
-            @click="confirmDialogs()"
+            @click="ConfirmDialogs()"
             class="cancel-btn"
             :disabled="disPwdBtn"
           >
-            {{ 'ยืนยัน' }}
+            {{ stepChangePwd == 0 ? 'ยืนยัน' : 'เปลี่ยนรหัสผ่าน' }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -273,27 +386,123 @@ export default {
       selectedFile: null,
       isSelecting: false,
       pwdDialog: false,
-      password: null,
-      error: false,
-      disPwdBtn: true
+      password: '',
+      errorPwd: false,
+      error: true,
+      disPwdBtn: true,
+      stepChangePwd: 0,
+      newPassword: '',
+      errorNewPassword: false,
+      cfNewPassword: '',
+      errorCfNewPassword: false
     }
   },
   watch: {
     password (newValue) {
-      if (newValue.length > 6) {
+      if (newValue.length >= 6) {
+        // this.errorPwd = false
         this.disPwdBtn = false
       } else {
+        // this.errorPwd = true
         this.disPwdBtn = true
       }
+    },
+    newPassword (newValue) {
+      let newPassword = JSON.stringify(newValue)
+      let cfNewPassword = JSON.stringify(this.cfNewPassword)
+      if (newPassword.length == cfNewPassword.length) {
+        this.errorNewPassword = newPassword == cfNewPassword ? false : true
+      } else if (
+        newPassword.length < cfNewPassword.length &&
+        cfNewPassword.length > 0
+      ) {
+        this.errorNewPassword = true
+      } else {
+        this.errorNewPassword = false
+      }
+
+      this.DisableBtn()
+    },
+    cfNewPassword (newValue) {
+      let newPassword = JSON.stringify(this.newPassword)
+      let cfNewPassword = JSON.stringify(newValue)
+      if (newValue.length > 0 && this.newPassword.length <= newValue.length) {
+        if (newPassword == cfNewPassword) {
+          this.errorCfNewPassword = false
+        } else {
+          this.errorCfNewPassword = true
+        }
+      } else {
+        this.errorCfNewPassword = false
+      }
+      this.DisableBtn()
     }
   },
   computed: {},
   methods: {
-    confirmDialogs () {
-      console.log('confirmDialogs =>')
+    DisableBtn () {
+      let newPassword = JSON.stringify(this.newPassword)
+      let cfNewPassword = JSON.stringify(this.cfNewPassword)
+      if (this.newPassword.length >= 6 && newPassword == cfNewPassword) {
+        this.disPwdBtn = false
+      } else {
+        this.disPwdBtn = true
+      }
+    },
+    IsNumber (evt) {
+      evt = evt ? evt : window.event
+      var keyCode = evt.which ? evt.which : evt.keyCode
+      if (
+        (keyCode >= 48 && keyCode <= 57) ||
+        (keyCode >= 97 && keyCode <= 122) ||
+        (keyCode >= 65 && keyCode <= 91)
+      ) {
+        return true
+      } else {
+        evt.preventDefault()
+      }
+    },
+    InCondition (evt) {
+      let newPassword = JSON.stringify(this.newPassword)
+      if (this.newPassword.length >= 6) {
+        let condChar = /[a-zA-Z]/g
+        let condNum = /[0-9]/g
+        let rsChar = newPassword.search(condChar)
+        let rsNum = newPassword.search(condNum)
+        if (rsChar >= 0 && rsNum >= 0) {
+          this.errorNewPassword = false
+          if (this.cfNewPassword.length >= 6) {
+            this.disPwdBtn = false
+          }
+        } else {
+          this.errorNewPassword = true
+          if (this.cfNewPassword.length >= 6) {
+            this.disPwdBtn = true
+          }
+        }
+      }
+    },
+    ConfirmDialogs () {
+      if (this.stepChangePwd == 0) {
+        // this.errorPwd = false
+        this.disPwdBtn = true
+        this.stepChangePwd = 1
+      } else if (this.stepChangePwd == 1) {
+        this.stepChangePwd = 2
+      }
+      console.log('ConfirmDialogs =>')
     },
     ClosePwdDialogs () {
       this.pwdDialog = false
+      this.password = ''
+      this.errorPwd = false
+      this.error = false
+      this.disPwdBtn = true
+      this.stepChangePwd = 0
+      this.newPassword = ''
+      this.errorNewPassword = false
+      this.cfNewPassword = ''
+      this.errorCfNewPassword = false
     },
     ChangePassword () {
       this.pwdDialog = true
