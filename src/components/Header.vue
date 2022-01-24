@@ -60,7 +60,10 @@
               />
             </div>
           </template>
-          <v-list id="account-menu-body">
+          <v-list
+            id="account-menu-body"
+            :style="{ height: permissinoAccount ? '385px' : '340px' }"
+          >
             <div class="logo-line" @click="UploadPic()">
               <v-badge
                 avatar
@@ -96,21 +99,44 @@
                 {{ position }}
               </div>
             </div>
-            <div style="text-align:center;padding-bottom:20px">
+            <!-- <div style="text-align:center;padding-bottom:20px">
               <v-chip class="account-chip">
                 {{ status_account }}
+              </v-chip>
+            </div> -->
+            <div
+              :style="{
+                'text-align': 'center',
+                'padding-bottom': permissinoAccount ? '10px' : '20px',
+                'padding-top': '15px'
+              }"
+            >
+              <v-chip class="account-chip" style="width:200px">
+                {{ 'จัดการรายการแอปพลิเคชัน' }}
+              </v-chip>
+            </div>
+            <div
+              style="text-align:center;padding-bottom:20px;"
+              v-show="permissinoAccount"
+            >
+              <v-chip
+                class="account-chip"
+                @click="ChangePassword()"
+                style="width:200px"
+              >
+                {{ 'เปลี่ยนรหัสผ่าน' }}
               </v-chip>
             </div>
             <div class="line-page"></div>
             <div class="account-button">
-              <v-btn
+              <!-- <v-btn
                 class="ok-btn"
                 style="margin-right:35px"
                 v-show="permissinoAccount"
                 @click="ChangePassword()"
               >
                 {{ okBtn }}
-              </v-btn>
+              </v-btn> -->
               <v-btn class="cancel-btn" @click="LoginOut()">
                 {{ cancelBtn }}
               </v-btn>

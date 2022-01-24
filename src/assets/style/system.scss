@@ -70,7 +70,6 @@
 }
 #account-menu-body {
   width: 410px;
-  height: 333px;
   border-radius: 6px;
   box-shadow: 0px 19px 38px #0000007f;
   border: 1px solid #95989a;
@@ -111,10 +110,14 @@
     }
   }
   .account-chip {
-    color: white;
     font-size: 14px;
     font-family: $kanit;
-    background: $red;
+    color: $dark_red;
+    background: white;
+    border: 1px solid $dark_red;
+    justify-content: center;
+    // color: white;
+    // background: $red;
   }
   .line-page {
     height: 1px;
