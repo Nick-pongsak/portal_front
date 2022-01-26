@@ -1,7 +1,7 @@
 <template>
   <div id="maintenance" style="display: block;">
     <div class="pics">
-      <img src="@/assets/images/maintenance.png" />
+      <!-- <img src="@/assets/images/maintenance.png" /> -->
     </div>
     <div v-html="txt"></div>
   </div>
