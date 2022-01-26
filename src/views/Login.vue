@@ -115,7 +115,7 @@ export default {
   },
   methods: {
     login () {
-      this.$router.push('/dashboard')
+      this.$router.push('/home')
     }
   },
   created () {},
