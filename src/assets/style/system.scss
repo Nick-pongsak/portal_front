@@ -68,11 +68,15 @@
   right: 0px;
   top: 80px;
 }
+#change-languages-body,
 #account-menu-body {
-  width: 410px;
   border-radius: 6px;
   box-shadow: 0px 19px 38px #0000007f;
   border: 1px solid #95989a;
+}
+
+#account-menu-body {
+  width: 410px;
   .logo-line {
     padding-top: 13px;
     display: flex;
@@ -190,12 +194,18 @@
   padding: 90px 70px 70px 70px;
   .input-with-icon {
     margin-left: 55px;
+  }
+}
+#change-pwd-dialogs,
+#set-app-dialogs {
+  .input-with-icon {
     padding: 7px 8px 5px 8px;
     box-shadow: 0px 0px 3px #00000080;
     border-radius: 4px;
     border: hidden;
 
-    input[type="password"] {
+    input[type="password"],
+    [type="text"] {
       width: 330px;
       &:hover,
       &:focus {
@@ -213,7 +223,8 @@
 }
 #change-pic-dialogs,
 #change-pwd-dialogs,
-#detail-dashboard-dialogs {
+#detail-dashboard-dialogs,
+#set-app-dialogs {
   .cancel-btn,
   .ok-btn {
     font-size: 14px;
@@ -274,6 +285,101 @@
     }
     &::-webkit-scrollbar-thumb:hover {
       background: rgb(145, 145, 145);
+    }
+  }
+}
+#set-app-dialogs {
+  .line-page {
+    height: 1px;
+    width: 100%;
+    background: #a8a8a8;
+    opacity: 0.5;
+  }
+  .table {
+    margin-top: 10px;
+    .head-table {
+      width: 100%;
+      display: flex;
+      background: #d1d1d133;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      padding-left: 20px;
+      padding-right: 20px;
+      .head {
+        display: flex;
+        cursor: pointer;
+        font-weight: 500;
+        color: #797979;
+        font-size: 14px;
+        font-family: $kanit;
+        .column-name {
+          padding-top: 3px;
+        }
+      }
+    }
+    .body-table {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      padding-left: 20px;
+      padding-right: 20px;
+      .body-row {
+        width: 100%;
+        display: flex;
+        padding-top: 3px;
+        padding-bottom: 8px;
+        .body {
+          font-family: $kanit;
+          color: #797979;
+          font-size: 14px;
+        }
+
+        .input-with-icon {
+          &.disabled-input {
+            color: #414141;
+            background: #d1d1d1;
+            box-shadow: 0px 0px 3px #00000080;
+            border-radius: 4px;
+          }
+          &.able-input {
+            color: #ed202499;
+            background: #ed202419;
+            box-shadow: 0px 0px 3px #00000080;
+            border: 1px solid $dark_red;
+          }
+        }
+        .cancel-btn {
+          font-size: 11px;
+          padding: 10px 10px 10px 10px;
+          width: 30px;
+          height: 32px;
+        }
+      }
+    }
+  }
+}
+#change-languages-body {
+  // padding-right: 10px;
+  .first {
+    display: flex;
+    border-bottom: 1px solid #a8a8a8;
+    padding-right: 8px;
+    .text {
+      color: #414141;
+      font-family: kanit;
+      font-size: 18px;
+      width: 150px;
+      padding: 0px 10px 8px 10px;
+      cursor: pointer;
+    }
+  }
+  .second {
+    display: flex;
+    .text {
+      color: #414141;
+      font-family: kanit;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 7px 10px 0px 10px;
     }
   }
 }

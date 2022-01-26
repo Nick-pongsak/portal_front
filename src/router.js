@@ -12,18 +12,18 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: "/login",
+      path: "/",
       component: Login,
       meta: {
         rule: "isPublic"
       }
     },
     {
-      path: "/",
+      path: "/home",
       component: DefaultLayout,
       children: [
         {
-          path: "/dashboard",
+          path: "/home",
           component: Dashboard,
           // meta: {
           //   rule: "isPublic",

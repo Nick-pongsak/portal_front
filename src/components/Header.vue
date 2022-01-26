@@ -16,17 +16,33 @@
                 {{ language }}
               </span>
               <img
-                src="@/assets/icons/arrow_drop_down.svg"
+                src="@/assets/icons/arrow_drop_down_white.svg"
                 alt="open"
                 style="margin-left:19px;"
               />
             </div>
           </template>
-          <v-list>
-            เปลี่ยนภาษา
-            <!-- <v-list-item v-for="(item, index) in items" :key="index">
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item> -->
+          <v-list id="change-languages-body">
+            <div class="first">
+              <div class="text" @click="SetLanguages('TH')">
+                ภาษาไทย (TH)
+              </div>
+              <v-img
+                v-show="language == 'TH'"
+                src="@/assets/icons/done.svg"
+                style="margin-right:5px;height:18px;width:18px"
+              ></v-img>
+            </div>
+            <div class="second">
+              <div class="text" @click="SetLanguages('EN')">
+                ภาษาอังกฤษ (EN)
+              </div>
+              <v-img
+                v-show="language == 'EN'"
+                src="@/assets/icons/done.svg"
+                style="margin-right:5px;height:18px;width:18px"
+              ></v-img>
+            </div>
           </v-list>
         </v-menu>
         <v-menu offset-y :close-on-content-click="false">
@@ -51,7 +67,7 @@
                 </div>
               </div>
               <img
-                src="@/assets/icons/arrow_drop_down.svg"
+                src="@/assets/icons/arrow_drop_down_white.svg"
                 alt="open"
                 style="padding-left: 19px;
                       width: 48px;
@@ -111,7 +127,11 @@
                 'padding-top': '15px'
               }"
             >
-              <v-chip class="account-chip" style="width:200px">
+              <v-chip
+                class="account-chip"
+                style="width:200px"
+                @click="SettingApp()"
+              >
                 {{ 'จัดการรายการแอปพลิเคชัน' }}
               </v-chip>
             </div>
@@ -387,6 +407,160 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <v-dialog v-model="setAppDialog" width="800" :no-click-animation="false">
+      <v-card id="set-app-dialogs">
+        <v-card-text style="padding:30px 30px 30px 70px">
+          <div class="justify-end" style="display: flex">
+            <v-btn
+              icon
+              @click="CloseSetAppDialogs()"
+              style="height:20px;width:20px"
+            >
+              <v-img src="@/assets/icons/close.svg"></v-img>
+            </v-btn>
+          </div>
+          <div style="padding-right:40px">
+            <div
+              style="color:#797979;
+                      font-size:24px;
+                      font-family:kanit"
+            >
+              {{ 'รายการแอปพลิเคชันของคุณ' }}
+            </div>
+            <div class="line-page" style="margin-top:8px"></div>
+            <div style="width:100%;margin-top:15px">
+              <div class="input-with-icon" style="display: flex;width: 300px;">
+                <img
+                  style="color:#000000;opacity:0.5;margin-right:8px"
+                  src="@/assets/icons/search.svg"
+                  alt="search"
+                  class="sesrch"
+                />
+                <input type="text" v-model="searchApp" :placeholder="'ค้นหา'" />
+              </div>
+              <div class="table">
+                <div class="head-table">
+                  <div class="head" style="width:10%" @click="sort('no')">
+                    <div class="column-name">No</div>
+                    <img
+                      v-if="sortNo"
+                      style="opacity:0.5;margin-left:8px"
+                      src="@/assets/icons/arrow_drop_up_black.svg"
+                      alt="sort"
+                    />
+                    <img
+                      v-else
+                      style="opacity:0.5;margin-left:8px"
+                      src="@/assets/icons/arrow_drop_down_black.svg"
+                      alt="sort"
+                    />
+                  </div>
+                  <div class="head" style="width:30%" @click="sort('name')">
+                    <div class="column-name">แอปพิเคชั่น</div>
+                    <img
+                      v-if="sortAppName"
+                      style="opacity:0.5;margin-left:8px"
+                      src="@/assets/icons/arrow_drop_up_black.svg"
+                      alt="sort"
+                    />
+                    <img
+                      v-else
+                      style="opacity:0.5;margin-left:8px"
+                      src="@/assets/icons/arrow_drop_down_black.svg"
+                      alt="sort"
+                    />
+                  </div>
+                  <div class="head" style="width:60%" @click="sort('user')">
+                    <div class="column-name">
+                      ชื่อผู้ใช้งานในการเข้าสู่ระบบด้วย SSO
+                    </div>
+                    <img
+                      v-if="sortUser"
+                      style="opacity:0.5;margin-left:8px"
+                      src="@/assets/icons/arrow_drop_up_black.svg"
+                      alt="sort"
+                    />
+                    <img
+                      v-else
+                      style="opacity:0.5;margin-left:8px"
+                      src="@/assets/icons/arrow_drop_down_black.svg"
+                      alt="sort"
+                    />
+                  </div>
+                </div>
+                <div class="body-table">
+                  <div
+                    class="body-row"
+                    v-for="(item, index) in list"
+                    :key="'setapp' + index"
+                  >
+                    <div
+                      class="body"
+                      style="width:10%;padding-left:5px;padding-top:5px"
+                    >
+                      {{ item.no }}
+                    </div>
+                    <div class="body" style="width:30%;padding-top:5px">
+                      {{ item.app_name }}
+                    </div>
+                    <div class="body" style="width:60%;display:flex">
+                      <div style="padding-top:5px;margin-right:15px">
+                        {{ renderText(item) }}
+                      </div>
+                      <div
+                        v-show="item.user_status == 'web_portal'"
+                        :class="
+                          editRow == index
+                            ? 'input-with-icon able-input'
+                            : 'input-with-icon disabled-input'
+                        "
+                        style="display: flex;width: 200px;height: 32px;margin-right:10px"
+                      >
+                        <input
+                          type="text"
+                          v-model="item.user_name"
+                          :placeholder="'-- โปรดระบุ --'"
+                        />
+                      </div>
+                      <v-btn
+                        v-show="item.user_status == 'web_portal'"
+                        text
+                        @click="edit(item, index)"
+                        class="cancel-btn"
+                      >
+                        {{ editRow == index ? 'เพิ่ม' : 'เปลี่ยน' }}
+                      </v-btn>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </v-card-text>
+
+        <v-card-actions class="justify-center" style="padding-top:80px">
+          <!-- <v-btn
+            text
+            @click="ClosePwdDialogs()"
+            class="ok-btn"
+            :style="{ 'margin-right': stepChangePwd == 2 ? '0px' : '35px' }"
+          >
+            {{ stepChangePwd == 2 ? 'ปิด' : 'ยกเลิก' }}
+          </v-btn>
+
+          <v-btn
+            v-show="stepChangePwd < 2"
+            text
+            @click="ConfirmDialogs()"
+            class="cancel-btn"
+            :disabled="disPwdBtn"
+          >
+            {{ stepChangePwd == 0 ? 'ยืนยัน' : 'เปลี่ยนรหัสผ่าน' }}
+          </v-btn> -->
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -420,7 +594,45 @@ export default {
       newPassword: '',
       errorNewPassword: false,
       cfNewPassword: '',
-      errorCfNewPassword: false
+      errorCfNewPassword: false,
+      setAppDialog: false,
+      searchApp: '',
+      sortNo: false,
+      sortAppName: false,
+      sortUser: false,
+      list: [
+        {
+          no: 1,
+          app_name: 'Cotporate Planning',
+          user_name: 'kittichai',
+          user_status: 'web_portal'
+        },
+        {
+          no: 2,
+          app_name: 'SalesOps',
+          user_name: 'kittichai',
+          user_status: 'web_portal'
+        },
+        {
+          no: 3,
+          app_name: 'MktOps',
+          user_name: 'kittichai',
+          user_status: 'LDAP'
+        },
+        {
+          no: 4,
+          app_name: 'MyHR',
+          user_name: 'kittichai',
+          user_status: 'only'
+        },
+        {
+          no: 5,
+          app_name: 'Good return',
+          user_name: 'kittichai',
+          user_status: 'web_portal'
+        }
+      ],
+      editRow: -1
     }
   },
   watch: {
@@ -466,6 +678,36 @@ export default {
   },
   computed: {},
   methods: {
+    edit (item, index) {
+      this.editRow = index
+    },
+    renderText (row) {
+      if (row.user_status == 'web_portal') {
+        return 'Username :'
+      } else if (row.user_status == 'LDAP') {
+        return 'LDAP'
+      } else if (row.user_status == 'only') {
+        return 'เข้าใช้งานผ่านระบบตัวเองเท่านั้น'
+      }
+    },
+    sort (feild) {
+      if (feild == 'no') {
+        this.sortNo = !this.sortNo
+      } else if (feild == 'name') {
+        this.sortAppName = !this.sortAppName
+      } else if (feild == 'user') {
+        this.sortUser = !this.sortUser
+      }
+    },
+    SettingApp () {
+      // this.setAppDialog = true
+    },
+    CloseSetAppDialogs () {
+      this.setAppDialog = false
+    },
+    SetLanguages (value) {
+      this.language = value
+    },
     DisableBtn () {
       let newPassword = JSON.stringify(this.newPassword)
       let cfNewPassword = JSON.stringify(this.cfNewPassword)
@@ -606,7 +848,7 @@ export default {
       }
     },
     LoginOut () {
-      this.$router.push('/login')
+      this.$router.push('/')
     },
     UploadPic () {
       this.picDialog = true
