@@ -12,13 +12,13 @@
               <v-avatar size="38">
                 <img src="@/assets/icons/language.svg" alt="language" />
               </v-avatar>
-              <span style="margin-left:12px;font-weight:400">
+              <span style="margin-left:17px;font-weight:400">
                 {{ language }}
               </span>
               <img
                 src="@/assets/icons/arrow_drop_down_white.svg"
                 alt="open"
-                style="margin-left:19px;"
+                style="margin-left:18px;"
               />
             </div>
           </template>
@@ -50,7 +50,7 @@
             <div
               v-bind="attrs"
               v-on="on"
-              style="display:flex;padding-left:38px"
+              style="display:flex;padding-left:2%"
             >
               <div>
                 <v-avatar size="50" v-show="showDefaultAccount">
@@ -62,7 +62,7 @@
               </div>
               <div style="margin-left:14px;">
                 <div class="account-name">{{ accountName }}</div>
-                <div class="account-name" style="padding-top:3px">
+                <div class="account-name" style="padding-top:1px">
                   {{ position }}
                 </div>
               </div>

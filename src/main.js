@@ -14,6 +14,11 @@ Vue.prototype.$axios = Axios;
 const EventBus = new Vue();
 Vue.prototype.$eventbus = EventBus;
 
+
+import 'vue-dnd-zone/vue-dnd-zone.css'
+import VueDndZone from 'vue-dnd-zone'
+Vue.use(VueDndZone)
+
 // import './firebase';
 import { rtdbPlugin as VueFire } from 'vuefire'
 Vue.use(VueFire)

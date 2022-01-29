@@ -1,6 +1,5 @@
 <template>
   <div id="dashboard">
-    <!-- <v-container class="grey lighten-5"> -->
     <div class="name-page">
       Product Manager (IT) Services
       <div class="line-page"></div>
@@ -8,80 +7,96 @@
     <div>
       <div
         class="details"
-        :style="{ border: showDragAndDrop ? '1px dashed #707070' : '' }"
+        :style="{
+          display: 'flex',
+          'padding-top': showDragAndDrop ? '30px' : '30px',
+          border: showDragAndDrop ? '1px dashed #707070' : ''
+        }"
       >
-        <div
-          class="justify-end"
-          :style="{
-            display: 'flex',
-            'padding-top': showDragAndDrop ? '5px' : '0px',
-            'padding-right': '5px'
-          }"
-        >
-          <div v-if="showDragAndDrop">
-            <v-btn text @click="clearDragAndDrop()" class="drag-btn close">
-              {{ 'ปิด' }}
-            </v-btn>
-            <v-btn
-              text
-              @click="saveDragAndDrop()"
-              class="drag-btn save"
-              style="margin-left:10px"
+        <!-- :style="{ border: showDragAndDrop ? '1px dashed #707070' : '' }" -->
+        <div style="width:15%"></div>
+        <div style="width:70%">
+          <dnd-zone :transition-duration="0.3">
+            <dnd-container
+              :dnd-model="list"
+              dnd-id="grid-example"
+              class="row"
+              dense
             >
-              {{ 'ยกเลิก / บันทึก' }}
-            </v-btn>
-          </div>
-          <div class="icon-line" @click="openDragAndDrop()" v-else>
-            <img src="@/assets/icons/sort_black.svg" alt="sort" class="sort" />
+              <dnd-item
+                v-for="item in list"
+                :key="item.sys_code"
+                :dnd-id="item.sys_code"
+                :dnd-model="item"
+                :is-draggable="showDragAndDrop"
+              >
+                <v-col cols="6" xs="2" sm="3" md="3" lg="3">
+                  <div
+                    class="body-round"
+                    :style="{ cursor: showDragAndDrop ? 'move' : '' }"
+                  >
+                    <v-card>
+                      <v-img
+                        :style="{ cursor: showDragAndDrop ? '' : 'pointer' }"
+                        height="180"
+                        :src="
+                          'https://cdn.vuetifyjs.com/images/cards/' +
+                            item.pic_path
+                        "
+                        @click="openDialog(item)"
+                      >
+                        <div class="sys-text">
+                          <div class="sys-name" v-text="item.sys_name"></div>
+                          <div
+                            class="sys-type"
+                            v-text="'(' + item.sys_type + ')'"
+                          ></div>
+                        </div>
+                      </v-img>
+                      <v-card-text>{{ item.sys_desc }} </v-card-text>
+                      <v-card-actions class="justify-end">
+                        <v-btn text @click="openLogin">
+                          เข้าสู่ระบบ
+                        </v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </div>
+                </v-col>
+              </dnd-item>
+            </dnd-container>
+          </dnd-zone>
+        </div>
+        <div style="width:15%;">
+          <div
+            class="justify-end"
+            :style="{
+              display: 'flex',
+              'padding-top': showDragAndDrop ? '0px' : '0px',
+              'padding-right': '5px'
+            }"
+          >
+            <div v-if="showDragAndDrop">
+              <v-btn text @click="clearDragAndDrop()" class="drag-btn close">
+                {{ 'ปิด' }}
+              </v-btn>
+              <v-btn
+                text
+                @click="saveDragAndDrop()"
+                class="drag-btn save"
+                style="margin-left:10px"
+              >
+                {{ 'ยกเลิก / บันทึก' }}
+              </v-btn>
+            </div>
+            <div class="icon-line" @click="openDragAndDrop()" v-else>
+              <img
+                src="@/assets/icons/sort_black.svg"
+                alt="sort"
+                class="sort"
+              />
+            </div>
           </div>
         </div>
-        <v-row no-gutters>
-          <v-col
-            v-for="(item, index) in list"
-            :key="'cadr-' + item.sys_code"
-            cols="6"
-            xs="2"
-            sm="3"
-            md="3"
-            draggable="true"
-            @dragstart="dragStart(index, $event)"
-            @dragover.prevent
-            @dragenter="dragEnter"
-            @dragleave="dragLeave"
-            @dragend="dragEnd"
-            @drop="dragFinish(index, $event)"
-          >
-            <div
-              class="body-round"
-              :style="{ cursor: showDragAndDrop ? 'move' : '' }"
-            >
-              <v-card>
-                <v-img
-                  :style="{ cursor: showDragAndDrop ? '' : 'pointer' }"
-                  height="240"
-                  :src="
-                    'https://cdn.vuetifyjs.com/images/cards/' + item.pic_path
-                  "
-                  @click="openDialog(item)"
-                >
-                  <div class="sys-text">
-                    <div class="sys-name" v-text="item.sys_name"></div>
-                    <div
-                      class="sys-type"
-                      v-text="'(' + item.sys_type + ')'"
-                    ></div>
-                  </div>
-                </v-img>
-                <v-card-text>{{ item.sys_desc }} </v-card-text>
-                <v-card-actions class="justify-end">
-                  <v-btn text @click="openLogin">
-                    เข้าสู่ระบบ
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </div>
-          </v-col>
-        </v-row>
       </div>
     </div>
 
@@ -124,7 +139,6 @@
 <script>
 export default {
   name: 'dashboard',
-  components: {},
   data () {
     return {
       list: [
@@ -295,3 +309,4 @@ export default {
   mounted () {}
 }
 </script>
+<!--<style src="@/components/DragAndDrop/vue-dnd-zone.css"></style>-->
