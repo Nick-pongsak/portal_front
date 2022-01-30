@@ -1,6 +1,6 @@
 <template>
   <div style="height:calc(100% - 50px);">
-    <v-card style="padding:50px 42px 53px 42px">
+    <v-card style="padding:50px 5px 53px 42px">
       <div class="detail-add">
         <div class="rows">
           <div style="width:30%" class="rows-name">ชื่อแอปพลิเคชัน (TH)</div>
@@ -85,7 +85,7 @@
           <div style="width:30%" class="rows-name">ประเภทการเข้าใช้งานระบบ</div>
           <div style="width:70%" class="rows-input">
             <v-radio-group v-model="type_access" style="display:flex">
-              <div class="radio">
+              <div class="radio" style="margin-right: 65px;">
                 <v-radio
                   :color="'#CE1212'"
                   :value="'1'"
