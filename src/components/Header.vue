@@ -9,17 +9,19 @@
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
             <div v-bind="attrs" v-on="on">
-              <v-avatar size="38">
-                <img src="@/assets/icons/language.svg" alt="language" />
-              </v-avatar>
-              <span style="margin-left:17px;font-weight:400">
+              <v-icon
+                v-text="'mdi-web'"
+                style="color:#ffffff;"
+                size="41"
+              ></v-icon>
+              <span style="margin-left:15px;font-weight:400">
                 {{ language }}
               </span>
-              <img
-                src="@/assets/icons/arrow_drop_down_white.svg"
-                alt="open"
-                style="margin-left:18px;"
-              />
+              <v-icon
+                v-text="'mdi-menu-down'"
+                style="color:#ffffff;padding-left:18px"
+                size="20"
+              ></v-icon>
             </div>
           </template>
           <v-list id="change-languages-body">
@@ -27,31 +29,29 @@
               <div class="text" @click="SetLanguages('TH')">
                 ภาษาไทย (TH)
               </div>
-              <v-img
+              <v-icon
                 v-show="language == 'TH'"
-                src="@/assets/icons/done.svg"
-                style="margin-right:5px;height:18px;width:18px"
-              ></v-img>
+                v-text="'mdi-check'"
+                style="color:#CE1212;"
+                size="20"
+              ></v-icon>
             </div>
             <div class="second">
               <div class="text" @click="SetLanguages('EN')">
                 ภาษาอังกฤษ (EN)
               </div>
-              <v-img
+              <v-icon
                 v-show="language == 'EN'"
-                src="@/assets/icons/done.svg"
-                style="margin-right:5px;height:18px;width:18px"
-              ></v-img>
+                v-text="'mdi-check'"
+                style="color:#CE1212;"
+                size="20"
+              ></v-icon>
             </div>
           </v-list>
         </v-menu>
         <v-menu offset-y :close-on-content-click="false">
           <template v-slot:activator="{ on, attrs }">
-            <div
-              v-bind="attrs"
-              v-on="on"
-              style="display:flex;padding-left:2%"
-            >
+            <div v-bind="attrs" v-on="on" style="display:flex;padding-left:2%">
               <div>
                 <v-avatar size="50" v-show="showDefaultAccount">
                   <div class="deafult-name">{{ accountNameEng }}</div>
@@ -66,14 +66,11 @@
                   {{ position }}
                 </div>
               </div>
-              <img
-                src="@/assets/icons/arrow_drop_down_white.svg"
-                alt="open"
-                style="padding-left: 19px;
-                      width: 48px;
-                      padding-top: 10px;
-                      height: 40px;"
-              />
+              <v-icon
+                v-text="'mdi-menu-down'"
+                style="color:#ffffff;padding-left:18px"
+                size="20"
+              ></v-icon>
             </div>
           </template>
           <v-list
@@ -91,11 +88,11 @@
               >
                 <template v-slot:badge>
                   <v-avatar style="background:white;border: 1px solid #D1D1D1;">
-                    <img
-                      style="width:13px"
-                      src="@/assets/icons/camera.svg"
-                      alt="camera"
-                    />
+                    <v-icon
+                      v-text="'mdi-camera'"
+                      style="color:#000000;"
+                      size="12"
+                    ></v-icon>
                   </v-avatar>
                 </template>
 
@@ -171,9 +168,12 @@
       <v-card id="change-pic-dialogs">
         <v-card-text style="padding:unset">
           <div class="justify-end" style="display: flex;">
-            <v-btn icon @click="CloseDialogs()" style="height:20px;width:20px">
-              <v-img src="@/assets/icons/close.svg"></v-img>
-            </v-btn>
+            <v-icon
+              @click="CloseDialogs()"
+              v-text="'mdi-close'"
+              style="color:#000000;"
+              size="20"
+            ></v-icon>
           </div>
           <div
             style=" display: flex;
@@ -204,11 +204,12 @@
             class="ok-btn"
             :style="{ 'margin-right': stepChangePic == 4 ? '' : '35px' }"
           >
-            <v-img
+            <v-icon
               v-show="stepChangePic == 1"
-              src="@/assets/icons/delete.svg"
-              style="margin-right:5px;height:18px;width:18px"
-            ></v-img>
+              v-text="'mdi-delete'"
+              style="color:#CE1212;margin-right:5px;"
+              size="20"
+            ></v-icon>
             {{ renderBtnLeft() }}
           </v-btn>
 
@@ -218,10 +219,11 @@
             class="cancel-btn"
             v-show="stepChangePic < 2"
           >
-            <v-img
-              src="@/assets/icons/edit.svg"
-              style="margin-right:5px;height:19px;width:19px"
-            ></v-img>
+            <v-icon
+              v-text="'mdi-pencil'"
+              style="color:#ffffff;margin-right:8px;"
+              size="18"
+            ></v-icon>
             {{ 'เปลี่ยน' }}
           </v-btn>
 
@@ -412,13 +414,12 @@
       <v-card id="set-app-dialogs">
         <v-card-text style="padding:30px 30px 30px 70px">
           <div class="justify-end" style="display: flex">
-            <v-btn
-              icon
+            <v-icon
               @click="CloseSetAppDialogs()"
-              style="height:20px;width:20px"
-            >
-              <v-img src="@/assets/icons/close.svg"></v-img>
-            </v-btn>
+              v-text="'mdi-close'"
+              style="color:#000000;"
+              size="20"
+            ></v-icon>
           </div>
           <div style="padding-right:40px">
             <div
@@ -431,62 +432,40 @@
             <div class="line-page" style="margin-top:8px"></div>
             <div style="width:100%;margin-top:15px">
               <div class="input-with-icon" style="display: flex;width: 300px;">
-                <img
-                  style="color:#000000;opacity:0.5;margin-right:8px"
-                  src="@/assets/icons/search.svg"
-                  alt="search"
-                  class="sesrch"
-                />
+                <v-icon
+                  v-text="'mdi-magnify'"
+                  style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
+                  size="20"
+                ></v-icon>
                 <input type="text" v-model="searchApp" :placeholder="'ค้นหา'" />
               </div>
               <div class="table">
                 <div class="head-table">
                   <div class="head" style="width:10%" @click="sort('no')">
                     <div class="column-name">No</div>
-                    <img
-                      v-if="sortNo"
-                      style="opacity:0.5;margin-left:8px"
-                      src="@/assets/icons/arrow_drop_up_black.svg"
-                      alt="sort"
-                    />
-                    <img
-                      v-else
-                      style="opacity:0.5;margin-left:8px"
-                      src="@/assets/icons/arrow_drop_down_black.svg"
-                      alt="sort"
-                    />
+                    <v-icon
+                      v-text="sortNo ? 'mdi-menu-up' : 'mdi-menu-down'"
+                      style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
+                      size="22"
+                    ></v-icon>
                   </div>
                   <div class="head" style="width:30%" @click="sort('name')">
                     <div class="column-name">แอปพิเคชั่น</div>
-                    <img
-                      v-if="sortAppName"
-                      style="opacity:0.5;margin-left:8px"
-                      src="@/assets/icons/arrow_drop_up_black.svg"
-                      alt="sort"
-                    />
-                    <img
-                      v-else
-                      style="opacity:0.5;margin-left:8px"
-                      src="@/assets/icons/arrow_drop_down_black.svg"
-                      alt="sort"
-                    />
+                    <v-icon
+                      v-text="sortAppName ? 'mdi-menu-up' : 'mdi-menu-down'"
+                      style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
+                      size="22"
+                    ></v-icon>
                   </div>
                   <div class="head" style="width:60%" @click="sort('user')">
                     <div class="column-name">
                       ชื่อผู้ใช้งานในการเข้าสู่ระบบด้วย SSO
                     </div>
-                    <img
-                      v-if="sortUser"
-                      style="opacity:0.5;margin-left:8px"
-                      src="@/assets/icons/arrow_drop_up_black.svg"
-                      alt="sort"
-                    />
-                    <img
-                      v-else
-                      style="opacity:0.5;margin-left:8px"
-                      src="@/assets/icons/arrow_drop_down_black.svg"
-                      alt="sort"
-                    />
+                    <v-icon
+                      v-text="sortUser ? 'mdi-menu-up' : 'mdi-menu-down'"
+                      style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
+                      size="22"
+                    ></v-icon>
                   </div>
                 </div>
                 <div class="body-table">
@@ -700,7 +679,7 @@ export default {
       }
     },
     SettingApp () {
-      // this.setAppDialog = true
+      this.setAppDialog = true
     },
     CloseSetAppDialogs () {
       this.setAppDialog = false
@@ -814,7 +793,7 @@ export default {
     onFileChanged (e) {
       this.selectedFile = e.target.files[0]
       setTimeout(() => {
-        console.log(e.target.files[0].name)
+        // console.log(e.target.files[0].name)
       }, 2000)
 
       // do something

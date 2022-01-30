@@ -90,9 +90,12 @@
       <v-card id="detail-dashboard-dialogs">
         <v-card-text style="padding:20px 25px 20px 100px">
           <div class="justify-end" style="display: flex;">
-            <v-btn icon @click="CloseDialogs()" style="height:20px;width:20px">
-              <v-img src="@/assets/icons/close.svg"></v-img>
-            </v-btn>
+            <v-icon
+              @click="CloseDialogs()"
+              v-text="'mdi-close'"
+              style="color:#000000;"
+              size="20"
+            ></v-icon>
           </div>
           <div style="padding-right:90px;padding-top:20px">
             <v-img

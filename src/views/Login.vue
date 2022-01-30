@@ -15,39 +15,28 @@
               v-model="user.username"
               placeholder="User Name"
             />
-            <img
-              src="@/assets/icons/account.svg"
-              alt="account"
-              class="account"
-            />
+            <v-icon
+              v-text="'mdi-account'"
+              style="color:#000000;opacity:0.5;padding-right:8px;"
+              size="20"
+            ></v-icon>
           </div>
           <div class="input-with-icon" :class="{ active: error }">
             <input
-              type="password"
-              v-show="!showpass"
+              :type="showpass ? 'text' : 'password'"
               v-model="user.password"
               placeholder="Password"
             />
-            <input
-              type="text"
-              v-show="showpass"
-              v-model="user.password"
-              placeholder="Password"
-            />
-            <img
-              src="@/assets/icons/eye.svg"
-              v-show="!showpass"
-              alt="show/hide password"
-              class="eye"
+            <div
               @click="showpass = !showpass"
-            />
-            <img
-              src="@/assets/icons/eye-hided.svg"
-              v-show="showpass"
-              alt="show/hide password"
-              class="eye eye-hided"
-              @click="showpass = !showpass"
-            />
+              style="padding-top: 8px;cursor:pointer"
+            >
+              <v-icon
+                v-text="showpass ? 'mdi-eye-off' : 'mdi-eye'"
+                style="color:#000000;opacity:0.5;padding-right:8px;"
+                size="20"
+              ></v-icon>
+            </div>
           </div>
           <v-radio-group
             class="radio-group"

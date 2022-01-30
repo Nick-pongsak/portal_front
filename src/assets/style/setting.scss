@@ -46,7 +46,7 @@
       height: calc(100% - 40px);
       .tab {
         width: 100%;
-        padding: 30px;
+        padding: 30px 30px 25px 30px;
         display: flex;
         .tab-row {
           padding-bottom: 7px;
@@ -121,7 +121,8 @@
           }
           &::-webkit-scrollbar-thumb {
             border-radius: 8px;
-            background: #e3e3e3;
+            background: #a8a8a8;
+            // background: #e3e3e3;
           }
           &::-webkit-scrollbar-thumb:hover {
             background: rgb(145, 145, 145);
@@ -129,13 +130,133 @@
         }
       }
       .input-with-icon {
-        // height: 32px;
         box-shadow: 0px 0px 3px #00000080;
         border-radius: 4px;
-        input {
+        input[type="text"] {
+          height: 32px;
+          width: 300px;
+          &:hover,
+          &:focus {
+            outline: none;
+          }
+          &::placeholder {
+            color: #11111169;
+          }
+        }
+      }
+      .cancel-btn {
+        width: 84px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: $kanit;
+        color: white;
+        background: $dark_red;
+        border: 1px solid $dark_red;
+      }
+      .detail-add {
+        padding-top: 3px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        height: calc(100% - 0px);
+        &::-webkit-scrollbar {
+          width: 6px;
+        }
+        &::-webkit-scrollbar:horizontal {
+          height: 8px;
+        }
+        &::-webkit-scrollbar-track {
+          background: #efefef;
+        }
+        &::-webkit-scrollbar-thumb {
+          border-radius: 8px;
+          background: #a8a8a8;
+          // background: #e3e3e3;
+        }
+        &::-webkit-scrollbar-thumb:hover {
+          background: rgb(145, 145, 145);
+        }
+        .rows {
+          display: flex;
           width: 100%;
-          color: #00000061;
-          font-family: $roboto;
+          padding-bottom: 17px;
+          .rows-name {
+            color: #11111169;
+            font-size: $fontver3;
+            font-family: $kanit;
+          }
+          .rows-input {
+            .input-with-icon {
+              border: none;
+              input[type="text"] {
+                padding-left: 8px;
+              }
+              textarea {
+                width: 500px;
+                height: 96px;
+                padding-top: 5px;
+                padding-left: 8px;
+                resize: none;
+                &:hover,
+                &:focus {
+                  outline: none;
+                }
+                &::placeholder {
+                  color: #11111169;
+                }
+              }
+              .v-text-field {
+                padding: 0px;
+                margin: 0px;
+                height: 32px;
+              }
+
+              .v-select__selection--comma {
+                padding-left: 8px;
+                // font-family: $kanit;
+              }
+              .v-text-field > .v-input__control > .v-input__slot:before {
+                width: 0%;
+              }
+              .v-text-field > .v-input__control > .v-input__slot:after {
+                width: 0%;
+              }
+            }
+            .v-input--radio-group {
+              padding: 0px;
+              margin: 0px;
+              .radio {
+                display: flex;
+                color: #414141;
+                font-size: $fontver3;
+                font-weight: 400;
+                font-family: $kanit;
+                margin-right: 76px;
+              }
+              .v-messages {
+                display: none;
+              }
+              .v-input__slot {
+                margin: 0px;
+              }
+            }
+            .v-input--radio-group--column .v-input--radio-group__input {
+              flex-direction: inherit;
+            }
+            .pic-upload {
+              margin-top: 28px;
+              background: #d1d1d1;
+              border: 1px solid #a8a8a8;
+              height: 76px;
+              width: 420px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: #797979;
+              font-family: $kanit;
+            }
+          }
         }
       }
     }
