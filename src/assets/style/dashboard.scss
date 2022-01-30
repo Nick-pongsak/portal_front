@@ -4,29 +4,29 @@
   width: 100%;
   height: 100%;
   background: white;
-  padding: 5px 20px 45px 20px;
+  padding: 25px 20px 45px 20px;
   overflow-x: hidden;
   overflow-y: auto;
   display: block;
 
   &::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
   }
   &::-webkit-scrollbar:horizontal {
     height: 8px;
   }
   &::-webkit-scrollbar-track {
-    background: transparent;
+    background: #EFEFEF;
   }
   &::-webkit-scrollbar-thumb {
-    border-radius: 10px;
+    border-radius: 8px;
     background: #e3e3e3;
   }
   &::-webkit-scrollbar-thumb:hover {
     background: rgb(145, 145, 145);
   }
   .drag-btn {
-    font-size: 10px;
+    font-size: $fontver6;
     color: white;
     border-radius: 5px;
     height: 22px;
@@ -75,7 +75,7 @@
   }
   .name-page {
     color: #797979;
-    font-size: 18px;
+    font-size: $fontver2;
     font-family: $lato;
     font-weight: 900;
   }
@@ -103,7 +103,7 @@
     margin-bottom: 3%;
 
     .v-card__text {
-      font-size: 10px;
+      font-size: $fontver6;
       color: #414141;
       font-family: $kanit;
       font-weight: 400;
@@ -127,12 +127,12 @@
         padding-top: 2px;
         font-family: $roboto;
         .sys-name {
-          font-size: 16px;
+          font-size: $fontver3;
           color: white;
         }
         .sys-type {
           padding-top: 1px;
-          font-size: 12px;
+          font-size: $fontver5;
           color: #a8a8a8;
         }
       }
@@ -140,7 +140,7 @@
     .v-card__actions {
       padding: 0px 15px 0px 8px;
       button {
-        font-size: 10px;
+        font-size: $fontver6;
         background: $dark_red;
         width: 65px;
         height: 22px;

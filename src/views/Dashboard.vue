@@ -13,7 +13,6 @@
           border: showDragAndDrop ? '1px dashed #707070' : ''
         }"
       >
-        <!-- :style="{ border: showDragAndDrop ? '1px dashed #707070' : '' }" -->
         <div style="width:15%"></div>
         <div style="width:70%">
           <dnd-zone :transition-duration="0.3">
@@ -55,7 +54,7 @@
                       </v-img>
                       <v-card-text>{{ item.sys_desc }} </v-card-text>
                       <v-card-actions class="justify-end">
-                        <v-btn text @click="openLogin">
+                        <v-btn text @click="openLogin(item)">
                           เข้าสู่ระบบ
                         </v-btn>
                       </v-card-actions>
@@ -216,7 +215,7 @@ export default {
         },
         {
           pic_path: 'cooking.png',
-          sys_name: 'Test System',
+          sys_name: 'Portal Setting',
           sys_type: 'CRM',
           sys_code: '9',
           sys_desc:
@@ -300,8 +299,10 @@ export default {
     CloseDialogs () {
       this.dialog = false
     },
-    openLogin () {
-      if (this.showDragAndDrop == false) {
+    openLogin (row) {
+      if (row.sys_name == 'Portal Setting') {
+        this.$router.push('/setting')
+      } else if (this.showDragAndDrop == false) {
         console.log('openLogin => ')
       }
     }
@@ -309,4 +310,3 @@ export default {
   mounted () {}
 }
 </script>
-<!--<style src="@/components/DragAndDrop/vue-dnd-zone.css"></style>-->

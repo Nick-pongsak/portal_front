@@ -135,7 +135,7 @@
       .text {
         padding-left: 20px;
         width: 150px;
-        font-size: 12px;
+        font-size: $fontver5;
         margin-top: -2px;
       }
       &:after {
@@ -166,7 +166,7 @@
     height: 25px;
     background: $red;
     color: white;
-    font-size: 10px;
+    font-size: $fontver6;
     text-align: center;
     font-weight: bold;
     user-select: none;
@@ -186,7 +186,7 @@
     margin-top: 0px;
     color: $red;
     opacity: 0;
-    font-size: 10px;
+    font-size: $fontver6;
     &.active {
       opacity: 1;
     }
@@ -194,7 +194,7 @@
 
   .creater {
     color: #414141;
-    font-size: 10px;
+    font-size: $fontver6;
     margin-top: 35px;
   }
 
@@ -230,7 +230,7 @@
         color: #414141;
         margin-left: 8px;
         width: 80%;
-        font-size: 10px;
+        font-size: $fontver6;
         padding-top: 5px;
       }
       .n-body_icon {

@@ -4,6 +4,7 @@ import Login from '@/views/Login.vue'
 import Dashboard from '@/views/Dashboard.vue'
 // import underMaintenance from '@/views/UnderMaintenance.vue'
 import DefaultLayout from "@/views/Default.vue";
+import Setting from "@/views/Setting.vue";
 
 Vue.use(Router)
 
@@ -30,14 +31,14 @@ export default new Router({
           //   auth: true
           // }
         },
-        // {
-          // path: "/maintenance",
-          // component: underMaintenance,
+        {
+          path: "/setting",
+          component: Setting,
           // meta: {
           //   rule: "isPublic",
           //   auth: true
           // }
-        // },
+        },
       ]
     }
   ]
