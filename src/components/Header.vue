@@ -228,11 +228,8 @@
           </v-btn>
 
           <div v-show="stepChangePic == 2 && stepChangePic != 3">
-            <v-btn
-              class="cancel-btn"
-              :loading="isSelecting"
-              @click="onButtonClick"
-            >
+            <v-btn class="cancel-btn" @click="onButtonClick">
+              <!-- :loading="isSelecting" -->
               {{ 'อัปโหลด' }}
             </v-btn>
             <input
@@ -563,7 +560,7 @@ export default {
       picDialog: false,
       showEditPic: false,
       selectedFile: null,
-      isSelecting: false,
+      // isSelecting: false,
       pwdDialog: false,
       password: '',
       errorPwd: false,
@@ -779,11 +776,11 @@ export default {
       }
     },
     onButtonClick () {
-      this.isSelecting = true
+      // this.isSelecting = true
       window.addEventListener(
         'focus',
         () => {
-          this.isSelecting = false
+          // this.isSelecting = false
         },
         { once: true }
       )

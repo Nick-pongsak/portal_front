@@ -386,3 +386,30 @@
     }
   }
 }
+.confirm-dialog {
+  .v-card__title,
+  .cancel,
+  .save {
+    font-family: $kanit;
+  }
+  .v-card__title {
+    color: #727272;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .cancel,
+  .save {
+    margin-top: 36px;
+    font-size: $fontver4;
+  }
+  .cancel {
+    span {
+      color: #a8a8a8;
+    }
+  }
+  .save {
+    span {
+      color: #ce1212;
+    }
+  }
+}

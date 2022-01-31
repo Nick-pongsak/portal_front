@@ -67,20 +67,17 @@
                 single-line
               ></v-select>
             </div>
-            <v-btn @click="add()" class="cancel-btn" style="height:32px;width:32px">
+            <v-btn
+              @click="add()"
+              class="cancel-btn"
+              style="height:32px;width:32px;margin-left:8px"
+            >
               <v-icon
-                v-text="'mdi-settings'"
+                v-text="'mdi-cog'"
                 style="color:#ffffff"
-                size="10"
+                size="18"
               ></v-icon>
             </v-btn>
-            <!-- <div style="background:#CE1212;height:32px;width:32px">
-              <v-icon
-                v-text="'mdi-settings'"
-                style="color:#000000"
-                size="10"
-              ></v-icon>
-            </div> -->
           </div>
         </div>
         <div class="rows">
@@ -191,15 +188,12 @@
         <div class="rows">
           <div style="width:30%" class="rows-name">รูปแบนเนอร์</div>
           <div style="width:70%" class="rows-input">
-            <!-- <v-btn @click="upload()" class="cancel-btn" style="width:200px">
-              {{ 'อัปโหลด' }}
-            </v-btn> -->
             <v-btn
               class="cancel-btn"
               style="width:200px"
-              :loading="isSelecting"
               @click="onButtonClick"
             >
+              <!-- :loading="isSelecting" -->
               {{ 'อัปโหลด' }}
             </v-btn>
             <input
@@ -209,8 +203,16 @@
               accept="image/*"
               @change="onFileChanged"
             />
-            <div class="pic-upload">
+            <div class="pic-upload" v-if="selectedFile == null">
               420*260
+            </div>
+            <div v-else class="pic-upload-success">
+              <v-img
+                max-height="76"
+                max-width="420"
+                :src="'https://cdn.vuetifyjs.com/images/cards/cooking.png'"
+              >
+              </v-img>
             </div>
           </div>
         </div>
@@ -224,14 +226,40 @@
       >
         {{ 'ยกเลิก' }}
       </v-btn>
+      <!-- @click="save()" -->
       <v-btn
-        @click="save()"
+        @click.stop="dialog = true"
         :class="enableBtn ? 'cancel-btn disabled' : 'cancel-btn'"
         style="width:200px"
       >
         {{ 'บันทึก' }}
       </v-btn>
     </div>
+
+    <v-dialog v-model="dialog" max-width="340">
+      <v-card class="confirm-dialog">
+        <v-card-title
+          v-text="errorDialog"
+          :style="{ 'font-weight': error ? '400' : '500' }"
+        >
+        </v-card-title>
+
+        <!-- <v-card-text>
+          Let Google help apps determine location. This means sending anonymous
+          location data to Google, even when no apps are running.
+        </v-card-text> -->
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn class="cancel" text @click="cancel()" v-show="!error">
+            ยกเลิก
+          </v-btn>
+          <v-btn text @click="save()" class="save">
+            {{ error ? 'ปิด' : 'บันทึก' }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -258,25 +286,40 @@ export default {
       app_status: '1',
       url_app: '',
       enableBtn: false,
-      isSelecting: false,
-      selectedFile: null
+      // isSelecting: false,
+      selectedFile: null,
+      dialog: false,
+      errorDialog: 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?',
+      error: false
     }
   },
   computed: {},
   watch: {},
   methods: {
     cancel () {
+      this.dialog = false
+      this.selectedFile = null
       this.$emit('cancel', null)
     },
     save () {
-      this.$emit('save', null)
+      if (this.error) {
+        this.dialog = false
+      } else {
+        // this.error = true
+        // this.errorDialog =
+        //   'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ (Error Code 1001)'
+
+        this.dialog = false
+        this.selectedFile = null
+        this.$emit('save', null)
+      }
     },
     onButtonClick () {
-      this.isSelecting = true
+      // this.isSelecting = true
       window.addEventListener(
         'focus',
         () => {
-          this.isSelecting = false
+          // this.isSelecting = false
         },
         { once: true }
       )
