@@ -54,7 +54,7 @@
         </div>
         <div class="rows">
           <div style="width:30%" class="rows-name">หมวดหมู่</div>
-          <div style="width:70%" class="rows-input">
+          <div style="width:70%;display:flex" class="rows-input">
             <div class="input-with-icon" style="width: 300px;">
               <v-select
                 v-model="app_type"
@@ -67,6 +67,20 @@
                 single-line
               ></v-select>
             </div>
+            <v-btn @click="add()" class="cancel-btn" style="height:32px;width:32px">
+              <v-icon
+                v-text="'mdi-settings'"
+                style="color:#ffffff"
+                size="10"
+              ></v-icon>
+            </v-btn>
+            <!-- <div style="background:#CE1212;height:32px;width:32px">
+              <v-icon
+                v-text="'mdi-settings'"
+                style="color:#000000"
+                size="10"
+              ></v-icon>
+            </div> -->
           </div>
         </div>
         <div class="rows">
@@ -177,9 +191,24 @@
         <div class="rows">
           <div style="width:30%" class="rows-name">รูปแบนเนอร์</div>
           <div style="width:70%" class="rows-input">
-            <v-btn @click="upload()" class="cancel-btn" style="width:200px">
+            <!-- <v-btn @click="upload()" class="cancel-btn" style="width:200px">
+              {{ 'อัปโหลด' }}
+            </v-btn> -->
+            <v-btn
+              class="cancel-btn"
+              style="width:200px"
+              :loading="isSelecting"
+              @click="onButtonClick"
+            >
               {{ 'อัปโหลด' }}
             </v-btn>
+            <input
+              ref="uploader"
+              class="d-none"
+              type="file"
+              accept="image/*"
+              @change="onFileChanged"
+            />
             <div class="pic-upload">
               420*260
             </div>
@@ -187,6 +216,22 @@
         </div>
       </div>
     </v-card>
+    <div style="display:flex;padding-top:27px" class="justify-end">
+      <v-btn
+        @click="cancel()"
+        class="ok-btn"
+        style="width:200px;margin-right:6px"
+      >
+        {{ 'ยกเลิก' }}
+      </v-btn>
+      <v-btn
+        @click="save()"
+        :class="enableBtn ? 'cancel-btn disabled' : 'cancel-btn'"
+        style="width:200px"
+      >
+        {{ 'บันทึก' }}
+      </v-btn>
+    </div>
   </div>
 </template>
 
@@ -211,13 +256,41 @@ export default {
       type_access: '1',
       connect_sso: '1',
       app_status: '1',
-      url_app: ''
+      url_app: '',
+      enableBtn: false,
+      isSelecting: false,
+      selectedFile: null
     }
   },
   computed: {},
   watch: {},
   methods: {
-    upload () {}
+    cancel () {
+      this.$emit('cancel', null)
+    },
+    save () {
+      this.$emit('save', null)
+    },
+    onButtonClick () {
+      this.isSelecting = true
+      window.addEventListener(
+        'focus',
+        () => {
+          this.isSelecting = false
+        },
+        { once: true }
+      )
+
+      this.$refs.uploader.click()
+    },
+    onFileChanged (e) {
+      this.selectedFile = e.target.files[0]
+      setTimeout(() => {
+        // console.log(e.target.files[0].name)
+      }, 2000)
+
+      // do something
+    }
   },
   mounted () {}
 }

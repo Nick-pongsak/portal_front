@@ -25,7 +25,8 @@
       <add-system-user
         v-else-if="currentView.code == '2-1'"
         :menu="rightMenu"
-        @add="addApp"
+        @cancel="cancelApp"
+        @save="saveApp"
       />
     </div>
   </div>
@@ -190,6 +191,18 @@ export default {
   computed: {},
   watch: {},
   methods: {
+    cancelApp (value) {
+      this.currentView = {
+        code: '2',
+        text: 'การจัดการแอปพลิเคชันที่เชื่อมต่อ'
+      }
+    },
+    saveApp (value) {
+      this.currentView = {
+        code: '2',
+        text: 'การจัดการแอปพลิเคชันที่เชื่อมต่อ'
+      }
+    },
     addApp (value) {
       this.currentView = {
         code: '2-1',

@@ -144,17 +144,6 @@
           }
         }
       }
-      .cancel-btn {
-        width: 84px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: $kanit;
-        color: white;
-        background: $dark_red;
-        border: 1px solid $dark_red;
-      }
       .detail-add {
         padding-top: 3px;
         overflow-x: hidden;
@@ -258,6 +247,36 @@
             }
           }
         }
+      }
+    }
+    .ok-btn {
+      background: #ffffff;
+      color: $dark_red;
+      border: 1px solid $dark_red;
+    }
+    .cancel-btn {
+      color: white;
+      background: $dark_red;
+      border: 1px solid $dark_red;
+    }
+    .ok-btn,
+    .cancel-btn {
+      font-size: $fontver4;
+      font-weight: 400;
+      width: 106px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: $kanit;
+      &.disabled {
+        // &.v-btn--disabled {
+        border: 1px solid #a8a8a8;
+        background: #ce1212;
+        color: white;
+        opacity: 0.51;
+        //   .v-btn__content {
+        //   }
       }
     }
   }
