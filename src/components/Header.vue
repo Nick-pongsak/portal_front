@@ -1,7 +1,15 @@
 <template>
   <div class="header-main">
     <v-row no-gutters>
-      <v-col cols="12" xs="5" sm="4" md="4" style="display:flex">
+      <v-col
+        cols="12"
+        xs="5"
+        sm="4"
+        md="4"
+        style="display:flex"
+      >
+        <!-- style="display:flex;cursor:pointer" -->
+        <!-- @click="goHome()" -->
         <img src="@/assets/icons/logo.png" style="height:45px" />
         <div class="sys-name">DHAS PORTAL</div>
       </v-col>
@@ -654,6 +662,9 @@ export default {
   },
   computed: {},
   methods: {
+    goHome () {
+      this.$router.push('/home')
+    },
     edit (item, index) {
       this.editRow = index
     },
