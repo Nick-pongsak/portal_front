@@ -1,7 +1,7 @@
 <template>
   <div id="setting-page">
     <div class="left">
-      <div class="header">ตั้งค่าระบบ</div>
+      <div class="header">{{ $t('set.menu') }}</div>
       <div class="list">
         <div
           :class="
@@ -11,11 +11,12 @@
           :key="item.code"
           @click="selectedMenu(item, index)"
         >
-          {{ item.text }}
+          {{ $t('set.left_menu' + index) }}
         </div>
       </div>
     </div>
     <div class="right">
+      <!-- <div class="header">{{ $t('set.right_menu') }}</div> -->
       <div class="header">{{ currentView.text }}</div>
       <main-system-user
         v-if="currentView.code == '2'"

@@ -27,9 +27,19 @@ Vue.use(VueMaterial)
 import './filters';
 import './global';
 
+import VueI18n from 'vue-i18n'
+import locales from './locales'
+Vue.use(VueI18n)
+var i18n = new VueI18n({
+  locale: 'th',
+  // locale: Vue.config.lang,
+  messages: locales
+})
+
 new Vue({
   router,
   store,
   vuetify,
+  i18n,
   render: h => h(App)
 }).$mount('#app')

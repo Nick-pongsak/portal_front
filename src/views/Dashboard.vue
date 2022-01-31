@@ -1,5 +1,5 @@
 <template>
-  <div id="dashboard">
+  <div id="dashboard" v-resize="onResize">
     <div class="name-page">
       Product Manager (IT) Services
       <div class="line-page"></div>
@@ -13,8 +13,8 @@
           border: showDragAndDrop ? '1px dashed #707070' : ''
         }"
       >
-        <div style="width:15%"></div>
-        <div style="width:70%">
+        <div :style="{ width: newWidthLeft + '%' }"></div>
+        <div :style="{ width: newWidth + '%' }">
           <dnd-zone :transition-duration="0.3">
             <dnd-container
               :dnd-model="list"
@@ -29,10 +29,12 @@
                 :dnd-model="item"
                 :is-draggable="showDragAndDrop"
               >
-                <v-col cols="6" xs="2" sm="3" md="3" lg="3">
+                <v-col cols="12" sm="12" md="6" lg="4" xl="3">
                   <div
                     class="body-round"
-                    :style="{ cursor: showDragAndDrop ? 'move' : '' }"
+                    :style="{
+                      cursor: showDragAndDrop ? 'move' : ''
+                    }"
                   >
                     <v-card>
                       <v-img
@@ -65,7 +67,7 @@
             </dnd-container>
           </dnd-zone>
         </div>
-        <div style="width:15%;">
+        <div :style="{ width: newWidthRight + '%' }">
           <div
             class="justify-end"
             :style="{
@@ -229,7 +231,14 @@ export default {
       dialog: false,
       selectedRow: {},
       showDragAndDrop: false,
-      dragging: -1
+      dragging: -1,
+      windowSize: {
+        x: 0,
+        y: 0
+      },
+      newWidth: 70,
+      newWidthLeft: 15,
+      newWidthRight: 15
     }
   },
   computed: {
@@ -240,17 +249,40 @@ export default {
       return this.dragging > -1
     }
   },
+  mounted () {
+    this.onResize()
+  },
   watch: {
     list: {
       handler: function (todos) {
         if (this.showDragAndDrop) {
-          console.log(todos)
+          // console.log(todos)
         }
       },
       deep: true
     }
   },
   methods: {
+    onResize () {
+      let x = window.innerWidth
+      let y = window.innerHeight
+      this.windowSize = { x: window.innerWidth, y: window.innerHeight }
+      if (x <= 530) {
+        // if (this.showDragAndDrop) {
+        //   this.newWidth = 60
+        //   this.newWidthRight = 37
+        //   this.newWidthLeft = 3
+        // } else {
+        //   this.newWidth = 65
+        //   this.newWidthRight = 20
+        //   this.newWidthLeft = 15
+        // }
+      } else {
+        // this.newWidth = 70
+        // this.newWidthLeft = 15
+        // this.newWidthRight = 15
+      }
+    },
     dragStart (which, ev) {
       if (this.showDragAndDrop) {
         ev.dataTransfer.setData('Text', this.id)
@@ -289,9 +321,11 @@ export default {
     saveDragAndDrop () {},
     clearDragAndDrop () {
       this.showDragAndDrop = false
+      this.onResize()
     },
     openDragAndDrop () {
       this.showDragAndDrop = true
+      this.onResize()
     },
     openDialog (row) {
       if (this.showDragAndDrop == false) {

@@ -1,27 +1,26 @@
 #setting-page {
+  font-family: $mainFont;
   display: flex;
   width: 100%;
   height: calc(100% - 0px);
   .left {
-    width: 30%;
+    width: 20%;
     height: 100%;
-    padding: 25px 0px 25px 0px;
+    padding: 20px 0px 20px 0px;
     .header {
-      padding-left: 32px;
-      font-size: $fontver1;
-      font-family: $kanit;
+      padding-left: 20px;
+      font-size: nth($font-sizes, 5);
       font-weight: bold;
       color: #797979;
       border-bottom: 1px solid #d1d1d1;
-      padding-bottom: 16px;
+      padding-bottom: 6px;
     }
     .list {
       .list-row {
         cursor: pointer;
         color: #797979;
-        font-size: $fontver2;
-        font-family: $kanit;
-        padding: 15px 25px 15px 32px;
+        font-size: nth($font-sizes, 3);
+        padding: 20px 25px 15px 20px;
         &.active {
           color: #ffff;
           background: #ed202499;
@@ -30,15 +29,14 @@
     }
   }
   .right {
-    width: 70%;
-    padding: 25px 25px 25px 50px;
+    width: 80%;
+    padding: 20px 25px 25px 20px;
     background: #f4f6f980;
     .header {
       color: #797979;
-      font-size: $fontver1;
-      font-family: $kanit;
-      font-weight: 400;
-      padding-bottom: 15px;
+      font-size: nth($font-sizes, 5);
+      font-weight: map-get($font-weight, "regular");
+      padding-bottom: 10px;
     }
     .v-card {
       border: 1px solid #d1d1d1;
@@ -46,18 +44,17 @@
       height: calc(100% - 40px);
       .tab {
         width: 100%;
-        padding: 30px 30px 25px 30px;
+        padding: 20px 20px 15px 20px;
         display: flex;
         .tab-row {
           padding-bottom: 7px;
-          margin-right: 40px;
+          margin-right: 15px;
           color: #797979;
-          font-size: $fontver1;
-          font-family: $kanit;
-          font-weight: 400;
+          font-size: nth($font-sizes, 5);
+          font-weight: map-get($font-weight, "regular");
           cursor: pointer;
           .line-active {
-            margin-top: 3px;
+            margin-top: 1px;
             width: 100%;
             height: 2px;
             background: #ed2024;
@@ -83,8 +80,7 @@
             cursor: pointer;
             font-weight: 500;
             color: #797979;
-            font-size: $fontver4;
-            font-family: $kanit;
+            font-size: nth($font-sizes, 3);
             .column-name {
               padding-top: 3px;
             }
@@ -101,14 +97,12 @@
             padding-top: 3px;
             padding-bottom: 8px;
             .body {
-              font-family: $kanit;
               color: #797979;
-              font-size: $fontver4;
+              font-size: nth($font-sizes, 3);
             }
           }
           overflow-x: hidden;
           overflow-y: auto;
-          // height: 420px;
           height: calc(100% - 200px);
           &::-webkit-scrollbar {
             width: 6px;
@@ -122,7 +116,6 @@
           &::-webkit-scrollbar-thumb {
             border-radius: 8px;
             background: #a8a8a8;
-            // background: #e3e3e3;
           }
           &::-webkit-scrollbar-thumb:hover {
             background: rgb(145, 145, 145);
@@ -141,6 +134,7 @@
           }
           &::placeholder {
             color: #11111169;
+            font-size: nth($font-sizes, 4);
           }
         }
       }
@@ -161,7 +155,6 @@
         &::-webkit-scrollbar-thumb {
           border-radius: 8px;
           background: #a8a8a8;
-          // background: #e3e3e3;
         }
         &::-webkit-scrollbar-thumb:hover {
           background: rgb(145, 145, 145);
@@ -169,11 +162,10 @@
         .rows {
           display: flex;
           width: 100%;
-          padding-bottom: 17px;
+          padding-bottom: 10px;
           .rows-name {
             color: #11111169;
-            font-size: $fontver3;
-            font-family: $kanit;
+            font-size: nth($font-sizes, 4);
           }
           .rows-input {
             .input-with-icon {
@@ -182,16 +174,17 @@
                 padding-left: 8px;
               }
               textarea {
-                width: 500px;
-                height: 96px;
+                width: 100%;
+                height: 120px;
                 padding-top: 5px;
                 padding-left: 8px;
-                resize: none;
+                // resize: none;
                 &:hover,
                 &:focus {
                   outline: none;
                 }
                 &::placeholder {
+                  font-size: nth($font-sizes, 4);
                   color: #11111169;
                 }
               }
@@ -203,7 +196,6 @@
 
               .v-select__selection--comma {
                 padding-left: 8px;
-                // font-family: $kanit;
               }
               .v-text-field > .v-input__control > .v-input__slot:before {
                 width: 0%;
@@ -218,9 +210,8 @@
               .radio {
                 display: flex;
                 color: #414141;
-                font-size: $fontver3;
-                font-weight: 400;
-                font-family: $kanit;
+                font-size: nth($font-sizes, 4);
+                font-weight: map-get($font-weight, "regular");
                 margin-right: 76px;
               }
               .v-messages {
@@ -235,9 +226,9 @@
             }
             .pic-upload,
             .pic-upload-success {
-              height: 76px;
-              width: 420px;
-              margin-top: 28px;
+              height: 180px;
+              width: 220px;
+              margin-top: 5px;
             }
             .pic-upload {
               background: #d1d1d1;
@@ -246,7 +237,6 @@
               align-items: center;
               justify-content: center;
               color: #797979;
-              font-family: $kanit;
             }
           }
         }
@@ -264,22 +254,18 @@
     }
     .ok-btn,
     .cancel-btn {
-      font-size: $fontver4;
-      font-weight: 400;
+      font-size: nth($font-sizes, 3);
+      font-weight: map-get($font-weight, "regular");
       width: 106px;
-      height: 22px;
+      height: 30px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: $kanit;
       &.disabled {
-        // &.v-btn--disabled {
         border: 1px solid #a8a8a8;
         background: #ce1212;
         color: white;
         opacity: 0.51;
-        //   .v-btn__content {
-        //   }
       }
     }
   }

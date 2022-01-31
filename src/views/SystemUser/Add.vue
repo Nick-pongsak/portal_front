@@ -1,11 +1,11 @@
 <template>
   <div style="height:calc(100% - 50px);">
-    <v-card style="padding:50px 5px 53px 42px">
+    <v-card style="padding:20px 5px 20px 20px">
       <div class="detail-add">
         <div class="rows">
           <div style="width:30%" class="rows-name">ชื่อแอปพลิเคชัน (TH)</div>
           <div style="width:70%" class="rows-input">
-            <div class="input-with-icon" style="width: 300px;">
+            <div class="input-with-icon" style="width: 365px;">
               <input
                 type="text"
                 v-model="app_name_th"
@@ -17,7 +17,7 @@
         <div class="rows">
           <div style="width:30%" class="rows-name">ชื่อแอปพลิเคชัน (EN)</div>
           <div style="width:70%" class="rows-input">
-            <div class="input-with-icon" style="width: 300px;">
+            <div class="input-with-icon" style="width: 365px;">
               <input
                 type="text"
                 v-model="app_name_en"
@@ -30,8 +30,8 @@
           <div style="width:30%" class="rows-name">
             คำอธิบายแอปพลิเคชั่น (TH)
           </div>
-          <div style="width:70%" class="rows-input">
-            <div class="input-with-icon" style="width: 500px;">
+          <div style="width:70%;padding-right:25px" class="rows-input">
+            <div class="input-with-icon" style="width: 100%">
               <textarea
                 v-model="app_desc_th"
                 :placeholder="'-- โปรดระบุ --'"
@@ -43,8 +43,8 @@
           <div style="width:30%" class="rows-name">
             คำอธิบายแอปพลิเคชั่น (EN)
           </div>
-          <div style="width:70%" class="rows-input">
-            <div class="input-with-icon" style="width: 500px;">
+          <div style="width:70%;padding-right:25px" class="rows-input">
+            <div class="input-with-icon" style="width: 100%">
               <textarea
                 v-model="app_desc_en"
                 :placeholder="'-- โปรดระบุ --'"
@@ -55,7 +55,7 @@
         <div class="rows">
           <div style="width:30%" class="rows-name">หมวดหมู่</div>
           <div style="width:70%;display:flex" class="rows-input">
-            <div class="input-with-icon" style="width: 300px;">
+            <div class="input-with-icon" style="width: 365px;">
               <v-select
                 v-model="app_type"
                 :items="items"
@@ -83,7 +83,7 @@
         <div class="rows">
           <div style="width:30%" class="rows-name">รหัสแอปพลิเคชัน</div>
           <div style="width:70%" class="rows-input">
-            <div class="input-with-icon" style="width: 300px;">
+            <div class="input-with-icon" style="width: 365px;">
               <input
                 type="text"
                 v-model="app_code"
@@ -176,7 +176,7 @@
         <div class="rows">
           <div style="width:30%" class="rows-name">URL ระบบ</div>
           <div style="width:70%" class="rows-input">
-            <div class="input-with-icon" style="width: 500px;">
+            <div class="input-with-icon" style="width: 544px;">
               <input
                 type="text"
                 v-model="url_app"
@@ -194,7 +194,7 @@
               @click="onButtonClick"
             >
               <!-- :loading="isSelecting" -->
-              {{ 'อัปโหลด' }}
+              {{ $t('btn_upload') }}
             </v-btn>
             <input
               ref="uploader"
@@ -204,12 +204,12 @@
               @change="onFileChanged"
             />
             <div class="pic-upload" v-if="selectedFile == null">
-              420*260
+             240*180
             </div>
             <div v-else class="pic-upload-success">
               <v-img
-                max-height="76"
-                max-width="420"
+                max-height="180"
+                max-width="240"
                 :src="'https://cdn.vuetifyjs.com/images/cards/cooking.png'"
               >
               </v-img>
@@ -222,17 +222,17 @@
       <v-btn
         @click="cancel()"
         class="ok-btn"
-        style="width:200px;margin-right:6px"
+        style="width:200px;margin-right:6px;height: 22px;"
       >
-        {{ 'ยกเลิก' }}
+        {{ $t('btn_cancel') }}
       </v-btn>
       <!-- @click="save()" -->
       <v-btn
         @click.stop="dialog = true"
         :class="enableBtn ? 'cancel-btn disabled' : 'cancel-btn'"
-        style="width:200px"
+        style="width:200px;height: 22px"
       >
-        {{ 'บันทึก' }}
+        {{ $t('btn_save') }}
       </v-btn>
     </div>
 

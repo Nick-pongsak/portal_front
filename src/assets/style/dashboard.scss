@@ -27,11 +27,11 @@
     background: rgb(145, 145, 145);
   }
   .drag-btn {
-    font-size: $fontver6;
+    font-size: nth($font-sizes, 1);
     color: white;
     border-radius: 5px;
     height: 22px;
-    font-family: $kanit;
+    font-family: $mainFont;
     min-width: 65px;
     &.close {
       background: #9d9d9d;
@@ -70,14 +70,15 @@
     // }
   }
   .body-round {
+    width: 240px;
     // padding-top: 20px;
     // padding-left: 25px;
     // padding-right: 25px;
   }
   .name-page {
     color: #797979;
-    font-size: $fontver2;
-    font-family: $lato;
+    font-size: nth($font-sizes, 5);
+    font-family: $mainFont;
     font-weight: 900;
   }
   .line-page {
@@ -104,10 +105,10 @@
     margin-bottom: 3%;
 
     .v-card__text {
-      font-size: $fontver6;
+      font-size: nth($font-sizes, 1);
       color: #414141;
-      font-family: $kanit;
-      font-weight: 400;
+      font-family: $mainFont;
+      font-weight: map-get($font-weight, "regular");
       padding: 9px 10px 0px 10px;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -126,14 +127,14 @@
         text-align: center;
         height: 40px;
         padding-top: 2px;
-        font-family: $roboto;
+        font-family: $mainFont;
         .sys-name {
-          font-size: $fontver3;
+          font-size: nth($font-sizes, 4);
           color: white;
         }
         .sys-type {
           padding-top: 1px;
-          font-size: $fontver5;
+          font-size: nth($font-sizes, 2);
           color: #a8a8a8;
         }
       }
@@ -141,14 +142,14 @@
     .v-card__actions {
       padding: 0px 15px 0px 8px;
       button {
-        font-size: $fontver6;
+        font-size: nth($font-sizes, 1);
         background: $dark_red;
         width: 65px;
         height: 22px;
         border-radius: 5px;
         color: white;
-        font-family: $kanit;
-        font-weight: 400;
+        font-family: $mainFont;
+        font-weight: map-get($font-weight, "regular");
       }
     }
   }

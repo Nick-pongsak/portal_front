@@ -10,20 +10,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: $mainFont;
   .sys-name {
     padding-left: 11px;
     padding-top: 12px;
     font-family: Georgia;
-    font-size: 20px;
+    font-size: nth($font-sizes, 6);
     font-weight: bold;
   }
   .right-header {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    font-size: $fontver4;
+    font-size: nth($font-sizes, 3);
+    font-family: $mainFont;
     .account-name {
-      font-family: $kanit;
+      // font-family: $kanit;
     }
     .deafult-name {
       text-align: center;
@@ -49,7 +51,7 @@
 .footer-main {
   color: white;
   background: $red;
-  font-size: $fontver6;
+  font-size: nth($font-sizes, 1);
   text-align: left;
   width: 100%;
   height: 30px;
@@ -97,25 +99,27 @@
     border: 1px solid #ffffff;
   }
   .account {
+    font-family: $mainFont;
     padding: 20px 38px 5px 38px;
     .account-name,
     .position-name {
       text-align: center;
-      font-family: $kanit;
+      // font-family: $kanit;
     }
     .account-name {
       color: #414141;
-      font-size: $fontver2;
+      font-size: nth($font-sizes, 5);
     }
     .position-name {
       padding-top: 5px;
       color: #727272;
-      font-size: $fontver4;
+      font-size: nth($font-sizes, 3);
     }
   }
   .account-chip {
-    font-size: $fontver4;
-    font-family: $kanit;
+    font-size: nth($font-sizes, 3);
+    font-family: $mainFont;
+    // font-family: $kanit;
     color: $dark_red;
     background: white;
     border: 1px solid $dark_red;
@@ -130,13 +134,13 @@
     opacity: 0.5;
   }
   .account-button {
-    font-family: $kanit;
+    font-family: $mainFont;
     border-radius: 5px;
     padding: 20px 35px 20px 35px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: $fontver4;
+    font-size: nth($font-sizes, 3);
     button {
       height: 32px;
     }
@@ -166,9 +170,9 @@
   .profile-desc {
     width: 100%;
     color: #797979;
-    font-size: 24px;
-    font-family: kanit;
-    font-weight: 400;
+    font-size: nth($font-sizes, 7);
+    font-family: $mainFont;
+    font-weight: map-get($font-weight, "regular");
     margin-top: 30px;
     text-align: center;
   }
@@ -213,6 +217,8 @@
       }
       &::placeholder {
         color: #11111169;
+        font-family: $mainFont;
+        font-size: nth($font-sizes, 4);
       }
     }
     &.active {
@@ -227,8 +233,8 @@
 #set-app-dialogs {
   .cancel-btn,
   .ok-btn {
-    font-size: $fontver4;
-    font-family: $kanit;
+    font-size: nth($font-sizes, 3);
+    font-family: $mainFont;
     padding: 10px 55px 10px 55px;
     button {
       height: 32px;
@@ -256,16 +262,16 @@
 #detail-dashboard-dialogs {
   .sys-name {
     color: $dark_red;
-    font-size: 24px;
+    font-size: nth($font-sizes, 7);
     font-weight: bold;
-    font-family: $roboto;
+    font-family: $mainFont;
     text-align: center;
     padding-top: 20px;
   }
   .details {
     color: #767676;
-    font-size: $fontver4;
-    font-family: $kanit;
+    font-size: nth($font-sizes, 3);
+    font-family: $mainFont;
     padding-top: 18px;
     overflow-x: hidden;
     overflow-y: auto;
@@ -310,8 +316,8 @@
         cursor: pointer;
         font-weight: 500;
         color: #797979;
-        font-size: $fontver4;
-        font-family: $kanit;
+        font-size: nth($font-sizes, 3);
+        font-family: $mainFont;
         .column-name {
           padding-top: 3px;
         }
@@ -328,9 +334,9 @@
         padding-top: 3px;
         padding-bottom: 8px;
         .body {
-          font-family: $kanit;
+          font-family: $mainFont;
           color: #797979;
-          font-size: $fontver4;
+          font-size: nth($font-sizes, 3);
         }
 
         .input-with-icon {
@@ -348,7 +354,7 @@
           }
         }
         .cancel-btn {
-          font-size: 11px;
+          font-size: nth($font-sizes, 1);
           padding: 10px 10px 10px 10px;
           width: 30px;
           height: 32px;
@@ -367,8 +373,8 @@
     padding-right: 8px;
     .text {
       color: #414141;
-      font-family: kanit;
-      font-size: $fontver2;
+      font-family: $mainFont;
+      font-size: nth($font-sizes, 5);
       width: 150px;
       padding: 5px 10px 8px 10px;
       cursor: pointer;
@@ -379,8 +385,8 @@
     padding-right: 5px;
     .text {
       color: #414141;
-      font-family: kanit;
-      font-size: $fontver2;
+      font-family: $mainFont;
+      font-size: nth($font-sizes, 5);
       cursor: pointer;
       padding: 5px 10px 8px 10px;
     }
@@ -390,17 +396,17 @@
   .v-card__title,
   .cancel,
   .save {
-    font-family: $kanit;
+    font-family: $mainFont;
   }
   .v-card__title {
     color: #727272;
-    font-size: 16px;
+    font-size: nth($font-sizes, 4);
     font-weight: 500;
   }
   .cancel,
   .save {
     margin-top: 36px;
-    font-size: $fontver4;
+    font-size: nth($font-sizes, 3);
   }
   .cancel {
     span {

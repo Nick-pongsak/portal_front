@@ -30,7 +30,7 @@
     }
 
     .system-name {
-      font-size: 26px;
+      font-size: nth($font-sizes, 8);
       font-weight: bold;
       font-family: Georgia;
       color: #000000;
@@ -132,7 +132,7 @@
       .text {
         padding-left: 20px;
         width: 150px;
-        font-size: $fontver5;
+        font-size: nth($font-sizes, 2);
         margin-top: -2px;
       }
       &:after {
@@ -163,7 +163,7 @@
     height: 25px;
     background: $red;
     color: white;
-    font-size: $fontver6;
+    font-size: nth($font-sizes, 1);
     text-align: center;
     font-weight: bold;
     user-select: none;
@@ -183,7 +183,7 @@
     margin-top: 0px;
     color: $red;
     opacity: 0;
-    font-size: $fontver6;
+    font-size: nth($font-sizes, 1);
     &.active {
       opacity: 1;
     }
@@ -191,7 +191,7 @@
 
   .creater {
     color: #414141;
-    font-size: $fontver6;
+    font-size: nth($font-sizes, 1);
     margin-top: 35px;
   }
 
@@ -214,7 +214,7 @@
       display: flex;
       .v-input--selection-controls__input {
         .v-icon {
-          font-size: 20px !important;
+          font-size: nth($font-sizes, 6) !important;
         }
         .primary--text,
         .accent--text {
@@ -227,7 +227,7 @@
         color: #414141;
         margin-left: 8px;
         width: 80%;
-        font-size: $fontver6;
+        font-size: nth($font-sizes, 1);
         padding-top: 5px;
       }
       .n-body_icon {

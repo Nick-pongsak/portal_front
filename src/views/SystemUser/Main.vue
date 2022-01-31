@@ -1,5 +1,5 @@
 <template>
- <div style="height:calc(100% - 0px);">
+  <div style="height:calc(100% - 0px);">
     <v-card>
       <div :class="'tab'">
         <div
@@ -8,19 +8,26 @@
           :key="item.code"
           @click="selectedTabs(item, index)"
         >
-          {{ item.text }}
+          {{ $t('set.app_tab' + index) }}
           <div v-show="selectedTab.code == item.code" class="line-active"></div>
         </div>
       </div>
-      <div style="padding-left:30px;display:flex;width:100%">
+      <div
+        v-show="selectedTab.code == '1'"
+        style="padding-left:30px;display:flex;width:100%"
+      >
         <div style="width:80%">
-          <div class="input-with-icon" style="display: flex;width: 300px;">
+          <div class="input-with-icon" style="display: flex;width: 300px">
             <v-icon
               v-text="'mdi-magnify'"
               style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
               size="20"
             ></v-icon>
-            <input type="text" v-model="searchApp" :placeholder="'ค้นหา'" />
+            <input
+              type="text"
+              v-model="searchApp"
+              :placeholder="$t('input_search')"
+            />
           </div>
         </div>
         <div
@@ -32,22 +39,22 @@
               style="color:#ffffff;margin-right:5px;"
               size="22"
             ></v-icon>
-            {{ 'เพิ่ม' }}
+            {{ $t('btn_add') }}
           </v-btn>
         </div>
       </div>
-      <div class="table">
+      <div v-show="selectedTab.code == '1'" class="table">
         <div class="head-table">
-          <div class="head" style="width:10%" @click="sort('no')">
-            <div class="column-name">ลำดับ</div>
+          <div class="head" style="width:9.5%" @click="sort('no')">
+            <div class="column-name">{{ $t('set.list_col1') }}</div>
             <v-icon
               v-text="sortNo ? 'mdi-menu-up' : 'mdi-menu-down'"
               style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
               size="20"
             ></v-icon>
           </div>
-          <div class="head" style="width:30%" @click="sort('app_name')">
-            <div class="column-name">แอปพิเคชั่น</div>
+          <div class="head" style="width:30%;padding-left:8px" @click="sort('app_name')">
+            <div class="column-name">{{ $t('set.list_col2') }}</div>
             <v-icon
               v-text="sortAppName ? 'mdi-menu-up' : 'mdi-menu-down'"
               style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
@@ -56,7 +63,7 @@
           </div>
           <div class="head" style="width:13%" @click="sort('type')">
             <div class="column-name">
-              หมวดหมู่
+              {{ $t('set.list_col3') }}
             </div>
             <v-icon
               v-text="sortType ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -66,7 +73,7 @@
           </div>
           <div class="head" style="width:22%" @click="sort('access')">
             <div class="column-name">
-              การเข้าการใช้งาน
+              {{ $t('set.list_col4') }}
             </div>
             <v-icon
               v-text="sortAccess ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -76,7 +83,7 @@
           </div>
           <div class="head" style="width:15%" @click="sort('status')">
             <div class="column-name">
-              สถานะ
+              {{ $t('set.list_col5') }}
             </div>
             <v-icon
               v-text="sortStatus ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -84,9 +91,9 @@
               size="22"
             ></v-icon>
           </div>
-          <div class="head" style="width:10%">
+          <div class="head" style="width:10.5%">
             <div class="column-name">
-              เครื่องมือ
+              {{ $t('set.list_col6') }}
             </div>
           </div>
         </div>
@@ -98,7 +105,7 @@
           >
             <div
               class="body"
-              style="width:10%;padding-top:5px;padding-left:15px"
+              style="width:10%;padding-top:5px;padding-left:7px"
             >
               {{ index + 1 }}
             </div>
@@ -124,7 +131,7 @@
             >
               {{ item.status == true ? 'เปิดใช้งาน' : 'ปิดการใช้งาน' }}
             </div>
-            <div class="body" style="width:10%;display:flex">
+            <div class="body" style="width:10%;display:flex;padding-left:12px">
               <v-icon
                 v-text="'mdi-pencil'"
                 style="color:#CE1212"
@@ -267,6 +274,7 @@ export default {
     },
     selectedTabs (item, index) {
       this.selectedTab = item
+      console.log(this.selectedTab)
     },
     sort (feild) {
       if (feild == 'no') {
