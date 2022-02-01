@@ -4,7 +4,19 @@ const locales = {
     'btn_upload': 'Upload',
     'btn_save': 'Save',
     'btn_cancel': 'Cancel',
+    'btn_close': 'Close',
+    'btn_change': 'Change',
+    'btn_signin': 'Sign in',
+    'btn_signout': 'Sign out',
+    'btn_confirm': 'ยืนยัน',
+    'btn_change_pwd': 'เปลี่ยนรหัสผ่าน',
+    'btn_save_close': 'Save & Close',
     'input_search': 'Search',
+    'input_selected': 'โปรดระบุ',
+
+    /*home => Dashboard*/
+    'das.menu': 'Product Manager (IT) Services',
+
     /*set => setting*/
     'set.menu': 'Setting',
     'set.left_menu0': 'User',
@@ -25,8 +37,20 @@ const locales = {
     'btn_upload': 'อัปโหลด',
     'btn_save': 'บันทึก',
     'btn_cancel': 'ยกเลิก',
+    'btn_close': 'ปิด',
+    'btn_change': 'เปลี่ยน',
+    'btn_signin': 'เข้าสู่ระบบ',
+    'btn_signout': 'ออกจากระบบ',
+    'btn_confirm': 'ยืนยัน',
+    'btn_change_pwd': 'เปลี่ยนรหัสผ่าน',
+    'btn_save_close': 'บันทึก',
     'input_search': 'ค้นหา',
-    /*Dashboard*/
+    'input_selected': 'โปรดระบุ',
+
+    /*home => Dashboard*/
+    'das.menu': 'Product Manager (IT) Services',
+
+    /*set => setting*/
     'set.menu': 'ตั้งค่าระบบ',
     'set.left_menu0': 'ผู้ใช้งานระบบ',
     'set.left_menu1': 'การจัดการแอปพลิเคชันที่เชื่อมต่อ',

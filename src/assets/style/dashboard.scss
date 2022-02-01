@@ -16,11 +16,11 @@
     height: 8px;
   }
   &::-webkit-scrollbar-track {
-    background: #EFEFEF;
+    background: #efefef;
   }
   &::-webkit-scrollbar-thumb {
     border-radius: 8px;
-    background: #A8A8A8;
+    background: #a8a8a8;
     // background: #e3e3e3;
   }
   &::-webkit-scrollbar-thumb:hover {
@@ -71,9 +71,6 @@
   }
   .body-round {
     width: 240px;
-    // padding-top: 20px;
-    // padding-left: 25px;
-    // padding-right: 25px;
   }
   .name-page {
     color: #797979;
@@ -90,7 +87,7 @@
     opacity: 0.5;
   }
   .icon-line {
-    padding-right: 25px;
+    // padding-right: 25px;
     display: flex;
     .sort {
       cursor: pointer;
@@ -98,7 +95,8 @@
   }
 
   .v-card {
-    width: 240px;
+    width: 100%;
+    // width: 240px;
     height: 240px;
     border-radius: 5px;
     box-shadow: 0px 0px 6px #00000029;
@@ -123,10 +121,8 @@
         width: 100%;
         background: #00000099;
         box-shadow: 6px 6px 6px #00000029;
-        // border: 1px solid #00000099;
         text-align: center;
-        height: 40px;
-        padding-top: 2px;
+        height: 45px;
         font-family: $mainFont;
         .sys-name {
           font-size: nth($font-sizes, 4);

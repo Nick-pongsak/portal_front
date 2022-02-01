@@ -1,160 +1,165 @@
 <template>
-  <div class="header-main">
-    <v-row no-gutters>
-      <v-col
-        cols="12"
-        xs="5"
-        sm="4"
-        md="4"
-        style="display:flex"
-      >
-        <!-- style="display:flex;cursor:pointer" -->
-        <!-- @click="goHome()" -->
-        <img src="@/assets/icons/logo.png" style="height:45px" />
-        <div class="sys-name">DHAS PORTAL</div>
-      </v-col>
-      <v-col cols="12" xs="7" sm="8" md="8" class="right-header">
-        <v-menu offset-y>
-          <template v-slot:activator="{ on, attrs }">
-            <div v-bind="attrs" v-on="on">
-              <v-icon
-                v-text="'mdi-web'"
-                style="color:#ffffff;"
-                size="41"
-              ></v-icon>
-              <span style="margin-left:15px;font-weight:400">
-                {{ language }}
-              </span>
-              <v-icon
-                v-text="'mdi-menu-down'"
-                style="color:#ffffff;padding-left:18px"
-                size="20"
-              ></v-icon>
+  <div class="header-main" v-resize="onResize">
+    <div style="width:50%;display:flex">
+      <img src="@/assets/icons/logo.png" :style="{ height: logo }" />
+      <div class="sys-name" :style="{ 'font-size': sysName }">
+        DHAS PORTAL
+      </div>
+    </div>
+    <div style="width:50%" class="right-header">
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <div v-bind="attrs" v-on="on">
+            <v-icon
+              v-show="resizeHeader"
+              v-text="'mdi-web'"
+              style="color:#ffffff;"
+              size="41"
+            ></v-icon>
+            <span
+              :style="{
+                'margin-left': resizeHeader ? '15px' : '0px',
+                'font-weight': 400
+              }"
+            >
+              {{ language }}
+            </span>
+            <v-icon
+              v-text="'mdi-menu-down'"
+              :style="{
+                'padding-left': resizeHeader ? '18px' : '0px',
+                color: '#ffffff'
+              }"
+              size="20"
+            ></v-icon>
+          </div>
+        </template>
+        <v-list id="change-languages-body">
+          <div class="first">
+            <div class="text" @click="SetLanguages('TH')">
+              ภาษาไทย (TH)
             </div>
-          </template>
-          <v-list id="change-languages-body">
-            <div class="first">
-              <div class="text" @click="SetLanguages('TH')">
-                ภาษาไทย (TH)
-              </div>
-              <v-icon
-                v-show="language == 'TH'"
-                v-text="'mdi-check'"
-                style="color:#CE1212;"
-                size="20"
-              ></v-icon>
+            <v-icon
+              v-show="language == 'TH'"
+              v-text="'mdi-check'"
+              style="color:#CE1212;"
+              size="20"
+            ></v-icon>
+          </div>
+          <div class="second">
+            <div class="text" @click="SetLanguages('EN')">
+              ภาษาอังกฤษ (EN)
             </div>
-            <div class="second">
-              <div class="text" @click="SetLanguages('EN')">
-                ภาษาอังกฤษ (EN)
-              </div>
-              <v-icon
-                v-show="language == 'EN'"
-                v-text="'mdi-check'"
-                style="color:#CE1212;"
-                size="20"
-              ></v-icon>
-            </div>
-          </v-list>
-        </v-menu>
-        <v-menu offset-y :close-on-content-click="false">
-          <template v-slot:activator="{ on, attrs }">
-            <div v-bind="attrs" v-on="on" style="display:flex;padding-left:2%">
-              <div>
-                <v-avatar size="50" v-show="showDefaultAccount">
-                  <div class="deafult-name">{{ accountNameEng }}</div>
-                </v-avatar>
-                <v-avatar v-show="!showDefaultAccount" size="37">
-                  <v-img src="@/assets/icons/account_demo.png"></v-img>
-                </v-avatar>
-              </div>
-              <div style="margin-left:14px;">
-                <div class="account-name">{{ accountName }}</div>
-                <div class="account-name" style="padding-top:1px">
-                  {{ position }}
-                </div>
-              </div>
-              <v-icon
-                v-text="'mdi-menu-down'"
-                style="color:#ffffff;padding-left:18px"
-                size="20"
-              ></v-icon>
-            </div>
-          </template>
-          <v-list
-            id="account-menu-body"
-            :style="{ height: permissinoAccount ? '385px' : '340px' }"
+            <v-icon
+              v-show="language == 'EN'"
+              v-text="'mdi-check'"
+              style="color:#CE1212;"
+              size="20"
+            ></v-icon>
+          </div>
+        </v-list>
+      </v-menu>
+      <v-menu offset-y :close-on-content-click="false">
+        <template v-slot:activator="{ on, attrs }">
+          <div
+            v-bind="attrs"
+            v-on="on"
+            :style="{
+              display: 'flex',
+              'padding-left': resizeHeader ? '2%' : '5%'
+            }"
           >
-            <div class="logo-line" @click="UploadPic()">
-              <v-badge
-                avatar
-                bordered
-                overlap
-                bottom
-                offset-x="24"
-                offset-y="24"
-              >
-                <template v-slot:badge>
-                  <v-avatar style="background:white;border: 1px solid #D1D1D1;">
-                    <v-icon
-                      v-text="'mdi-camera'"
-                      style="color:#000000;"
-                      size="12"
-                    ></v-icon>
-                  </v-avatar>
-                </template>
-
-                <v-avatar v-show="!showDefaultAccount" size="100">
-                  <v-img src="@/assets/icons/account_demo.png"></v-img>
-                </v-avatar>
-                <div v-show="showDefaultAccount" class="deafult-name">
-                  {{ accountNameEng }}
-                </div>
-              </v-badge>
+            <div>
+              <v-avatar size="50" v-show="showDefaultAccount">
+                <div class="deafult-name">{{ accountNameEng }}</div>
+              </v-avatar>
+              <v-avatar v-show="!showDefaultAccount" size="37">
+                <v-img src="@/assets/icons/account_demo.png"></v-img>
+              </v-avatar>
             </div>
-            <div class="account">
-              <div class="account-name">
-                {{ accountName }}
-              </div>
-              <div class="position-name">
+            <div :style="{ 'margin-left': '14px' }" v-show="resizeHeader">
+              <div class="account-name">{{ accountName }}</div>
+              <div class="account-name" style="padding-top:1px">
                 {{ position }}
               </div>
             </div>
-            <!-- <div style="text-align:center;padding-bottom:20px">
+            <v-icon
+              v-text="'mdi-menu-down'"
+              :style="{
+                'padding-left': resizeHeader ? '18px' : '5px',
+                color: '#ffffff'
+              }"
+              size="20"
+            ></v-icon>
+          </div>
+        </template>
+        <v-list
+          id="account-menu-body"
+          :style="{ height: permissinoAccount ? '385px' : '340px' }"
+        >
+          <div class="logo-line" @click="UploadPic()">
+            <v-badge avatar bordered overlap bottom offset-x="24" offset-y="24">
+              <template v-slot:badge>
+                <v-avatar style="background:white;border: 1px solid #D1D1D1;">
+                  <v-icon
+                    v-text="'mdi-camera'"
+                    style="color:#000000;"
+                    size="12"
+                  ></v-icon>
+                </v-avatar>
+              </template>
+
+              <v-avatar v-show="!showDefaultAccount" size="100">
+                <v-img src="@/assets/icons/account_demo.png"></v-img>
+              </v-avatar>
+              <div v-show="showDefaultAccount" class="deafult-name">
+                {{ accountNameEng }}
+              </div>
+            </v-badge>
+          </div>
+          <div class="account">
+            <div class="account-name">
+              {{ accountName }}
+            </div>
+            <div class="position-name">
+              {{ position }}
+            </div>
+          </div>
+          <!-- <div style="text-align:center;padding-bottom:20px">
               <v-chip class="account-chip">
                 {{ status_account }}
               </v-chip>
             </div> -->
-            <div
-              :style="{
-                'text-align': 'center',
-                'padding-bottom': permissinoAccount ? '10px' : '20px',
-                'padding-top': '15px'
-              }"
+          <div
+            :style="{
+              'text-align': 'center',
+              'padding-bottom': permissinoAccount ? '10px' : '20px',
+              'padding-top': '15px'
+            }"
+          >
+            <v-chip
+              class="account-chip"
+              style="width:200px"
+              @click="SettingApp()"
             >
-              <v-chip
-                class="account-chip"
-                style="width:200px"
-                @click="SettingApp()"
-              >
-                {{ 'จัดการรายการแอปพลิเคชัน' }}
-              </v-chip>
-            </div>
-            <div
-              style="text-align:center;padding-bottom:20px;"
-              v-show="permissinoAccount"
+              {{ 'จัดการรายการแอปพลิเคชัน' }}
+            </v-chip>
+          </div>
+          <div
+            style="text-align:center;padding-bottom:20px;"
+            v-show="permissinoAccount"
+          >
+            <v-chip
+              class="account-chip"
+              @click="ChangePassword()"
+              style="width:200px"
             >
-              <v-chip
-                class="account-chip"
-                @click="ChangePassword()"
-                style="width:200px"
-              >
-                {{ 'เปลี่ยนรหัสผ่าน' }}
-              </v-chip>
-            </div>
-            <div class="line-page"></div>
-            <div class="account-button">
-              <!-- <v-btn
+              {{ 'เปลี่ยนรหัสผ่าน' }}
+            </v-chip>
+          </div>
+          <div class="line-page"></div>
+          <div class="account-button">
+            <!-- <v-btn
                 class="ok-btn"
                 style="margin-right:35px"
                 v-show="permissinoAccount"
@@ -162,14 +167,13 @@
               >
                 {{ okBtn }}
               </v-btn> -->
-              <v-btn class="cancel-btn" @click="LoginOut()">
-                {{ cancelBtn }}
-              </v-btn>
-            </div>
-          </v-list>
-        </v-menu>
-      </v-col>
-    </v-row>
+            <v-btn class="cancel-btn" @click="LoginOut()">
+              {{ $t('btn_signout') }}
+            </v-btn>
+          </div>
+        </v-list>
+      </v-menu>
+    </div>
 
     <!---Dialogs-->
     <v-dialog v-model="picDialog" width="600" :no-click-animation="false">
@@ -232,13 +236,13 @@
               style="color:#ffffff;margin-right:8px;"
               size="18"
             ></v-icon>
-            {{ 'เปลี่ยน' }}
+            {{ $t('btn_change') }}
           </v-btn>
 
           <div v-show="stepChangePic == 2 && stepChangePic != 3">
             <v-btn class="cancel-btn" @click="onButtonClick">
               <!-- :loading="isSelecting" -->
-              {{ 'อัปโหลด' }}
+              {{ $t('btn_upload') }}
             </v-btn>
             <input
               ref="uploader"
@@ -276,7 +280,7 @@
                 type="password"
                 v-model="password"
                 @keypress="IsNumber"
-                :placeholder="'โปรดระบุ'"
+                :placeholder="$t('input_selected')"
               />
             </div>
           </div>
@@ -308,7 +312,7 @@
                 <input
                   type="password"
                   v-model="newPassword"
-                  :placeholder="'โปรดระบุ'"
+                  :placeholder="$t('input_selected')"
                   @keypress="IsNumber"
                   @keyup="InCondition"
                 />
@@ -342,7 +346,7 @@
                   type="password"
                   v-model="cfNewPassword"
                   @keypress="IsNumber"
-                  :placeholder="'โปรดระบุ'"
+                  :placeholder="$t('input_selected')"
                 />
               </div>
             </div>
@@ -399,7 +403,7 @@
             class="ok-btn"
             :style="{ 'margin-right': stepChangePwd == 2 ? '0px' : '35px' }"
           >
-            {{ stepChangePwd == 2 ? 'ปิด' : 'ยกเลิก' }}
+            {{ stepChangePwd == 2 ? $t('btn_close') : $t('btn_cancel') }}
           </v-btn>
 
           <v-btn
@@ -409,7 +413,7 @@
             class="cancel-btn"
             :disabled="disPwdBtn"
           >
-            {{ stepChangePwd == 0 ? 'ยืนยัน' : 'เปลี่ยนรหัสผ่าน' }}
+            {{ stepChangePwd == 0 ? $t('btn_confirm') : $t('btn_change_pwd') }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -560,7 +564,6 @@ export default {
       accountNameEng: 'K',
       position: 'Product Manager (IT)',
       okBtn: 'เปลี่ยนรหัสผ่าน',
-      cancelBtn: 'ออกจากระบบ',
       status_account: 'ผู้ดูแลระบบ',
       stepChangePic: 0,
       showDefaultAccount: false,
@@ -616,7 +619,11 @@ export default {
           user_status: 'web_portal'
         }
       ],
-      editRow: -1
+      editRow: -1,
+      tranformScale: 'scale(1)',
+      sysName: '20px',
+      logo: '45px',
+      resizeHeader: true
     }
   },
   watch: {
@@ -662,6 +669,22 @@ export default {
   },
   computed: {},
   methods: {
+    onResize () {
+      let x = window.innerWidth
+      let y = window.innerHeight
+      if (x <= 375) {
+        this.sysName = '15px'
+      } else if (x > 375 && x <= 568) {
+        this.sysName = '18px'
+      } else {
+        this.sysName = '20px'
+      }
+      if (x <= 690) {
+        this.resizeHeader = false
+      } else {
+        this.resizeHeader = true
+      }
+    },
     goHome () {
       this.$router.push('/home')
     },

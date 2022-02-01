@@ -1,20 +1,50 @@
 <template>
   <div id="dashboard" v-resize="onResize">
     <div class="name-page">
-      Product Manager (IT) Services
+      {{ $t('das.menu') }}
       <div class="line-page"></div>
     </div>
     <div>
       <div
+        class="justify-end"
+        :style="{
+          display: 'flex',
+          'padding-top': showDragAndDrop ? '5px' : '0px',
+          'margin-bottom': showDragAndDrop ? '10px' : '0px',
+          'padding-right': '5px'
+        }"
+      >
+        <div v-if="showDragAndDrop">
+          <v-btn text @click="clearDragAndDrop()" class="drag-btn close">
+            {{ $t('btn_close') }}
+          </v-btn>
+          <v-btn
+            text
+            @click="saveDragAndDrop()"
+            class="drag-btn save"
+            style="margin-left:10px"
+          >
+            {{ $t('btn_save_close') }}
+          </v-btn>
+        </div>
+        <div v-else class="icon-line" @click="openDragAndDrop()">
+          <v-icon
+            v-text="'mdi-sort-variant'"
+            style="color:#000000;opacity:0.5;cursor:pointer"
+            size="23"
+          ></v-icon>
+        </div>
+      </div>
+      <div
         class="details"
         :style="{
           display: 'flex',
-          'padding-top': showDragAndDrop ? '30px' : '30px',
+          'padding-top': showDragAndDrop ? '10px' : '0px',
           border: showDragAndDrop ? '1px dashed #707070' : ''
         }"
       >
-        <div :style="{ width: newWidthLeft + '%' }"></div>
-        <div :style="{ width: newWidth + '%' }">
+        <div :style="{ width: '15%' }"></div>
+        <div :style="{ width: '70%' }">
           <dnd-zone :transition-duration="0.3">
             <dnd-container
               :dnd-model="list"
@@ -29,14 +59,21 @@
                 :dnd-model="item"
                 :is-draggable="showDragAndDrop"
               >
-                <v-col cols="12" sm="12" md="6" lg="4" xl="3">
+                <v-col
+                  cols="12"
+                  sm="12"
+                  md="4"
+                  lg="4"
+                  xl="3"
+                  style="display: flex;justify-content: center"
+                >
                   <div
                     class="body-round"
                     :style="{
                       cursor: showDragAndDrop ? 'move' : ''
                     }"
                   >
-                    <v-card>
+                    <v-card :style="{ transform: tranformScale }">
                       <v-img
                         :style="{ cursor: showDragAndDrop ? '' : 'pointer' }"
                         height="180"
@@ -57,7 +94,7 @@
                       <v-card-text>{{ item.sys_desc }} </v-card-text>
                       <v-card-actions class="justify-end">
                         <v-btn text @click="openLogin(item)">
-                          เข้าสู่ระบบ
+                          {{ $t('btn_signin') }}
                         </v-btn>
                       </v-card-actions>
                     </v-card>
@@ -67,37 +104,7 @@
             </dnd-container>
           </dnd-zone>
         </div>
-        <div :style="{ width: newWidthRight + '%' }">
-          <div
-            class="justify-end"
-            :style="{
-              display: 'flex',
-              'padding-top': showDragAndDrop ? '0px' : '0px',
-              'padding-right': '5px'
-            }"
-          >
-            <div v-if="showDragAndDrop">
-              <v-btn text @click="clearDragAndDrop()" class="drag-btn close">
-                {{ 'ปิด' }}
-              </v-btn>
-              <v-btn
-                text
-                @click="saveDragAndDrop()"
-                class="drag-btn save"
-                style="margin-left:10px"
-              >
-                {{ 'ยกเลิก / บันทึก' }}
-              </v-btn>
-            </div>
-            <div class="icon-line" @click="openDragAndDrop()" v-else>
-              <v-icon
-                v-text="'mdi-sort-variant'"
-                style="color:#000000;opacity:0.5;cursor:pointer"
-                size="23"
-              ></v-icon>
-            </div>
-          </div>
-        </div>
+        <div :style="{ width: '15%' }"></div>
       </div>
     </div>
 
@@ -132,7 +139,7 @@
         </v-card-text>
         <v-card-actions class="justify-center" style="padding-bottom:20px">
           <v-btn text @click="CloseDialogs()" class="cancel-btn">
-            {{ 'เข้าสู่ระบบ' }}
+            {{ $t('btn_signin') }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -231,22 +238,12 @@ export default {
       dialog: false,
       selectedRow: {},
       showDragAndDrop: false,
-      dragging: -1,
-      windowSize: {
-        x: 0,
-        y: 0
-      },
-      newWidth: 70,
-      newWidthLeft: 15,
-      newWidthRight: 15
+      tranformScale: 'scale(1)'
     }
   },
   computed: {
     loading () {
       return this.$store.getters.isLoading
-    },
-    isDragging () {
-      return this.dragging > -1
     }
   },
   mounted () {
@@ -266,59 +263,20 @@ export default {
     onResize () {
       let x = window.innerWidth
       let y = window.innerHeight
-      this.windowSize = { x: window.innerWidth, y: window.innerHeight }
-      if (x <= 530) {
-        // if (this.showDragAndDrop) {
-        //   this.newWidth = 60
-        //   this.newWidthRight = 37
-        //   this.newWidthLeft = 3
-        // } else {
-        //   this.newWidth = 65
-        //   this.newWidthRight = 20
-        //   this.newWidthLeft = 15
-        // }
+      if (x <= 375) {
+        this.tranformScale = 'scale(0.8)'
+      } else if (x > 375 && x <= 550) {
+        this.tranformScale = 'scale(0.9)'
+      } else if (x <= 1110 && x >= 960) {
+        this.tranformScale = 'scale(0.8)'
       } else {
-        // this.newWidth = 70
-        // this.newWidthLeft = 15
-        // this.newWidthRight = 15
+        this.tranformScale = 'scale(1)'
       }
     },
-    dragStart (which, ev) {
-      if (this.showDragAndDrop) {
-        ev.dataTransfer.setData('Text', this.id)
-        ev.dataTransfer.dropEffect = 'move'
-        this.dragging = which
-      } else {
-        return false
-      }
+    saveDragAndDrop () {
+      this.showDragAndDrop = false
+      this.onResize()
     },
-    removeItemAt (index) {
-      this.list.splice(index, 1)
-    },
-    dragEnter (ev) {},
-    dragLeave (ev) {},
-    dragEnd (ev) {
-      this.dragging = -1
-    },
-    dragFinish (to, ev) {
-      if (this.showDragAndDrop) {
-        this.moveItem(this.dragging, to)
-      } else {
-        return false
-      }
-    },
-    moveItem (from, to) {
-      if (this.showDragAndDrop) {
-        if (to === -1) {
-          this.removeItemAt(from)
-        } else {
-          this.list.splice(to, 0, this.list.splice(from, 1)[0])
-        }
-      } else {
-        return false
-      }
-    },
-    saveDragAndDrop () {},
     clearDragAndDrop () {
       this.showDragAndDrop = false
       this.onResize()
