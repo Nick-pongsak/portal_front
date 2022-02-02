@@ -9,7 +9,7 @@
         class="justify-end"
         :style="{
           display: 'flex',
-          'padding-top': showDragAndDrop ? '5px' : '0px',
+          'padding-top': showDragAndDrop ? '10px' : '0px',
           'margin-bottom': showDragAndDrop ? '10px' : '0px',
           'padding-right': '5px'
         }"
