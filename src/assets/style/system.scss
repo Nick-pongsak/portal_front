@@ -161,85 +161,6 @@
     border: 0.5px solid $red;
   }
 }
-
-#detail-dashboard-dialogs {
-  .cancel-btn,
-  .ok-btn {
-    font-size: nth($font-sizes, 3);
-    font-family: $mainFont;
-    padding: 10px 55px 10px 55px;
-    button {
-      height: 30px;
-    }
-    &.v-btn--disabled {
-      background: #ce121280;
-      border: 1px solid #a8a8a8;
-      .v-btn__content {
-        color: white;
-      }
-    }
-  }
-  .cancel-btn {
-    color: white;
-    background: $dark_red;
-    border: 1px solid $dark_red;
-    border-radius: 5px;
-  }
-  .ok-btn {
-    background: #ffffff;
-    color: $dark_red;
-    border: 1px solid $dark_red;
-  }
-}
-#detail-dashboard-dialogs {
-  overflow: hidden;
-  .sys-name {
-    color: $dark_red;
-    font-size: nth($font-sizes, 7);
-    font-weight: bold;
-    font-family: $mainFont;
-    text-align: center;
-    padding-top: 8px;
-    padding-bottom: 8px;
-  }
-  .img-detail {
-    padding-top: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .details {
-    color: #767676;
-    font-size: nth($font-sizes, 3);
-    font-family: $mainFont;
-    overflow-x: hidden;
-    overflow-y: auto;
-    height: 126px;
-    padding-left: 20px;
-    padding-right: 10px;
-    textarea {
-      color: #767676;
-      resize: none;
-      width: 100%;
-    }
-    &::-webkit-scrollbar {
-      width: 8px;
-    }
-    &::-webkit-scrollbar:horizontal {
-      height: 8px;
-    }
-    &::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    &::-webkit-scrollbar-thumb {
-      border-radius: 10px;
-      background: #e3e3e3;
-    }
-    &::-webkit-scrollbar-thumb:hover {
-      background: rgb(145, 145, 145);
-    }
-  }
-}
 #change-languages-body {
   padding: 0px;
   overflow: hidden;
@@ -549,5 +470,54 @@
   }
   .v-btn {
     width: 200px;
+  }
+}
+#detail-dashboard-dialogs {
+  overflow: hidden;
+  .sys-name {
+    color: $dark_red;
+    font-size: nth($font-sizes, 7);
+    font-weight: bold;
+    font-family: $mainFont;
+    text-align: center;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  .img-detail {
+    padding-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .details {
+    color: #767676;
+    font-size: nth($font-sizes, 3);
+    font-family: $mainFont;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 126px;
+    padding-left: 20px;
+    padding-right: 10px;
+    textarea {
+      color: #767676;
+      resize: none;
+      width: 100%;
+    }
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+    &::-webkit-scrollbar:horizontal {
+      height: 8px;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background: #e3e3e3;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background: rgb(145, 145, 145);
+    }
   }
 }

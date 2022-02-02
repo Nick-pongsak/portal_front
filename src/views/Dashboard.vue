@@ -116,34 +116,35 @@
       :style="{ transform: tranformScale }"
     >
       <v-card id="detail-dashboard-dialogs">
-        <v-card-text style="padding:20px 25px 0px 25px">
-          <div class="justify-end" style="display: flex;">
-            <v-icon
-              @click="CloseDialogs()"
-              v-text="'mdi-close'"
-              style="color:#000000;"
-              size="20"
-            ></v-icon>
-          </div>
-          <div class="img-detail" :style="{ transform: tranformScale }">
-            <v-img
-              :style="{ transform: tranformScale }"
-              max-height="257"
-              max-width="498"
-              :src="
-                'https://cdn.vuetifyjs.com/images/cards/' + selectedRow.pic_path
-              "
-            >
-            </v-img>
-          </div>
-          <div class="sys-name">
-            {{ selectedRow.sys_name + ' (' + selectedRow.sys_type + ')' }}
-          </div>
-          <div class="details">
-            <textarea v-model="selectedRow.sys_desc"></textarea>
-          </div>
-        </v-card-text>
-        <v-card-actions class="justify-center" style="padding-bottom:20px">
+        <div class="justify-end" style="display: flex;">
+          <v-icon
+            @click="CloseDialogs()"
+            v-text="'mdi-close'"
+            style="color:#000000;"
+            size="20"
+          ></v-icon>
+        </div>
+        <div class="img-detail" :style="{ transform: tranformScale }">
+          <v-img
+            :style="{ transform: tranformScale }"
+            max-height="257"
+            max-width="498"
+            :src="
+              'https://cdn.vuetifyjs.com/images/cards/' + selectedRow.pic_path
+            "
+          >
+          </v-img>
+        </div>
+        <div class="sys-name">
+          {{ selectedRow.sys_name + ' (' + selectedRow.sys_type + ')' }}
+        </div>
+        <div class="details">
+          <textarea v-model="selectedRow.sys_desc"></textarea>
+        </div>
+        <v-card-actions
+          class="justify-center"
+          style="padding-bottom:20px;padding-top:20px"
+        >
           <v-btn text @click="CloseDialogs()" class="cancel-btn">
             {{ $t('btn_signin') }}
           </v-btn>
