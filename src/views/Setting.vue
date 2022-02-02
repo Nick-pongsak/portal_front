@@ -63,20 +63,17 @@ export default {
           text: 'การจัดการแอปพลิเคชันที่เชื่อมต่อ',
           child: [
             {
-              code: '1',
+              code: '2.1',
               text: 'รายการแอปพลิเคชัน'
             },
             {
-              code: '2',
+              code: '2.2',
               text: 'จัดกลุ่มผู้ใช้งานแอปพลิเคชัน'
             }
           ]
         }
       ],
-      selectedItem: {
-        // code: '2',
-        // text: 'การจัดการแอปพลิเคชันที่เชื่อมต่อ'
-      },
+      selectedItem: {},
       list: [
         {
           app_name: 'app',
@@ -218,7 +215,6 @@ export default {
       }
     },
     addApp (value) {
-      value.code = this.currentView.code + '.' + value.code
       this.currentView = {
         code: value.code,
         text:
