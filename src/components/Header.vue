@@ -187,12 +187,7 @@
               size="20"
             ></v-icon>
           </div>
-          <div
-            style=" display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    padding-top:20px"
-          >
+          <div class="center-vh" style="padding-top:20px">
             <v-avatar v-show="!showDefaultAccount" size="230">
               <v-img src="@/assets/icons/account_demo.png"> </v-img>
               <!-- <img :src="`${profilePicPath}`"/> -->
@@ -256,25 +251,16 @@
       </v-card>
     </v-dialog>
 
-    <v-dialog v-model="pwdDialog" width="600" :no-click-animation="false">
-      <v-card id="change-pwd-dialogs">
+    <v-dialog v-model="pwdDialog" width="650" :no-click-animation="false">
+      <v-card id="pwd-dialogs">
         <v-card-text v-if="stepChangePwd == 0" style="padding:unset">
-          <div
-            style="color:#797979;
-                      font-size:24px;
-                      font-family:kanit;
-                      text-align:center"
-          >
+          <div class="head-menu7 justify-center" style="display:flex">
             {{ 'กรุณายืนยันตัวตน' }}
           </div>
-          <div
-            style="color:#414141;
-                      font-size:18px;
-                      font-family:kanit;
-                      padding-top:90px;
-                      display:flex"
-          >
-            <div style="padding-top:8px">{{ 'รหัสผ่านปัจจุบัน' }}</div>
+          <div style="padding-top:90px;display:flex">
+            <div class="head-menu3 center-vh" style="margin-right: 45px;">
+              {{ 'รหัสผ่านปัจจุบัน' }}
+            </div>
             <div class="input-with-icon" :class="{ active: errorPwd }">
               <input
                 type="password"
@@ -286,24 +272,18 @@
           </div>
           <div
             v-show="errorPwd"
-            style="padding-left:175px;
-                    padding-top:8px;
-                    color: #ED2024;
-                    font-family:kanit;
-                    font-size:14px"
+            class="error-input"
+            style="padding-left:137px;padding-top:8px"
           >
             รหัสผ่านไม่ถูกต้อง
           </div>
         </v-card-text>
         <v-card-text v-else style="padding:unset">
           <div v-show="stepChangePwd < 2">
-            <div
-              style="color:#414141;
-                      font-size:18px;
-                      font-family:kanit;
-                      display:flex"
-            >
-              <div style="padding-top:8px">{{ 'รหัสผ่านใหม่' }}</div>
+            <div style="display:flex">
+              <div class="head-menu3 center-vh" style="padding-top:8px">
+                {{ 'รหัสผ่านใหม่' }}
+              </div>
               <div
                 class="input-with-icon"
                 style="margin-left:72px"
@@ -318,28 +298,15 @@
                 />
               </div>
             </div>
-            <!-- <div
-              v-show="errorNewPassword"
-              style="padding-left:163px;
-                    padding-top:8px;
-                    color: #ED2024;
-                    font-family:kanit;
-                    font-size:14px"
-            >
-              รหัสผ่านไม่ถูกต้อง
-            </div> -->
           </div>
           <div v-show="stepChangePwd < 2">
-            <div
-              style="color:#414141;
-                      font-size:18px;
-                      font-family:kanit;
-                      padding-top:30px;
-                      display:flex"
-            >
-              <div style="padding-top:8px">{{ 'ยืนยันรหัสผ่าน' }}</div>
+            <div style="padding-top:30px;display:flex">
+              <div class="head-menu3 center-vh" style="padding-top:8px">
+                {{ 'ยืนยันรหัสผ่าน' }}
+              </div>
               <div
                 class="input-with-icon"
+                style="margin-left:62px"
                 :class="{ active: errorCfNewPassword }"
               >
                 <input
@@ -350,48 +317,25 @@
                 />
               </div>
             </div>
-            <!-- <div
-              v-show="errorCfNewPassword"
-              style="padding-left:163px;
-                    padding-top:8px;
-                    color: #ED2024;
-                    font-family:kanit;
-                    font-size:14px"
-            >
-              รหัสผ่านไม่ถูกต้อง
-            </div> -->
           </div>
           <div
             v-show="stepChangePwd < 2"
-            style="
-                    padding-top:30px;
-                    color: #767676;
-                    font-family:kanit;
-                    font-size:14px"
+            class="details"
+            style="padding-top:30px"
           >
             หมายเหตุ - รหัสผ่านต้องยาวอย่างน้อย 6 ตัวอักษรและประกอบไปด้วย<br />
             1) ตัวเลข 0 - 9 <br />
             2) ตัวอักษรภาษาอังกฤษตัวพิมพ์เล็กหรือพิมพ์ใหญ่
           </div>
           <div v-show="stepChangePwd == 2">
-            <div
-              style="display: flex;
-                  align-items: center;
-                  justify-content: center"
-            >
+            <div class="center-vh">
               <v-avatar style="background:#66BB6A;width:90px;height:90px">
                 <v-icon style="color:white">
                   mdi-check
                 </v-icon>
               </v-avatar>
             </div>
-            <div
-              style="color:#797979;
-                      font-size:24px;
-                      margin-top:50px;
-                      font-family:kanit;
-                      text-align:center"
-            >
+            <div class="head-menu7" style="margin-top:50px; text-align:center">
               {{ 'เปลี่ยนรหัสผ่านสำเร็จ' }}
             </div>
           </div>
@@ -408,10 +352,8 @@
 
           <v-btn
             v-show="stepChangePwd < 2"
-            text
             @click="ConfirmDialogs()"
-            class="cancel-btn"
-            :disabled="disPwdBtn"
+            :class="disPwdBtn ? 'cancel-btn-disabled' : 'cancel-btn'"
           >
             {{ stepChangePwd == 0 ? $t('btn_confirm') : $t('btn_change_pwd') }}
           </v-btn>
@@ -420,133 +362,106 @@
     </v-dialog>
 
     <v-dialog v-model="setAppDialog" width="800" :no-click-animation="false">
-      <v-card id="set-app-dialogs">
-        <v-card-text style="padding:30px 30px 30px 70px">
-          <div class="justify-end" style="display: flex">
-            <v-icon
-              @click="CloseSetAppDialogs()"
-              v-text="'mdi-close'"
-              style="color:#000000;"
-              size="20"
-            ></v-icon>
+      <v-card>
+        <div class="justify-end" style="display: flex">
+          <v-icon
+            @click="CloseSetAppDialogs()"
+            v-text="'mdi-close'"
+            style="color:#000000;"
+            size="20"
+          ></v-icon>
+        </div>
+        <div>
+          <div class="head-menu">
+            {{ 'รายการแอปพลิเคชันของคุณ' }}
           </div>
-          <div style="padding-right:40px">
-            <div
-              style="color:#797979;
-                      font-size:24px;
-                      font-family:kanit"
-            >
-              {{ 'รายการแอปพลิเคชันของคุณ' }}
+          <div class="line-page" style="margin-top:8px"></div>
+          <div style="width:100%;margin-top:15px">
+            <div class="input-with-icon search-form">
+              <v-icon v-text="'mdi-magnify'" size="20"></v-icon>
+              <input
+                type="text"
+                v-model="searchApp"
+                :placeholder="$t('input_search')"
+              />
             </div>
-            <div class="line-page" style="margin-top:8px"></div>
-            <div style="width:100%;margin-top:15px">
-              <div class="input-with-icon" style="display: flex;width: 300px;">
-                <v-icon
-                  v-text="'mdi-magnify'"
-                  style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
-                  size="20"
-                ></v-icon>
-                <input type="text" v-model="searchApp" :placeholder="'ค้นหา'" />
-              </div>
-              <div class="table">
-                <div class="head-table">
-                  <div class="head" style="width:10%" @click="sort('no')">
-                    <div class="column-name">No</div>
-                    <v-icon
-                      v-text="sortNo ? 'mdi-menu-up' : 'mdi-menu-down'"
-                      style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
-                      size="22"
-                    ></v-icon>
-                  </div>
-                  <div class="head" style="width:30%" @click="sort('name')">
-                    <div class="column-name">แอปพิเคชั่น</div>
-                    <v-icon
-                      v-text="sortAppName ? 'mdi-menu-up' : 'mdi-menu-down'"
-                      style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
-                      size="22"
-                    ></v-icon>
-                  </div>
-                  <div class="head" style="width:60%" @click="sort('user')">
-                    <div class="column-name">
-                      ชื่อผู้ใช้งานในการเข้าสู่ระบบด้วย SSO
-                    </div>
-                    <v-icon
-                      v-text="sortUser ? 'mdi-menu-up' : 'mdi-menu-down'"
-                      style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
-                      size="22"
-                    ></v-icon>
-                  </div>
+            <div class="table">
+              <div class="head-table">
+                <div class="head" style="width:10%" @click="sort('no')">
+                  <div class="column-name">No</div>
+                  <v-icon
+                    v-text="sortNo ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
+                    size="22"
+                  ></v-icon>
                 </div>
-                <div class="body-table">
+                <div class="head" style="width:30%" @click="sort('name')">
+                  <div class="column-name">แอปพิเคชั่น</div>
+                  <v-icon
+                    v-text="sortAppName ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
+                    size="22"
+                  ></v-icon>
+                </div>
+                <div class="head" style="width:60%" @click="sort('user')">
+                  <div class="column-name">
+                    ชื่อผู้ใช้งานในการเข้าสู่ระบบด้วย SSO
+                  </div>
+                  <v-icon
+                    v-text="sortUser ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
+                    size="22"
+                  ></v-icon>
+                </div>
+              </div>
+              <div class="body-table">
+                <div
+                  class="body-row"
+                  v-for="(item, index) in list"
+                  :key="'setapp' + index"
+                >
                   <div
-                    class="body-row"
-                    v-for="(item, index) in list"
-                    :key="'setapp' + index"
+                    class="body"
+                    style="width:10%;padding-left:5px;padding-top:5px"
                   >
+                    {{ item.no }}
+                  </div>
+                  <div class="body" style="width:30%;padding-top:5px">
+                    {{ item.app_name }}
+                  </div>
+                  <div class="body" style="width:60%;display:flex">
+                    <div style="padding-top:5px;margin-right:15px">
+                      {{ renderText(item) }}
+                    </div>
                     <div
-                      class="body"
-                      style="width:10%;padding-left:5px;padding-top:5px"
+                      v-show="item.user_status == 'web_portal'"
+                      :class="
+                        editRow == index
+                          ? 'input-with-icon able-input'
+                          : 'input-with-icon disabled-input'
+                      "
+                      style="display: flex;width: 200px;height: 30px;margin-right:10px"
                     >
-                      {{ item.no }}
+                      <input
+                        type="text"
+                        v-model="item.user_name"
+                        :placeholder="'-- โปรดระบุ --'"
+                      />
                     </div>
-                    <div class="body" style="width:30%;padding-top:5px">
-                      {{ item.app_name }}
-                    </div>
-                    <div class="body" style="width:60%;display:flex">
-                      <div style="padding-top:5px;margin-right:15px">
-                        {{ renderText(item) }}
-                      </div>
-                      <div
-                        v-show="item.user_status == 'web_portal'"
-                        :class="
-                          editRow == index
-                            ? 'input-with-icon able-input'
-                            : 'input-with-icon disabled-input'
-                        "
-                        style="display: flex;width: 200px;height: 32px;margin-right:10px"
-                      >
-                        <input
-                          type="text"
-                          v-model="item.user_name"
-                          :placeholder="'-- โปรดระบุ --'"
-                        />
-                      </div>
-                      <v-btn
-                        v-show="item.user_status == 'web_portal'"
-                        text
-                        @click="edit(item, index)"
-                        class="cancel-btn"
-                      >
-                        {{ editRow == index ? 'เพิ่ม' : 'เปลี่ยน' }}
-                      </v-btn>
-                    </div>
+                    <v-btn
+                      v-show="item.user_status == 'web_portal'"
+                      text
+                      @click="edit(item, index)"
+                      class="cancel-btn"
+                    >
+                      {{ editRow == index ? 'เพิ่ม' : 'เปลี่ยน' }}
+                    </v-btn>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </v-card-text>
-
-        <v-card-actions class="justify-center" style="padding-top:80px">
-          <!-- <v-btn
-            text
-            @click="ClosePwdDialogs()"
-            class="ok-btn"
-            :style="{ 'margin-right': stepChangePwd == 2 ? '0px' : '35px' }"
-          >
-            {{ stepChangePwd == 2 ? 'ปิด' : 'ยกเลิก' }}
-          </v-btn>
-
-          <v-btn
-            v-show="stepChangePwd < 2"
-            text
-            @click="ConfirmDialogs()"
-            class="cancel-btn"
-            :disabled="disPwdBtn"
-          >
-            {{ stepChangePwd == 0 ? 'ยืนยัน' : 'เปลี่ยนรหัสผ่าน' }}
-          </v-btn> -->
-        </v-card-actions>
+        </div>
       </v-card>
     </v-dialog>
   </div>
@@ -574,7 +489,7 @@ export default {
       // isSelecting: false,
       pwdDialog: false,
       password: '',
-      errorPwd: false,
+      errorPwd: true,
       error: true,
       disPwdBtn: true,
       stepChangePwd: 0,
@@ -823,6 +738,8 @@ export default {
     },
     onFileChanged (e) {
       this.selectedFile = e.target.files[0]
+      // console.log(e.target.files)
+      // text: `<div class="normal-text">Please Wait...</div>`,
       setTimeout(() => {
         // console.log(e.target.files[0].name)
       }, 2000)

@@ -9,7 +9,7 @@
               <input
                 type="text"
                 v-model="app_name_th"
-                :placeholder="'-- โปรดระบุ --'"
+                :placeholder="$t('input_selected')"
               />
             </div>
           </div>
@@ -21,7 +21,7 @@
               <input
                 type="text"
                 v-model="app_name_en"
-                :placeholder="'-- โปรดระบุ --'"
+                :placeholder="$t('input_selected')"
               />
             </div>
           </div>
@@ -34,7 +34,7 @@
             <div class="input-with-icon" style="width: 100%">
               <textarea
                 v-model="app_desc_th"
-                :placeholder="'-- โปรดระบุ --'"
+                :placeholder="$t('input_selected')"
               ></textarea>
             </div>
           </div>
@@ -47,7 +47,7 @@
             <div class="input-with-icon" style="width: 100%">
               <textarea
                 v-model="app_desc_en"
-                :placeholder="'-- โปรดระบุ --'"
+                :placeholder="$t('input_selected')"
               ></textarea>
             </div>
           </div>
@@ -59,7 +59,7 @@
               <v-select
                 v-model="app_type"
                 :items="items"
-                :placeholder="'-- โปรดระบุ --'"
+                :placeholder="$t('input_selected')"
                 item-text="state"
                 item-value="abbr"
                 persistent-hint
@@ -68,7 +68,7 @@
               ></v-select>
             </div>
             <v-btn
-              @click="add()"
+              @click="openPopupType()"
               class="cancel-btn"
               style="height:32px;width:32px;margin-left:8px"
             >
@@ -87,7 +87,7 @@
               <input
                 type="text"
                 v-model="app_code"
-                :placeholder="'-- โปรดระบุ --'"
+                :placeholder="$t('input_selected')"
               />
             </div>
           </div>
@@ -180,7 +180,7 @@
               <input
                 type="text"
                 v-model="url_app"
-                :placeholder="'-- โปรดระบุ --'"
+                :placeholder="$t('input_selected')"
               />
             </div>
           </div>
@@ -204,7 +204,7 @@
               @change="onFileChanged"
             />
             <div class="pic-upload" v-if="selectedFile == null">
-             240*180
+              240*180
             </div>
             <div v-else class="pic-upload-success">
               <v-img
@@ -218,25 +218,36 @@
         </div>
       </div>
     </v-card>
-    <div style="display:flex;padding-top:27px" class="justify-end">
-      <v-btn
-        @click="cancel()"
-        class="ok-btn"
-        style="width:200px;margin-right:6px;height: 22px;"
-      >
-        {{ $t('btn_cancel') }}
-      </v-btn>
-      <!-- @click="save()" -->
-      <v-btn
-        @click.stop="dialog = true"
-        :class="enableBtn ? 'cancel-btn disabled' : 'cancel-btn'"
-        style="width:200px;height: 22px"
-      >
-        {{ $t('btn_save') }}
-      </v-btn>
+    <div style="display:flex;padding-top:27px">
+      <div style="width:50%">
+        <v-btn
+          @click="clear()"
+          class="clear-btn"
+          style="margin-right:6px;height: 22px;"
+        >
+          {{ $t('btn_delete') }}
+        </v-btn>
+      </div>
+      <div style="width:50%;display:flex" class="justify-end">
+        <v-btn
+          @click="cancel()"
+          class="ok-btn"
+          style="margin-right:6px;height: 22px;"
+        >
+          {{ $t('btn_cancel') }}
+        </v-btn>
+        <!-- @click="save()" -->
+        <!-- @click.stop="dialog = true" -->
+        <v-btn
+          :class="enableBtn ? 'cancel-btn disabled' : 'cancel-btn'"
+          style="height: 22px"
+        >
+          {{ $t('btn_save') }}
+        </v-btn>
+      </div>
     </div>
 
-    <v-dialog v-model="dialog" max-width="340">
+    <v-dialog v-model="dialog" max-width="350">
       <v-card class="confirm-dialog">
         <v-card-title
           v-text="errorDialog"
@@ -255,9 +266,170 @@
             ยกเลิก
           </v-btn>
           <v-btn text @click="save()" class="save">
-            {{ error ? 'ปิด' : 'บันทึก' }}
+            {{ error ? 'ปิด' : rightBtn }}
           </v-btn>
         </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="typeDialog" :max-width="editMode ? '600' : '750'">
+      <v-card>
+        <div class="justify-end" style="display: flex;">
+          <v-icon
+            @click="CloseDialogs()"
+            v-text="'mdi-close'"
+            style="color:#000000;"
+            size="20"
+          ></v-icon>
+        </div>
+        <div>
+          <div class="head-menu5">
+            {{
+              editMode
+                ? 'เพิ่มหมวดหมู่ของแอปพลิเคชัน'
+                : 'การจัดการหมวดหมู่ของแอปพลิเคชัน'
+            }}
+          </div>
+          <div class="line-page" style="margin-top:8px"></div>
+          <div v-if="editMode">
+            <div class="rows-form" style="padding-top:30px">
+              <div class="rows-title" style="margin-right:70px">
+                {{ 'หมวดหมู่ (TH)' }}
+              </div>
+              <div class="input-with-icon">
+                <input
+                  type="text"
+                  v-model="NameThInput"
+                  :placeholder="$t('input_selected')"
+                />
+              </div>
+            </div>
+            <div class="rows-form" style="margin-top:30px">
+              <div class="rows-title" style="margin-right:70px">
+                {{ 'หมวดหมู่ (EN)' }}
+              </div>
+              <div class="input-with-icon">
+                <input
+                  type="text"
+                  v-model="NameEnInput"
+                  :placeholder="$t('input_selected')"
+                />
+              </div>
+            </div>
+            <div
+              style="padding-top:50px;padding-bottom:50px;display:flex"
+              class="justify-center"
+            >
+              <v-btn
+                @click="CloseNewType()"
+                class="ok-btn"
+                style="margin-right:30px;"
+              >
+                {{ $t('btn_cancel') }}
+              </v-btn>
+              <v-btn
+                @click="CloseNewType()"
+                :class="enableType ? 'cancel-btn-disabled' : 'cancel-btn'"
+              >
+                {{ $t('btn_save') }}
+              </v-btn>
+            </div>
+          </div>
+          <div v-else style="width:100%;margin-top:15px">
+            <div style="display:flex;width:100%">
+              <div style="width:80%">
+                <div class="input-with-icon search-form">
+                  <v-icon v-text="'mdi-magnify'" size="20"></v-icon>
+                  <input
+                    type="text"
+                    v-model="searchApp"
+                    :placeholder="$t('input_search')"
+                  />
+                </div>
+              </div>
+              <div class="right-action" style="width:20%;">
+                <v-btn @click="AddNewType()" class="cancel-btn">
+                  <v-icon
+                    v-text="'mdi-plus'"
+                    style="color:#ffffff;margin-right:5px;"
+                    size="22"
+                  ></v-icon>
+                  {{ $t('btn_add') }}
+                </v-btn>
+              </div>
+            </div>
+            <div class="table">
+              <div class="head-table">
+                <div class="head" style="width:10%" @click="sort('no')">
+                  <div class="column-name">No</div>
+                  <v-icon
+                    v-text="sortNo ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
+                    size="22"
+                  ></v-icon>
+                </div>
+                <div class="head" style="width:40%" @click="sort('type_th')">
+                  <div class="column-name">หมวดหมู่ (TH)</div>
+                  <v-icon
+                    v-text="sortTypeTh ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
+                    size="22"
+                  ></v-icon>
+                </div>
+                <div class="head" style="width:40%" @click="sort('type_en')">
+                  <div class="column-name">
+                    หมวดหมู่ (EN)
+                  </div>
+                  <v-icon
+                    v-text="sortTypeEn ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
+                    size="22"
+                  ></v-icon>
+                </div>
+                <div class="head" style="width:10%">
+                  <div class="column-name">
+                    {{ $t('set.list_col6') }}
+                  </div>
+                </div>
+              </div>
+              <div class="body-table">
+                <div
+                  class="body-row"
+                  v-for="(item, index) in list"
+                  :key="'setapp' + index"
+                >
+                  <div
+                    class="body"
+                    style="width:10%;padding-left:5px;padding-top:5px"
+                  >
+                    {{ item.no }}
+                  </div>
+                  <div class="body" style="width:40%;padding-top:5px">
+                    {{ item.name_th }}
+                  </div>
+                  <div class="body" style="width:40%;padding-top:5px">
+                    {{ item.name_en }}
+                  </div>
+                  <div class="body" style="width:10%;padding-top:5px">
+                    <v-icon
+                      @click="EditNewType(item)"
+                      v-text="'mdi-pencil'"
+                      style="color:#CE1212;cursor:pointer"
+                      size="20"
+                    ></v-icon>
+                    <v-icon
+                      @click="DeleteNewType(item)"
+                      v-text="'mdi-delete-sweep'"
+                      style="color:#CE1212;cursor:pointer;margin-left:10px"
+                      size="20"
+                    ></v-icon>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- </v-card-text> -->
       </v-card>
     </v-dialog>
   </div>
@@ -290,24 +462,96 @@ export default {
       selectedFile: null,
       dialog: false,
       errorDialog: 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?',
-      error: false
+      error: false,
+      rightBtn: 'บันทึก',
+      typeDialog: false,
+      searchApp: '',
+      sortNo: false,
+      sortTypeTh: false,
+      sortTypeEn: false,
+      list: [
+        {
+          no: 1,
+          name_th: 'CRM',
+          name_en: 'CRM'
+        },
+        {
+          no: 2,
+          name_th: 'ERP',
+          name_en: 'ERP'
+        }
+      ],
+      editMode: false,
+      editRow: {},
+      NameThInput: '',
+      NameEnInput: '',
+      enableType: false
     }
   },
   computed: {},
   watch: {},
   methods: {
+    AddNewType () {
+      this.editMode = true
+    },
+    EditNewType (item) {
+      this.editMode = true
+      this.NameThInput = item.name_th
+      this.NameEnInput = item.name_en
+    },
+    DeleteNewType (item) {
+      this.editMode = true
+    },
+    CloseNewType () {
+      this.editMode = false
+      this.NameThInput = ''
+      this.NameEnInput = ''
+    },
+    sort (feild) {
+      if (feild == 'no') {
+        this.sortNo = !this.sortNo
+      } else if (feild == 'type_th') {
+        this.sortTypeTh = !this.sortTypeTh
+      } else if (feild == 'type_en') {
+        this.sortTypeEn = !this.sortTypeEn
+      }
+    },
+    openPopupType () {
+      this.typeDialog = true
+    },
+    CloseDialogs () {
+      this.typeDialog = false
+    },
     cancel () {
+      if (!this.dialog) {
+        this.$emit('cancel', null)
+      }
       this.dialog = false
+      this.rightBtn = 'บันทึก'
       this.selectedFile = null
-      this.$emit('cancel', null)
+    },
+    clear () {
+      console.log('2==>')
+      // this.dialog = true
+      this.errorDialog = 'คุณต้องการลบข้อมูลใช่หรือไม่ ?'
+      this.rightBtn = 'ลบ'
+      // this.dialog = false
+      // this.selectedFile = null
+      // this.$emit('clear', null)
     },
     save () {
+      console.log('3==>')
+      this.rightBtn = 'บันทึก'
       if (this.error) {
         this.dialog = false
       } else {
         // this.error = true
         // this.errorDialog =
         //   'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ (Error Code 1001)'
+
+        // this.error = true
+        // this.errorDialog =
+        //   'ข้อมูลแอปพลิเคชันดังกล่าวถูกใช้งานอยู่ในเมนู "จัดกลุ่มผู้ใช้งานแอปพลิเคชัน" กรุณายืนยัน การดำเนินการ'
 
         this.dialog = false
         this.selectedFile = null

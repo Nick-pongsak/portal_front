@@ -2,7 +2,7 @@
   <div id="dashboard" v-resize="onResize">
     <div class="name-page">
       {{ $t('das.menu') }}
-      <div class="line-page"></div>
+      <div class="line-page" style="margin-top: 15px;"></div>
     </div>
     <div>
       <div
@@ -109,9 +109,14 @@
     </div>
 
     <!---Dialogs-->
-    <v-dialog v-model="dialog" width="700" :no-click-animation="false">
+    <v-dialog
+      v-model="dialog"
+      max-width="700"
+      :no-click-animation="false"
+      :style="{ transform: tranformScale }"
+    >
       <v-card id="detail-dashboard-dialogs">
-        <v-card-text style="padding:20px 25px 20px 100px">
+        <v-card-text style="padding:20px 25px 0px 25px">
           <div class="justify-end" style="display: flex;">
             <v-icon
               @click="CloseDialogs()"
@@ -120,21 +125,22 @@
               size="20"
             ></v-icon>
           </div>
-          <div style="padding-right:90px;padding-top:20px">
+          <div class="img-detail" :style="{ transform: tranformScale }">
             <v-img
-              style="cursor:pointer;"
-              height="200"
+              :style="{ transform: tranformScale }"
+              max-height="257"
+              max-width="498"
               :src="
                 'https://cdn.vuetifyjs.com/images/cards/' + selectedRow.pic_path
               "
             >
             </v-img>
-            <div class="sys-name">
-              {{ selectedRow.sys_name + ' (' + selectedRow.sys_type + ')' }}
-            </div>
-            <div class="details">
-              {{ selectedRow.sys_desc }}
-            </div>
+          </div>
+          <div class="sys-name">
+            {{ selectedRow.sys_name + ' (' + selectedRow.sys_type + ')' }}
+          </div>
+          <div class="details">
+            <textarea v-model="selectedRow.sys_desc"></textarea>
           </div>
         </v-card-text>
         <v-card-actions class="justify-center" style="padding-bottom:20px">

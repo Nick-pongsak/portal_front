@@ -5,6 +5,7 @@ const locales = {
     'btn_save': 'Save',
     'btn_cancel': 'Cancel',
     'btn_close': 'Close',
+    'btn_delete': 'Delete',
     'btn_change': 'Change',
     'btn_signin': 'Sign in',
     'btn_signout': 'Sign out',
@@ -12,7 +13,7 @@ const locales = {
     'btn_change_pwd': 'เปลี่ยนรหัสผ่าน',
     'btn_save_close': 'Save & Close',
     'input_search': 'Search',
-    'input_selected': 'โปรดระบุ',
+    'input_selected': '-- โปรดระบุ --',
 
     /*home => Dashboard*/
     'das.menu': 'Product Manager (IT) Services',
@@ -38,6 +39,7 @@ const locales = {
     'btn_save': 'บันทึก',
     'btn_cancel': 'ยกเลิก',
     'btn_close': 'ปิด',
+    'btn_delete': 'ลบ',
     'btn_change': 'เปลี่ยน',
     'btn_signin': 'เข้าสู่ระบบ',
     'btn_signout': 'ออกจากระบบ',
@@ -45,7 +47,7 @@ const locales = {
     'btn_change_pwd': 'เปลี่ยนรหัสผ่าน',
     'btn_save_close': 'บันทึก',
     'input_search': 'ค้นหา',
-    'input_selected': 'โปรดระบุ',
+    'input_selected': '-- โปรดระบุ --',
 
     /*home => Dashboard*/
     'das.menu': 'Product Manager (IT) Services',

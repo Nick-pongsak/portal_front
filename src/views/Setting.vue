@@ -28,6 +28,7 @@
         :menu="rightMenu"
         @cancel="cancelApp"
         @save="saveApp"
+        @clear="clearApp"
       />
     </div>
   </div>
@@ -192,6 +193,12 @@ export default {
   computed: {},
   watch: {},
   methods: {
+    clearApp (value) {
+      this.currentView = {
+        code: '2',
+        text: 'การจัดการแอปพลิเคชันที่เชื่อมต่อ'
+      }
+    },
     cancelApp (value) {
       this.currentView = {
         code: '2',

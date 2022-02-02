@@ -252,8 +252,13 @@
       background: $dark_red;
       border: 1px solid $dark_red;
     }
+    .clear-btn {
+      color: white;
+      background: #797979;
+    }
     .ok-btn,
-    .cancel-btn {
+    .cancel-btn ,
+    .clear-btn {
       font-size: nth($font-sizes, 3);
       font-weight: map-get($font-weight, "regular");
       width: 106px;

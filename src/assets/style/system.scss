@@ -16,7 +16,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    // padding-top: 12px;
     font-family: Georgia;
     font-size: nth($font-sizes, 6);
     font-weight: bold;
@@ -27,9 +26,7 @@
     justify-content: flex-end;
     font-size: nth($font-sizes, 3);
     font-family: $mainFont;
-    .account-name {
-      // font-family: $kanit;
-    }
+
     .deafult-name {
       text-align: center;
       padding-top: 10px;
@@ -107,7 +104,6 @@
     .account-name,
     .position-name {
       text-align: center;
-      // font-family: $kanit;
     }
     .account-name {
       color: #414141;
@@ -122,13 +118,10 @@
   .account-chip {
     font-size: nth($font-sizes, 3);
     font-family: $mainFont;
-    // font-family: $kanit;
     color: $dark_red;
     background: white;
     border: 1px solid $dark_red;
     justify-content: center;
-    // color: white;
-    // background: $red;
   }
   .line-page {
     height: 1px;
@@ -145,7 +138,7 @@
     justify-content: center;
     font-size: nth($font-sizes, 3);
     button {
-      height: 32px;
+      height: 30px;
     }
     .ok-btn {
       background: #ffffff;
@@ -168,79 +161,15 @@
     border: 0.5px solid $red;
   }
 }
-#change-pic-dialogs {
-  padding: 25px;
-  .profile-desc {
-    width: 100%;
-    color: #797979;
-    font-size: nth($font-sizes, 7);
-    font-family: $mainFont;
-    font-weight: map-get($font-weight, "regular");
-    margin-top: 30px;
-    text-align: center;
-  }
-  .deafult-name {
-    text-align: center;
-    padding-top: 105px;
-    background: #810000;
-    color: white;
-    font-family: Georgia;
-    font-size: 48px;
-    width: 230px;
-    height: 230px;
-    border-radius: 50%;
-    border: 1px solid #ffffff;
-  }
-  .v-card__actions {
-    display: flex;
-    margin-top: 50px;
-    margin-bottom: 60px;
-  }
-}
-#change-pwd-dialogs {
-  padding: 90px 70px 70px 70px;
-  .input-with-icon {
-    margin-left: 55px;
-  }
-}
-#change-pwd-dialogs,
-#set-app-dialogs {
-  .input-with-icon {
-    padding: 7px 8px 5px 8px;
-    box-shadow: 0px 0px 3px #00000080;
-    border-radius: 4px;
-    border: hidden;
 
-    input[type="password"],
-    [type="text"] {
-      width: 330px;
-      &:hover,
-      &:focus {
-        outline: none;
-      }
-      &::placeholder {
-        color: #11111169;
-        font-family: $mainFont;
-        font-size: nth($font-sizes, 4);
-      }
-    }
-    &.active {
-      border: 0.5px solid $red;
-      box-shadow: none;
-    }
-  }
-}
-#change-pic-dialogs,
-#change-pwd-dialogs,
-#detail-dashboard-dialogs,
-#set-app-dialogs {
+#detail-dashboard-dialogs {
   .cancel-btn,
   .ok-btn {
     font-size: nth($font-sizes, 3);
     font-family: $mainFont;
     padding: 10px 55px 10px 55px;
     button {
-      height: 32px;
+      height: 30px;
     }
     &.v-btn--disabled {
       background: #ce121280;
@@ -263,22 +192,36 @@
   }
 }
 #detail-dashboard-dialogs {
+  overflow: hidden;
   .sys-name {
     color: $dark_red;
     font-size: nth($font-sizes, 7);
     font-weight: bold;
     font-family: $mainFont;
     text-align: center;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  .img-detail {
     padding-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .details {
     color: #767676;
     font-size: nth($font-sizes, 3);
     font-family: $mainFont;
-    padding-top: 18px;
     overflow-x: hidden;
     overflow-y: auto;
-    height: 150px;
+    height: 126px;
+    padding-left: 20px;
+    padding-right: 10px;
+    textarea {
+      color: #767676;
+      resize: none;
+      width: 100%;
+    }
     &::-webkit-scrollbar {
       width: 8px;
     }
@@ -294,75 +237,6 @@
     }
     &::-webkit-scrollbar-thumb:hover {
       background: rgb(145, 145, 145);
-    }
-  }
-}
-#set-app-dialogs {
-  .line-page {
-    height: 1px;
-    width: 100%;
-    background: #a8a8a8;
-    opacity: 0.5;
-  }
-  .table {
-    margin-top: 10px;
-    .head-table {
-      width: 100%;
-      display: flex;
-      background: #d1d1d133;
-      padding-top: 5px;
-      padding-bottom: 5px;
-      padding-left: 20px;
-      padding-right: 20px;
-      .head {
-        display: flex;
-        cursor: pointer;
-        font-weight: 500;
-        color: #797979;
-        font-size: nth($font-sizes, 3);
-        font-family: $mainFont;
-        .column-name {
-          padding-top: 3px;
-        }
-      }
-    }
-    .body-table {
-      padding-top: 5px;
-      padding-bottom: 5px;
-      padding-left: 20px;
-      padding-right: 20px;
-      .body-row {
-        width: 100%;
-        display: flex;
-        padding-top: 3px;
-        padding-bottom: 8px;
-        .body {
-          font-family: $mainFont;
-          color: #797979;
-          font-size: nth($font-sizes, 3);
-        }
-
-        .input-with-icon {
-          &.disabled-input {
-            color: #414141;
-            background: #d1d1d1;
-            box-shadow: 0px 0px 3px #00000080;
-            border-radius: 4px;
-          }
-          &.able-input {
-            color: #ed202499;
-            background: #ed202419;
-            box-shadow: 0px 0px 3px #00000080;
-            border: 1px solid $dark_red;
-          }
-        }
-        .cancel-btn {
-          font-size: nth($font-sizes, 1);
-          padding: 10px 10px 10px 10px;
-          width: 30px;
-          height: 32px;
-        }
-      }
     }
   }
 }
@@ -395,30 +269,285 @@
     }
   }
 }
-.confirm-dialog {
-  .v-card__title,
-  .cancel,
-  .save {
+
+//--Gobal----
+.line-page {
+  height: 1px;
+  width: 100%;
+  background: #a8a8a8;
+  opacity: 0.5;
+}
+
+.v-dialog {
+  .v-card {
+    background: pink;
+    padding: 20px 50px 20px 50px;
+    .line-page {
+      height: 1px;
+      width: 100%;
+      background: #a8a8a8;
+      opacity: 0.5;
+    }
+    .center-vh {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .error-input {
+      font-size: nth($font-sizes, 3);
+      font-family: $mainFont;
+      color: #ed2024;
+    }
+    .head-menu3 {
+      color: #414141;
+      font-size: nth($font-sizes, 3);
+      font-family: $mainFont;
+    }
+    .head-menu5 {
+      color: #797979;
+      font-size: nth($font-sizes, 5);
+      font-family: $mainFont;
+    }
+    .head-menu7 {
+      color: #797979;
+      font-size: nth($font-sizes, 7);
+      font-family: $mainFont;
+    }
+    .rows-form {
+      color: #414141;
+      font-size: nth($font-sizes, 3);
+      font-family: $mainFont;
+      display: flex;
+      .rows-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    .input-with-icon {
+      box-shadow: 0px 0px 3px #00000080;
+      border-radius: 4px;
+      border: hidden;
+      height: 30px;
+      width: 330px;
+
+      input {
+        height: 30px;
+        padding-left: 10px;
+        padding-right: 10px;
+        &:hover,
+        &:focus {
+          outline: none;
+        }
+        &::placeholder {
+          color: #11111169;
+          font-family: $mainFont;
+          font-size: nth($font-sizes, 3);
+        }
+      }
+      &.rows-input {
+        // height: 30px;
+      }
+
+      &.search-form {
+        display: flex;
+        width: 300px;
+        .v-icon {
+          color: #000000;
+          opacity: 0.5;
+          padding-left: 5px;
+        }
+      }
+
+      &.active {
+        border: 0.5px solid $red;
+        box-shadow: none;
+      }
+    }
+    .right-action {
+      justify-content: end;
+      align-items: flex-end;
+      display: flex;
+    }
+    button {
+      height: 30px;
+      &.cancel-btn,
+      &.ok-btn,
+      &.cancel-btn-disabled {
+        width: 106px;
+        font-size: nth($font-sizes, 3);
+        font-family: $mainFont;
+      }
+      &.cancel-btn {
+        color: white;
+        background: $dark_red;
+        border: 1px solid $dark_red;
+        border-radius: 5px;
+        height: 30px;
+      }
+      &.cancel-btn-disabled {
+        color: white;
+        background: #ce121280;
+        height: 30px;
+        border-radius: 5px;
+      }
+      &.ok-btn {
+        height: 30px;
+        background: #ffffff;
+        color: $dark_red;
+        border: 1px solid $dark_red;
+      }
+    }
+    &.confirm-dialog {
+      .v-card__title,
+      .cancel,
+      .save {
+        font-family: $mainFont;
+      }
+      .v-card__title {
+        color: #727272;
+        font-size: nth($font-sizes, 4);
+        font-weight: 500;
+        padding: 0px;
+      }
+      .cancel,
+      .save {
+        margin-top: 36px;
+        font-size: nth($font-sizes, 3);
+      }
+      .cancel {
+        span {
+          color: #a8a8a8;
+        }
+      }
+      .save {
+        span {
+          color: #ce1212;
+        }
+      }
+    }
+    .table {
+      margin-top: 10px;
+      .head-table {
+        width: 100%;
+        display: flex;
+        background: #d1d1d133;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 20px;
+        padding-right: 20px;
+        .head {
+          display: flex;
+          cursor: pointer;
+          font-weight: 500;
+          color: #797979;
+          font-size: nth($font-sizes, 3);
+          font-family: $mainFont;
+          .column-name {
+            padding-top: 3px;
+          }
+        }
+      }
+      .body-table {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 20px;
+        padding-right: 20px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        height: 250px;
+        .body-row {
+          width: 100%;
+          display: flex;
+          padding-top: 3px;
+          padding-bottom: 8px;
+          .body {
+            font-family: $mainFont;
+            color: #797979;
+            font-size: nth($font-sizes, 3);
+          }
+
+          .input-with-icon {
+            &.disabled-input {
+              color: #414141;
+              background: #d1d1d1;
+              box-shadow: 0px 0px 3px #00000080;
+              border-radius: 4px;
+            }
+            &.able-input {
+              color: #ed202499;
+              background: #ed202419;
+              box-shadow: 0px 0px 3px #00000080;
+              border: 1px solid $dark_red;
+            }
+          }
+          .cancel-btn {
+            font-size: nth($font-sizes, 1);
+            padding: 10px 10px 10px 10px;
+            width: 30px;
+          }
+        }
+        &::-webkit-scrollbar {
+          width: 6px;
+        }
+        &::-webkit-scrollbar:horizontal {
+          height: 8px;
+        }
+        &::-webkit-scrollbar-track {
+          background: #efefef;
+        }
+        &::-webkit-scrollbar-thumb {
+          border-radius: 8px;
+          background: #a8a8a8;
+        }
+        &::-webkit-scrollbar-thumb:hover {
+          background: rgb(145, 145, 145);
+        }
+      }
+    }
+  }
+}
+
+#pwd-dialogs {
+  padding: 90px 60px 70px 60px !important;
+  .details {
+    color: #767676;
+    font-size: nth($font-sizes, 3);
     font-family: $mainFont;
   }
-  .v-card__title {
-    color: #727272;
-    font-size: nth($font-sizes, 4);
-    font-weight: 500;
+  .v-btn {
+    width: 200px;
   }
-  .cancel,
-  .save {
-    margin-top: 36px;
-    font-size: nth($font-sizes, 3);
+}
+#change-pic-dialogs {
+  padding: 25px;
+  .profile-desc {
+    width: 100%;
+    color: #797979;
+    font-size: nth($font-sizes, 7);
+    font-family: $mainFont;
+    font-weight: map-get($font-weight, "regular");
+    margin-top: 30px;
+    text-align: center;
   }
-  .cancel {
-    span {
-      color: #a8a8a8;
-    }
+  .deafult-name {
+    text-align: center;
+    padding-top: 105px;
+    background: #810000;
+    color: white;
+    font-family: Georgia;
+    font-size: 48px;
+    width: 230px;
+    height: 230px;
+    border-radius: 50%;
+    border: 1px solid #ffffff;
   }
-  .save {
-    span {
-      color: #ce1212;
-    }
+  .v-card__actions {
+    display: flex;
+    margin-top: 50px;
+    margin-bottom: 60px;
+  }
+  .v-btn {
+    width: 200px;
   }
 }
