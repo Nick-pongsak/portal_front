@@ -402,7 +402,7 @@
                     class="body"
                     style="width:10%;padding-left:5px;padding-top:5px"
                   >
-                    {{ item.no }}
+                    {{ index + 1 }}
                   </div>
                   <div class="body" style="width:40%;padding-top:5px">
                     {{ item.name_th }}
@@ -437,7 +437,7 @@
 
 <script>
 export default {
-  name: 'add-system-user',
+  name: 'add-app',
   props: {
     menu: {
       type: Array,

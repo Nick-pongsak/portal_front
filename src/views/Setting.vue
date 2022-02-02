@@ -18,13 +18,23 @@
     <div class="right">
       <!-- <div class="header">{{ $t('set.right_menu') }}</div> -->
       <div class="header">{{ currentView.text }}</div>
-      <main-system-user
+      <main-list-app
         v-if="currentView.code == '2'"
         :menu="rightMenu"
         @add="addApp"
+        @edit="editApp"
+        @tabs="selectedTabs"
+        :active="activeTab"
       />
-      <add-system-user
-        v-else-if="currentView.code == '2-1'"
+      <add-app
+        v-else-if="activeTab.code == '2.1'"
+        :menu="rightMenu"
+        @cancel="cancelApp"
+        @save="saveApp"
+        @clear="clearApp"
+      />
+      <add-group
+        v-else-if="activeTab.code == '2.2'"
         :menu="rightMenu"
         @cancel="cancelApp"
         @save="saveApp"
@@ -35,8 +45,9 @@
 </template>
 
 <script>
-import MainSystemUser from './SystemUser/Main'
-import AddSystemUser from './SystemUser/Add'
+import MainListApp from './ManageApp/Main'
+import AddApp from './ManageApp/AddApp'
+import AddGroup from './ManageApp/AddGroup'
 export default {
   name: 'setting',
   data () {
@@ -44,7 +55,8 @@ export default {
       menu: [
         {
           code: '1',
-          text: 'ผู้ใช้งานระบบ'
+          text: 'ผู้ใช้งานระบบ',
+          child: []
         },
         {
           code: '2',
@@ -62,12 +74,8 @@ export default {
         }
       ],
       selectedItem: {
-        code: '2',
-        text: 'การจัดการแอปพลิเคชันที่เชื่อมต่อ'
-      },
-      selectedTab: {
-        code: '1',
-        text: 'รายการแอปพลิเคชัน'
+        // code: '2',
+        // text: 'การจัดการแอปพลิเคชันที่เชื่อมต่อ'
       },
       list: [
         {
@@ -79,7 +87,7 @@ export default {
         {
           app_name: 'app',
           type: 'CRM',
-          access: 'LDAP (AD',
+          access: 'LDAP (AD)',
           status: false
         },
         {
@@ -174,20 +182,18 @@ export default {
       sortAccess: false,
       sortStatus: false,
       addAppMode: false,
-      currentView: {
-        code: '2',
-        text: 'การจัดการแอปพลิเคชันที่เชื่อมต่อ'
-      },
+      currentView: {},
       rightMenu: [
         {
-          code: '1',
+          code: '2.1',
           text: 'รายการแอปพลิเคชัน'
         },
         {
-          code: '2',
+          code: '2.2',
           text: 'จัดกลุ่มผู้ใช้งานแอปพลิเคชัน'
         }
-      ]
+      ],
+      activeTab: {}
     }
   },
   computed: {},
@@ -212,19 +218,34 @@ export default {
       }
     },
     addApp (value) {
+      value.code = this.currentView.code + '.' + value.code
       this.currentView = {
-        code: '2-1',
-        text: 'เพิ่มแอปพลิเคชัน'
+        code: value.code,
+        text:
+          value.code == '2.1'
+            ? 'เพิ่มแอปพลิเคชัน'
+            : 'เพิ่มกลุ่มผู้ใช้งานแอปพลิเคชัน'
       }
-      console.log('addApp', value)
+      this.activeTab = value
+    },
+    editApp (value) {
+      this.currentView = {
+        code: value.current.code,
+        text:
+          value.current.code == '2.1'
+            ? 'เพิ่มแอปพลิเคชัน'
+            : 'เพิ่มกลุ่มผู้ใช้งานแอปพลิเคชัน'
+      }
+      this.activeTab = value.current
     },
     selectedMenu (item, index) {
       this.selectedItem = item
       this.currentView = item
+      this.activeTab = item.child.length > 0 ? item.child[0] : {}
       this.rightMenu = item !== undefined ? item.child : []
     },
-    selectedTabs (item, index) {
-      this.selectedTab = item
+    selectedTabs (item) {
+      this.activeTab = item
     },
     sort (feild) {
       if (feild == 'no') {
@@ -238,11 +259,20 @@ export default {
       } else if (feild == 'status') {
         this.sortStatus = !this.sortStatus
       }
+    },
+    int () {
+      this.selectedItem = this.menu[1]
+      this.currentView = this.menu[1]
+      this.activeTab = this.rightMenu[0]
     }
   },
+  created () {
+    this.int()
+  },
   components: {
-    MainSystemUser,
-    AddSystemUser
+    MainListApp,
+    AddApp,
+    AddGroup
   },
   mounted () {}
 }

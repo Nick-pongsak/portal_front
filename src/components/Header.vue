@@ -424,7 +424,7 @@
                     class="body"
                     style="width:10%;padding-left:5px;padding-top:5px"
                   >
-                    {{ item.no }}
+                    {{ index + 1 }}
                   </div>
                   <div class="body" style="width:30%;padding-top:5px">
                     {{ item.app_name }}

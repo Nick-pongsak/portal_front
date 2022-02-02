@@ -30,6 +30,10 @@ const locales = {
     'set.list_col4': 'Login Type',
     'set.list_col5': 'Status',
     'set.list_col6': 'Tools',
+
+    'set.manege_col2': 'กลุ่มผู้ใช้งานแอปพลิเคชัน',
+    'set.manege_col3': 'จำนวนแอปฯ',
+    'set.manege_col4': 'จำนวนผู้ใช้งาน',
     // 'set.login_type0': 'Application User',
     // 'set.login_type1': 'LDAP (AD',
   },
@@ -64,6 +68,10 @@ const locales = {
     'set.list_col4': 'การเข้าการใช้งาน',
     'set.list_col5': 'สถานะ',
     'set.list_col6': 'เครื่องมือ',
+
+    'set.manege_col2': 'กลุ่มผู้ใช้งานแอปพลิเคชัน',
+    'set.manege_col3': 'จำนวนแอปฯ',
+    'set.manege_col4': 'จำนวนผู้ใช้งาน',
     // 'set.login_type0': 'ผู้ใช้งานแอปพลิเคชัน',
     // 'set.login_type1': 'LDAP (AD',
   }

@@ -9,7 +9,11 @@ body {
   &.v-application {
     line-height: normal; // override vuetify
   }
-  font-family: $roboto;
+  .red--text {
+    color: $dark_red !important;
+    caret-color: $dark_red !important;
+  }
+  font-family: $mainFont;
 }
 
 :root {

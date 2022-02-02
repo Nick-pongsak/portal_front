@@ -10,7 +10,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: $mainFont;
   .sys-name {
     padding-left: 11px;
     display: flex;
@@ -25,7 +24,6 @@
     align-items: center;
     justify-content: flex-end;
     font-size: nth($font-sizes, 3);
-    font-family: $mainFont;
 
     .deafult-name {
       text-align: center;
@@ -99,7 +97,6 @@
     border: 1px solid #ffffff;
   }
   .account {
-    font-family: $mainFont;
     padding: 20px 38px 5px 38px;
     .account-name,
     .position-name {
@@ -117,7 +114,6 @@
   }
   .account-chip {
     font-size: nth($font-sizes, 3);
-    font-family: $mainFont;
     color: $dark_red;
     background: white;
     border: 1px solid $dark_red;
@@ -130,7 +126,6 @@
     opacity: 0.5;
   }
   .account-button {
-    font-family: $mainFont;
     border-radius: 5px;
     padding: 20px 35px 20px 35px;
     display: flex;
@@ -171,7 +166,6 @@
     padding-right: 8px;
     .text {
       color: #414141;
-      font-family: $mainFont;
       font-size: nth($font-sizes, 5);
       width: 150px;
       padding: 5px 10px 8px 10px;
@@ -183,7 +177,6 @@
     padding-right: 5px;
     .text {
       color: #414141;
-      font-family: $mainFont;
       font-size: nth($font-sizes, 5);
       cursor: pointer;
       padding: 5px 10px 8px 10px;
@@ -198,6 +191,14 @@
   background: #a8a8a8;
   opacity: 0.5;
 }
+.no-data {
+  height: 200px;
+  width: 100%;
+  text-align: center;
+  padding-top: 15px;
+  color: #79797980;
+  font-size: nth($font-sizes, 4);
+}
 
 .v-dialog {
   .v-card {
@@ -209,6 +210,13 @@
       background: #a8a8a8;
       opacity: 0.5;
     }
+    .no-data {
+      width: 100%;
+      text-align: center;
+      padding-top: 15px;
+      color: #79797980;
+      font-size: nth($font-sizes, 4);
+    }
     .center-vh {
       display: flex;
       align-items: center;
@@ -216,28 +224,23 @@
     }
     .error-input {
       font-size: nth($font-sizes, 3);
-      font-family: $mainFont;
       color: #ed2024;
     }
     .head-menu3 {
       color: #414141;
       font-size: nth($font-sizes, 3);
-      font-family: $mainFont;
     }
     .head-menu5 {
       color: #797979;
       font-size: nth($font-sizes, 5);
-      font-family: $mainFont;
     }
     .head-menu7 {
       color: #797979;
       font-size: nth($font-sizes, 7);
-      font-family: $mainFont;
     }
     .rows-form {
       color: #414141;
       font-size: nth($font-sizes, 3);
-      font-family: $mainFont;
       display: flex;
       .rows-title {
         display: flex;
@@ -262,7 +265,6 @@
         }
         &::placeholder {
           color: #11111169;
-          font-family: $mainFont;
           font-size: nth($font-sizes, 3);
         }
       }
@@ -297,7 +299,6 @@
       &.cancel-btn-disabled {
         width: 106px;
         font-size: nth($font-sizes, 3);
-        font-family: $mainFont;
       }
       &.cancel-btn {
         color: white;
@@ -320,11 +321,6 @@
       }
     }
     &.confirm-dialog {
-      .v-card__title,
-      .cancel,
-      .save {
-        font-family: $mainFont;
-      }
       .v-card__title {
         color: #727272;
         font-size: nth($font-sizes, 4);
@@ -363,7 +359,6 @@
           font-weight: 500;
           color: #797979;
           font-size: nth($font-sizes, 3);
-          font-family: $mainFont;
           .column-name {
             padding-top: 3px;
           }
@@ -383,7 +378,6 @@
           padding-top: 3px;
           padding-bottom: 8px;
           .body {
-            font-family: $mainFont;
             color: #797979;
             font-size: nth($font-sizes, 3);
           }
@@ -426,6 +420,10 @@
         }
       }
     }
+    .v-input--selection-controls {
+      padding: 0px;
+      margin: 0px;
+    }
   }
 }
 
@@ -434,7 +432,6 @@
   .details {
     color: #767676;
     font-size: nth($font-sizes, 3);
-    font-family: $mainFont;
   }
   .v-btn {
     width: 200px;
@@ -446,7 +443,6 @@
     width: 100%;
     color: #797979;
     font-size: nth($font-sizes, 7);
-    font-family: $mainFont;
     font-weight: map-get($font-weight, "regular");
     margin-top: 30px;
     text-align: center;
@@ -478,7 +474,6 @@
     color: $dark_red;
     font-size: nth($font-sizes, 7);
     font-weight: bold;
-    font-family: $mainFont;
     text-align: center;
     padding-top: 8px;
     padding-bottom: 8px;
@@ -492,7 +487,6 @@
   .details {
     color: #767676;
     font-size: nth($font-sizes, 3);
-    font-family: $mainFont;
     overflow-x: hidden;
     overflow-y: auto;
     max-height: 126px;
