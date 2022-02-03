@@ -193,6 +193,9 @@
                 padding: 0px;
                 margin: 0px;
                 height: 25px;
+                .v-input__append-inner{
+                  margin-top: 0px;
+                }
               }
 
               .v-select__selection--comma {
