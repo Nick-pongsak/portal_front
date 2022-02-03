@@ -74,7 +74,7 @@
                 <div class="deafult-name">{{ accountNameEng }}</div>
               </v-avatar>
               <v-avatar v-show="!showDefaultAccount" size="37">
-                <v-img src="@/assets/icons/account_demo.png"></v-img>
+                <v-img src="@/assets/images/account_demo.png"></v-img>
               </v-avatar>
             </div>
             <div :style="{ 'margin-left': '14px' }" v-show="resizeHeader">
@@ -110,7 +110,7 @@
               </template>
 
               <v-avatar v-show="!showDefaultAccount" size="100">
-                <v-img src="@/assets/icons/account_demo.png"></v-img>
+                <v-img src="@/assets/images/account_demo.png"></v-img>
               </v-avatar>
               <div v-show="showDefaultAccount" class="deafult-name">
                 {{ accountNameEng }}
@@ -189,9 +189,9 @@
           </div>
           <div class="center-vh" style="padding-top:20px">
             <v-avatar v-show="!showDefaultAccount" size="230">
-              <v-img src="@/assets/icons/account_demo.png"> </v-img>
+              <v-img src="@/assets/images/account_demo.png"> </v-img>
               <!-- <img :src="`${profilePicPath}`"/> -->
-              <!-- <img src="@/assets/icons/account_demo.png"/> -->
+              <!-- <img src="@/assets/images/account_demo.png"/> -->
               <!-- <v-img :src="`${profilePicPath}`"></v-img> -->
               <!-- <v-img :src="`${profilePicPath}`"></v-img> -->
             </v-avatar>
@@ -372,7 +372,7 @@
           ></v-icon>
         </div>
         <div>
-          <div class="head-menu">
+          <div class="head-menu5">
             {{ 'รายการแอปพลิเคชันของคุณ' }}
           </div>
           <div class="line-page" style="margin-top:8px"></div>
@@ -473,7 +473,7 @@ export default {
   props: {},
   data () {
     return {
-      profilePicPath: '@/assets/icons/account_demo.png',
+      profilePicPath: '@/assets/images/account_demo.png',
       language: 'TH',
       accountName: 'กิตติชัย กำแพงทอง',
       accountNameEng: 'K',

@@ -1,6 +1,6 @@
 <template>
   <div style="height:calc(100% - 50px);">
-    <v-card style="padding:20px 5px 20px 20px">
+    <v-card style="padding:20px 5px 20px 20px;height: calc(100% - 10px);">
       <div class="detail-add">
         <div class="rows">
           <div style="width:30%" class="rows-name">ชื่อแอปพลิเคชัน (TH)</div>
@@ -70,7 +70,7 @@
             <v-btn
               @click="openPopupType()"
               class="cancel-btn"
-              style="height:32px;width:32px;margin-left:8px"
+              style="height:25px;width:32px;margin-left:8px"
             >
               <v-icon
                 v-text="'mdi-cog'"
@@ -188,37 +188,44 @@
         <div class="rows">
           <div style="width:30%" class="rows-name">รูปแบนเนอร์</div>
           <div style="width:70%" class="rows-input">
+            <!-- :loading="isSelecting" -->
             <v-btn
               class="cancel-btn"
-              style="width:200px"
+              style="width:200px;margin-top:5px"
               @click="onButtonClick"
             >
-              <!-- :loading="isSelecting" -->
               {{ $t('btn_upload') }}
             </v-btn>
-            <input
-              ref="uploader"
-              class="d-none"
-              type="file"
-              accept="image/*"
-              @change="onFileChanged"
-            />
-            <div class="pic-upload" v-if="selectedFile == null">
-              240*180
-            </div>
-            <div v-else class="pic-upload-success">
-              <v-img
-                max-height="180"
-                max-width="240"
-                :src="'https://cdn.vuetifyjs.com/images/cards/cooking.png'"
+            <div class="upload-block">
+              <image-uploader
+                :preview="true"
+                :maxHeight="768"
+                :className="['fileinput', { 'fileinput--loaded': hasImage }]"
+                capture="environment"
+                :debug="1"
+                accept="image/*"
+                :autoRotate="true"
+                outputFormat="verbose"
+                @input="setImage"
               >
-              </v-img>
+                <label
+                  for="fileInput"
+                  slot="upload-label"
+                  ref="uploader"
+                  style="visibility: hidden;"
+                >
+                  {{ hasImage ? 'Replace' : 'Click to upload' }}
+                </label>
+              </image-uploader>
+            </div>
+            <div class="pic-upload" v-if="image == null">
+              240*180
             </div>
           </div>
         </div>
       </div>
     </v-card>
-    <div style="display:flex;padding-top:27px">
+    <div style="display:flex;padding-top:15px">
       <div style="width:50%">
         <v-btn
           @click="clear()"
@@ -436,6 +443,7 @@
 </template>
 
 <script>
+import ImageUploader from 'vue-image-upload-resize'
 export default {
   name: 'add-app',
   props: {
@@ -485,12 +493,21 @@ export default {
       editRow: {},
       NameThInput: '',
       NameEnInput: '',
-      enableType: false
+      enableType: false,
+      hasImage: false,
+      image: null
     }
   },
   computed: {},
   watch: {},
   methods: {
+    setImage: function (output) {
+      this.hasImage = true
+      this.image = output
+      // console.log('Info', output)
+      // console.log('Info', output.info)
+      // console.log('Exif', output.exif)
+    },
     AddNewType () {
       this.editMode = true
     },
@@ -559,15 +576,6 @@ export default {
       }
     },
     onButtonClick () {
-      // this.isSelecting = true
-      window.addEventListener(
-        'focus',
-        () => {
-          // this.isSelecting = false
-        },
-        { once: true }
-      )
-
       this.$refs.uploader.click()
     },
     onFileChanged (e) {
@@ -578,6 +586,9 @@ export default {
 
       // do something
     }
+  },
+  components: {
+    ImageUploader
   },
   mounted () {}
 }

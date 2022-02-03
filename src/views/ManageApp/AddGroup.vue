@@ -1,6 +1,6 @@
 <template>
   <div style="height:calc(100% - 50px);">
-    <v-card style="padding:20px 5px 20px 20px;">
+    <v-card style="padding:20px 5px 20px 20px;height: calc(100% - 10px);">
       <div class="detail-add" style="overflow:hidden">
         <div class="rows">
           <div style="width:30%" class="rows-name">
@@ -135,7 +135,7 @@
         </div>
       </div>
     </v-card>
-    <div style="display:flex;padding-top:27px">
+    <div style="display:flex;padding-top:15px">
       <div style="width:50%">
         <v-btn
           @click="clear()"

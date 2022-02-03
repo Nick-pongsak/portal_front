@@ -165,9 +165,9 @@
     padding-right: 8px;
     .text {
       color: #414141;
-      font-size: nth($font-sizes, 5);
+      font-size: nth($font-sizes, 3);
       width: 150px;
-      padding: 5px 10px 8px 10px;
+      padding: 3px 8px 6px 8px;
       cursor: pointer;
     }
   }
@@ -176,9 +176,9 @@
     padding-right: 5px;
     .text {
       color: #414141;
-      font-size: nth($font-sizes, 5);
+      font-size: nth($font-sizes, 3);
       cursor: pointer;
-      padding: 5px 10px 8px 10px;
+      padding: 3px 8px 6px 8px;
     }
   }
 }
@@ -229,6 +229,10 @@
       color: #414141;
       font-size: nth($font-sizes, 3);
     }
+    .head-menu4 {
+      color: #414141;
+      font-size: nth($font-sizes, 4);
+    }
     .head-menu5 {
       color: #797979;
       font-size: nth($font-sizes, 5);
@@ -267,10 +271,6 @@
           font-size: nth($font-sizes, 3);
         }
       }
-      &.rows-input {
-        // height: 30px;
-      }
-
       &.search-form {
         display: flex;
         width: 300px;
@@ -423,7 +423,6 @@
     }
   }
 }
-
 #pwd-dialogs {
   padding: 90px 60px 70px 60px !important;
   .details {
@@ -510,5 +509,15 @@
     &::-webkit-scrollbar-thumb:hover {
       background: rgb(145, 145, 145);
     }
+  }
+}
+.upload-block {
+  .img-preview {
+    width: 240px;
+    height: 180px;
+    margin-top: 18px;
+  }
+  #fileInput {
+    display: none;
   }
 }

@@ -19,6 +19,8 @@ import 'vue-dnd-zone/vue-dnd-zone.css'
 import VueDndZone from 'vue-dnd-zone'
 Vue.use(VueDndZone)
 
+import ImageUploader from 'vue-image-upload-resize'
+Vue.use(ImageUploader);
 // import './firebase';
 import { rtdbPlugin as VueFire } from 'vuefire'
 Vue.use(VueFire)
