@@ -29,7 +29,8 @@
           </div>
         </div>
         <div
-          style="width:20%;justify-content: end;align-items: flex-end;display:flex;padding-right:30px"
+          class="justify-end"
+          style="width:20%;display:flex;padding-right:30px"
         >
           <v-btn @click="add()" class="cancel-btn">
             <v-icon

@@ -6,7 +6,7 @@
         DHAS PORTAL
       </div>
     </div>
-    <div style="width:50%" class="right-header">
+    <div style="width:50%" class="right-header justify-end">
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
           <div v-bind="attrs" v-on="on">

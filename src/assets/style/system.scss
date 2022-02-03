@@ -22,7 +22,6 @@
   .right-header {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
     font-size: nth($font-sizes, 3);
 
     .deafult-name {
@@ -288,8 +287,6 @@
       }
     }
     .right-action {
-      justify-content: end;
-      align-items: flex-end;
       display: flex;
     }
     button {

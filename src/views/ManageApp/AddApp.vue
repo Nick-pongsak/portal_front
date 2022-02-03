@@ -347,7 +347,7 @@
                   />
                 </div>
               </div>
-              <div class="right-action" style="width:20%;">
+              <div class="right-action justify-end" style="width:20%;">
                 <v-btn @click="AddNewType()" class="cancel-btn">
                   <v-icon
                     v-text="'mdi-plus'"
