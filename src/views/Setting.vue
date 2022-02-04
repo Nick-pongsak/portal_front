@@ -18,8 +18,15 @@
     <div class="right">
       <!-- <div class="header">{{ $t('set.right_menu') }}</div> -->
       <div class="header">{{ currentView.text }}</div>
+      <user-list
+        v-if="currentView.code == '1'"
+        :menu="rightMenu"
+        @cancel="cancelApp"
+        @save="saveApp"
+        @clear="clearApp"
+      />
       <main-list-app
-        v-if="currentView.code == '2'"
+        v-else-if="currentView.code == '2'"
         :menu="rightMenu"
         @add="addApp"
         @edit="editApp"
@@ -28,6 +35,7 @@
       />
       <add-app
         v-else-if="activeTab.code == '2.1'"
+        :data="editRow"
         :menu="rightMenu"
         @cancel="cancelApp"
         @save="saveApp"
@@ -45,6 +53,7 @@
 </template>
 
 <script>
+import UserList from './UserList'
 import MainListApp from './ManageApp/Main'
 import AddApp from './ManageApp/AddApp'
 import AddGroup from './ManageApp/AddGroup'
@@ -190,7 +199,15 @@ export default {
           text: 'จัดกลุ่มผู้ใช้งานแอปพลิเคชัน'
         }
       ],
-      activeTab: {}
+      activeTab: {},
+      defaultEditRow: {
+        status: 1,
+        status_sso: 1,
+        type_login: 1,
+        image: 1,
+        mode: 'add'
+      },
+      editRow: {}
     }
   },
   computed: {},
@@ -223,6 +240,7 @@ export default {
             : 'เพิ่มกลุ่มผู้ใช้งานแอปพลิเคชัน'
       }
       this.activeTab = value
+      this.editRow = this.defaultEditRow
     },
     editApp (value) {
       this.currentView = {
@@ -233,6 +251,9 @@ export default {
             : 'เพิ่มกลุ่มผู้ใช้งานแอปพลิเคชัน'
       }
       this.activeTab = value.current
+      this.editRow = value.item
+      this.editRow.mode = 'edit'
+      console.log(this.editRow)
     },
     selectedMenu (item, index) {
       this.selectedItem = item
@@ -268,7 +289,8 @@ export default {
   components: {
     MainListApp,
     AddApp,
-    AddGroup
+    AddGroup,
+    UserList
   },
   mounted () {}
 }

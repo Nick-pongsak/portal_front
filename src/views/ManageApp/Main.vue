@@ -25,6 +25,7 @@
               type="text"
               v-model="searchApp"
               :placeholder="$t('input_search')"
+              maxlength="250"
             />
           </div>
         </div>
@@ -44,52 +45,52 @@
       </div>
       <div v-if="active.code == '2.1'" class="table">
         <div class="head-table">
-          <div class="head" style="width:9.5%" @click="sort('no')">
+          <div class="head" style="width:9.5%" @click="sort(headCol[0], 0)">
             <div class="column-name">{{ $t('set.list_col1') }}</div>
             <v-icon
-              v-text="sortNo ? 'mdi-menu-up' : 'mdi-menu-down'"
+              v-text="sortNo == 0 ? 'mdi-menu-up' : 'mdi-menu-down'"
               style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
               size="20"
             ></v-icon>
           </div>
           <div
             class="head"
-            style="width:30%;padding-left:8px"
-            @click="sort('app_name')"
+            style="width:25%;padding-left:8px"
+            @click="sort(headCol[1], 1)"
           >
             <div class="column-name">{{ $t('set.list_col2') }}</div>
             <v-icon
-              v-text="sortAppName ? 'mdi-menu-up' : 'mdi-menu-down'"
+              v-text="sortNo == 1 ? 'mdi-menu-up' : 'mdi-menu-down'"
               style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
               size="22"
             ></v-icon>
           </div>
-          <div class="head" style="width:13%" @click="sort('type')">
+          <div class="head" style="width:22%" @click="sort(headCol[2], 2)">
             <div class="column-name">
               {{ $t('set.list_col3') }}
             </div>
             <v-icon
-              v-text="sortType ? 'mdi-menu-up' : 'mdi-menu-down'"
+              v-text="sortNo == 2 ? 'mdi-menu-up' : 'mdi-menu-down'"
               style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
               size="22"
             ></v-icon>
           </div>
-          <div class="head" style="width:22%" @click="sort('access')">
+          <div class="head" style="width:20%" @click="sort(headCol[3], 3)">
             <div class="column-name">
               {{ $t('set.list_col4') }}
             </div>
             <v-icon
-              v-text="sortAccess ? 'mdi-menu-up' : 'mdi-menu-down'"
+              v-text="sortNo == 3 ? 'mdi-menu-up' : 'mdi-menu-down'"
               style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
               size="22"
             ></v-icon>
           </div>
-          <div class="head" style="width:15%" @click="sort('status')">
+          <div class="head" style="width:13%" @click="sort(headCol[4], 4)">
             <div class="column-name">
               {{ $t('set.list_col5') }}
             </div>
             <v-icon
-              v-text="sortStatus ? 'mdi-menu-up' : 'mdi-menu-down'"
+              v-text="sortNo == 4 ? 'mdi-menu-up' : 'mdi-menu-down'"
               style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
               size="22"
             ></v-icon>
@@ -101,6 +102,9 @@
           </div>
         </div>
         <div class="body-table">
+          <div v-if="list.length == 0" class="no-data">
+            -- ไม่พบรายการ --
+          </div>
           <div
             class="body-row"
             v-for="(item, index) in list"
@@ -110,29 +114,29 @@
               class="body"
               style="width:10%;padding-top:5px;padding-left:7px"
             >
-              {{ index + 1 }}
+              {{ item.index + 1 }}
             </div>
             <div
               class="body"
-              style="width:30%;padding-left:5px;padding-top:5px"
+              style="width:25%;padding-left:5px;padding-top:5px"
             >
-              {{ item.app_name + ' index' }}
+              {{ item.name_th }}
             </div>
-            <div class="body" style="width:13%;padding-top:5px">
-              {{ item.type }}
+            <div class="body" style="width:22%;padding-top:5px">
+              {{ item.category_name_th }}
             </div>
-            <div class="body" style="width:22%;display:flex">
-              {{ item.access }}
+            <div class="body" style="width:20%;display:flex">
+              {{ item.type_login ? 'LDAP (AD)' : 'ผู้ใช้งานบนแอปพลิเคชัน' }}
             </div>
             <div
               class="body"
               :style="{
-                width: '15%',
+                width: '13%',
                 display: 'flex',
-                color: item.status == true ? '#66BB6A' : '#FBC02D'
+                color: item.status ? '#66BB6A' : '#FBC02D'
               }"
             >
-              {{ item.status == true ? 'เปิดใช้งาน' : 'ปิดการใช้งาน' }}
+              {{ item.status ? 'เปิดใช้งาน' : 'ปิดการใช้งาน' }}
             </div>
             <div class="body" style="width:10%;display:flex;padding-left:12px">
               <v-icon
@@ -158,7 +162,7 @@
           <div
             class="head"
             style="width:40%;padding-left:8px"
-            @click="sort('app_name')"
+            @click="sort('name_th')"
           >
             <div class="column-name">{{ $t('set.manege_col2') }}</div>
             <v-icon
@@ -167,7 +171,11 @@
               size="22"
             ></v-icon>
           </div>
-          <div class="head" style="width:20%" @click="sort2('count')">
+          <div
+            class="head"
+            style="width:20%"
+            @click="sort2('category_name_th')"
+          >
             <div class="column-name">
               {{ $t('set.manege_col3') }}
             </div>
@@ -177,7 +185,7 @@
               size="22"
             ></v-icon>
           </div>
-          <div class="head" style="width:20%" @click="sort2('access')">
+          <div class="head" style="width:20%" @click="sort2('type_login')">
             <div class="column-name">
               {{ $t('set.manege_col4') }}
             </div>
@@ -194,6 +202,9 @@
           </div>
         </div>
         <div class="body-table">
+          <div v-if="list.list2 == 0" class="no-data">
+            -- ไม่พบรายการ --
+          </div>
           <div
             class="body-row"
             v-for="(item, index) in list2"
@@ -247,104 +258,7 @@ export default {
   },
   data () {
     return {
-      list: [
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'LDAP (AD)',
-          status: false
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        }
-      ],
+      list: [],
       list2: [
         {
           app_name: 'app',
@@ -428,27 +342,29 @@ export default {
         }
       ],
       searchApp: '',
-      sortNo: false,
-      sortAppName: false,
-      sortType: false,
-      sortAccess: false,
-      sortType: false,
-      sortStatus: false,
+      sortNo: null,
+      headCol: ['index', 'name_th', 'category_name_th', 'type_login', 'status'],
       sortNo2: false,
       sortAppName2: false,
       sortCount2: false,
-      sortAccess2: false
+      sortAccess2: false,
+      mainSort: {
+        feild: 'name_th',
+        orderby: true
+      }
     }
   },
   computed: {},
   watch: {
     searchApp: {
       handler: function (todos) {
-        if (this.active.code == '1') {
-          // console.log('searchApp===> 1')
-        } else {
-          // console.log('searchApp===> 2')
+        // if (this.active.code == '2.1') {
+        if (todos.trim().length > 2 || todos.trim().length == 0) {
+          this.fetchData()
         }
+        // } else {
+        // console.log('searchApp===> 2')
+        // }
       }
     }
   },
@@ -467,30 +383,55 @@ export default {
       this.$emit('tabs', item)
     },
     sort2 (feild) {
-      if (feild == 'no') {
-        this.sortNo2 = !this.sortNo
-      } else if (feild == 'app_name') {
-        this.sortAppName2 = !this.sortAppName2
-      } else if (feild == 'count') {
-        this.sortCount2 = !this.sortCount2
-      } else if (feild == 'access') {
-        this.sortAccess2 = !this.sortAccess2
+      this.sortNo = this.sortNo == index ? null : index
+      if (feild !== 'no') {
+        if (this.mainSort.feild == feild) {
+          this.mainSort.orderby = !this.mainSort.orderby
+        } else {
+          this.mainSort.orderby = false
+        }
+        this.mainSort.feild = feild
+        this.fetchData()
       }
     },
-    sort (feild) {
-      if (feild == 'no') {
-        this.sortNo = !this.sortNo
-      } else if (feild == 'app_name') {
-        this.sortAppName = !this.sortAppName
-      } else if (feild == 'type') {
-        this.sortType = !this.sortType
-      } else if (feild == 'access') {
-        this.sortAccess = !this.sortAccess
-      } else if (feild == 'status') {
-        this.sortStatus = !this.sortStatus
+    sort (feild, index) {
+      this.sortNo = this.sortNo == index ? null : index
+      if (feild == 'index') {
+      } else {
+        if (this.mainSort.feild == feild) {
+          this.mainSort.orderby = !this.mainSort.orderby
+        } else {
+          this.mainSort.orderby = false
+        }
+        this.mainSort.feild = feild
+        this.fetchData()
+      }
+    },
+    fetchData () {
+      if (this.active.code == '2.1') {
+        let req = {
+          keyword: this.searchApp.trim(),
+          field: this.mainSort.feild,
+          sort: this.mainSort.orderby ? 'asc' : 'desc'
+        }
+        this.$store.dispatch('getAppList', req).then(res => {
+          this.list = res.data
+        })
+      } else {
+        // let req = {
+        //   keyword: this.searchApp.trim(),
+        //   field: this.mainSort.feild,
+        //   sort: this.mainSort.orderby ? 'asc' : 'desc'
+        // }
+        // this.$store.dispatch('getGroupist', req).then(res => {
+        //   this.list2 = res.data
+        // })
       }
     }
   },
-  mounted () {}
+  mounted () {},
+  created () {
+    this.fetchData()
+  }
 }
 </script>

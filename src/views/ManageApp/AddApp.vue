@@ -8,7 +8,7 @@
             <div class="input-with-icon" style="width: 365px;">
               <input
                 type="text"
-                v-model="app_name_th"
+                v-model="editRow.name_th"
                 :placeholder="$t('input_selected')"
               />
             </div>
@@ -20,7 +20,7 @@
             <div class="input-with-icon" style="width: 365px;">
               <input
                 type="text"
-                v-model="app_name_en"
+                v-model="editRow.name_en"
                 :placeholder="$t('input_selected')"
               />
             </div>
@@ -33,7 +33,7 @@
           <div style="width:70%;padding-right:25px" class="rows-input">
             <div class="input-with-icon" style="width: 100%">
               <textarea
-                v-model="app_desc_th"
+                v-model="editRow.description_th"
                 :placeholder="$t('input_selected')"
               ></textarea>
             </div>
@@ -46,7 +46,7 @@
           <div style="width:70%;padding-right:25px" class="rows-input">
             <div class="input-with-icon" style="width: 100%">
               <textarea
-                v-model="app_desc_en"
+                v-model="editRow.description_en"
                 :placeholder="$t('input_selected')"
               ></textarea>
             </div>
@@ -57,15 +57,15 @@
           <div style="width:70%;display:flex" class="rows-input">
             <div class="input-with-icon" style="width: 365px;">
               <v-select
-                v-model="app_type"
+                v-model="editRow.category_id"
                 :items="items"
                 :placeholder="$t('input_selected')"
-                item-text="state"
-                item-value="abbr"
+                item-text="name_th"
+                item-value="category_id"
                 persistent-hint
-                return-object
                 single-line
               ></v-select>
+              <!-- return-object -->
             </div>
             <v-btn
               @click="openPopupType()"
@@ -86,7 +86,7 @@
             <div class="input-with-icon" style="width: 365px;">
               <input
                 type="text"
-                v-model="app_code"
+                v-model="editRow.key_app"
                 :placeholder="$t('input_selected')"
               />
             </div>
@@ -95,11 +95,11 @@
         <div class="rows">
           <div style="width:30%" class="rows-name">ประเภทการเข้าใช้งานระบบ</div>
           <div style="width:70%" class="rows-input">
-            <v-radio-group v-model="type_access" style="display:flex">
+            <v-radio-group v-model="editRow.type_login" style="display:flex">
               <div class="radio" style="margin-right: 65px;">
                 <v-radio
                   :color="'#CE1212'"
-                  :value="'1'"
+                  :value="1"
                   :ripple="false"
                   :messages="false"
                   :light="false"
@@ -109,7 +109,7 @@
               <div class="radio">
                 <v-radio
                   :color="'#CE1212'"
-                  :value="'2'"
+                  :value="0"
                   :ripple="false"
                   :messages="false"
                   :light="false"
@@ -122,11 +122,11 @@
         <div class="rows">
           <div style="width:30%" class="rows-name">สถานะการเชื่อมต่อ SSO</div>
           <div style="width:70%" class="rows-input">
-            <v-radio-group v-model="connect_sso" style="display:flex">
+            <v-radio-group v-model="editRow.status_sso" style="display:flex">
               <div class="radio">
                 <v-radio
                   :color="'#CE1212'"
-                  :value="'1'"
+                  :value="1"
                   :ripple="false"
                   :messages="false"
                   :light="false"
@@ -136,7 +136,7 @@
               <div class="radio">
                 <v-radio
                   :color="'#CE1212'"
-                  :value="'2'"
+                  :value="0"
                   :ripple="false"
                   :messages="false"
                   :light="false"
@@ -149,11 +149,11 @@
         <div class="rows">
           <div style="width:30%" class="rows-name">สถานะแอปพลิเคชัน</div>
           <div style="width:70%" class="rows-input">
-            <v-radio-group v-model="app_status" style="display:flex">
+            <v-radio-group v-model="editRow.status" style="display:flex">
               <div class="radio">
                 <v-radio
                   :color="'#CE1212'"
-                  :value="'1'"
+                  :value="1"
                   :ripple="false"
                   :messages="false"
                   :light="false"
@@ -163,7 +163,7 @@
               <div class="radio">
                 <v-radio
                   :color="'#CE1212'"
-                  :value="'2'"
+                  :value="0"
                   :ripple="false"
                   :messages="false"
                   :light="false"
@@ -179,7 +179,7 @@
             <div class="input-with-icon" style="width: 544px;">
               <input
                 type="text"
-                v-model="url_app"
+                v-model="editRow.url"
                 :placeholder="$t('input_selected')"
               />
             </div>
@@ -243,9 +243,9 @@
         >
           {{ $t('btn_cancel') }}
         </v-btn>
-        <!-- @click="save()" -->
         <!-- @click.stop="dialog = true" -->
         <v-btn
+          @click="saveBtn()"
           :class="enableBtn ? 'cancel-btn disabled' : 'cancel-btn'"
           style="height: 22px"
         >
@@ -335,7 +335,7 @@
                 {{ $t('btn_cancel') }}
               </v-btn>
               <v-btn
-                @click="CloseNewType()"
+                @click="SaveNewType()"
                 :class="enableType ? 'cancel-btn-disabled' : 'cancel-btn'"
               >
                 {{ $t('btn_save') }}
@@ -367,28 +367,40 @@
             </div>
             <div class="table">
               <div class="head-table">
-                <div class="head" style="width:10%" @click="sort('no')">
+                <div
+                  class="head"
+                  style="width:10%"
+                  @click="sort(headCol[0], 0)"
+                >
                   <div class="column-name">No</div>
                   <v-icon
-                    v-text="sortNo ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    v-text="sortNo == 0 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
                     size="22"
                   ></v-icon>
                 </div>
-                <div class="head" style="width:40%" @click="sort('type_th')">
+                <div
+                  class="head"
+                  style="width:40%"
+                  @click="sort(headCol[1], 1)"
+                >
                   <div class="column-name">หมวดหมู่ (TH)</div>
                   <v-icon
-                    v-text="sortTypeTh ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    v-text="sortNo == 1 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
                     size="22"
                   ></v-icon>
                 </div>
-                <div class="head" style="width:40%" @click="sort('type_en')">
+                <div
+                  class="head"
+                  style="width:40%"
+                  @click="sort(headCol[2], 2)"
+                >
                   <div class="column-name">
                     หมวดหมู่ (EN)
                   </div>
                   <v-icon
-                    v-text="sortTypeEn ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    v-text="sortNo == 2 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
                     size="22"
                   ></v-icon>
@@ -400,16 +412,19 @@
                 </div>
               </div>
               <div class="body-table">
+                <div v-if="items.list2 == 0" class="no-data">
+                  -- ไม่พบรายการ --
+                </div>
                 <div
                   class="body-row"
-                  v-for="(item, index) in list"
+                  v-for="(item, index) in items"
                   :key="'setapp' + index"
                 >
                   <div
                     class="body"
                     style="width:10%;padding-left:5px;padding-top:5px"
                   >
-                    {{ index + 1 }}
+                    {{ item.index + 1 }}
                   </div>
                   <div class="body" style="width:40%;padding-top:5px">
                     {{ item.name_th }}
@@ -450,23 +465,16 @@ export default {
     menu: {
       type: Array,
       required: true
+    },
+    data: {
+      type: Object,
+      required: true
     }
   },
   data () {
     return {
-      app_name_th: '',
-      app_name_en: '',
-      app_desc_th: '',
-      app_desc_en: '',
-      app_type: '',
-      app_code: '',
-      items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
-      type_access: '1',
-      connect_sso: '1',
-      app_status: '1',
-      url_app: '',
+      items: [],
       enableBtn: false,
-      // isSelecting: false,
       selectedFile: null,
       dialog: false,
       errorDialog: 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?',
@@ -474,32 +482,33 @@ export default {
       rightBtn: 'บันทึก',
       typeDialog: false,
       searchApp: '',
-      sortNo: false,
-      sortTypeTh: false,
-      sortTypeEn: false,
-      list: [
-        {
-          no: 1,
-          name_th: 'CRM',
-          name_en: 'CRM'
-        },
-        {
-          no: 2,
-          name_th: 'ERP',
-          name_en: 'ERP'
-        }
-      ],
+      sortNo: null,
+      headCol: ['index', 'name_th', 'name_en'],
       editMode: false,
-      editRow: {},
       NameThInput: '',
       NameEnInput: '',
       enableType: false,
       hasImage: false,
-      image: null
+      image: null,
+      editRow: this.data,
+      mainSort: {
+        feild: 'name_th',
+        orderby: true
+      },
+      modeAdd: null,
+      editRowPop: {}
     }
   },
   computed: {},
-  watch: {},
+  watch: {
+    searchApp: {
+      handler: function (todos) {
+        if (todos.trim().length > 2 || todos.trim().length == 0) {
+          this.getTypeList()
+        }
+      }
+    }
+  },
   methods: {
     setImage: function (output) {
       this.hasImage = true
@@ -509,28 +518,57 @@ export default {
       // console.log('Exif', output.exif)
     },
     AddNewType () {
+      this.modeAdd = true
       this.editMode = true
     },
     EditNewType (item) {
       this.editMode = true
+      this.modeAdd = false
+      this.editRowPop = item
       this.NameThInput = item.name_th
       this.NameEnInput = item.name_en
     },
+    SaveNewType (item) {
+      let result = {
+        name_th: this.NameThInput,
+        name_en: this.NameEnInput
+      }
+      if (!this.modeAdd) {
+        result = {
+          category_id: this.editRowPop.category_id,
+          name_th: this.NameThInput,
+          name_en: this.NameEnInput
+        }
+      }
+      let url = this.modeAdd ? 'addType' : 'updateType'
+      this.$store.dispatch(url, result).then(res => {
+        this.modeAdd = null
+        this.editMode = false
+        this.getTypeList()
+      })
+    },
     DeleteNewType (item) {
-      this.editMode = true
+      this.$store.dispatch('deleteType', item).then(res => {
+        this.getTypeList()
+      })
     },
     CloseNewType () {
+      this.modeAdd = null
       this.editMode = false
       this.NameThInput = ''
       this.NameEnInput = ''
     },
-    sort (feild) {
-      if (feild == 'no') {
-        this.sortNo = !this.sortNo
-      } else if (feild == 'type_th') {
-        this.sortTypeTh = !this.sortTypeTh
-      } else if (feild == 'type_en') {
-        this.sortTypeEn = !this.sortTypeEn
+    sort (feild, index) {
+      this.sortNo = this.sortNo == index ? null : index
+      if (feild == 'index') {
+      } else {
+        if (this.mainSort.feild == feild) {
+          this.mainSort.orderby = !this.mainSort.orderby
+        } else {
+          this.mainSort.orderby = false
+        }
+        this.mainSort.feild = feild
+        this.getTypeList()
       }
     },
     openPopupType () {
@@ -556,36 +594,50 @@ export default {
       // this.selectedFile = null
       // this.$emit('clear', null)
     },
-    save () {
-      console.log('3==>')
+    saveBtn () {
+      this.dialog = true
       this.rightBtn = 'บันทึก'
-      if (this.error) {
-        this.dialog = false
-      } else {
-        // this.error = true
-        // this.errorDialog =
-        //   'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ (Error Code 1001)'
+    },
+    save () {
+      // if (this.error) {
+      //   this.dialog = false
+      // } else {
+      //   // this.error = true
+      //   // this.errorDialog =
+      //   //   'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ (Error Code 1001)'
 
-        // this.error = true
-        // this.errorDialog =
-        //   'ข้อมูลแอปพลิเคชันดังกล่าวถูกใช้งานอยู่ในเมนู "จัดกลุ่มผู้ใช้งานแอปพลิเคชัน" กรุณายืนยัน การดำเนินการ'
+      //   // this.error = true
+      //   // this.errorDialog =
+      //   //   'ข้อมูลแอปพลิเคชันดังกล่าวถูกใช้งานอยู่ในเมนู "จัดกลุ่มผู้ใช้งานแอปพลิเคชัน" กรุณายืนยัน การดำเนินการ'
 
+      //   this.selectedFile = null
+
+      let url = this.editRow.mode == 'add' ? 'addAppList' : 'updateAppList'
+
+      this.$store.dispatch(url, this.editRow).then(res => {
         this.dialog = false
-        this.selectedFile = null
-        this.$emit('save', null)
-      }
+        // this.items = res.data
+      })
+
+      this.$emit('save', null)
+      // }
     },
     onButtonClick () {
       this.$refs.uploader.click()
     },
-    onFileChanged (e) {
-      this.selectedFile = e.target.files[0]
-      setTimeout(() => {
-        // console.log(e.target.files[0].name)
-      }, 2000)
-
-      // do something
+    getTypeList () {
+      let req = {
+        keyword: this.searchApp.trim(),
+        field: this.mainSort.feild,
+        sort: this.mainSort.orderby ? 'asc' : 'desc'
+      }
+      this.$store.dispatch('getType', req).then(res => {
+        this.items = res.data
+      })
     }
+  },
+  created () {
+    this.getTypeList('open')
   },
   components: {
     ImageUploader

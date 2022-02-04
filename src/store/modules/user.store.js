@@ -6,7 +6,7 @@ const store = {
   state: {
     user: null,
     role: null,
-    access_token: '',
+    access_token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODJcL2FwaVwvYXV0aFwvbG9naW4iLCJpYXQiOjE2NDM5NjAxNzYsImV4cCI6MTY0Mzk5NjE3NiwibmJmIjoxNjQzOTYwMTc2LCJqdGkiOiJaRkVNdkI0UktNOXJ3dUE1Iiwic3ViIjoxMCwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.mum6wFw2gs-QU2LuFMS4e2sIQEzopDayRcO_TABb4FA',
     approval: null,
   },
   mutations: {

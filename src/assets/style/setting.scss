@@ -193,13 +193,16 @@
                 padding: 0px;
                 margin: 0px;
                 height: 25px;
-                .v-input__append-inner{
+                .v-input__append-inner {
                   margin-top: 0px;
                 }
               }
-
+              .v-select__selections {
+                height: 25px;
+              }
               .v-select__selection--comma {
                 padding-left: 8px;
+                font-size: nth($font-sizes, 2);
               }
               .v-text-field > .v-input__control > .v-input__slot:before {
                 width: 0%;
@@ -274,6 +277,27 @@
         background: #ce1212;
         color: white;
         opacity: 0.51;
+      }
+    }
+    #user-list {
+      .v-card {
+        .input-with-icon {
+          input[type="text"] {
+            width: 100%;
+            font-size: nth($font-sizes, 2);
+          }
+        }
+        .v-text-field--outlined.v-input--dense.v-text-field--single-line
+          > .v-input__control
+          > .v-input__slot {
+          min-height: 25px;
+          padding-left: 2px;
+        }
+        .v-text-field.v-text-field--solo:not(.v-text-field--solo-flat)
+          > .v-input__control
+          > .v-input__slot {
+          box-shadow: 0px 0px 3px #00000080;
+        }
       }
     }
   }

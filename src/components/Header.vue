@@ -244,8 +244,8 @@
               class="d-none"
               type="file"
               accept="image/*"
-              @change="onFileChanged"
             />
+              <!-- @change="onFileChanged" -->
           </div>
         </v-card-actions>
       </v-card>
@@ -468,6 +468,7 @@
 </template>
 
 <script>
+import ImageUploader from 'vue-image-upload-resize'
 export default {
   name: 'headers',
   props: {},
@@ -725,26 +726,7 @@ export default {
       }
     },
     onButtonClick () {
-      // this.isSelecting = true
-      window.addEventListener(
-        'focus',
-        () => {
-          // this.isSelecting = false
-        },
-        { once: true }
-      )
-
       this.$refs.uploader.click()
-    },
-    onFileChanged (e) {
-      this.selectedFile = e.target.files[0]
-      // console.log(e.target.files)
-      // text: `<div class="normal-text">Please Wait...</div>`,
-      setTimeout(() => {
-        // console.log(e.target.files[0].name)
-      }, 2000)
-
-      // do something
     },
     ChangePic () {
       this.showEditPic = true
@@ -785,6 +767,9 @@ export default {
       this.showEditPic = false
       this.stepChangePic = 0
     }
+  },
+  components: {
+    ImageUploader
   }
 }
 </script>
