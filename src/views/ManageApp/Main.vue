@@ -370,6 +370,7 @@ export default {
   },
   methods: {
     add () {
+      this.fetchData()
       this.$emit('add', this.active)
     },
     edit (item) {
@@ -377,6 +378,7 @@ export default {
         current: this.active,
         item: item
       }
+      this.fetchData()
       this.$emit('edit', obj)
     },
     tabs (item, index) {

@@ -588,8 +588,8 @@ export default {
     clear () {
       console.log('2==>')
       // this.dialog = true
-      this.errorDialog = 'คุณต้องการลบข้อมูลใช่หรือไม่ ?'
-      this.rightBtn = 'ลบ'
+      // this.errorDialog = 'คุณต้องการลบข้อมูลใช่หรือไม่ ?'
+      // this.rightBtn = 'ลบ'
       // this.dialog = false
       // this.selectedFile = null
       // this.$emit('clear', null)
@@ -616,7 +616,6 @@ export default {
 
       this.$store.dispatch(url, this.editRow).then(res => {
         this.dialog = false
-        // this.items = res.data
       })
 
       this.$emit('save', null)
