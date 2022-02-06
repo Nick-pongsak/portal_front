@@ -35,8 +35,25 @@ const store = {
       })
     },
     updateAppList({ state, commit, dispatch }, data) {
+      console.log("update-application ==>", JSON.stringify(data))
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/update-application`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          resolve(res.data.success)
+        }).catch(error => {
+          // commit('SetLoading', false)
+          reject(error)
+        })
+      })
+    },
+    deleteAppList({ state, commit, dispatch }, data) {
+      console.log("delete-application ==>", JSON.stringify(data))
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/delete-application`, data, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${this.getters.access_token}`
@@ -112,6 +129,21 @@ const store = {
     updateType({ state, commit, dispatch }, data) {
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/update_category`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          resolve(res.data.success)
+        }).catch(error => {
+          // commit('SetLoading', false)
+          reject(error)
+        })
+      })
+    },
+    getGroupList({ state, commit, dispatch }, data) {
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/get-group-app`, data, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${this.getters.access_token}`

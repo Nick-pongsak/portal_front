@@ -47,6 +47,7 @@
         @cancel="cancelApp"
         @save="saveApp"
         @clear="clearApp"
+        :data="editRow2"
       />
     </div>
   </div>
@@ -204,10 +205,25 @@ export default {
         status: 1,
         status_sso: 1,
         type_login: 1,
-        image: 1,
-        mode: 'add'
+        image: '',
+        mode: 'add',
+        name_th: '',
+        name_en: '',
+        description_th: '',
+        description_en: '',
+        category_id: 0,
+        key_app: '',
+        url: ''
       },
-      editRow: {}
+      defaultEditRow2: {
+        mode: 'add',
+        name_th: '',
+        name_en: '',
+        total_user: 0,
+        total_app: 0
+      },
+      editRow: {},
+      editRow2: {}
     }
   },
   computed: {},
@@ -240,7 +256,11 @@ export default {
             : 'เพิ่มกลุ่มผู้ใช้งานแอปพลิเคชัน'
       }
       this.activeTab = value
-      this.editRow = this.defaultEditRow
+      if (value.code == '2.1') {
+        this.editRow = this.defaultEditRow
+      } else {
+        this.editRow2 = this.defaultEditRow2
+      }
     },
     editApp (value) {
       this.currentView = {
@@ -251,9 +271,13 @@ export default {
             : 'เพิ่มกลุ่มผู้ใช้งานแอปพลิเคชัน'
       }
       this.activeTab = value.current
-      this.editRow = value.item
-      this.editRow.mode = 'edit'
-      console.log(this.editRow)
+      if (value.current.code == '2.1') {
+        this.editRow = value.item
+        this.editRow.mode = 'edit'
+      } else {
+        this.editRow2 = value.item
+        this.editRow2.mode = 'edit'
+      }
     },
     selectedMenu (item, index) {
       this.selectedItem = item

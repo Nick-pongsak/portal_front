@@ -45,48 +45,48 @@
           <div style="width:70%">
             <div class="table" style="padding-left:0px">
               <div class="head-table" style="background:#ffffff">
-                <div class="head" style="width:10%" @click="sort('no')">
+                <div class="head" style="width:10%" @click="sort(headCol[0], 0)">
                   <div class="column-name">No</div>
                   <v-icon
-                    v-text="sortNo ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    v-text="sortNo == 0 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
                     size="22"
                   ></v-icon>
                 </div>
-                <div class="head" style="width:30%" @click="sort('app')">
+                <div class="head" style="width:30%" @click="sort(headCol[1], 1)">
                   <div class="column-name">แอปพิเคชัน</div>
                   <v-icon
-                    v-text="sortApp ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    v-text="sortNo == 1 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
                     size="22"
                   ></v-icon>
                 </div>
-                <div class="head" style="width:20%" @click="sort('type_en')">
+                <div class="head" style="width:20%" @click="sort(headCol[2], 2)">
                   <div class="column-name">
                     หมวดหมู่ (EN)
                   </div>
                   <v-icon
-                    v-text="sortTypeEn ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    v-text="sortNo == 2 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
                     size="22"
                   ></v-icon>
                 </div>
-                <div class="head" style="width:25%" @click="sort('access')">
+                <div class="head" style="width:25%" @click="sort(headCol[3], 3)">
                   <div class="column-name">
                     การเข้าใช้งาน
                   </div>
                   <v-icon
-                    v-text="sortAccess ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    v-text="sortNo == 3 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
                     size="22"
                   ></v-icon>
                 </div>
-                <div class="head" style="width:15%" @click="sort('status')">
+                <div class="head" style="width:15%" @click="sort(headCol[4], 4)">
                   <div class="column-name">
                     สถานะ
                   </div>
                   <v-icon
-                    v-text="sortStatus ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    v-text="sortNo == 4 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
                     size="22"
                   ></v-icon>
@@ -331,6 +331,10 @@ export default {
     menu: {
       type: Array,
       required: true
+    },
+    data: {
+      type: Object,
+      required: true
     }
   },
   data () {
@@ -344,11 +348,8 @@ export default {
       rightBtn: 'บันทึก',
       groupDialog: false,
       searchApp: '',
-      sortNo: false,
-      sortApp: false,
-      sortTypeEn: false,
-      sortAccess: false,
-      sortStatus: false,
+      sortNo: null,
+      headCol: ['index', 'name_th', 'name_en', 'name_en', 'name_en'],
       list: [
         {
           no: 1,
@@ -416,7 +417,8 @@ export default {
         }
       ],
       enableType: false,
-      mainList: []
+      mainList: [],
+      editRow: this.data
     }
   },
   computed: {},
@@ -436,18 +438,18 @@ export default {
         return 'ผู้ใช้งานบนแอปพลิเคชัน'
       }
     },
-    sort (feild) {
-      if (feild == 'no') {
-        this.sortNo = !this.sortNo
-      } else if (feild == 'app') {
-        this.sortApp = !this.sortApp
-      } else if (feild == 'type_en') {
-        this.sortTypeEn = !this.sortTypeEn
-      } else if (feild == 'access') {
-        this.sortAccess = !this.sortAccess
-      } else if (feild == 'status') {
-        this.sortStatus = !this.sortStatus
+    sort (feild, index) {
+      this.sortNo = this.sortNo == index ? null : index
+      // if (feild == 'index') {
+      // } else {
+      if (this.mainSort.feild == feild) {
+        this.mainSort.orderby = !this.mainSort.orderby
+      } else {
+        this.mainSort.orderby = false
       }
+      this.mainSort.feild = feild
+      this.getTypeList()
+      // }
     },
     openPopup () {
       this.groupDialog = true

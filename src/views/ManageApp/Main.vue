@@ -151,7 +151,7 @@
       </div>
       <div v-else class="table">
         <div class="head-table">
-          <div class="head" style="width:9.5%" @click="sort2('no')">
+          <div class="head" style="width:9.5%" @click="sort('no')">
             <div class="column-name">{{ $t('set.list_col1') }}</div>
             <v-icon
               v-text="sortNo2 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -171,11 +171,7 @@
               size="22"
             ></v-icon>
           </div>
-          <div
-            class="head"
-            style="width:20%"
-            @click="sort2('category_name_th')"
-          >
+          <div class="head" style="width:20%" @click="sort('total_app')">
             <div class="column-name">
               {{ $t('set.manege_col3') }}
             </div>
@@ -185,7 +181,7 @@
               size="22"
             ></v-icon>
           </div>
-          <div class="head" style="width:20%" @click="sort2('type_login')">
+          <div class="head" style="width:20%" @click="sort('total_user')">
             <div class="column-name">
               {{ $t('set.manege_col4') }}
             </div>
@@ -202,31 +198,31 @@
           </div>
         </div>
         <div class="body-table">
-          <div v-if="list.list2 == 0" class="no-data">
+          <div v-if="list.list == 0" class="no-data">
             -- ไม่พบรายการ --
           </div>
           <div
             class="body-row"
-            v-for="(item, index) in list2"
+            v-for="(item, index) in list"
             :key="'app_name_' + index"
           >
             <div
               class="body"
               style="width:10%;padding-top:5px;padding-left:7px"
             >
-              {{ index + 1 }}
+              {{ item.index + 1 }}
             </div>
             <div
               class="body"
               style="width:40%;padding-left:5px;padding-top:5px"
             >
-              {{ item.app_name + ' index' }}
+              {{ item.name_th}}
             </div>
             <div class="body" style="width:20%;padding-top:5px">
-              {{ item.count }}
+              {{ item.total_app }}
             </div>
             <div class="body" style="width:20%;display:flex">
-              {{ item.access }}
+              {{ item.total_user }}
             </div>
             <div class="body" style="width:10%;display:flex;padding-left:12px">
               <v-icon
@@ -358,19 +354,15 @@ export default {
   watch: {
     searchApp: {
       handler: function (todos) {
-        // if (this.active.code == '2.1') {
         if (todos.trim().length > 2 || todos.trim().length == 0) {
           this.fetchData()
         }
-        // } else {
-        // console.log('searchApp===> 2')
-        // }
       }
     }
   },
   methods: {
     add () {
-      this.fetchData()
+      // this.fetchData()
       this.$emit('add', this.active)
     },
     edit (item) {
@@ -378,56 +370,50 @@ export default {
         current: this.active,
         item: item
       }
-      this.fetchData()
+      // this.fetchData()
       this.$emit('edit', obj)
     },
     tabs (item, index) {
-      this.$emit('tabs', item)
-    },
-    sort2 (feild) {
-      this.sortNo = this.sortNo == index ? null : index
-      if (feild !== 'no') {
-        if (this.mainSort.feild == feild) {
-          this.mainSort.orderby = !this.mainSort.orderby
-        } else {
-          this.mainSort.orderby = false
-        }
-        this.mainSort.feild = feild
-        this.fetchData()
+      if (this.active.code !== item.code) {
+        this.$emit('tabs', item)
+        this.sortNo = null
+        this.fetchData(item)
+      } else {
+        this.$emit('tabs', item)
       }
     },
     sort (feild, index) {
       this.sortNo = this.sortNo == index ? null : index
-      if (feild == 'index') {
+      // if (feild == 'index') {
+      //   this.list = this.list.sort(function (a, b) {
+      //     return b - a
+      //     // return a - b
+      //   })
+      // } else {
+      if (this.mainSort.feild == feild) {
+        this.mainSort.orderby = !this.mainSort.orderby
       } else {
-        if (this.mainSort.feild == feild) {
-          this.mainSort.orderby = !this.mainSort.orderby
-        } else {
-          this.mainSort.orderby = false
-        }
-        this.mainSort.feild = feild
-        this.fetchData()
+        this.mainSort.orderby = false
       }
+      this.mainSort.feild = feild
+      this.fetchData()
+      // }
     },
-    fetchData () {
-      if (this.active.code == '2.1') {
-        let req = {
-          keyword: this.searchApp.trim(),
-          field: this.mainSort.feild,
-          sort: this.mainSort.orderby ? 'asc' : 'desc'
-        }
+    fetchData (item) {
+      let req = {
+        keyword: this.searchApp.trim(),
+        field: this.mainSort.feild,
+        sort: this.mainSort.orderby ? 'asc' : 'desc'
+      }
+      let tabs = item == undefined ? this.active.code : item.code
+      if (tabs == '2.1') {
         this.$store.dispatch('getAppList', req).then(res => {
           this.list = res.data
         })
       } else {
-        // let req = {
-        //   keyword: this.searchApp.trim(),
-        //   field: this.mainSort.feild,
-        //   sort: this.mainSort.orderby ? 'asc' : 'desc'
-        // }
-        // this.$store.dispatch('getGroupist', req).then(res => {
-        //   this.list2 = res.data
-        // })
+        this.$store.dispatch('getGroupList', req).then(res => {
+          this.list = res.data
+        })
       }
     }
   },

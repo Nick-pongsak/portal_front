@@ -10,6 +10,7 @@
                 type="text"
                 v-model="editRow.name_th"
                 :placeholder="$t('input_selected')"
+                maxlength="250"
               />
             </div>
           </div>
@@ -22,6 +23,7 @@
                 type="text"
                 v-model="editRow.name_en"
                 :placeholder="$t('input_selected')"
+                maxlength="250"
               />
             </div>
           </div>
@@ -88,6 +90,8 @@
                 type="text"
                 v-model="editRow.key_app"
                 :placeholder="$t('input_selected')"
+                maxlength="50"
+                @keypress="IsNumber"
               />
             </div>
           </div>
@@ -181,6 +185,7 @@
                 type="text"
                 v-model="editRow.url"
                 :placeholder="$t('input_selected')"
+                maxlength="250"
               />
             </div>
           </div>
@@ -198,6 +203,7 @@
             </v-btn>
             <div class="upload-block">
               <image-uploader
+                v-model="editRow.image"
                 :preview="true"
                 :maxHeight="768"
                 :className="['fileinput', { 'fileinput--loaded': hasImage }]"
@@ -218,7 +224,7 @@
                 </label>
               </image-uploader>
             </div>
-            <div class="pic-upload" v-if="image == null">
+            <div class="pic-upload" v-if="editRow.image == ''">
               240*180
             </div>
           </div>
@@ -228,7 +234,8 @@
     <div style="display:flex;padding-top:15px">
       <div style="width:50%">
         <v-btn
-          @click="clear()"
+          v-show="editRow.mode == 'edit'"
+          @click="clearBtn()"
           class="clear-btn"
           style="margin-right:6px;height: 22px;"
         >
@@ -243,7 +250,6 @@
         >
           {{ $t('btn_cancel') }}
         </v-btn>
-        <!-- @click.stop="dialog = true" -->
         <v-btn
           @click="saveBtn()"
           :class="enableBtn ? 'cancel-btn disabled' : 'cancel-btn'"
@@ -351,6 +357,7 @@
                     type="text"
                     v-model="searchApp"
                     :placeholder="$t('input_search')"
+                    maxlength="250"
                   />
                 </div>
               </div>
@@ -489,14 +496,15 @@ export default {
       NameEnInput: '',
       enableType: false,
       hasImage: false,
-      image: null,
       editRow: this.data,
       mainSort: {
         feild: 'name_th',
         orderby: true
       },
       modeAdd: null,
-      editRowPop: {}
+      editRowPop: {},
+      btnClick: null,
+      detailDialog: null
     }
   },
   computed: {},
@@ -512,7 +520,7 @@ export default {
   methods: {
     setImage: function (output) {
       this.hasImage = true
-      this.image = output
+      this.editRow.image = output.info.name
       // console.log('Info', output)
       // console.log('Info', output.info)
       // console.log('Exif', output.exif)
@@ -527,30 +535,26 @@ export default {
       this.editRowPop = item
       this.NameThInput = item.name_th
       this.NameEnInput = item.name_en
+      this.btnClick = 'edit-type'
+      this.detailDialog = item
     },
     SaveNewType (item) {
-      let result = {
-        name_th: this.NameThInput,
-        name_en: this.NameEnInput
+      let name_th = this.NameThInput.trim()
+      let name_en = this.NameEnInput.trim()
+      if (name_th.length > 0 && name_en.length > 0) {
+        this.btnClick = 'save-type'
+        this.dialog = true
+        this.errorDialog = 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?'
+        this.rightBtn = 'บันทึก'
+        this.detailDialog = item
       }
-      if (!this.modeAdd) {
-        result = {
-          category_id: this.editRowPop.category_id,
-          name_th: this.NameThInput,
-          name_en: this.NameEnInput
-        }
-      }
-      let url = this.modeAdd ? 'addType' : 'updateType'
-      this.$store.dispatch(url, result).then(res => {
-        this.modeAdd = null
-        this.editMode = false
-        this.getTypeList()
-      })
     },
     DeleteNewType (item) {
-      this.$store.dispatch('deleteType', item).then(res => {
-        this.getTypeList()
-      })
+      this.btnClick = 'del-type'
+      this.dialog = true
+      this.errorDialog = 'คุณต้องการลบข้อมูลใช่หรือไม่ ?'
+      this.rightBtn = 'ลบ'
+      this.detailDialog = item
     },
     CloseNewType () {
       this.modeAdd = null
@@ -560,16 +564,16 @@ export default {
     },
     sort (feild, index) {
       this.sortNo = this.sortNo == index ? null : index
-      if (feild == 'index') {
+      // if (feild == 'index') {
+      // } else {
+      if (this.mainSort.feild == feild) {
+        this.mainSort.orderby = !this.mainSort.orderby
       } else {
-        if (this.mainSort.feild == feild) {
-          this.mainSort.orderby = !this.mainSort.orderby
-        } else {
-          this.mainSort.orderby = false
-        }
-        this.mainSort.feild = feild
-        this.getTypeList()
+        this.mainSort.orderby = false
       }
+      this.mainSort.feild = feild
+      this.getTypeList()
+      // }
     },
     openPopupType () {
       this.typeDialog = true
@@ -584,19 +588,51 @@ export default {
       this.dialog = false
       this.rightBtn = 'บันทึก'
       this.selectedFile = null
+      this.detailDialog = null
+    },
+    clearBtn () {
+      this.btnClick = 'clear'
+      this.dialog = true
+      this.errorDialog = 'คุณต้องการลบข้อมูลใช่หรือไม่ ?'
+      this.rightBtn = 'ลบ'
     },
     clear () {
-      console.log('2==>')
-      // this.dialog = true
-      // this.errorDialog = 'คุณต้องการลบข้อมูลใช่หรือไม่ ?'
-      // this.rightBtn = 'ลบ'
-      // this.dialog = false
-      // this.selectedFile = null
-      // this.$emit('clear', null)
+      let result = {
+        app_id: this.editRow.app_id,
+        name_th: this.editRow.name_th,
+        name_en: this.editRow.name_en
+      }
+      this.$store.dispatch('deleteAppList', result).then(res => {
+        this.dialog = false
+        this.$emit('clear', null)
+      })
     },
     saveBtn () {
-      this.dialog = true
-      this.rightBtn = 'บันทึก'
+      this.btnClick = 'save'
+      let item = this.editRow
+      let name_th = item.name_th.trim()
+      let name_en = item.name_en.trim()
+      let description_th = item.description_th.trim()
+      let description_en = item.description_en.trim()
+      let category_id = item.category_id.toString()
+      let key_app = item.key_app.trim()
+      let image = item.image.trim()
+      let url = item.url.trim()
+      if (
+        name_th.length > 0 &&
+        name_en.length > 0 &&
+        description_th.length > 0 &&
+        description_en.length > 0 &&
+        category_id.length > 0 &&
+        key_app.length > 0 &&
+        image.length > 0 &&
+        url.length > 0
+      ) {
+        this.dialog = true
+        this.rightBtn = 'บันทึก'
+      } else {
+        console.log('Valid...', item)
+      }
     },
     save () {
       // if (this.error) {
@@ -611,14 +647,43 @@ export default {
       //   //   'ข้อมูลแอปพลิเคชันดังกล่าวถูกใช้งานอยู่ในเมนู "จัดกลุ่มผู้ใช้งานแอปพลิเคชัน" กรุณายืนยัน การดำเนินการ'
 
       //   this.selectedFile = null
+      if (this.btnClick == 'save') {
+        let url = this.editRow.mode == 'add' ? 'addAppList' : 'updateAppList'
+        this.$store.dispatch(url, this.editRow).then(res => {
+          this.$emit('save', null)
+          this.dialog = false
+        })
+      } else if (this.btnClick == 'clear') {
+        this.clear()
+      } else if (this.btnClick == 'save-type' || this.btnClick == 'edit-type') {
+        let result = {
+          name_th: this.NameThInput,
+          name_en: this.NameEnInput
+        }
+        if (!this.modeAdd) {
+          result = {
+            category_id: this.editRowPop.category_id,
+            name_th: this.NameThInput,
+            name_en: this.NameEnInput
+          }
+        }
+        let url = this.modeAdd ? 'addType' : 'updateType'
+        this.$store.dispatch(url, result).then(res => {
+          this.modeAdd = null
+          this.editMode = false
+          this.dialog = false
+          this.detailDialog = null
+          this.getTypeList()
+        })
+      } else if (this.btnClick == 'del-type') {
+        this.$store.dispatch('deleteType', this.detailDialog).then(res => {
+          this.dialog = false
+          this.detailDialog = null
+          this.getTypeList()
+        })
+      } else {
+      }
 
-      let url = this.editRow.mode == 'add' ? 'addAppList' : 'updateAppList'
-
-      this.$store.dispatch(url, this.editRow).then(res => {
-        this.dialog = false
-      })
-
-      this.$emit('save', null)
       // }
     },
     onButtonClick () {
@@ -633,6 +698,19 @@ export default {
       this.$store.dispatch('getType', req).then(res => {
         this.items = res.data
       })
+    },
+    IsNumber (evt) {
+      evt = evt ? evt : window.event
+      var keyCode = evt.which ? evt.which : evt.keyCode
+      if (
+        (keyCode >= 48 && keyCode <= 57) ||
+        (keyCode >= 97 && keyCode <= 122) ||
+        (keyCode >= 65 && keyCode <= 91)
+      ) {
+        return true
+      } else {
+        evt.preventDefault()
+      }
     }
   },
   created () {
