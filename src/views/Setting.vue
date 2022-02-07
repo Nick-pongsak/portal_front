@@ -220,7 +220,8 @@ export default {
         name_th: '',
         name_en: '',
         total_user: 0,
-        total_app: 0
+        total_app: 0,
+        app: []
       },
       editRow: {},
       editRow2: {}
@@ -260,6 +261,7 @@ export default {
         this.editRow = this.defaultEditRow
       } else {
         this.editRow2 = this.defaultEditRow2
+        this.editRow2.app = []
       }
     },
     editApp (value) {
@@ -267,8 +269,8 @@ export default {
         code: value.current.code,
         text:
           value.current.code == '2.1'
-            ? 'เพิ่มแอปพลิเคชัน'
-            : 'เพิ่มกลุ่มผู้ใช้งานแอปพลิเคชัน'
+            ? 'แก้ไขแอปพลิเคชัน'
+            : 'แก้ไขกลุ่มผู้ใช้งานแอปพลิเคชัน'
       }
       this.activeTab = value.current
       if (value.current.code == '2.1') {
@@ -276,6 +278,7 @@ export default {
         this.editRow.mode = 'edit'
       } else {
         this.editRow2 = value.item
+        this.editRow2.app = []
         this.editRow2.mode = 'edit'
       }
     },

@@ -10,8 +10,9 @@
             <div class="input-with-icon" style="width: 365px;">
               <input
                 type="text"
-                v-model="app_name_th"
+                v-model="editRow.name_th"
                 :placeholder="$t('input_selected')"
+                maxlength="250"
               />
             </div>
           </div>
@@ -24,8 +25,9 @@
             <div class="input-with-icon" style="width: 365px;">
               <input
                 type="text"
-                v-model="app_name_en"
+                v-model="editRow.name_en"
                 :placeholder="$t('input_selected')"
+                maxlength="250"
               />
             </div>
           </div>
@@ -45,7 +47,11 @@
           <div style="width:70%">
             <div class="table" style="padding-left:0px">
               <div class="head-table" style="background:#ffffff">
-                <div class="head" style="width:10%" @click="sort(headCol[0], 0)">
+                <div
+                  class="head"
+                  style="width:10%"
+                  @click="sort(headCol[0], 0)"
+                >
                   <div class="column-name">No</div>
                   <v-icon
                     v-text="sortNo == 0 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -53,7 +59,11 @@
                     size="22"
                   ></v-icon>
                 </div>
-                <div class="head" style="width:30%" @click="sort(headCol[1], 1)">
+                <div
+                  class="head"
+                  style="width:30%"
+                  @click="sort(headCol[1], 1)"
+                >
                   <div class="column-name">แอปพิเคชัน</div>
                   <v-icon
                     v-text="sortNo == 1 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -61,7 +71,11 @@
                     size="22"
                   ></v-icon>
                 </div>
-                <div class="head" style="width:20%" @click="sort(headCol[2], 2)">
+                <div
+                  class="head"
+                  style="width:20%"
+                  @click="sort(headCol[2], 2)"
+                >
                   <div class="column-name">
                     หมวดหมู่ (EN)
                   </div>
@@ -71,7 +85,11 @@
                     size="22"
                   ></v-icon>
                 </div>
-                <div class="head" style="width:25%" @click="sort(headCol[3], 3)">
+                <div
+                  class="head"
+                  style="width:25%"
+                  @click="sort(headCol[3], 3)"
+                >
                   <div class="column-name">
                     การเข้าใช้งาน
                   </div>
@@ -81,7 +99,11 @@
                     size="22"
                   ></v-icon>
                 </div>
-                <div class="head" style="width:15%" @click="sort(headCol[4], 4)">
+                <div
+                  class="head"
+                  style="width:15%"
+                  @click="sort(headCol[4], 4)"
+                >
                   <div class="column-name">
                     สถานะ
                   </div>
@@ -95,16 +117,16 @@
               <div
                 class="body-table"
                 :style="{
-                  'overflow-y': mainList.length == 0 ? 'hidden' : 'auto'
+                  'overflow-y': editRow.app.length == 0 ? 'hidden' : 'auto'
                 }"
               >
-                <div v-if="mainList.length == 0" class="no-data">
+                <div v-if="editRow.app.length == 0" class="no-data">
                   -- ไม่พบรายการ --
                 </div>
                 <div
                   v-else
                   class="body-row"
-                  v-for="(item, index) in mainList"
+                  v-for="(item, index) in editRow.app"
                   :key="'setapp' + index"
                 >
                   <div class="body" style="width:10%;padding-left:5px">
@@ -114,7 +136,7 @@
                     {{ item.name_th }}
                   </div>
                   <div class="body" style="width:20%">
-                    {{ item.type }}
+                    {{ item.category_name_en }}
                   </div>
                   <div class="body" style="width:25%">
                     {{ renderText(item) }}
@@ -138,7 +160,8 @@
     <div style="display:flex;padding-top:15px">
       <div style="width:50%">
         <v-btn
-          @click="clear()"
+          v-show="editRow.mode == 'edit'"
+          @click="clearBtn()"
           class="clear-btn"
           style="margin-right:6px;height: 22px;"
         >
@@ -153,9 +176,9 @@
         >
           {{ $t('btn_cancel') }}
         </v-btn>
-        <!-- @click="save()" -->
         <!-- @click.stop="dialog = true" -->
         <v-btn
+          @click="saveBtn()"
           :class="enableBtn ? 'cancel-btn disabled' : 'cancel-btn'"
           style="height: 22px"
         >
@@ -217,48 +240,68 @@
             </div>
             <div class="table">
               <div class="head-table">
-                <div class="head" style="width:10%" @click="sort('no')">
+                <div
+                  class="head"
+                  style="width:10%"
+                  @click="sort2(headCol[0], 0)"
+                >
                   <div class="column-name">No</div>
                   <v-icon
-                    v-text="sortNo ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    v-text="sortNo2 == 0 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
                     size="22"
                   ></v-icon>
                 </div>
-                <div class="head" style="width:30%" @click="sort('app')">
+                <div
+                  class="head"
+                  style="width:30%"
+                  @click="sort2(headCol[1], 1)"
+                >
                   <div class="column-name">แอปพิเคชัน</div>
                   <v-icon
-                    v-text="sortApp ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    v-text="sortNo2 == 1 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
                     size="22"
                   ></v-icon>
                 </div>
-                <div class="head" style="width:20%" @click="sort('type_en')">
+                <div
+                  class="head"
+                  style="width:20%"
+                  @click="sort2(headCol[2], 2)"
+                >
                   <div class="column-name">
                     หมวดหมู่ (EN)
                   </div>
                   <v-icon
-                    v-text="sortTypeEn ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    v-text="sortNo2 == 2 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
                     size="22"
                   ></v-icon>
                 </div>
-                <div class="head" style="width:25%" @click="sort('access')">
+                <div
+                  class="head"
+                  style="width:25%"
+                  @click="sort2(headCol[3], 3)"
+                >
                   <div class="column-name">
                     การเข้าใช้งาน
                   </div>
                   <v-icon
-                    v-text="sortAccess ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    v-text="sortNo2 == 3 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
                     size="22"
                   ></v-icon>
                 </div>
-                <div class="head" style="width:15%" @click="sort('status')">
+                <div
+                  class="head"
+                  style="width:15%"
+                  @click="sort2(headCol[4], 4)"
+                >
                   <div class="column-name">
                     สถานะ
                   </div>
                   <v-icon
-                    v-text="sortStatus ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    v-text="sortNo2 == 4 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
                     size="22"
                   ></v-icon>
@@ -281,7 +324,7 @@
                     {{ item.name_th }}
                   </div>
                   <div class="body" style="width:20%">
-                    {{ item.type }}
+                    {{ item.category_name_en }}
                   </div>
                   <div class="body" style="width:25%">
                     {{ renderText(item) }}
@@ -349,7 +392,8 @@ export default {
       groupDialog: false,
       searchApp: '',
       sortNo: null,
-      headCol: ['index', 'name_th', 'name_en', 'name_en', 'name_en'],
+      sortNo2: null,
+      headCol: ['index', 'name_th', 'category_name_en', 'type_login', 'status'],
       list: [
         {
           no: 1,
@@ -418,21 +462,36 @@ export default {
       ],
       enableType: false,
       mainList: [],
-      editRow: this.data
+      editRow: this.data,
+      mainSort: {
+        feild: 'name_th',
+        orderby: true
+      },
+      mainSort2: {
+        feild: 'name_th',
+        orderby: true
+      }
     }
   },
   computed: {},
   watch: {},
   methods: {
     SaveGroup () {
-      this.mainList = this.list.filter(a => a.selected)
+      // this.editRow.app = this.list.filter(a => a.selected)
+      let results = this.list.filter(a => a.selected)
+      let data = []
+      for (let i = 0; i < results.length; i++) {
+        results[i].index = i
+        data.push(results[i])
+      }
+      this.editRow.app = data
       this.groupDialog = false
     },
     CloseGroup () {
       this.groupDialog = false
     },
     renderText (row) {
-      if (row.access == 'LDAP') {
+      if (row.type_login == 1) {
         return 'LDAP (AP)'
       } else if (row.access == 'only') {
         return 'ผู้ใช้งานบนแอปพลิเคชัน'
@@ -440,22 +499,110 @@ export default {
     },
     sort (feild, index) {
       this.sortNo = this.sortNo == index ? null : index
-      // if (feild == 'index') {
-      // } else {
-      if (this.mainSort.feild == feild) {
-        this.mainSort.orderby = !this.mainSort.orderby
+      // let table = this.editRow.app
+      if (feild == 'index') {
+        // if (this.mainSort.orderby) {
+        //   console.log('==>')
+        //   this.editRow.app = this.editRow.app.sort(function (a, b) {
+        //     return b.index - a.index
+        //   })
+        // } else {
+        //   console.log('-->')
+        //   this.editRow.app = this.editRow.app.sort(function (a, b) {
+        //     return a.index - b.index
+        //   })
+        // }
+        // this.mainSort.orderby = !this.mainSort.orderby
       } else {
-        this.mainSort.orderby = false
+        // if (this.mainSort.feild == feild) {
+        //   this.mainSort.orderby = !this.mainSort.orderby
+        // } else {
+        //   this.mainSort.orderby = false
+        // }
+        // this.mainSort.feild = feild
+        // this.getTypeList()
       }
-      this.mainSort.feild = feild
-      this.getTypeList()
-      // }
+    },
+    sort2 (feild, index) {
+      this.sortNo2 = this.sortNo2 == index ? null : index
+      if (feild == 'index') {
+        if (this.mainSort2.orderby) {
+          this.list = this.list.sort(function (a, b) {
+            return b.index - a.index
+          })
+        } else {
+          this.list = this.list.sort(function (a, b) {
+            return a.index - b.index
+          })
+        }
+        this.mainSort2.orderby = !this.mainSort2.orderby
+      } else {
+        if (this.mainSort2.feild == feild) {
+          this.mainSort2.orderby = !this.mainSort2.orderby
+        } else {
+          this.mainSort2.orderby = false
+        }
+        this.mainSort2.feild = feild
+
+        let req = {
+          keyword: this.searchApp.trim(),
+          field: this.mainSort2.feild,
+          sort: this.mainSort2.orderby ? 'asc' : 'desc'
+        }
+        this.$store.dispatch('getAppList', req).then(res => {
+          this.mapList(res)
+        })
+      }
+    },
+    mapList (res) {
+      for (let i = 0; i < this.editRow.app.length; i++) {
+        var result = res.data.findIndex(
+          row => row.app_id == this.editRow.app[i].app_id
+        )
+        if (result >= 0) {
+          res.data[result].selected = true
+        }
+      }
+      this.list = res.data
     },
     openPopup () {
-      this.groupDialog = true
+      let req = {
+        keyword: this.searchApp.trim(),
+        field: this.mainSort2.feild,
+        sort: this.mainSort2.orderby ? 'asc' : 'desc'
+      }
+      this.$store.dispatch('getAppList', req).then(res => {
+        this.mapList(res)
+        this.groupDialog = true
+      })
     },
     CloseDialogs () {
       this.groupDialog = false
+    },
+    saveBtn () {
+      this.btnClick = 'save'
+      let item = this.editRow
+      let name_th = item.name_th.trim()
+      let name_en = item.name_en.trim()
+      let list = item.app
+      if (name_th.length > 0 && name_en.length > 0 && list.length > 0) {
+        this.dialog = true
+        this.errorDialog = 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?'
+        this.rightBtn = 'บันทึก'
+      } else {
+        console.log('Valid...', item)
+      }
+    },
+    clear () {
+      let result = {
+        group_id: this.editRow.group_id,
+        name_th: this.editRow.name_th,
+        name_en: this.editRow.name_en
+      }
+      this.$store.dispatch('deleteGroupList', result).then(res => {
+        this.dialog = false
+        this.$emit('clear', null)
+      })
     },
     cancel () {
       if (!this.dialog) {
@@ -464,33 +611,44 @@ export default {
       this.dialog = false
       this.rightBtn = 'บันทึก'
     },
-    clear () {
-      console.log('2==>')
-      // this.dialog = true
+    clearBtn () {
+      this.btnClick = 'clear'
+      this.dialog = true
       this.errorDialog = 'คุณต้องการลบข้อมูลใช่หรือไม่ ?'
       this.rightBtn = 'ลบ'
-      // this.dialog = false
-      // this.selectedFile = null
-      // this.$emit('clear', null)
     },
     save () {
-      console.log('3==>')
-      this.rightBtn = 'บันทึก'
-      if (this.error) {
-        this.dialog = false
-      } else {
-        // this.error = true
-        // this.errorDialog =
-        //   'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ (Error Code 1001)'
+      if (this.btnClick == 'save') {
+        let url =
+          this.editRow.mode == 'add' ? 'AddGroupList' : 'updateGroupList'
 
-        // this.error = true
-        // this.errorDialog =
-        //   'ข้อมูลแอปพลิเคชันดังกล่าวถูกใช้งานอยู่ในเมนู "จัดกลุ่มผู้ใช้งานแอปพลิเคชัน" กรุณายืนยัน การดำเนินการ'
-
-        this.dialog = false
-        this.selectedFile = null
-        this.$emit('save', null)
+        let result = {
+          name_th: this.editRow.name_th,
+          name_en: this.editRow.name_en,
+          app_id: this.editRow.app.map(a => a.app_id)
+        }
+        if (this.editRow.mode == 'edit') {
+          result.group_id = this.editRow.group_id
+        }
+        this.$store.dispatch(url, result).then(res => {
+          this.$emit('save', null)
+          this.dialog = false
+        })
+      } else if (this.btnClick == 'clear') {
+        this.clear()
       }
+    }
+  },
+  created () {
+    if (this.editRow.mode == 'edit') {
+      let mode = this.editRow.mode
+      let result = {
+        group_id: this.editRow.group_id
+      }
+      this.$store.dispatch('groupDetail', result).then(res => {
+        this.editRow = res.data
+        this.editRow.mode = mode
+      })
     }
   },
   mounted () {}

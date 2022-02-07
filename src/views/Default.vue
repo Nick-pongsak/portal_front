@@ -1,5 +1,13 @@
 <template>
   <div>
+    <div class="loading-bar" v-if="loading">
+      <v-progress-circular
+        :size="50"
+        color="red"
+        :value="valueLoading"
+        indeterminate
+      ></v-progress-circular>
+    </div>
     <headers />
     <div class="body-main">
       <router-view />
@@ -13,10 +21,15 @@ import Headers from '@/components/Header'
 import Footers from '@/components/Footer'
 export default {
   name: 'defaults-page',
-  data: () => ({}),
+  data: () => ({ valueLoading: 0 }),
   components: {
     Headers,
     Footers
+  },
+  computed: {
+    loading () {
+      return this.$store.getters.isLoading
+    }
   },
   methods: {
     toggleMenu () {

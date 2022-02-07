@@ -19,6 +19,7 @@ const store = {
   },
   actions: {
     addAppList({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
       console.log("add-application ==>", JSON.stringify(data))
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/add-application`, data, {
@@ -27,14 +28,16 @@ const store = {
             'Authorization': `Bearer ${this.getters.access_token}`
           }
         }).then(res => {
+          commit('SetLoading', false)
           resolve(res.data.success)
         }).catch(error => {
-          // commit('SetLoading', false)
+          commit('SetLoading', false)
           reject(error)
         })
       })
     },
     updateAppList({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
       console.log("update-application ==>", JSON.stringify(data))
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/update-application`, data, {
@@ -43,14 +46,16 @@ const store = {
             'Authorization': `Bearer ${this.getters.access_token}`
           }
         }).then(res => {
+          commit('SetLoading', false)
           resolve(res.data.success)
         }).catch(error => {
-          // commit('SetLoading', false)
+          commit('SetLoading', false)
           reject(error)
         })
       })
     },
     deleteAppList({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
       console.log("delete-application ==>", JSON.stringify(data))
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/delete-application`, data, {
@@ -59,14 +64,16 @@ const store = {
             'Authorization': `Bearer ${this.getters.access_token}`
           }
         }).then(res => {
+          commit('SetLoading', false)
           resolve(res.data.success)
         }).catch(error => {
-          // commit('SetLoading', false)
+          commit('SetLoading', false)
           reject(error)
         })
       })
     },
     getAppList({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/application-detail`, data, {
           headers: {
@@ -74,14 +81,16 @@ const store = {
             'Authorization': `Bearer ${this.getters.access_token}`
           }
         }).then(res => {
+          commit('SetLoading', false)
           resolve(res.data.success)
         }).catch(error => {
-          // commit('SetLoading', false)
+          commit('SetLoading', false)
           reject(error)
         })
       })
     },
     getType({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/get_category`, data, {
           headers: {
@@ -89,14 +98,16 @@ const store = {
             'Authorization': `Bearer ${this.getters.access_token}`
           }
         }).then(res => {
+          commit('SetLoading', false)
           resolve(res.data.success)
         }).catch(error => {
-          // commit('SetLoading', false)
+          commit('SetLoading', false)
           reject(error)
         })
       })
     },
     deleteType({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/delete_category`, data, {
           headers: {
@@ -104,14 +115,16 @@ const store = {
             'Authorization': `Bearer ${this.getters.access_token}`
           }
         }).then(res => {
+          commit('SetLoading', false)
           resolve(res.data.success)
         }).catch(error => {
-          // commit('SetLoading', false)
+          commit('SetLoading', false)
           reject(error)
         })
       })
     },
     addType({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/add_category`, data, {
           headers: {
@@ -119,14 +132,16 @@ const store = {
             'Authorization': `Bearer ${this.getters.access_token}`
           }
         }).then(res => {
+          commit('SetLoading', false)
           resolve(res.data.success)
         }).catch(error => {
-          // commit('SetLoading', false)
+          commit('SetLoading', false)
           reject(error)
         })
       })
     },
     updateType({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/update_category`, data, {
           headers: {
@@ -134,14 +149,89 @@ const store = {
             'Authorization': `Bearer ${this.getters.access_token}`
           }
         }).then(res => {
+          commit('SetLoading', false)
           resolve(res.data.success)
         }).catch(error => {
-          // commit('SetLoading', false)
+          commit('SetLoading', false)
+          reject(error)
+        })
+      })
+    },
+    groupDetail({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
+      console.log("group-detail ==>", JSON.stringify(data))
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/group-detail`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          commit('SetLoading', false)
+          resolve(res.data.success)
+        }).catch(error => {
+          commit('SetLoading', false)
+          reject(error)
+        })
+      })
+    },
+    AddGroupList({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
+      console.log("add-group ==>", JSON.stringify(data))
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/add-group`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          commit('SetLoading', false)
+          resolve(res.data.success)
+        }).catch(error => {
+          commit('SetLoading', false)
+          reject(error)
+        })
+      })
+    },
+    updateGroupList({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
+      console.log("update-group ==>", JSON.stringify(data))
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/update-group`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          commit('SetLoading', false)
+          resolve(res.data.success)
+        }).catch(error => {
+          commit('SetLoading', false)
+          reject(error)
+        })
+      })
+    },
+    deleteGroupList({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
+      console.log("delete-group ==>", JSON.stringify(data))
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/delete-group`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          commit('SetLoading', false)
+          resolve(res.data.success)
+        }).catch(error => {
+          commit('SetLoading', false)
           reject(error)
         })
       })
     },
     getGroupList({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
+      console.log("get-group-app ==>", JSON.stringify(data))
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/get-group-app`, data, {
           headers: {
@@ -149,9 +239,10 @@ const store = {
             'Authorization': `Bearer ${this.getters.access_token}`
           }
         }).then(res => {
+          commit('SetLoading', false)
           resolve(res.data.success)
         }).catch(error => {
-          // commit('SetLoading', false)
+          commit('SetLoading', false)
           reject(error)
         })
       })

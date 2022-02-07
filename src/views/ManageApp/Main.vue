@@ -216,7 +216,7 @@
               class="body"
               style="width:40%;padding-left:5px;padding-top:5px"
             >
-              {{ item.name_th}}
+              {{ item.name_th }}
             </div>
             <div class="body" style="width:20%;padding-top:5px">
               {{ item.total_app }}
@@ -384,20 +384,26 @@ export default {
     },
     sort (feild, index) {
       this.sortNo = this.sortNo == index ? null : index
-      // if (feild == 'index') {
-      //   this.list = this.list.sort(function (a, b) {
-      //     return b - a
-      //     // return a - b
-      //   })
-      // } else {
-      if (this.mainSort.feild == feild) {
+      if (feild == 'index') {
+        if (this.mainSort.orderby) {
+          this.list = this.list.sort(function (a, b) {
+            return b.index - a.index
+          })
+        } else {
+          this.list = this.list.sort(function (a, b) {
+            return a.index - b.index
+          })
+        }
         this.mainSort.orderby = !this.mainSort.orderby
       } else {
-        this.mainSort.orderby = false
+        if (this.mainSort.feild == feild) {
+          this.mainSort.orderby = !this.mainSort.orderby
+        } else {
+          this.mainSort.orderby = false
+        }
+        this.mainSort.feild = feild
+        this.fetchData()
       }
-      this.mainSort.feild = feild
-      this.fetchData()
-      // }
     },
     fetchData (item) {
       let req = {
@@ -419,6 +425,7 @@ export default {
   },
   mounted () {},
   created () {
+    this.items = []
     this.fetchData()
   }
 }

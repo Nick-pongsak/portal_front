@@ -11,7 +11,9 @@ const store = {
 
   },
   mutations: {
-
+    SetLoading(state, data) {
+      state.loading = data;
+    }
   },
   actions: {
     FetchMainData({
@@ -24,7 +26,9 @@ const store = {
 
   },
   getters: {
-
+    isLoading(state) {
+      return state.loading;
+    },
   }
 }
 

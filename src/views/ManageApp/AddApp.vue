@@ -419,7 +419,7 @@
                 </div>
               </div>
               <div class="body-table">
-                <div v-if="items.list2 == 0" class="no-data">
+                <div v-if="items.length == 0" class="no-data">
                   -- ไม่พบรายการ --
                 </div>
                 <div
@@ -564,16 +564,26 @@ export default {
     },
     sort (feild, index) {
       this.sortNo = this.sortNo == index ? null : index
-      // if (feild == 'index') {
-      // } else {
-      if (this.mainSort.feild == feild) {
+      if (feild == 'index') {
+        if (this.mainSort.orderby) {
+          this.items = this.items.sort(function (a, b) {
+            return b.index - a.index
+          })
+        } else {
+          this.items = this.items.sort(function (a, b) {
+            return a.index - b.index
+          })
+        }
         this.mainSort.orderby = !this.mainSort.orderby
       } else {
-        this.mainSort.orderby = false
+        if (this.mainSort.feild == feild) {
+          this.mainSort.orderby = !this.mainSort.orderby
+        } else {
+          this.mainSort.orderby = false
+        }
+        this.mainSort.feild = feild
+        this.getTypeList()
       }
-      this.mainSort.feild = feild
-      this.getTypeList()
-      // }
     },
     openPopupType () {
       this.typeDialog = true
@@ -629,6 +639,7 @@ export default {
         url.length > 0
       ) {
         this.dialog = true
+        this.errorDialog = 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?'
         this.rightBtn = 'บันทึก'
       } else {
         console.log('Valid...', item)
@@ -714,7 +725,7 @@ export default {
     }
   },
   created () {
-    this.getTypeList('open')
+    this.getTypeList()
   },
   components: {
     ImageUploader
