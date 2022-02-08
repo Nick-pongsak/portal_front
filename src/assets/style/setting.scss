@@ -79,7 +79,7 @@
             cursor: pointer;
             font-weight: 500;
             color: #797979;
-            font-size: nth($font-sizes, 3);
+            font-size: nth($font-sizes, 2);
             .column-name {
               padding-top: 3px;
             }
@@ -97,7 +97,7 @@
             padding-bottom: 8px;
             .body {
               color: #797979;
-              font-size: nth($font-sizes, 3);
+              font-size: nth($font-sizes, 2);
             }
           }
           overflow-x: hidden;
@@ -288,6 +288,9 @@
             width: 100%;
             font-size: nth($font-sizes, 2);
           }
+        }
+        .v-input--checkbox{
+          margin: 0px;
         }
         .v-text-field--outlined.v-input--dense.v-text-field--single-line
           > .v-input__control

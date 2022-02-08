@@ -18,12 +18,17 @@
     <div class="right">
       <!-- <div class="header">{{ $t('set.right_menu') }}</div> -->
       <div class="header">{{ currentView.text }}</div>
-      <user-list
+      <main-admin-app
         v-if="currentView.code == '1'"
-        :menu="rightMenu"
-        @cancel="cancelApp"
-        @save="saveApp"
-        @clear="clearApp"
+        @add="addUser"
+        @edit="editUser"
+      />
+      <user-list
+        v-else-if="currentView.code == '1.1'"
+        :data="editRow"
+        @cancel="cancelUser"
+        @save="saveUser"
+        @clear="clearUser"
       />
       <main-list-app
         v-else-if="currentView.code == '2'"
@@ -54,7 +59,8 @@
 </template>
 
 <script>
-import UserList from './UserList'
+import UserList from './AdminApp/UserList'
+import MainAdminApp from './AdminApp/Main'
 import MainListApp from './ManageApp/Main'
 import AddApp from './ManageApp/AddApp'
 import AddGroup from './ManageApp/AddGroup'
@@ -230,6 +236,39 @@ export default {
   computed: {},
   watch: {},
   methods: {
+    addUser (value) {
+      this.currentView = {
+        code: '1.1',
+        text: 'เพิ่มผู้ใช้งานระบบ'
+      }
+      this.editRow.mode = 'add'
+    },
+    editUser (value) {
+      this.currentView = {
+        code: '1.1',
+        text: 'แก้ไขผู้ใช้งานระบบ'
+      }
+      this.editRow = value
+      this.editRow.mode = 'edit'
+    },
+    clearUser (value) {
+      this.currentView = {
+        code: '1',
+        text: 'ผู้ใช้งานระบบ'
+      }
+    },
+    cancelUser (value) {
+      this.currentView = {
+        code: '1',
+        text: 'ผู้ใช้งานระบบ'
+      }
+    },
+    saveUser (value) {
+      this.currentView = {
+        code: '1',
+        text: 'ผู้ใช้งานระบบ'
+      }
+    },
     clearApp (value) {
       this.currentView = {
         code: '2',
@@ -283,10 +322,12 @@ export default {
       }
     },
     selectedMenu (item, index) {
-      this.selectedItem = item
-      this.currentView = item
-      this.activeTab = item.child.length > 0 ? item.child[0] : {}
-      this.rightMenu = item !== undefined ? item.child : []
+      if(item.code == '2'){
+        this.selectedItem = item
+        this.currentView = item
+        this.activeTab = item.child.length > 0 ? item.child[0] : {}
+        this.rightMenu = item !== undefined ? item.child : []
+      }
     },
     selectedTabs (item) {
       this.activeTab = item
@@ -317,7 +358,8 @@ export default {
     MainListApp,
     AddApp,
     AddGroup,
-    UserList
+    UserList,
+    MainAdminApp
   },
   mounted () {}
 }

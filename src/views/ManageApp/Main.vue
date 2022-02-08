@@ -151,10 +151,10 @@
       </div>
       <div v-else class="table">
         <div class="head-table">
-          <div class="head" style="width:9.5%" @click="sort('no')">
+          <div class="head" style="width:9.5%" @click="sort(headCol2[0], 0)">
             <div class="column-name">{{ $t('set.list_col1') }}</div>
             <v-icon
-              v-text="sortNo2 ? 'mdi-menu-up' : 'mdi-menu-down'"
+              v-text="sortNo == 0 ? 'mdi-menu-up' : 'mdi-menu-down'"
               style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
               size="20"
             ></v-icon>
@@ -162,31 +162,31 @@
           <div
             class="head"
             style="width:40%;padding-left:8px"
-            @click="sort('name_th')"
+            @click="sort(headCol2[1], 1)"
           >
             <div class="column-name">{{ $t('set.manege_col2') }}</div>
             <v-icon
-              v-text="sortAppName2 ? 'mdi-menu-up' : 'mdi-menu-down'"
+              v-text="sortNo == 1 ? 'mdi-menu-up' : 'mdi-menu-down'"
               style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
               size="22"
             ></v-icon>
           </div>
-          <div class="head" style="width:20%" @click="sort('total_app')">
+          <div class="head" style="width:20%" @click="sort(headCol2[2], 2)">
             <div class="column-name">
               {{ $t('set.manege_col3') }}
             </div>
             <v-icon
-              v-text="sortCount2 ? 'mdi-menu-up' : 'mdi-menu-down'"
+              v-text="sortNo == 2 ? 'mdi-menu-up' : 'mdi-menu-down'"
               style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
               size="22"
             ></v-icon>
           </div>
-          <div class="head" style="width:20%" @click="sort('total_user')">
+          <div class="head" style="width:20%" @click="sort(headCol2[3], 3)">
             <div class="column-name">
               {{ $t('set.manege_col4') }}
             </div>
             <v-icon
-              v-text="sortAccess2 ? 'mdi-menu-up' : 'mdi-menu-down'"
+              v-text="sortNo == 3 ? 'mdi-menu-up' : 'mdi-menu-down'"
               style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
               size="22"
             ></v-icon>
@@ -340,10 +340,7 @@ export default {
       searchApp: '',
       sortNo: null,
       headCol: ['index', 'name_th', 'category_name_th', 'type_login', 'status'],
-      sortNo2: false,
-      sortAppName2: false,
-      sortCount2: false,
-      sortAccess2: false,
+      headCol2: ['index', 'name_th', 'total_app', 'total_user'],
       mainSort: {
         feild: 'name_th',
         orderby: true
@@ -377,6 +374,10 @@ export default {
       if (this.active.code !== item.code) {
         this.$emit('tabs', item)
         this.sortNo = null
+        this.mainSort = {
+          feild: 'name_th',
+          orderby: true
+        }
         this.fetchData(item)
       } else {
         this.$emit('tabs', item)
@@ -392,6 +393,28 @@ export default {
         } else {
           this.list = this.list.sort(function (a, b) {
             return a.index - b.index
+          })
+        }
+        this.mainSort.orderby = !this.mainSort.orderby
+      } else if (feild == 'total_user') {
+        if (this.mainSort.orderby) {
+          this.list = this.list.sort(function (a, b) {
+            return b.total_user - a.total_user
+          })
+        } else {
+          this.list = this.list.sort(function (a, b) {
+            return a.total_user - b.total_user
+          })
+        }
+        this.mainSort.orderby = !this.mainSort.orderby
+      } else if (feild == 'total_app') {
+        if (this.mainSort.orderby) {
+          this.list = this.list.sort(function (a, b) {
+            return b.total_app - a.total_app
+          })
+        } else {
+          this.list = this.list.sort(function (a, b) {
+            return a.total_app - b.total_app
           })
         }
         this.mainSort.orderby = !this.mainSort.orderby

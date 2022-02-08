@@ -4,12 +4,12 @@
       <div class="detail-add">
         <div class="rows">
           <div style="width:20%" class="rows-name">ประเภทการเข้าใช้งานระบบ</div>
-          <div style="width:80%" class="rows-input">
-            <v-radio-group v-model="type_access" style="display:flex">
+          <div style="width:62%" class="rows-input">
+            <v-radio-group v-model="editRow.type_login" style="display:flex">
               <div class="radio" style="margin-right: 65px;">
                 <v-radio
                   :color="'#CE1212'"
-                  :value="'1'"
+                  :value="1"
                   :ripple="false"
                   :messages="false"
                   :light="false"
@@ -19,7 +19,7 @@
               <div class="radio">
                 <v-radio
                   :color="'#CE1212'"
-                  :value="'2'"
+                  :value="0"
                   :ripple="false"
                   :messages="false"
                   :light="false"
@@ -28,6 +28,14 @@
               </div>
             </v-radio-group>
           </div>
+          <div style="width:18%;display:flex" class="rows-input">
+            <v-checkbox
+              color="red"
+              v-model="editRow.status_permission"
+              hide-details
+            ></v-checkbox>
+            <div style="padding-top:4px">ผู้ดูแลระบบ</div>
+          </div>
         </div>
         <div class="rows">
           <div style="width:20%" class="rows-name">ค้นหาพนักงาน</div>
@@ -35,8 +43,7 @@
             <div class="input-with-icon" style="width: 200px;">
               <v-combobox
                 id="combobox-user-list"
-                v-model="app_type"
-                :items="items"
+                v-model="editRow.emp_code"
                 dense
                 filled
                 hide-selected
@@ -64,7 +71,7 @@
             <div class="input-with-icon" style="width: 200px;">
               <input
                 type="text"
-                v-model="app_name_th"
+                v-model="editRow.emp_code"
                 :placeholder="$t('input_selected')"
               />
             </div>
@@ -77,7 +84,7 @@
               <div class="input-with-icon">
                 <input
                   type="text"
-                  v-model="app_name_en"
+                  v-model="editRow.name_th"
                   :placeholder="$t('input_selected')"
                 />
               </div>
@@ -91,7 +98,7 @@
               <div class="input-with-icon">
                 <input
                   type="text"
-                  v-model="app_name_en"
+                  v-model="editRow.name_en"
                   :placeholder="$t('input_selected')"
                 />
               </div>
@@ -105,7 +112,7 @@
               <div class="input-with-icon">
                 <input
                   type="text"
-                  v-model="app_name_en"
+                  v-model="editRow.nickname1_th"
                   :placeholder="$t('input_selected')"
                 />
               </div>
@@ -119,7 +126,7 @@
               <div class="input-with-icon">
                 <input
                   type="text"
-                  v-model="app_name_en"
+                  v-model="editRow.nickname1_en"
                   :placeholder="$t('input_selected')"
                 />
               </div>
@@ -133,7 +140,7 @@
               <div class="input-with-icon">
                 <input
                   type="text"
-                  v-model="app_name_en"
+                  v-model="editRow.nickname2_th"
                   :placeholder="$t('input_selected')"
                 />
               </div>
@@ -147,7 +154,7 @@
               <div class="input-with-icon">
                 <input
                   type="text"
-                  v-model="app_name_en"
+                  v-model="editRow.nickname2_en"
                   :placeholder="$t('input_selected')"
                 />
               </div>
@@ -161,7 +168,7 @@
               <div class="input-with-icon">
                 <input
                   type="text"
-                  v-model="app_name_en"
+                  v-model="editRow.postname_th"
                   :placeholder="$t('input_selected')"
                 />
               </div>
@@ -175,7 +182,7 @@
               <div class="input-with-icon">
                 <input
                   type="text"
-                  v-model="app_name_en"
+                  v-model="editRow.postname_en"
                   :placeholder="$t('input_selected')"
                 />
               </div>
@@ -189,7 +196,7 @@
               <div class="input-with-icon">
                 <input
                   type="text"
-                  v-model="app_name_en"
+                  v-model="editRow.email"
                   :placeholder="$t('input_selected')"
                 />
               </div>
@@ -203,7 +210,7 @@
               <div class="input-with-icon">
                 <input
                   type="text"
-                  v-model="app_name_en"
+                  v-model="editRow.phone"
                   :placeholder="$t('input_selected')"
                 />
               </div>
@@ -217,7 +224,7 @@
               <div class="input-with-icon">
                 <input
                   type="text"
-                  v-model="app_name_en"
+                  v-model="editRow.phone"
                   :placeholder="$t('input_selected')"
                 />
               </div>
@@ -228,11 +235,11 @@
               สถานะ
             </div>
             <div style="width:60%;padding-right:25px" class="rows-input">
-              <v-radio-group v-model="type_access" style="display:flex">
+              <v-radio-group v-model="editRow.status" style="display:flex">
                 <div class="radio" style="margin-right: 30px;">
                   <v-radio
                     :color="'#CE1212'"
-                    :value="'1'"
+                    :value="1"
                     :ripple="false"
                     :messages="false"
                     :light="false"
@@ -242,7 +249,7 @@
                 <div class="radio">
                   <v-radio
                     :color="'#CE1212'"
-                    :value="'2'"
+                    :value="0"
                     :ripple="false"
                     :messages="false"
                     :light="false"
@@ -261,7 +268,7 @@
             <div class="input-with-icon" style="width: 300px;">
               <input
                 type="text"
-                v-model="app_name_th"
+                v-model="editRow.group_name_th"
                 :placeholder="$t('input_selected')"
               />
             </div>
@@ -366,7 +373,7 @@
                 <div class="head" style="width:10%" @click="sort('no')">
                   <div class="column-name">No</div>
                   <v-icon
-                    v-text="sortNo ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    v-text="sortNo == 0 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
                     size="22"
                   ></v-icon>
@@ -374,7 +381,7 @@
                 <div class="head" style="width:20%" @click="sort('type_th')">
                   <div class="column-name">รหัสพนักงาน</div>
                   <v-icon
-                    v-text="sortTypeTh ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    v-text="sortNo == 1 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
                     size="22"
                   ></v-icon>
@@ -384,7 +391,7 @@
                     ชื่อ - นามสกุล
                   </div>
                   <v-icon
-                    v-text="sortTypeEn ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    v-text="sortNo == 2 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
                     size="22"
                   ></v-icon>
@@ -394,7 +401,7 @@
                     ตำแหน่ง
                   </div>
                   <v-icon
-                    v-text="sortTypeEn ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    v-text="sortNo == 3 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
                     size="22"
                   ></v-icon>
@@ -455,120 +462,52 @@
 export default {
   name: 'user-list',
   props: {
-    menu: {
-      type: Array,
+    data: {
+      type: Object,
       required: true
     }
   },
   data () {
     return {
-      app_name_th: '',
-      app_name_en: '',
-      app_desc_th: '',
-      app_desc_en: '',
-      app_type: '',
-      app_code: '',
-      items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
-      type_access: '1',
-      connect_sso: '1',
-      app_status: '1',
-      url_app: '',
-      enableBtn: false,
-      // isSelecting: false,
-      selectedFile: null,
+      editRow: this.data,
       dialog: false,
       errorDialog: 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?',
       error: false,
       rightBtn: 'บันทึก',
+      enableBtn: false,
       typeDialog: false,
+      sortNo: null,
       searchApp: '',
-      sortNo: false,
-      sortTypeTh: false,
-      sortTypeEn: false,
-      list: [
-        {
-          no: 1,
-          cust_code: '630251',
-          name_th: 'Kittichai Kunpangtong',
-          position: 'Product Manager (IT)'
-        },
-        {
-          no: 2,
-          cust_code: '630252',
-          name_th: 'Kittichai Kunpangtong',
-          position: 'Product Manager (IT)'
-        },
-        {
-          no: 3,
-          cust_code: '630253',
-          name_th: 'Kittichai Kunpangtong',
-          position: 'Product Manager (IT)'
-        },
-        {
-          no: 4,
-          cust_code: '630254',
-          name_th: 'Kittichai Kunpangtong',
-          position: 'Product Manager (IT)'
-        },
-        {
-          no: 5,
-          cust_code: '630255',
-          name_th: 'Kittichai Kunpangtong',
-          position: 'Product Manager (IT)'
-        },
-        {
-          no: 6,
-          cust_code: '630256',
-          name_th: 'Kittichai Kunpangtong',
-          position: 'Product Manager (IT)'
-        },
-        {
-          no: 7,
-          cust_code: '630257',
-          name_th: 'Kittichai Kunpangtong',
-          position: 'Product Manager (IT)'
-        },
-        {
-          no: 8,
-          cust_code: '630258',
-          name_th: 'Kittichai Kunpangtong',
-          position: 'Product Manager (IT)'
-        }
-      ],
-      editMode: false,
-      editRow: {},
-      NameThInput: '',
-      NameEnInput: '',
-      enableType: false
+      list: []
     }
   },
   computed: {},
   watch: {},
   methods: {
     AddNewType () {
-      this.editMode = true
+      // this.editMode = true
     },
     EditNewType (item) {
-      this.editMode = true
-      this.NameThInput = item.name_th
-      this.NameEnInput = item.name_en
+      // this.editMode = true
+      // this.NameThInput = item.name_th
+      // this.NameEnInput = item.name_en
     },
     DeleteNewType (item) {
-      this.editMode = true
+      // this.editMode = true
     },
     CloseNewType () {
-      this.editMode = false
-      this.NameThInput = ''
-      this.NameEnInput = ''
+      // this.editMode = false
+      // this.NameThInput = ''
+      // this.NameEnInput = ''
     },
     sort (feild) {
-      if (feild == 'no') {
-        this.sortNo = !this.sortNo
-      } else if (feild == 'type_th') {
-        this.sortTypeTh = !this.sortTypeTh
-      } else if (feild == 'type_en') {
-        this.sortTypeEn = !this.sortTypeEn
-      }
+      // if (feild == 'no') {
+      //   this.sortNo = !this.sortNo
+      // } else if (feild == 'type_th') {
+      //   this.sortTypeTh = !this.sortTypeTh
+      // } else if (feild == 'type_en') {
+      //   this.sortTypeEn = !this.sortTypeEn
+      // }
     },
     openPopupType () {
       this.typeDialog = true
@@ -582,7 +521,6 @@ export default {
       }
       this.dialog = false
       this.rightBtn = 'บันทึก'
-      this.selectedFile = null
     },
     clear () {
       console.log('2==>')
@@ -608,13 +546,10 @@ export default {
         //   'ข้อมูลแอปพลิเคชันดังกล่าวถูกใช้งานอยู่ในเมนู "จัดกลุ่มผู้ใช้งานแอปพลิเคชัน" กรุณายืนยัน การดำเนินการ'
 
         this.dialog = false
-        this.selectedFile = null
         this.$emit('save', null)
       }
     },
-    onButtonClick () {
-      this.$refs.uploader.click()
-    }
+    onButtonClick () {}
   },
   mounted () {}
 }
