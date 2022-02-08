@@ -196,7 +196,7 @@
   text-align: center;
   padding-top: 15px;
   color: #79797980;
-  font-size: nth($font-sizes, 4);
+  font-size: nth($font-sizes, 2);
 }
 
 .v-dialog {
@@ -214,7 +214,7 @@
       text-align: center;
       padding-top: 15px;
       color: #79797980;
-      font-size: nth($font-sizes, 4);
+      font-size: nth($font-sizes, 2);
     }
     .center-vh {
       display: flex;

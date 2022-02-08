@@ -242,6 +242,9 @@ export default {
         text: 'เพิ่มผู้ใช้งานระบบ'
       }
       this.editRow.mode = 'add'
+      this.editRow.user_id = null
+      this.editRow.status = 1
+      this.editRow.type_login = 1
     },
     editUser (value) {
       this.currentView = {
@@ -249,7 +252,6 @@ export default {
         text: 'แก้ไขผู้ใช้งานระบบ'
       }
       this.editRow = value
-      console.log(value)
       this.editRow.mode = 'edit'
     },
     clearUser (value) {
@@ -323,12 +325,12 @@ export default {
       }
     },
     selectedMenu (item, index) {
-      if (item.code == '2') {
-        this.selectedItem = item
-        this.currentView = item
-        this.activeTab = item.child.length > 0 ? item.child[0] : {}
-        this.rightMenu = item !== undefined ? item.child : []
-      }
+      // if (item.code == '2') {
+      this.selectedItem = item
+      this.currentView = item
+      this.activeTab = item.child.length > 0 ? item.child[0] : {}
+      this.rightMenu = item !== undefined ? item.child : []
+      // }
     },
     selectedTabs (item) {
       this.activeTab = item
@@ -347,9 +349,10 @@ export default {
       }
     },
     int () {
-      this.selectedItem = this.menu[1]
-      this.currentView = this.menu[1]
-      this.activeTab = this.rightMenu[0]
+      this.selectedItem = this.menu[0]
+      this.currentView = this.menu[0]
+      this.activeTab = null
+      // this.activeTab = this.rightMenu[0]
     }
   },
   created () {

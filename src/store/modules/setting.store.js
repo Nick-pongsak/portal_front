@@ -265,6 +265,42 @@ const store = {
         })
       })
     },
+    getDroupdownGroup({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
+      console.log("dropdown-group ==>", JSON.stringify(data))
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/dropdown-group`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          commit('SetLoading', false)
+          resolve(res.data.success)
+        }).catch(error => {
+          commit('SetLoading', false)
+          reject(error)
+        })
+      })
+    },
+    searchEmpLdap({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
+      console.log("search-emp-ldap ==>", JSON.stringify(data))
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/auth/search-emp-ldap`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          commit('SetLoading', false)
+          resolve(res.data.success)
+        }).catch(error => {
+          commit('SetLoading', false)
+          reject(error)
+        })
+      })
+    },
 
   },
   getters: {

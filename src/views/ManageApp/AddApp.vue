@@ -72,7 +72,7 @@
             <v-btn
               @click="openPopupType()"
               class="cancel-btn"
-              style="height:25px;width:32px;margin-left:8px"
+              style="height:25px;width:32px;min-width:32px;margin-left:8px"
             >
               <v-icon
                 v-text="'mdi-cog'"
