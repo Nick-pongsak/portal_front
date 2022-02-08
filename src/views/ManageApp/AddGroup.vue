@@ -130,7 +130,7 @@
                   :key="'setapp' + index"
                 >
                   <div class="body" style="width:10%;padding-left:5px">
-                    {{ index + 1 }}
+                    {{ item.index + 1 }}
                   </div>
                   <div class="body" style="width:30%">
                     {{ item.name_th }}
@@ -501,20 +501,33 @@ export default {
       this.sortNo = this.sortNo == index ? null : index
       let table = this.editRow.app
       if (feild == 'index') {
-        console.log('==>')
-        // if (this.mainSort.orderby) {
-        //   console.log('==>')
-        //   this.editRow.app = this.editRow.app.sort(function (a, b) {
-        //     return b.index - a.index
-        //   })
-        // } else {
-        //   console.log('-->')
-        //   this.editRow.app = this.editRow.app.sort(function (a, b) {
-        //     return a.index - b.index
-        //   })
-        // }
-        // this.mainSort.orderby = !this.mainSort.orderby
+        if (this.mainSort.orderby) {
+          this.editRow.app = table.sort(function (a, b) {
+            return b.index - a.index
+          })
+        } else {
+          this.editRow.app = table.sort(function (a, b) {
+            return a.index - b.index
+          })
+        }
+        console.log(table)
+        this.mainSort.orderby = !this.mainSort.orderby
       } else {
+        /*
+          items.sort(function(a, b) {
+          var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+          var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+
+          // names must be equal
+          return 0;
+        });
+        */
         // if (this.mainSort.feild == feild) {
         //   this.mainSort.orderby = !this.mainSort.orderby
         // } else {
@@ -647,8 +660,14 @@ export default {
         group_id: this.editRow.group_id
       }
       this.$store.dispatch('groupDetail', result).then(res => {
+        let result = []
+        for (let i = 0; i < res.data.app.length; i++) {
+          res.data.app[i].index = i
+          result.push(res.data.app[i])
+        }
         this.editRow = res.data
-        this.editRow.mode = mode
+        this.editRow.app = result
+        // this.editRow.mode = mode
       })
     }
   },
