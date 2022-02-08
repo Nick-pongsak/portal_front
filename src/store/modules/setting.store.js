@@ -301,6 +301,60 @@ const store = {
         })
       })
     },
+    registerUser({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
+      console.log("register ==>", JSON.stringify(data))
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/auth/register`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          commit('SetLoading', false)
+          resolve(res.data.success)
+        }).catch(error => {
+          commit('SetLoading', false)
+          reject(error)
+        })
+      })
+    },
+    delteUser({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
+      console.log("delete-user ==>", JSON.stringify(data))
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/delete-user`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          commit('SetLoading', false)
+          resolve(res.data.success)
+        }).catch(error => {
+          commit('SetLoading', false)
+          reject(error)
+        })
+      })
+    },
+    updateUser({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
+      console.log("update-user ==>", JSON.stringify(data))
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/update-user`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          commit('SetLoading', false)
+          resolve(res.data.success)
+        }).catch(error => {
+          commit('SetLoading', false)
+          reject(error)
+        })
+      })
+    },
 
   },
   getters: {

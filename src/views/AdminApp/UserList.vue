@@ -522,7 +522,8 @@
     <div style="display:flex;padding-top:15px">
       <div style="width:50%">
         <v-btn
-          @click="clear()"
+          v-show="editRow.mode == 'edit'"
+          @click="clearBtn()"
           class="clear-btn"
           style="margin-right:6px;height: 22px;"
         >
@@ -794,10 +795,12 @@ export default {
       this.enableInput = false
     },
     selectedGroup (value) {
+      console.log(value)
       if (this.editRow.user_id !== null) {
+        let user_id = this.editRow.user_id.toString()
         let req = {
           group_id: value,
-          user_id: this.editRow.user_id.trim() == 0 ? 0 : this.editRow.user_id
+          user_id: user_id.trim() == 0 ? 0 : this.editRow.user_id
         }
         this.$store.dispatch('getDroupdownGroup', req).then(res => {
           let temp = []
@@ -875,58 +878,85 @@ export default {
       this.dialog = false
       this.rightBtn = 'บันทึก'
     },
-    clear () {
-      console.log('2==>')
-      // this.dialog = true
+    clearBtn () {
+      this.btnClick = 'clear'
+      this.dialog = true
       this.errorDialog = 'คุณต้องการลบข้อมูลใช่หรือไม่ ?'
       this.rightBtn = 'ลบ'
-      // this.dialog = false
-      // this.selectedFile = null
-      // this.$emit('clear', null)
     },
     saveBtn () {
-      let result = this.editRow
-      let arr = []
-      result.password =
-        this.editRow.type_login == 1 ? 'LDAP' : this.editRow.password
-      for (let i = 0; i < this.applist.length; i++) {
-        arr.push({
-          app_id: this.applist[i].app_id,
-          username:
-            this.applist[i].type_login == 0
-              ? this.applist[i].username
-              : result.username,
-          password: 'LDAP'
-        })
-      }
-      result.app = arr
-      if (this.editRow.type_login == 1) {
-        console.log('save user ==>', JSON.stringify(result))
+      this.btnClick = 'save'
+      let item = this.editRow
+      let group_id = item.group_id.toString()
+      let name_th = item.name_th.trim()
+      let name_en = item.name_en.trim()
+      let postname_th = item.postname_th.trim()
+      let postname_en = item.postname_en.trim()
+      let emp_code = item.emp_code.toString()
+      let email = item.email.trim()
+      if (
+        group_id.length > 0 &&
+        name_th.length > 0 &&
+        name_en.length > 0 &&
+        postname_th.length > 0 &&
+        postname_en.length > 0 &&
+        emp_code.trim().length > 0 &&
+        email.length > 0 &&
+        this.applist.length > 0
+      ) {
+        this.dialog = true
+        this.errorDialog = 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?'
+        this.rightBtn = 'บันทึก'
       } else {
-        if (this.InCondition(this.editRow.password)) {
-          console.log('save user ==>', JSON.stringify(result))
-        } else {
-          console.log('No save...')
-        }
+        console.log('Valid...', item)
       }
     },
     save () {
-      console.log('3==>')
-      this.rightBtn = 'บันทึก'
-      if (this.error) {
-        this.dialog = false
-      } else {
-        // this.error = true
-        // this.errorDialog =
-        //   'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ (Error Code 1001)'
-
-        // this.error = true
-        // this.errorDialog =
-        //   'ข้อมูลแอปพลิเคชันดังกล่าวถูกใช้งานอยู่ในเมนู "จัดกลุ่มผู้ใช้งานแอปพลิเคชัน" กรุณายืนยัน การดำเนินการ'
-
-        this.dialog = false
-        this.$emit('save', null)
+      if (this.btnClick == 'save') {
+        let result = this.editRow
+        let arr = []
+        result.password =
+          this.editRow.type_login == 1 ? 'LDAP' : this.editRow.password
+        result.status_permission = this.editRow.status_permission ? 1 : 0
+        for (let i = 0; i < this.applist.length; i++) {
+          arr.push({
+            app_id: this.applist[i].app_id,
+            username:
+              this.applist[i].type_login == 0
+                ? this.applist[i].username
+                : result.username,
+            password: 'LDAP'
+          })
+        }
+        result.app = JSON.stringify(arr)
+        let url = this.editRow.mode == 'add' ? 'registerUser' : 'updateUser'
+        if (this.editRow.type_login == 1) {
+          this.$store.dispatch(url, result).then(res => {
+            this.$emit('save', null)
+            this.dialog = false
+          })
+        } else {
+          if (this.InCondition(this.editRow.password)) {
+            this.$store.dispatch(url, result).then(res => {
+              this.$emit('save', null)
+              this.dialog = false
+            })
+          } else {
+            console.log('No save...')
+          }
+        }
+      } else if (this.btnClick == 'clear') {
+        this.clear()
       }
+    },
+    clear () {
+      let result = {
+        user_id: this.editRow.user_id
+      }
+      this.$store.dispatch('delteUser', result).then(res => {
+        this.dialog = false
+        this.$emit('clear', null)
+      })
     },
     InCondition (value) {
       if (value.length >= 6) {
@@ -982,14 +1012,14 @@ export default {
     onButtonClick () {}
   },
   created () {
+    let reqSearch = {
+      keyword: '',
+      field: 'name_th',
+      sort: 'asc'
+    }
     if (this.editRow.mode == 'add') {
       this.enableInput = true
-      let req = {
-        keyword: '',
-        field: 'name_th',
-        sort: 'asc'
-      }
-      this.$store.dispatch('getGroupList', req).then(res => {
+      this.$store.dispatch('getGroupList', reqSearch).then(res => {
         this.items = res.data
         this.applist = []
       })
@@ -999,14 +1029,19 @@ export default {
         group_id: this.editRow.group_id,
         user_id: this.editRow.user_id
       }
-      this.$store.dispatch('getDroupdownGroup', req).then(res => {
-        this.items = [res.data]
-        let temp = []
-        for (let i = 0; i < res.data.app.length; i++) {
-          res.data.app[i].index = i
-          temp.push(res.data.app[i])
-        }
-        this.applist = temp
+      this.$store.dispatch('getGroupList', reqSearch).then(res => {
+        this.items = res.data
+        this.applist = []
+        this.$store.dispatch('getDroupdownGroup', req).then(res => {
+          // this.items = [res.data]
+          // this.editRow.group_id = res.data
+          let temp = []
+          for (let i = 0; i < res.data.app.length; i++) {
+            res.data.app[i].index = i
+            temp.push(res.data.app[i])
+          }
+          this.applist = temp
+        })
       })
     }
   },

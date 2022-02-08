@@ -242,9 +242,18 @@ export default {
         text: 'เพิ่มผู้ใช้งานระบบ'
       }
       this.editRow.mode = 'add'
-      this.editRow.user_id = null
+      this.editRow.app_id = 0
+      this.editRow.user_id = 0
       this.editRow.status = 1
       this.editRow.type_login = 1
+      this.editRow.group_id = ''
+      this.editRow.name_en = ''
+      this.editRow.name_th = ''
+      this.editRow.postname_th = ''
+      this.editRow.postname_en = ''
+      this.editRow.emp_code = ''
+      this.editRow.email = ''
+      this.editRow.status_permission = ''
     },
     editUser (value) {
       this.currentView = {
