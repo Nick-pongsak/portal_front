@@ -323,7 +323,7 @@ export default {
       }
     },
     selectedMenu (item, index) {
-      if(item.code == '2'){
+      if (item.code == '2') {
         this.selectedItem = item
         this.currentView = item
         this.activeTab = item.child.length > 0 ? item.child[0] : {}

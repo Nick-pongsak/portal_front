@@ -41,7 +41,14 @@
           <div style="width:20%" class="rows-name">ค้นหาพนักงาน</div>
           <div style="width:80%;display:flex" class="rows-input">
             <div class="input-with-icon" style="width: 200px;">
-              <v-combobox
+              <div class="input-with-icon" style="width: 200px;">
+                <input
+                  type="text"
+                  v-model="searchEmpCode"
+                  :placeholder="$t('input_selected')"
+                />
+              </div>
+              <!-- <v-combobox
                 id="combobox-user-list"
                 v-model="editRow.emp_code"
                 dense
@@ -50,7 +57,7 @@
                 outlined
                 solo
                 :placeholder="$t('input_selected')"
-              ></v-combobox>
+              ></v-combobox> -->
             </div>
             <v-btn
               @click="openPopupType()"
@@ -478,6 +485,7 @@ export default {
       typeDialog: false,
       sortNo: null,
       searchApp: '',
+      searchEmpCode: '',
       list: []
     }
   },

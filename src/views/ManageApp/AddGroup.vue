@@ -499,8 +499,9 @@ export default {
     },
     sort (feild, index) {
       this.sortNo = this.sortNo == index ? null : index
-      // let table = this.editRow.app
+      let table = this.editRow.app
       if (feild == 'index') {
+        console.log('==>')
         // if (this.mainSort.orderby) {
         //   console.log('==>')
         //   this.editRow.app = this.editRow.app.sort(function (a, b) {
