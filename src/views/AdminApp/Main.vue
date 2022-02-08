@@ -203,12 +203,7 @@ export default {
       this.$emit('add', this.active)
     },
     edit (item) {
-      let obj = {
-        current: this.active,
-        item: item
-      }
-      // this.fetchData()
-      this.$emit('edit', obj)
+      this.$emit('edit', item)
     },
     sort (feild, index) {
       this.sortNo = this.sortNo == index ? null : index

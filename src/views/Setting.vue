@@ -249,6 +249,7 @@ export default {
         text: 'แก้ไขผู้ใช้งานระบบ'
       }
       this.editRow = value
+      console.log(value)
       this.editRow.mode = 'edit'
     },
     clearUser (value) {
