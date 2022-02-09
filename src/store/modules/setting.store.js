@@ -74,6 +74,7 @@ const store = {
     },
     getAppList({ state, commit, dispatch }, data) {
       commit('SetLoading', true)
+      console.log("application-detail ==>", JSON.stringify(data))
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/application-detail`, data, {
           headers: {
@@ -91,8 +92,9 @@ const store = {
     },
     getType({ state, commit, dispatch }, data) {
       commit('SetLoading', true)
+      console.log("get-category ==>", JSON.stringify(data))
       return new Promise((resolve, reject) => {
-        axios.post(`${url}/apiweb/api/get_category`, data, {
+        axios.post(`${url}/apiweb/api/get-category`, data, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${this.getters.access_token}`
@@ -108,8 +110,9 @@ const store = {
     },
     deleteType({ state, commit, dispatch }, data) {
       commit('SetLoading', true)
+      console.log("delete-category ==>", JSON.stringify(data))
       return new Promise((resolve, reject) => {
-        axios.post(`${url}/apiweb/api/delete_category`, data, {
+        axios.post(`${url}/apiweb/api/delete-category`, data, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${this.getters.access_token}`
@@ -125,6 +128,7 @@ const store = {
     },
     addType({ state, commit, dispatch }, data) {
       commit('SetLoading', true)
+      console.log("add-category ==>", JSON.stringify(data))
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/add-category`, data, {
           headers: {
@@ -142,8 +146,9 @@ const store = {
     },
     updateType({ state, commit, dispatch }, data) {
       commit('SetLoading', true)
+      console.log("update-category ==>", JSON.stringify(data))
       return new Promise((resolve, reject) => {
-        axios.post(`${url}/apiweb/api/update_category`, data, {
+        axios.post(`${url}/apiweb/api/update-category`, data, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${this.getters.access_token}`

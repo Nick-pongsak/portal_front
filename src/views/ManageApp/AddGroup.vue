@@ -13,6 +13,8 @@
                 v-model="editRow.name_th"
                 :placeholder="$t('input_selected')"
                 maxlength="250"
+                @keyup="enableBtnSave"
+                @keypress="enableBtnSave"
               />
             </div>
           </div>
@@ -28,6 +30,8 @@
                 v-model="editRow.name_en"
                 :placeholder="$t('input_selected')"
                 maxlength="250"
+                @keyup="enableBtnSave"
+                @keypress="enableBtnSave"
               />
             </div>
           </div>
@@ -179,7 +183,8 @@
         <!-- @click.stop="dialog = true" -->
         <v-btn
           @click="saveBtn()"
-          :class="enableBtn ? 'cancel-btn disabled' : 'cancel-btn'"
+          :class="'cancel-btn'"
+          :disabled="enableBtn"
           style="height: 22px"
         >
           {{ $t('btn_save') }}
@@ -382,9 +387,6 @@ export default {
   },
   data () {
     return {
-      app_name_th: '',
-      app_name_en: '',
-      enableBtn: false,
       dialog: false,
       errorDialog: 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?',
       error: false,
@@ -394,72 +396,7 @@ export default {
       sortNo: null,
       sortNo2: null,
       headCol: ['index', 'name_th', 'category_name_en', 'type_login', 'status'],
-      list: [
-        {
-          no: 1,
-          name_th: 'Corparate Planning',
-          type: 'CRM',
-          access: 'only',
-          status: false,
-          selected: false
-        },
-        {
-          no: 2,
-          name_th: 'SalesOps',
-          type: 'CRM',
-          access: 'only',
-          status: true,
-          selected: true
-        },
-        {
-          no: 3,
-          name_th: 'MktOps',
-          type: 'CRM',
-          access: 'only',
-          status: false,
-          selected: false
-        },
-        {
-          no: 4,
-          name_th: 'myHr',
-          type: 'HRS',
-          access: 'LDAP',
-          status: true,
-          selected: true
-        },
-        {
-          no: 5,
-          name_th: 'App 5',
-          type: 'HRS',
-          access: 'LDAP',
-          status: true,
-          selected: true
-        },
-        {
-          no: 6,
-          name_th: 'App 5',
-          type: 'HRS',
-          access: 'LDAP',
-          status: true,
-          selected: true
-        },
-        {
-          no: 7,
-          name_th: 'App 5',
-          type: 'HRS',
-          access: 'LDAP',
-          status: true,
-          selected: true
-        },
-        {
-          no: 8,
-          name_th: 'App 5',
-          type: 'HRS',
-          access: 'LDAP',
-          status: true,
-          selected: true
-        }
-      ],
+      list: [],
       enableType: false,
       mainList: [],
       editRow: this.data,
@@ -470,14 +407,14 @@ export default {
       mainSort2: {
         feild: 'name_th',
         orderby: true
-      }
+      },
+      enableBtn: true
     }
   },
   computed: {},
   watch: {},
   methods: {
     SaveGroup () {
-      // this.editRow.app = this.list.filter(a => a.selected)
       let results = this.list.filter(a => a.selected)
       let data = []
       for (let i = 0; i < results.length; i++) {
@@ -486,6 +423,7 @@ export default {
       }
       this.editRow.app = data
       this.groupDialog = false
+      this.enableBtnSave()
     },
     CloseGroup () {
       this.groupDialog = false
@@ -593,15 +531,23 @@ export default {
     saveBtn () {
       this.btnClick = 'save'
       let item = this.editRow
-      let name_th = item.name_th.trim()
-      let name_en = item.name_en.trim()
-      let list = item.app
-      if (name_th.length > 0 && name_en.length > 0 && list.length > 0) {
+      if (this.enableBtn == false) {
         this.dialog = true
         this.errorDialog = 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?'
         this.rightBtn = 'บันทึก'
       } else {
         console.log('Valid...', item)
+      }
+    },
+    enableBtnSave () {
+      let item = this.editRow
+      let name_th = item.name_th.trim()
+      let name_en = item.name_en.trim()
+      let list = item.app
+      if (name_th.length > 0 && name_en.length > 0 && list.length > 0) {
+        this.enableBtn = false
+      } else {
+        this.enableBtn = true
       }
     },
     clear () {
@@ -695,7 +641,11 @@ export default {
         )
         this.editRow.app = result
         this.editRow.mode = mode
+        this.enableBtnSave()
       })
+    } else {
+      // this.editRow.name_th = ''
+      // this.editRow.name_en = ''
     }
   },
   mounted () {}

@@ -563,8 +563,8 @@
           {{ $t('btn_cancel') }}
         </v-btn>
         <v-btn
-          :class="'cancel-btn'"
           @click="saveBtn()"
+          :class="'cancel-btn'"
           :disabled="enableBtn"
           style="height: 22px"
         >

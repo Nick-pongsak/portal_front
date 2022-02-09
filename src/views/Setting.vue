@@ -322,6 +322,8 @@ export default {
       } else {
         this.editRow2 = this.defaultEditRow2
         this.editRow2.app = []
+        this.editRow2.name_th = ''
+        this.editRow2.name_en = ''
       }
     },
     editApp (value) {

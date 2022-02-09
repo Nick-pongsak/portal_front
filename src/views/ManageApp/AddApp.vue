@@ -11,6 +11,8 @@
                 v-model="editRow.name_th"
                 :placeholder="$t('input_selected')"
                 maxlength="250"
+                @keyup="enableBtnSave"
+                @keypress="enableBtnSave"
               />
             </div>
           </div>
@@ -24,6 +26,8 @@
                 v-model="editRow.name_en"
                 :placeholder="$t('input_selected')"
                 maxlength="250"
+                @keyup="enableBtnSave"
+                @keypress="enableBtnSave"
               />
             </div>
           </div>
@@ -35,6 +39,8 @@
           <div style="width:70%;padding-right:25px" class="rows-input">
             <div class="input-with-icon" style="width: 100%">
               <textarea
+                @keyup="enableBtnSave"
+                @keypress="enableBtnSave"
                 v-model="editRow.description_th"
                 :placeholder="$t('input_selected')"
               ></textarea>
@@ -50,6 +56,8 @@
               <textarea
                 v-model="editRow.description_en"
                 :placeholder="$t('input_selected')"
+                @keyup="enableBtnSave"
+                @keypress="enableBtnSave"
               ></textarea>
             </div>
           </div>
@@ -92,6 +100,7 @@
                 :placeholder="$t('input_selected')"
                 maxlength="50"
                 @keypress="IsNumber"
+                @keyup="enableBtnSave"
               />
             </div>
           </div>
@@ -186,6 +195,8 @@
                 v-model="editRow.url"
                 :placeholder="$t('input_selected')"
                 maxlength="250"
+                @keyup="enableBtnSave"
+                @keypress="enableBtnSave"
               />
             </div>
           </div>
@@ -252,7 +263,8 @@
         </v-btn>
         <v-btn
           @click="saveBtn()"
-          :class="enableBtn ? 'cancel-btn disabled' : 'cancel-btn'"
+          :class="'cancel-btn'"
+          :disabled="enableBtn"
           style="height: 22px"
         >
           {{ $t('btn_save') }}
@@ -504,7 +516,8 @@ export default {
       modeAdd: null,
       editRowPop: {},
       btnClick: null,
-      detailDialog: null
+      detailDialog: null,
+      enableBtn: true
     }
   },
   computed: {},
@@ -643,6 +656,16 @@ export default {
     saveBtn () {
       this.btnClick = 'save'
       let item = this.editRow
+      if (this.enableBtn == false) {
+        this.dialog = true
+        this.errorDialog = 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?'
+        this.rightBtn = 'บันทึก'
+      } else {
+        console.log('Valid...', item)
+      }
+    },
+    enableBtnSave () {
+      let item = this.editRow
       let name_th = item.name_th.trim()
       let name_en = item.name_en.trim()
       let description_th = item.description_th.trim()
@@ -661,11 +684,9 @@ export default {
         image.length > 0 &&
         url.length > 0
       ) {
-        this.dialog = true
-        this.errorDialog = 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?'
-        this.rightBtn = 'บันทึก'
+        this.enableBtn = false
       } else {
-        console.log('Valid...', item)
+        this.enableBtn = true
       }
     },
     save () {
@@ -721,6 +742,7 @@ export default {
       })
     },
     IsNumber (evt) {
+      this.enableBtnSave()
       evt = evt ? evt : window.event
       var keyCode = evt.which ? evt.which : evt.keyCode
       if (
@@ -735,6 +757,9 @@ export default {
     }
   },
   created () {
+    if (this.editRow.mode == 'edit') {
+      this.enableBtnSave()
+    }
     this.getTypeList()
   },
   components: {
