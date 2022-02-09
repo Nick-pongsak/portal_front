@@ -97,16 +97,6 @@
                   v-on:keyup.enter="onEnter"
                 />
               </div>
-              <!-- <v-combobox
-                id="combobox-user-list"
-                v-model="editRow.emp_code"
-                dense
-                filled
-                hide-selected
-                outlined
-                solo
-                :placeholder="$t('input_selected')"
-              ></v-combobox> -->
             </div>
             <v-btn
               @click="openPopupType()"
@@ -149,6 +139,7 @@
                   :placeholder="$t('input_selected')"
                   :disabled="enableInput"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
+                  @keypress="enableBtnSave"
                 />
               </div>
             </div>
@@ -165,6 +156,7 @@
                   :placeholder="$t('input_selected')"
                   :disabled="enableInput"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
+                  @keypress="enableBtnSave"
                 />
               </div>
             </div>
@@ -244,6 +236,7 @@
                   v-model="editRow.postname_th"
                   :placeholder="$t('input_selected')"
                   :disabled="enableInput"
+                  @keypress="enableBtnSave"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
                 />
               </div>
@@ -257,6 +250,7 @@
               <div class="input-with-icon">
                 <input
                   type="text"
+                  @keypress="enableBtnSave"
                   v-model="editRow.postname_en"
                   :placeholder="$t('input_selected')"
                   :disabled="enableInput"
@@ -366,6 +360,7 @@
                   :placeholder="'-- หากมีโปรดระบุ --'"
                   :disabled="enableInput"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
+                  @keypress="enableBtnSave"
                 />
               </div>
               <v-tooltip bottom color="red">
@@ -565,6 +560,7 @@
         <v-btn
           @click="saveBtn()"
           :class="enableBtn ? 'cancel-btn disabled' : 'cancel-btn'"
+          :disabled="enableBtn"
           style="height: 22px"
         >
           {{ $t('btn_save') }}
@@ -746,7 +742,6 @@ export default {
       errorDialog: 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?',
       error: false,
       rightBtn: 'บันทึก',
-      enableBtn: false,
       empeDialog: false,
       sortNo: null,
       headCol: ['index', 'emp_code', 'name_th', 'postname_th'],
@@ -776,7 +771,8 @@ export default {
           menu_id: 1
         }
       ],
-      statusPermission: false
+      statusPermission: false,
+      enableBtn: true
     }
   },
   computed: {},
@@ -811,27 +807,32 @@ export default {
     },
     selectedPermission (evt) {
       this.statusPermission = this.editRow.status_permission
+      this.enableBtnSave()
     },
     selectedType (value) {
       this.editRow.type_login = value
-      if (value == 0) {
-        this.enableInput = false
-      } else if (value == 1 && this.editRow.user_id !== null) {
-        this.enableInput = true
+      if (this.editRow.mode == 'add') {
+        if (value == 1 && this.editRow.emp_code == '') {
+          this.enableInput = true
+        } else {
+          this.enableInput = false
+        }
       } else {
-        this.enableInput = true
       }
     },
     selectedStatus (value) {
       this.editRow.status = value
+      this.enableBtnSave()
     },
     selectedUser (value) {
       this.empeDialog = false
       let mode = this.editRow.mode
       this.editRow = value
       this.editRow.mode = mode
+      this.editRow.password = ''
       this.editRow.status = 1
       this.enableInput = false
+      this.enableBtnSave()
     },
     selectedGroup (value) {
       if (this.editRow.user_id !== null) {
@@ -859,6 +860,7 @@ export default {
             temp.push(sortData[i])
           }
           this.applist = temp
+          this.enableBtnSave()
         })
       }
     },
@@ -997,6 +999,16 @@ export default {
     saveBtn () {
       this.btnClick = 'save'
       let item = this.editRow
+      if (this.enableBtn == false) {
+        this.dialog = true
+        this.errorDialog = 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?'
+        this.rightBtn = 'บันทึก'
+      } else {
+        console.log('Valid...', item)
+      }
+    },
+    enableBtnSave () {
+      let item = this.editRow
       let group_id = item.group_id.toString()
       let name_th = item.name_th.trim()
       let name_en = item.name_en.trim()
@@ -1014,11 +1026,19 @@ export default {
         email.length > 0 &&
         this.applist.length > 0
       ) {
-        this.dialog = true
-        this.errorDialog = 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?'
-        this.rightBtn = 'บันทึก'
+        if (this.statusPermission == 0) {
+          let username = item.username.trim()
+          let password = item.password.trim()
+          if (username.length > 5 && password.length > 5) {
+            this.enableBtn = false
+          } else {
+            this.enableBtn = true
+          }
+        } else {
+          this.enableBtn = false
+        }
       } else {
-        console.log('Valid...', item)
+        this.enableBtn = true
       }
     },
     save () {
@@ -1084,6 +1104,7 @@ export default {
       }
     },
     isNumber (evt) {
+      this.enableBtnSave()
       evt = evt ? evt : window.event
       var charCode = evt.which ? evt.which : evt.keyCode
       if (charCode > 31 && (charCode < 48 || charCode > 57 || charCode == 46)) {
@@ -1093,6 +1114,7 @@ export default {
       }
     },
     IsEmail (evt) {
+      this.enableBtnSave()
       evt = evt ? evt : window.event
       var keyCode = evt.which ? evt.which : evt.keyCode
       if (
@@ -1109,6 +1131,7 @@ export default {
       }
     },
     IsPassword (evt) {
+      this.enableBtnSave()
       evt = evt ? evt : window.event
       var keyCode = evt.which ? evt.which : evt.keyCode
       if (

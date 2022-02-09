@@ -613,18 +613,29 @@ export default {
       this.$store
         .dispatch('deleteGroupList', result)
         .then(res => {
-          this.dialog = false
-          this.$emit('clear', null)
-        })
-        .catch(error => {
-          if (error && error.response && error.response.status === 803) {
-            this.dialog = true
-            this.error = true
-            this.errorDialog =
-              'ไม่สามารถลบข้อมูลได้ เนื่องจากพบการใช้งาน ข้อมูลดังกล่าวอยู่ กรุณาตรวจสอบอีกครั้ง'
-            this.rightBtn = 'ปิด'
+          if (res.data.success == undefined) {
+            if (res.status == 222) {
+              this.btnClick = 'error'
+              this.dialog = true
+              this.errorDialog =
+                'ไม่สามารถลบข้อมูลได้ เนื่องจากพบการใช้งาน ข้อมูลดังกล่าวอยู่ กรุณาตรวจสอบอีกครั้ง'
+              this.error = true
+            } else {
+              this.btnClick = 'error'
+              this.dialog = true
+              this.error = true
+              this.errorDialog =
+                'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ (Error Code ' +
+                res.status +
+                ')'
+              // this.rightBtn = 'ยืนยัน'
+            }
+          } else {
+            this.dialog = false
+            this.$emit('clear', null)
           }
         })
+        .catch(error => {})
     },
     cancel () {
       if (!this.dialog) {
@@ -658,6 +669,8 @@ export default {
         })
       } else if (this.btnClick == 'clear') {
         this.clear()
+      } else {
+        this.dialog = false
       }
     }
   },

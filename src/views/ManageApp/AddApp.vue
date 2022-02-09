@@ -616,18 +616,29 @@ export default {
       this.$store
         .dispatch('deleteAppList', result)
         .then(res => {
-          this.dialog = false
-          this.$emit('clear', null)
-        })
-        .catch(error => {
-          if (error && error.response && error.response.status === 803) {
-            this.btnClick = 'confirm-clear'
-            this.dialog = true
-            this.errorDialog =
-              'ข้อมูลแอปพลิเคชันดังกล่าวถูกใช้งานอยู่ในเมนู "จัดกลุ่มผู้ใช้ งานแอปพลิเคชัน" กรุณายืนยันการดำเนินการ'
-            this.rightBtn = 'ยืนยัน'
+          if (res.data.success == undefined) {
+            if (res.status == 215) {
+              this.btnClick = 'confirm-clear'
+              this.dialog = true
+              this.errorDialog =
+                'ข้อมูลแอปพลิเคชันดังกล่าวถูกใช้งานอยู่ในเมนู "จัดกลุ่มผู้ใช้ งานแอปพลิเคชัน" กรุณายืนยันการดำเนินการ'
+              this.rightBtn = 'ยืนยัน'
+            } else {
+              this.btnClick = 'error'
+              this.dialog = true
+              this.error = true
+              this.errorDialog =
+                'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ (Error Code ' +
+                res.status +
+                ')'
+              // this.rightBtn = 'ยืนยัน'
+            }
+          } else {
+            this.dialog = false
+            this.$emit('clear', null)
           }
         })
+        .catch(error => {})
     },
     saveBtn () {
       this.btnClick = 'save'
@@ -658,18 +669,6 @@ export default {
       }
     },
     save () {
-      // if (this.error) {
-      //   this.dialog = false
-      // } else {
-      //   // this.error = true
-      //   // this.errorDialog =
-      //   //   'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ (Error Code 1001)'
-
-      //   // this.error = true
-      //   // this.errorDialog =
-      //   //   'ข้อมูลแอปพลิเคชันดังกล่าวถูกใช้งานอยู่ในเมนู "จัดกลุ่มผู้ใช้งานแอปพลิเคชัน" กรุณายืนยัน การดำเนินการ'
-
-      //   this.selectedFile = null
       if (this.btnClick == 'save') {
         let url = this.editRow.mode == 'add' ? 'addAppList' : 'updateAppList'
         this.$store.dispatch(url, this.editRow).then(res => {
@@ -705,9 +704,8 @@ export default {
           this.getTypeList()
         })
       } else {
+        this.dialog = false
       }
-
-      // }
     },
     onButtonClick () {
       this.$refs.uploader.click()

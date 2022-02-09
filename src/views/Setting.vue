@@ -261,6 +261,8 @@ export default {
       this.editRow.nickname2_th = ''
       this.editRow.nickname2_en = ''
       this.editRow.status_permission = ''
+      this.editRow.username = ''
+      this.editRow.password = ''
     },
     editUser (value) {
       this.currentView = {
