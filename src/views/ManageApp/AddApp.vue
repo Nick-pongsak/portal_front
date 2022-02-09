@@ -610,12 +610,24 @@ export default {
       let result = {
         app_id: this.editRow.app_id,
         name_th: this.editRow.name_th,
-        name_en: this.editRow.name_en
+        name_en: this.editRow.name_en,
+        confirm: this.btnClick == 'clear' ? 0 : 1
       }
-      this.$store.dispatch('deleteAppList', result).then(res => {
-        this.dialog = false
-        this.$emit('clear', null)
-      })
+      this.$store
+        .dispatch('deleteAppList', result)
+        .then(res => {
+          this.dialog = false
+          this.$emit('clear', null)
+        })
+        .catch(error => {
+          if (error && error.response && error.response.status === 803) {
+            this.btnClick = 'confirm-clear'
+            this.dialog = true
+            this.errorDialog =
+              'ข้อมูลแอปพลิเคชันดังกล่าวถูกใช้งานอยู่ในเมนู "จัดกลุ่มผู้ใช้ งานแอปพลิเคชัน" กรุณายืนยันการดำเนินการ'
+            this.rightBtn = 'ยืนยัน'
+          }
+        })
     },
     saveBtn () {
       this.btnClick = 'save'
@@ -664,7 +676,7 @@ export default {
           this.$emit('save', null)
           this.dialog = false
         })
-      } else if (this.btnClick == 'clear') {
+      } else if (this.btnClick == 'clear' || this.btnClick == 'confirm-clear') {
         this.clear()
       } else if (this.btnClick == 'save-type' || this.btnClick == 'edit-type') {
         let result = {

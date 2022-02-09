@@ -610,10 +610,21 @@ export default {
         name_th: this.editRow.name_th,
         name_en: this.editRow.name_en
       }
-      this.$store.dispatch('deleteGroupList', result).then(res => {
-        this.dialog = false
-        this.$emit('clear', null)
-      })
+      this.$store
+        .dispatch('deleteGroupList', result)
+        .then(res => {
+          this.dialog = false
+          this.$emit('clear', null)
+        })
+        .catch(error => {
+          if (error && error.response && error.response.status === 803) {
+            this.dialog = true
+            this.error = true
+            this.errorDialog =
+              'ไม่สามารถลบข้อมูลได้ เนื่องจากพบการใช้งาน ข้อมูลดังกล่าวอยู่ กรุณาตรวจสอบอีกครั้ง'
+            this.rightBtn = 'ปิด'
+          }
+        })
     },
     cancel () {
       if (!this.dialog) {
