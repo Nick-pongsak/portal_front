@@ -1028,6 +1028,8 @@ export default {
         result.password =
           this.editRow.type_login == 1 ? 'LDAP' : this.editRow.password
         result.status_permission = this.editRow.status_permission ? 1 : 0
+        result.admin_menu =
+          result.admin_menu.length == 0 ? 0 : result.admin_menu
         for (let i = 0; i < this.applist.length; i++) {
           arr.push({
             app_id: this.applist[i].app_id,
