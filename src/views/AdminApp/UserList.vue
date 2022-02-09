@@ -520,10 +520,10 @@
                     style="width:60%;padding-top:5px;display:flex"
                   >
                     <div>
-                      {{ item.type_login ? 'LDAP (AD)' : 'Username : ' }}
+                      {{ renderAcess(item) }}
                     </div>
                     <div
-                      v-show="item.type_login == 0"
+                      v-show="item.status_sso == 1 && item.type_login == 0"
                       class="input-with-icon"
                       style="margin-left:15px"
                     >
@@ -686,7 +686,7 @@
                   </div>
                 </div>
               </div>
-              <div class="body-table">
+              <div class="body-table" style="height: 290px">
                 <div v-if="list.length == 0" class="no-data">
                   -- ไม่พบรายการ --
                 </div>
@@ -802,6 +802,13 @@ export default {
     }
   },
   methods: {
+    renderAcess (item) {
+      if (item.status_sso == 1) {
+        return item.type_login ? 'LDAP (AD)' : 'Username : '
+      } else {
+        return 'เข้าใช้งานผ่านตัวระบบเท่านั้น'
+      }
+    },
     selectedPermission (evt) {
       this.statusPermission = this.editRow.status_permission
     },
