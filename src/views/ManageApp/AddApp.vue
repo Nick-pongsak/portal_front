@@ -603,6 +603,10 @@ export default {
     },
     CloseDialogs () {
       this.typeDialog = false
+      this.editMode = false
+      this.NameThInput = ''
+      this.NameEnInput = ''
+      this.searchApp = ''
     },
     cancel () {
       if (!this.dialog) {

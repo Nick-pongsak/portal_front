@@ -1023,6 +1023,7 @@ export default {
     },
     CloseDialogs () {
       this.empeDialog = false
+       this.searchApp = ''
     },
     cancel () {
       if (!this.dialog) {

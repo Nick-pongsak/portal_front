@@ -347,7 +347,7 @@
               </div>
             </div>
             <div
-              style="padding-top:50px;padding-bottom:50px;display:flex"
+              style="padding-top:20px;padding-bottom:20px;display:flex"
               class="justify-center"
             >
               <v-btn
@@ -527,6 +527,7 @@ export default {
     },
     CloseDialogs () {
       this.groupDialog = false
+      this.searchApp = ''
     },
     saveBtn () {
       this.btnClick = 'save'
