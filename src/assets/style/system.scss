@@ -361,7 +361,11 @@
           color: #797979;
           font-size: nth($font-sizes, 2);
           .column-name {
-            padding-top: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            // padding-top: 3px;
           }
         }
       }
@@ -424,6 +428,12 @@
     .v-input--selection-controls {
       padding: 0px;
       margin: 0px;
+    }
+    .theme--light.v-btn.v-btn--disabled.v-btn--has-bg {
+      background: #ce1212 !important;
+    }
+    .theme--light.v-btn.v-btn--disabled {
+      color: white !important;
     }
   }
 }

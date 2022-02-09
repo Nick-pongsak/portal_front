@@ -690,8 +690,8 @@ export default {
         this.editRow = res.data
         result = result.sort((a, b) =>
           String(a[feild]).toLowerCase() < String(b[feild]).toLowerCase()
-            ? -1
-            : 1
+            ? 1
+            : -1
         )
         this.editRow.app = result
         this.editRow.mode = mode

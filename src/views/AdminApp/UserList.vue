@@ -139,6 +139,7 @@
                   :placeholder="$t('input_selected')"
                   :disabled="enableInput"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
+                  @keyup="enableBtnSave"
                   @keypress="enableBtnSave"
                 />
               </div>
@@ -156,6 +157,7 @@
                   :placeholder="$t('input_selected')"
                   :disabled="enableInput"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
+                  @keyup="enableBtnSave"
                   @keypress="enableBtnSave"
                 />
               </div>
@@ -236,6 +238,7 @@
                   v-model="editRow.postname_th"
                   :placeholder="$t('input_selected')"
                   :disabled="enableInput"
+                  @keyup="enableBtnSave"
                   @keypress="enableBtnSave"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
                 />
@@ -250,6 +253,7 @@
               <div class="input-with-icon">
                 <input
                   type="text"
+                  @keyup="enableBtnSave"
                   @keypress="enableBtnSave"
                   v-model="editRow.postname_en"
                   :placeholder="$t('input_selected')"
@@ -360,6 +364,7 @@
                   :placeholder="'-- หากมีโปรดระบุ --'"
                   :disabled="enableInput"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
+                  @keyup="enableBtnSave"
                   @keypress="enableBtnSave"
                 />
               </div>
@@ -390,7 +395,7 @@
             >
               <div class="input-with-icon" style="margin-right:10px">
                 <input
-                  type="text"
+                  type="password"
                   v-model="editRow.password"
                   :placeholder="'-- หากมีโปรดระบุ --'"
                   :disabled="enableInput"
@@ -558,8 +563,8 @@
           {{ $t('btn_cancel') }}
         </v-btn>
         <v-btn
+          :class="'cancel-btn'"
           @click="saveBtn()"
-          :class="enableBtn ? 'cancel-btn disabled' : 'cancel-btn'"
           :disabled="enableBtn"
           style="height: 22px"
         >
@@ -824,6 +829,7 @@ export default {
     },
     selectedType (value) {
       this.editRow.type_login = value
+      this.enableBtnSave()
       if (this.editRow.mode == 'add') {
         if (value == 1 && this.editRow.emp_code == '') {
           this.enableInput = true
@@ -1051,7 +1057,6 @@ export default {
       let postname_en = item.postname_en.trim()
       let emp_code = item.emp_code.toString()
       let email = item.email.trim()
-      /*
       if (
         group_id.length > 0 &&
         name_th.length > 0 &&
@@ -1062,28 +1067,20 @@ export default {
         email.length > 0 &&
         this.applist.length > 0
       ) {
-        console.log('1 ===>')
-        if (this.statusPermission == 0) {
-          console.log('2 ===>')
+        if (item.type_login == 0) {
           let username = item.username.trim()
           let password = item.password.trim()
           if (username.length > 5 && password.length > 5) {
-            console.log('3 ===>')
             this.enableBtn = false
           } else {
-            console.log('4 ===>')
             this.enableBtn = true
           }
         } else {
-          console.log('5 ===>')
           this.enableBtn = false
         }
       } else {
-        console.log('3 --->')
         this.enableBtn = true
       }
-      */
-      this.enableBtn = false
     },
     save () {
       if (this.btnClick == 'save') {
@@ -1223,6 +1220,7 @@ export default {
             temp.push(res.data.app[i])
           }
           this.applist = temp
+          this.enableBtnSave()
         })
       })
     }

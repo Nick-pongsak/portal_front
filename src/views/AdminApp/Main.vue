@@ -33,7 +33,7 @@
       </div>
       <div class="table">
         <div class="head-table">
-          <div class="head" style="width:5%" @click="sort(headCol[0], 0)">
+          <div class="head" style="width:6%" @click="sort(headCol[0], 0)">
             <div class="column-name">{{ $t('set.list_col1') }}</div>
             <v-icon
               v-text="sortNo == 0 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -43,7 +43,7 @@
           </div>
           <div
             class="head"
-            style="width:13%;padding-left:8px"
+            style="width:12%;padding-left:8px"
             @click="sort(headCol[1], 1)"
           >
             <div class="column-name">{{ 'รหัสพนักงาน' }}</div>
@@ -53,7 +53,7 @@
               size="22"
             ></v-icon>
           </div>
-          <div class="head" style="width:15%" @click="sort(headCol[2], 2)">
+          <div class="head" style="width:17%" @click="sort(headCol[2], 2)">
             <div class="column-name">
               {{ 'ชื่อ-นามสกุล' }}
             </div>
@@ -63,7 +63,7 @@
               size="22"
             ></v-icon>
           </div>
-          <div class="head" style="width:17%" @click="sort(headCol[3], 3)">
+          <div class="head" style="width:18%" @click="sort(headCol[3], 3)">
             <div class="column-name">
               {{ 'ตำแหน่ง' }}
             </div>
@@ -93,7 +93,7 @@
               size="22"
             ></v-icon>
           </div>
-          <div class="head" style="width:13%" @click="sort(headCol[6], 6)">
+          <div class="head" style="width:9%" @click="sort(headCol[6], 6)">
             <div class="column-name">
               {{ 'สถานะ' }}
             </div>
@@ -103,7 +103,7 @@
               size="22"
             ></v-icon>
           </div>
-          <div class="head" style="width:5%">
+          <div class="head" style="width:6%">
             <div class="column-name">
               {{ $t('set.list_col6') }}
             </div>
@@ -118,43 +118,44 @@
             v-for="(item, index) in list"
             :key="'app_name_' + index"
           >
-            <div class="body" style="width:5%;padding-top:5px;padding-left:7px">
+            <div class="body" style="width:6%;padding-top:5px;padding-left:7px">
               {{ item.index + 1 }}
             </div>
             <div
               class="body"
-              style="width:13%;padding-left:5px;padding-top:5px"
+              style="width:12%;padding-left:5px;padding-top:5px"
             >
               {{ item.emp_code }}
             </div>
-            <div class="body" style="width:15%;padding-top:5px">
+            <div class="body" style="width:17%;padding-top:5px">
               {{ item.name_th }}
             </div>
-            <div class="body" style="width:17%;padding-top:5px">
+            <div class="body" style="width:18%;padding-top:5px">
               {{ item.postname_th }}
             </div>
             <div class="body" style="width:17%;padding-top:5px">
               {{ item.group_name_th }}
             </div>
-            <div class="body" style="width:15%;display:flex">
+            <div class="body" style="width:15%;display:flex;padding-top: 5px;">
               {{ item.type_login ? 'LDAP (AD)' : 'ผู้ใช้งานบนแอปพลิเคชัน' }}
             </div>
             <div
               class="body"
               :style="{
-                width: '13%',
+                'padding-top': '5px',
+                width: '9%',
                 display: 'flex',
                 color: item.status ? '#66BB6A' : '#FBC02D'
               }"
             >
               {{ item.status ? 'เปิดใช้งาน' : 'ปิดการใช้งาน' }}
             </div>
-            <div class="body" style="width:5%;display:flex;padding-left:12px">
+            <div class="body" style="width:6%;display:flex;padding-left:12px">
               <v-icon
                 @click="edit(item)"
                 v-text="'mdi-pencil'"
                 style="color:#CE1212"
-                size="20"
+                size="19"
               ></v-icon>
             </div>
           </div>
