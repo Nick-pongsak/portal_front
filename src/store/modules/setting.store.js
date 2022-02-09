@@ -126,7 +126,7 @@ const store = {
     addType({ state, commit, dispatch }, data) {
       commit('SetLoading', true)
       return new Promise((resolve, reject) => {
-        axios.post(`${url}/apiweb/api/add_category`, data, {
+        axios.post(`${url}/apiweb/api/add-category`, data, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${this.getters.access_token}`

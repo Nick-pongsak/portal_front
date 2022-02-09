@@ -791,6 +791,19 @@ export default {
             .catch(error => {
               if (error && error.response && error.response.status === 500) {
                 this.list = []
+              } else if (
+                error &&
+                error.response &&
+                error.response.status === 401
+              ) {
+                this.btnClick = 'error'
+                this.dialog = true
+                this.error = true
+                this.errorDialog =
+                  'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ (Error Code ' +
+                  error.response.status +
+                  ')'
+                this.list = []
               }
             })
         }
@@ -959,6 +972,15 @@ export default {
         .catch(error => {
           if (error && error.response && error.response.status === 500) {
             this.list = []
+          } else if (error && error.response && error.response.status === 401) {
+            this.btnClick = 'error'
+            this.dialog = true
+            this.error = true
+            this.errorDialog =
+              'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ (Error Code ' +
+              error.response.status +
+              ')'
+            this.list = []
           }
         })
     },
@@ -975,6 +997,19 @@ export default {
           })
           .catch(error => {
             if (error && error.response && error.response.status === 500) {
+              this.list = []
+            } else if (
+              error &&
+              error.response &&
+              error.response.status === 401
+            ) {
+              this.btnClick = 'error'
+              this.dialog = true
+              this.error = true
+              this.errorDialog =
+                'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ (Error Code ' +
+                error.response.status +
+                ')'
               this.list = []
             }
           })
@@ -1016,6 +1051,7 @@ export default {
       let postname_en = item.postname_en.trim()
       let emp_code = item.emp_code.toString()
       let email = item.email.trim()
+      /*
       if (
         group_id.length > 0 &&
         name_th.length > 0 &&
@@ -1026,20 +1062,28 @@ export default {
         email.length > 0 &&
         this.applist.length > 0
       ) {
+        console.log('1 ===>')
         if (this.statusPermission == 0) {
+          console.log('2 ===>')
           let username = item.username.trim()
           let password = item.password.trim()
           if (username.length > 5 && password.length > 5) {
+            console.log('3 ===>')
             this.enableBtn = false
           } else {
+            console.log('4 ===>')
             this.enableBtn = true
           }
         } else {
+          console.log('5 ===>')
           this.enableBtn = false
         }
       } else {
+        console.log('3 --->')
         this.enableBtn = true
       }
+      */
+      this.enableBtn = false
     },
     save () {
       if (this.btnClick == 'save') {
@@ -1079,6 +1123,8 @@ export default {
         }
       } else if (this.btnClick == 'clear') {
         this.clear()
+      } else {
+        this.dialog = false
       }
     },
     clear () {

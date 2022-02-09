@@ -198,7 +198,7 @@
           </div>
         </div>
         <div class="body-table">
-          <div v-if="list.list == 0" class="no-data">
+          <div v-if="list.length == 0" class="no-data">
             -- ไม่พบรายการ --
           </div>
           <div
