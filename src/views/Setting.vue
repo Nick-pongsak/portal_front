@@ -246,6 +246,7 @@ export default {
       this.editRow.user_id = 0
       this.editRow.status = 1
       this.editRow.type_login = 1
+      this.editRow.admin_menu = 0
       this.editRow.group_id = ''
       this.editRow.name_en = ''
       this.editRow.name_th = ''
@@ -253,6 +254,12 @@ export default {
       this.editRow.postname_en = ''
       this.editRow.emp_code = ''
       this.editRow.email = ''
+      this.editRow.cx = ''
+      this.editRow.phone = ''
+      this.editRow.nickname1_th = ''
+      this.editRow.nickname1_en = ''
+      this.editRow.nickname2_th = ''
+      this.editRow.nickname2_en = ''
       this.editRow.status_permission = ''
     },
     editUser (value) {

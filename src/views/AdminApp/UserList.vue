@@ -5,8 +5,21 @@
         <div class="rows">
           <div style="width:20%" class="rows-name">ประเภทการเข้าใช้งานระบบ</div>
           <div
+            v-if="editRow.mode == 'edit'"
             :style="{
-              width: !editRow.status_permission ? '62%' : '40%',
+              width: !statusPermission ? '62%' : '40%',
+              display: 'flex'
+            }"
+            class="rows-name"
+          >
+            {{
+              editRow.type_login == 1 ? 'LDAP (AD)' : 'ผู้ใช้งานบนแอปพลิเคชัน'
+            }}
+          </div>
+          <div
+            v-else
+            :style="{
+              width: !statusPermission ? '62%' : '40%',
               display: 'flex'
             }"
             class="rows-input"
@@ -38,12 +51,13 @@
           </div>
           <div
             :style="{
-              width: !editRow.status_permission ? '18%' : '40%',
+              width: !statusPermission ? '18%' : '40%',
               display: 'flex'
             }"
             class="rows-input"
           >
             <v-checkbox
+              @click="selectedPermission($event)"
               color="red"
               v-model="editRow.status_permission"
               hide-details
@@ -51,7 +65,7 @@
             <div style="padding-top:4px">ผู้ดูแลระบบ</div>
             <div
               class="input-with-icon"
-              v-show="editRow.status_permission"
+              v-show="statusPermission"
               style="height:25px;margin-left:15px"
             >
               <v-select
@@ -67,7 +81,10 @@
             </div>
           </div>
         </div>
-        <div class="rows" v-show="editRow.type_login == 1">
+        <div
+          class="rows"
+          v-show="editRow.type_login == 1 && editRow.mode == 'add'"
+        >
           <div style="width:20%" class="rows-name">ค้นหาพนักงาน</div>
           <div style="width:80%;display:flex" class="rows-input">
             <div class="input-with-icon" style="width: 200px;">
@@ -334,7 +351,11 @@
             </div>
           </div>
         </div>
-        <div class="rows" v-show="editRow.type_login == 0">
+        <div
+          class="rows"
+          v-show="editRow.type_login == 0"
+          style="margin-top:8px"
+        >
           <div style="width:50%;display: flex;">
             <div style="width:40%" class="rows-name">ชื่อผู้ใช้งาน</div>
             <div style="width:60%;display:flex" class="rows-input">
@@ -401,7 +422,10 @@
             </div>
           </div>
         </div>
-        <div class="rows" style="margin-top:8px">
+        <div
+          class="rows"
+          :style="{ 'margin-top': editRow.type_login == 1 ? '8px' : '0px' }"
+        >
           <div style="width:20%" class="rows-name">
             กลุ่มผู้ใช้งานแอปพลิเคชัน
           </div>
@@ -435,7 +459,7 @@
                 <div
                   class="head"
                   style="width:10%"
-                  @click="sort(headCol[0], 0)"
+                  @click="sort2(headCol2[0], 0)"
                 >
                   <div class="column-name">{{ $t('set.list_col1') }}</div>
                   <v-icon
@@ -447,7 +471,7 @@
                 <div
                   class="head"
                   style="width:30%"
-                  @click="sort(headCol[1], 1)"
+                  @click="sort2(headCol2[1], 1)"
                 >
                   <div class="column-name">
                     {{ 'แอปพิเคชัน' }}
@@ -461,7 +485,7 @@
                 <div
                   class="head"
                   style="width:60%"
-                  @click="sort(headCol[2], 2)"
+                  @click="sort2(headCol2[2], 2)"
                 >
                   <div class="column-name">
                     {{ 'การเข้าใช้งานระบบ' }}
@@ -727,9 +751,13 @@ export default {
       sortNo: null,
       headCol: ['index', 'emp_code', 'name_th', 'postname_th'],
       sortNo2: null,
-      headCol2: ['index', 'emp_code', 'username'],
+      headCol2: ['index', 'name_th', 'username'],
       mainSort: {
         feild: 'emp_code',
+        orderby: true
+      },
+      mainSort2: {
+        feild: 'name_th',
         orderby: true
       },
       searchApp: '',
@@ -747,7 +775,8 @@ export default {
           name_th: 'ทั้งหมด',
           menu_id: 1
         }
-      ]
+      ],
+      statusPermission: false
     }
   },
   computed: {},
@@ -773,6 +802,9 @@ export default {
     }
   },
   methods: {
+    selectedPermission (evt) {
+      this.statusPermission = this.editRow.status_permission
+    },
     selectedType (value) {
       this.editRow.type_login = value
       if (value == 0) {
@@ -795,7 +827,6 @@ export default {
       this.enableInput = false
     },
     selectedGroup (value) {
-      console.log(value)
       if (this.editRow.user_id !== null) {
         let user_id = this.editRow.user_id.toString()
         let req = {
@@ -804,27 +835,99 @@ export default {
         }
         this.$store.dispatch('getDroupdownGroup', req).then(res => {
           let temp = []
-          for (let i = 0; i < res.data.app.length; i++) {
-            res.data.app[i].index = i
+          let feild = 'name_th'
+          let sortData = res.data.app
+          sortData = sortData.sort((a, b) =>
+            String(a[feild]).toLowerCase() < String(b[feild]).toLowerCase()
+              ? -1
+              : 1
+          )
+          for (let i = 0; i < sortData.length; i++) {
+            sortData[i].index = i
             let username =
-              res.data.app[i].username == null ? '' : res.data.app[i].username
+              sortData[i].username == null ? '' : sortData[i].username
             if (this.editRow.mode == 'add' && username.trim().length == 0) {
-              res.data.app[i].username = this.editRow.username
+              sortData[i].username = this.editRow.username
             }
-            temp.push(res.data.app[i])
+            temp.push(sortData[i])
           }
           this.applist = temp
         })
       }
     },
-    sort (feild) {
-      // if (feild == 'no') {
-      //   this.sortNo = !this.sortNo
-      // } else if (feild == 'type_th') {
-      //   this.sortTypeTh = !this.sortTypeTh
-      // } else if (feild == 'type_en') {
-      //   this.sortTypeEn = !this.sortTypeEn
-      // }
+    sort2 (feild, index) {
+      this.sortNo2 = this.sortNo2 == index ? null : index
+      let table = this.applist
+      if (feild == 'index') {
+        if (this.mainSort2.orderby) {
+          this.applist = table.sort(function (a, b) {
+            return b.index - a.index
+          })
+        } else {
+          this.applist = table.sort(function (a, b) {
+            return a.index - b.index
+          })
+        }
+        this.mainSort2.orderby = !this.mainSort2.orderby
+      } else {
+        if (this.mainSort2.feild == feild) {
+          this.mainSort2.orderby = !this.mainSort2.orderby
+        } else {
+          this.mainSort2.orderby = false
+        }
+        this.mainSort2.feild = feild
+
+        if (!this.mainSort2.orderby) {
+          this.applist = table.sort((a, b) =>
+            String(a[feild]).toLowerCase() < String(b[feild]).toLowerCase()
+              ? -1
+              : 1
+          )
+        } else {
+          this.applist = table.sort((a, b) =>
+            String(a[feild]).toLowerCase() < String(b[feild]).toLowerCase()
+              ? 1
+              : -1
+          )
+        }
+      }
+    },
+    sort (feild, index) {
+      this.sortNo = this.sortNo == index ? null : index
+      let table = this.list
+      if (feild == 'index') {
+        if (this.mainSort.orderby) {
+          this.list = table.sort(function (a, b) {
+            return b.index - a.index
+          })
+        } else {
+          this.list = table.sort(function (a, b) {
+            return a.index - b.index
+          })
+        }
+        this.mainSort.orderby = !this.mainSort.orderby
+      } else {
+        if (this.mainSort.feild == feild) {
+          this.mainSort.orderby = !this.mainSort.orderby
+        } else {
+          this.mainSort.orderby = false
+        }
+        this.mainSort.feild = feild
+
+        if (this.mainSort.orderby) {
+          this.list = table.sort((a, b) =>
+            String(a[feild]).toLowerCase() < String(b[feild]).toLowerCase()
+              ? -1
+              : 1
+          )
+        } else {
+          this.list = table.sort((a, b) =>
+            String(a[feild]).toLowerCase() < String(b[feild]).toLowerCase()
+              ? 1
+              : -1
+          )
+        }
+      }
     },
     onEnter () {
       let req = {
@@ -1008,8 +1111,7 @@ export default {
       } else {
         evt.preventDefault()
       }
-    },
-    onButtonClick () {}
+    }
   },
   created () {
     let reqSearch = {
@@ -1019,12 +1121,14 @@ export default {
     }
     if (this.editRow.mode == 'add') {
       this.enableInput = true
+      this.statusPermission = false
       this.$store.dispatch('getGroupList', reqSearch).then(res => {
         this.items = res.data
         this.applist = []
       })
     } else {
       this.enableInput = false
+      this.statusPermission = this.editRow.status_permission
       let req = {
         group_id: this.editRow.group_id,
         user_id: this.editRow.user_id

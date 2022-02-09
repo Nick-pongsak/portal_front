@@ -493,14 +493,14 @@ export default {
     renderText (row) {
       if (row.type_login == 1) {
         return 'LDAP (AP)'
-      } else if (row.access == 'only') {
+      } else if (row.type_login == 0) {
         return 'ผู้ใช้งานบนแอปพลิเคชัน'
       }
     },
     sort (feild, index) {
       this.sortNo = this.sortNo == index ? null : index
       let table = this.editRow.app
-      if (feild == 'index') {
+      if (feild == 'index' || feild == 'type_login' || feild == 'status') {
         if (this.mainSort.orderby) {
           this.editRow.app = table.sort(function (a, b) {
             return b.index - a.index
@@ -510,31 +510,28 @@ export default {
             return a.index - b.index
           })
         }
-        console.log(table)
         this.mainSort.orderby = !this.mainSort.orderby
       } else {
-        /*
-          items.sort(function(a, b) {
-          var nameA = a.name.toUpperCase(); // ignore upper and lowercase
-          var nameB = b.name.toUpperCase(); // ignore upper and lowercase
-          if (nameA < nameB) {
-            return -1;
-          }
-          if (nameA > nameB) {
-            return 1;
-          }
+        if (this.mainSort.feild == feild) {
+          this.mainSort.orderby = !this.mainSort.orderby
+        } else {
+          this.mainSort.orderby = false
+        }
+        this.mainSort.feild = feild
 
-          // names must be equal
-          return 0;
-        });
-        */
-        // if (this.mainSort.feild == feild) {
-        //   this.mainSort.orderby = !this.mainSort.orderby
-        // } else {
-        //   this.mainSort.orderby = false
-        // }
-        // this.mainSort.feild = feild
-        // this.getTypeList()
+        if (this.mainSort.orderby) {
+          this.editRow.app = table.sort((a, b) =>
+            String(a[feild]).toLowerCase() < String(b[feild]).toLowerCase()
+              ? -1
+              : 1
+          )
+        } else {
+          this.editRow.app = table.sort((a, b) =>
+            String(a[feild]).toLowerCase() < String(b[feild]).toLowerCase()
+              ? 1
+              : -1
+          )
+        }
       }
     },
     sort2 (feild, index) {
@@ -665,9 +662,15 @@ export default {
           res.data.app[i].index = i
           result.push(res.data.app[i])
         }
+        let feild = 'name_th'
         this.editRow = res.data
+        result = result.sort((a, b) =>
+          String(a[feild]).toLowerCase() < String(b[feild]).toLowerCase()
+            ? -1
+            : 1
+        )
         this.editRow.app = result
-        // this.editRow.mode = mode
+        this.editRow.mode = mode
       })
     }
   },

@@ -225,7 +225,23 @@ export default {
           this.mainSort.orderby = false
         }
         this.mainSort.feild = feild
-        this.fetchData()
+        if (feild == 'group_name_th') {
+          if (this.mainSort.orderby) {
+            this.list = this.list.sort((a, b) =>
+              String(a[feild]).toLowerCase() < String(b[feild]).toLowerCase()
+                ? 1
+                : -1
+            )
+          } else {
+            this.list = this.list.sort((a, b) =>
+              String(a[feild]).toLowerCase() < String(b[feild]).toLowerCase()
+                ? -1
+                : 1
+            )
+          }
+        } else {
+          this.fetchData()
+        }
       }
     },
     fetchData (item) {

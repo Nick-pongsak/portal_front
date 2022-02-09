@@ -249,7 +249,7 @@ const store = {
     },
     getUserList({ state, commit, dispatch }, data) {
       commit('SetLoading', true)
-      console.log("get-group-app ==>", JSON.stringify(data))
+      console.log("get-user-list ==>", JSON.stringify(data))
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/get-user-list`, data, {
           headers: {
