@@ -2,7 +2,8 @@
 
 const path = require('path');
 module.exports = {
-  assetsDir: './assets',
+  assetsDir: './',
+  // assetsDir: './assets',
   devServer: {
     disableHostCheck: true,
     headers: {
