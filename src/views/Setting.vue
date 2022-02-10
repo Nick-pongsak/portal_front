@@ -342,6 +342,7 @@ export default {
         this.editRow2 = value.item
         this.editRow2.app = []
         this.editRow2.mode = 'edit'
+        this.editRow2.password
       }
     },
     selectedMenu (item, index) {

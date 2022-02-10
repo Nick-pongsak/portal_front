@@ -26,6 +26,9 @@ import { rtdbPlugin as VueFire } from 'vuefire'
 Vue.use(VueFire)
 Vue.use(VueMaterial)
 
+// var bcrypt = require('bcryptjs');
+// Vue.use(bcrypt)
+
 import './filters';
 import './global';
 
@@ -43,5 +46,6 @@ new Vue({
   store,
   vuetify,
   i18n,
+  // bcrypt,
   render: h => h(App)
 }).$mount('#app')

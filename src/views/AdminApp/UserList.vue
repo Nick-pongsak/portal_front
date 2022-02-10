@@ -732,6 +732,7 @@
 </template>
 
 <script>
+var bcrypt = require('bcryptjs')
 export default {
   name: 'user-list',
   props: {
@@ -777,7 +778,10 @@ export default {
         }
       ],
       statusPermission: false,
-      enableBtn: true
+      enableBtn: true,
+      oldUsername: this.data.password,
+      oldPassword: this.data.password,
+      defaultPassword: '99999999'
     }
   },
   computed: {},
@@ -1048,9 +1052,21 @@ export default {
       this.btnClick = 'save'
       let item = this.editRow
       if (this.enableBtn == false) {
-        this.dialog = true
-        this.errorDialog = 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?'
-        this.rightBtn = 'บันทึก'
+        if (
+          (item.password !== this.oldPassword ||
+            item.username !== this.oldUsername) &&
+          this.editRow.mode == 'edit' &&
+          item.password != this.defaultPassword
+        ) {
+          this.dialog = true
+          this.errorDialog =
+            'พบการแก้ไขข้อมูล Username หรือ Password กรุณายืนยันการดำเนินการแก้ไข และบันทึกข้อมูลทั้งหมด'
+          this.rightBtn = 'บันทึก'
+        } else {
+          this.dialog = true
+          this.errorDialog = 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?'
+          this.rightBtn = 'บันทึก'
+        }
       } else {
         console.log('Valid...', item)
       }
@@ -1064,6 +1080,8 @@ export default {
       let postname_en = item.postname_en.trim()
       let emp_code = item.emp_code.toString()
       let email = item.email.trim()
+      let password = item.password.trim()
+
       if (
         group_id.length > 0 &&
         name_th.length > 0 &&
@@ -1075,12 +1093,20 @@ export default {
         this.applist.length > 0
       ) {
         if (item.type_login == 0) {
-          let username = item.username.trim()
-          let password = item.password.trim()
-          if (username.length > 5 && password.length > 5) {
+          if (password == this.defaultPassword) {
             this.enableBtn = false
           } else {
-            this.enableBtn = true
+            let username = item.username.trim()
+            let password = item.password.trim()
+            if (
+              username.length > 5 &&
+              password.length > 5 &&
+              this.InCondition(password)
+            ) {
+              this.enableBtn = false
+            } else {
+              this.enableBtn = true
+            }
           }
         } else {
           this.enableBtn = false
@@ -1093,9 +1119,16 @@ export default {
       if (this.btnClick == 'save') {
         let result = this.editRow
         let arr = []
-        result.password =
-          this.editRow.type_login == 1 ? 'LDAP' : this.editRow.password
-        result.status_permission = this.editRow.status_permission ? 1 : 0
+        var pwdCrypt = result.password
+        if (result.password == this.defaultPassword) {
+          pwdCrypt = this.oldPassword
+        } else {
+          if (result.password !== this.oldPassword) {
+            pwdCrypt = bcrypt.hashSync(result.password, 10)
+          }
+        }
+        result.password = result.type_login == 1 ? 'LDAP' : pwdCrypt
+        result.status_permission = result.status_permission ? 1 : 0
         result.admin_menu =
           result.admin_menu.length == 0 ? 0 : result.admin_menu
         for (let i = 0; i < this.applist.length; i++) {
@@ -1110,6 +1143,10 @@ export default {
         }
         result.app = JSON.stringify(arr)
         let url = this.editRow.mode == 'add' ? 'registerUser' : 'updateUser'
+
+        // console.log(this.oldPassword)
+        // console.log(result.password)
+
         if (this.editRow.type_login == 1) {
           this.$store.dispatch(url, result).then(res => {
             this.$emit('save', null)
@@ -1219,14 +1256,13 @@ export default {
         this.items = res.data
         this.applist = []
         this.$store.dispatch('getDroupdownGroup', req).then(res => {
-          // this.items = [res.data]
-          // this.editRow.group_id = res.data
           let temp = []
           for (let i = 0; i < res.data.app.length; i++) {
             res.data.app[i].index = i
             temp.push(res.data.app[i])
           }
           this.applist = temp
+          this.editRow.password = this.defaultPassword
           this.enableBtnSave()
         })
       })
