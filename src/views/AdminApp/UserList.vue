@@ -463,7 +463,7 @@
                 >
                   <div class="column-name">{{ $t('set.list_col1') }}</div>
                   <v-icon
-                    v-text="sortNo == 0 ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    v-text="sortNo2 == 0 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
                     size="20"
                   ></v-icon>
@@ -477,7 +477,7 @@
                     {{ 'แอปพิเคชัน' }}
                   </div>
                   <v-icon
-                    v-text="sortNo == 2 ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    v-text="sortNo2 == 1 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
                     size="22"
                   ></v-icon>
@@ -491,7 +491,7 @@
                     {{ 'การเข้าใช้งานระบบ' }}
                   </div>
                   <v-icon
-                    v-text="sortNo == 3 ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    v-text="sortNo2 == 2 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
                     size="22"
                   ></v-icon>
@@ -905,7 +905,7 @@ export default {
         }
         this.mainSort2.feild = feild
 
-        if (!this.mainSort2.orderby) {
+        if (this.mainSort2.orderby) {
           this.applist = table.sort((a, b) =>
             String(a[feild]).toLowerCase() < String(b[feild]).toLowerCase()
               ? -1
@@ -961,34 +961,40 @@ export default {
       let req = {
         emp_code: this.searchEmpCode.trim()
       }
-      let mode = this.editRow.mode
-      this.$store
-        .dispatch('searchEmpLdap', req)
-        .then(res => {
-          if (res.data.length == 1) {
-            this.enableInput = false
-            this.editRow = res.data[0]
-            this.editRow.mode = mode
-            this.editRow.status = 1
-          } else if (res.data.length > 1) {
-            this.empeDialog = true
-            this.list = res.data
-          }
-        })
-        .catch(error => {
-          if (error && error.response && error.response.status === 500) {
-            this.list = []
-          } else if (error && error.response && error.response.status === 401) {
-            this.btnClick = 'error'
-            this.dialog = true
-            this.error = true
-            this.errorDialog =
-              'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ (Error Code ' +
-              error.response.status +
-              ')'
-            this.list = []
-          }
-        })
+      if (req.emp_code.length > 0) {
+        let mode = this.editRow.mode
+        this.$store
+          .dispatch('searchEmpLdap', req)
+          .then(res => {
+            if (res.data.length == 1) {
+              this.enableInput = false
+              this.editRow = res.data[0]
+              this.editRow.mode = mode
+              this.editRow.status = 1
+            } else if (res.data.length > 1) {
+              this.empeDialog = true
+              this.list = res.data
+            }
+          })
+          .catch(error => {
+            if (error && error.response && error.response.status === 500) {
+              this.list = []
+            } else if (
+              error &&
+              error.response &&
+              error.response.status === 401
+            ) {
+              this.btnClick = 'error'
+              this.dialog = true
+              this.error = true
+              this.errorDialog =
+                'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ (Error Code ' +
+                error.response.status +
+                ')'
+              this.list = []
+            }
+          })
+      }
     },
     openPopupType () {
       if (this.searchEmpCode.trim() > 3) {
@@ -1023,7 +1029,7 @@ export default {
     },
     CloseDialogs () {
       this.empeDialog = false
-       this.searchApp = ''
+      this.searchApp = ''
     },
     cancel () {
       if (!this.dialog) {

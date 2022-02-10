@@ -180,7 +180,8 @@ export default {
         'name_th',
         'postname_th',
         'group_name_th',
-        'type_login'
+        'type_login',
+        'status'
       ],
       mainSort: {
         feild: 'emp_code',
