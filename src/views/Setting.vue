@@ -263,6 +263,7 @@ export default {
       this.editRow.status_permission = ''
       this.editRow.username = ''
       this.editRow.password = ''
+      this.editRow.origin_password = ''
     },
     editUser (value) {
       this.currentView = {
@@ -271,6 +272,8 @@ export default {
       }
       this.editRow = value
       this.editRow.mode = 'edit'
+      this.editRow.origin_password = value.password
+      this.editRow.password = '99999999'
     },
     clearUser (value) {
       this.currentView = {
@@ -342,7 +345,6 @@ export default {
         this.editRow2 = value.item
         this.editRow2.app = []
         this.editRow2.mode = 'edit'
-        this.editRow2.password
       }
     },
     selectedMenu (item, index) {

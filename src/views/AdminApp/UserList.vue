@@ -780,7 +780,7 @@ export default {
       statusPermission: false,
       enableBtn: true,
       oldUsername: this.data.password,
-      oldPassword: this.data.password,
+      oldPassword: this.data.origin_password,
       defaultPassword: '99999999'
     }
   },
@@ -1262,7 +1262,7 @@ export default {
             temp.push(res.data.app[i])
           }
           this.applist = temp
-          this.editRow.password = this.defaultPassword
+          // this.editRow.password = this.defaultPassword
           this.enableBtnSave()
         })
       })
