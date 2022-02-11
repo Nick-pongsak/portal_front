@@ -1096,8 +1096,9 @@ export default {
       let postname_en = item.postname_en.trim()
       let emp_code = item.emp_code.toString()
       let email = item.email.trim()
-      if (item.type_login == 0) {
-        let password = item.password.trim()
+      let password = ''
+      if (item.password !== undefined) {
+        password = item.password.trim()
       }
 
       if (
@@ -1110,7 +1111,7 @@ export default {
         email.length > 0 &&
         this.applist.length > 0
       ) {
-        if (item.type_login == 0) {
+        if (item.type_login == 0) { 
           if (password == this.defaultPassword) {
             this.enableBtn = false
           } else {
