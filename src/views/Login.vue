@@ -104,15 +104,15 @@ export default {
   },
   methods: {
     login () {
-      // let result = {
-      //   username: this.user.username,
-      //   password: this.user.password,
-      //   type: this.radioGroup
-      // }
-      // this.$store.dispatch('Login', result).then(res => {
-      //   this.$router.push('/home')
-      // })
-      this.$router.push('/home')
+      let result = {
+        username: this.user.username,
+        password: this.user.password,
+        type: this.radioGroup
+      }
+      this.$store.dispatch('Login', result).then(res => {
+        this.$router.push('/home')
+      })
+      // this.$router.push('/home')
     }
   },
   created () {},
