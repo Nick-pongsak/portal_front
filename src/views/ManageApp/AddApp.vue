@@ -537,6 +537,7 @@ export default {
     setImage: function (output) {
       this.hasImage = true
       this.editRow.image = output.info.name
+      this.enableBtnSave()
       // console.log('Info', output)
       // console.log('Info', output.info)
       // console.log('Exif', output.exif)
