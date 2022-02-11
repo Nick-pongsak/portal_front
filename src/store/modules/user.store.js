@@ -6,7 +6,7 @@ const store = {
   state: {
     user: null,
     role: null,
-    access_token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODJcL2FwaVwvYXV0aFwvbG9naW4iLCJpYXQiOjE2NDQ1NTEyMzUsImV4cCI6MTY0NDU4NzIzNSwibmJmIjoxNjQ0NTUxMjM1LCJqdGkiOiJCUkx1dFN3UmlyOVdXNTdhIiwic3ViIjoxMywicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.F_T8qG5_X4mpepSpvAoHFPAQhykcFe6vNQ0FkJI2ePo',
+    access_token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODJcL2FwaVwvYXV0aFwvbG9naW4iLCJpYXQiOjE2NDQ1NTAwNTAsImV4cCI6MTY0NDU4NjA1MCwibmJmIjoxNjQ0NTUwMDUwLCJqdGkiOiJxTWtCMDFzcVJYdkxjSlFLIiwic3ViIjoxMywicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.jWkx7Qm0M6hlgFUZCtFBUyH2zj8lHjlJh6HRc2aNbLU',
     approval: null,
   },
   mutations: {
