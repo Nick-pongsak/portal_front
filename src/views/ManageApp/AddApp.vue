@@ -785,6 +785,19 @@ export default {
     }
   },
   created () {
+    if (
+      this.$store.getters.access_token === '' &&
+      sessionStorage.getItem('token_seesion') === null
+    ) {
+      this.$store.dispatch('LogOut').then(() => {
+        this.$router.push('/')
+      })
+    } else if (sessionStorage.getItem('token_seesion') !== null) {
+      this.$store.commit(
+        'SetAccessToken',
+        sessionStorage.getItem('token_seesion')
+      )
+    }
     if (this.editRow.mode == 'edit') {
       this.enableBtnSave()
     }

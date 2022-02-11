@@ -239,13 +239,8 @@
               <!-- :loading="isSelecting" -->
               {{ $t('btn_upload') }}
             </v-btn>
-            <input
-              ref="uploader"
-              class="d-none"
-              type="file"
-              accept="image/*"
-            />
-              <!-- @change="onFileChanged" -->
+            <input ref="uploader" class="d-none" type="file" accept="image/*" />
+            <!-- @change="onFileChanged" -->
           </div>
         </v-card-actions>
       </v-card>
@@ -757,7 +752,9 @@ export default {
       }
     },
     LoginOut () {
-      this.$router.push('/')
+      this.$store.dispatch('LogOut', result).then(res => {
+        this.$router.push('/')
+      })
     },
     UploadPic () {
       this.picDialog = true

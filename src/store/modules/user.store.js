@@ -6,8 +6,7 @@ const store = {
   state: {
     user: null,
     role: null,
-    access_token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODJcL2FwaVwvYXV0aFwvbG9naW4iLCJpYXQiOjE2NDQ1NTAwNTAsImV4cCI6MTY0NDU4NjA1MCwibmJmIjoxNjQ0NTUwMDUwLCJqdGkiOiJxTWtCMDFzcVJYdkxjSlFLIiwic3ViIjoxMywicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.jWkx7Qm0M6hlgFUZCtFBUyH2zj8lHjlJh6HRc2aNbLU',
-    approval: null,
+    access_token: ''
   },
   mutations: {
     SetAccessToken(state, data) {
@@ -21,13 +20,14 @@ const store = {
     Login({ state, commit, dispatch }, data) {
       console.log("login ==>", JSON.stringify(data))
       return new Promise((resolve, reject) => {
-        axios.post(`${url}/api/auth/login`, { "username": data.username, "password": data.password, "type": data.type }, {
+        axios.post(`${url}/apiweb/api/auth/login`, { "username": data.username, "password": data.password, "type": data.type }, {
           headers: {
             'Content-Type': 'application/json'
           }
         }).then(response => {
-          let res = response.data.data
-          dispatch("SetAccessToken", res.access_token)
+          let res = response.data.success.data
+          sessionStorage.setItem('token_seesion', res.access_token)
+          commit("SetAccessToken", res.access_token)
           resolve(response.data);
         }).catch(error => {
           reject(error)
@@ -36,31 +36,12 @@ const store = {
 
     },
     LogOut({ state, commit, dispatch }) {
-      /*
       return new Promise((resolve, reject) => {
-        localStorage.removeItem("token")
-        localStorage.removeItem("name")
-        localStorage.removeItem("role")
-        localStorage.removeItem("emp_info")
-        localStorage.removeItem("countTab")
-        localStorage.removeItem("log_time")
-        localStorage.removeItem("fetch_time")
-        localStorage.removeItem("fetchMain")
         sessionStorage.removeItem("token_seesion")
-        localStorage.removeItem("prd_treeview")
-        localStorage.removeItem("chn_treeview")
-        localStorage.removeItem("target_year")
-        localStorage.removeItem("module")
         commit('SetAccessToken', '');
-        fb.auth().signOut().then(() => {
-          localStorage.removeItem("auth_firebase")
-          // Sign-out successful.
-        }).catch((error) => {
-          // An error happened.
-        });
+
         resolve();
       })
-      */
     },
     checkServ({ }) {
       // return new Promise((resolve, reject) => {

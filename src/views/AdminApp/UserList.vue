@@ -1111,7 +1111,7 @@ export default {
         email.length > 0 &&
         this.applist.length > 0
       ) {
-        if (item.type_login == 0) { 
+        if (item.type_login == 0) {
           if (password == this.defaultPassword) {
             this.enableBtn = false
           } else {
@@ -1252,12 +1252,24 @@ export default {
     }
   },
   created () {
+    if (
+      this.$store.getters.access_token === '' &&
+      sessionStorage.getItem('token_seesion') === null
+    ) {
+      this.$store.dispatch('LogOut').then(() => {
+        this.$router.push('/')
+      })
+    } else if (sessionStorage.getItem('token_seesion') !== null) {
+      this.$store.commit(
+        'SetAccessToken',
+        sessionStorage.getItem('token_seesion')
+      )
+    }
     let reqSearch = {
       keyword: '',
       field: 'name_th',
       sort: 'asc'
     }
-    console.log(this.editRow)
     if (this.editRow.mode == 'add') {
       this.enableInput = true
       this.statusPermission = false
