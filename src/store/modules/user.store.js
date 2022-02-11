@@ -6,7 +6,7 @@ const store = {
   state: {
     user: null,
     role: null,
-    access_token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODJcL2FwaVwvYXV0aFwvbG9naW4iLCJpYXQiOjE2NDQ0NjkzNDQsImV4cCI6MTY0NDUwNTM0NCwibmJmIjoxNjQ0NDY5MzQ0LCJqdGkiOiJOZnhGalY4VUFTWHlPcU9YIiwic3ViIjoxMywicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.N7m6WYEwfnLHiNyyzcjKMkpKepio2pyBBF678pavHkE',
+    access_token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODJcL2FwaVwvYXV0aFwvbG9naW4iLCJpYXQiOjE2NDQ1NTEyMzUsImV4cCI6MTY0NDU4NzIzNSwibmJmIjoxNjQ0NTUxMjM1LCJqdGkiOiJCUkx1dFN3UmlyOVdXNTdhIiwic3ViIjoxMywicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.F_T8qG5_X4mpepSpvAoHFPAQhykcFe6vNQ0FkJI2ePo',
     approval: null,
   },
   mutations: {
@@ -19,51 +19,21 @@ const store = {
   },
   actions: {
     Login({ state, commit, dispatch }, data) {
-      /*
+      console.log("login ==>", JSON.stringify(data))
       return new Promise((resolve, reject) => {
-        axios.post(`${url}/api/auth/login`, { "username": data.username, "password": data.password, "menu": this.getters.menuDisplay }, {
+        axios.post(`${url}/api/auth/login`, { "username": data.username, "password": data.password, "type": data.type }, {
           headers: {
             'Content-Type': 'application/json'
           }
         }).then(response => {
           let res = response.data.data
-          dispatch("reFreshToken", res.access_token)
-          localStorage.setItem('name', res.emp_info.firstname_en)
-          commit('SetUser', res.emp_info)
-          localStorage.setItem('emp_info', JSON.stringify(res.emp_info))
-          localStorage.setItem('log_time', res.log_time)
-          localStorage.setItem('target_year', res.target_year)
-          sessionStorage.setItem('token_seesion', res.access_token)
-          fb.auth().signInWithCustomToken(res.fs_access_token)
-            .then((user) => {
-              let auth_staus = user.operationType == 'signIn' ? true : false
-              localStorage.setItem("auth_firebase", auth_staus)
-              if (res.emp_info.roles.length == 1) {
-                if (res.emp_info.roles.length == 1) {
-                  commit('SetRole', res.emp_info.roles[0])
-                  router.push('/dashboard')
-                }
-              }
-            })
-            .catch((error) => {
-              localStorage.setItem("auth_firebase", false)
-              if (res.emp_info.roles.length == 1) {
-                if (res.emp_info.roles.length == 1) {
-                  commit('SetRole', res.emp_info.roles[0])
-                  router.push('/dashboard')
-                }
-              }
-              var errorCode = error.code;
-              var errorMessage = error.message;
-              console.log(errorCode + " : " + errorMessage)
-            });
+          dispatch("SetAccessToken", res.access_token)
           resolve(response.data);
         }).catch(error => {
-          localStorage.setItem("auth_firebase", false)
           reject(error)
         })
       })
-      */
+
     },
     LogOut({ state, commit, dispatch }) {
       /*
@@ -92,25 +62,18 @@ const store = {
       })
       */
     },
-    CheckAuthorization({ state, commit, dispatch }, data) {
-      return new Promise((resolve, reject) => {
-        if (state.access_token === '' && localStorage.getItem("token")) {
-          commit("SetAccessToken", localStorage.getItem("token"))
-        }
-      })
-    },
     checkServ({ }) {
-      return new Promise((resolve, reject) => {
-        axios.get(`${url}/api/server/info`, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then(response => {
-          resolve(response.data);
-        }).catch(error => {
-          reject(error)
-        })
-      })
+      // return new Promise((resolve, reject) => {
+      //   axios.get(`${url}/api/server/info`, {
+      //     headers: {
+      //       'Content-Type': 'application/json'
+      //     }
+      //   }).then(response => {
+      //     resolve(response.data);
+      //   }).catch(error => {
+      //     reject(error)
+      //   })
+      // })
     },
   },
   getters: {

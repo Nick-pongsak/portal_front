@@ -137,7 +137,7 @@ const store = {
           }
         }).then(res => {
           commit('SetLoading', false)
-          resolve(res.data.success)
+          resolve(res)
         }).catch(error => {
           commit('SetLoading', false)
           reject(error)

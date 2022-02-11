@@ -323,6 +323,7 @@
               </div>
               <div class="input-with-icon">
                 <input
+                  style="width:100%"
                   type="text"
                   v-model="NameThInput"
                   :placeholder="$t('input_selected')"
@@ -335,6 +336,7 @@
               </div>
               <div class="input-with-icon">
                 <input
+                  style="width:100%"
                   type="text"
                   v-model="NameEnInput"
                   :placeholder="$t('input_selected')"
@@ -366,6 +368,7 @@
                 <div class="input-with-icon search-form">
                   <v-icon v-text="'mdi-magnify'" size="20"></v-icon>
                   <input
+                    style="width:100%"
                     type="text"
                     v-model="searchApp"
                     :placeholder="$t('input_search')"
@@ -716,11 +719,31 @@ export default {
         }
         let url = this.modeAdd ? 'addType' : 'updateType'
         this.$store.dispatch(url, result).then(res => {
-          this.modeAdd = null
-          this.editMode = false
-          this.dialog = false
-          this.detailDialog = null
-          this.getTypeList()
+          if (res.data.success == undefined) {
+            if (res.status == 217) {
+              {
+                this.btnClick = 'error'
+                this.dialog = true
+                this.error = true
+                this.errorDialog =
+                  'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ (Error Code ' +
+                  res.status +
+                  ')'
+              }
+            } else {
+              this.modeAdd = null
+              this.editMode = false
+              this.dialog = false
+              this.detailDialog = null
+              this.getTypeList()
+            }
+          } else {
+            this.modeAdd = null
+            this.editMode = false
+            this.dialog = false
+            this.detailDialog = null
+            this.getTypeList()
+          }
         })
       } else if (this.btnClick == 'del-type') {
         this.$store.dispatch('deleteType', this.detailDialog).then(res => {

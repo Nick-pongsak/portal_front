@@ -26,6 +26,7 @@
       <user-list
         v-else-if="currentView.code == '1.1'"
         :data="editRow"
+        :master="masterUser"
         @cancel="cancelUser"
         @save="saveUser"
         @clear="clearUser"
@@ -230,7 +231,32 @@ export default {
         app: []
       },
       editRow: {},
-      editRow2: {}
+      editRow2: {},
+      masterUser: {
+        admin_menu: 0,
+        app_id: 0,
+        cx: '',
+        email: '',
+        emp_code: '',
+        group_id: '',
+        mode: 'add',
+        name_en: '',
+        name_th: '',
+        nickname1_en: '',
+        nickname1_th: '',
+        nickname2_en: '',
+        nickname2_th: '',
+        origin_password: '',
+        password: '',
+        phone: '',
+        postname_en: '',
+        postname_th: '',
+        status: 1,
+        status_permission: '',
+        type_login: 1,
+        user_id: 0,
+        username: ''
+      }
     }
   },
   computed: {},
@@ -241,29 +267,7 @@ export default {
         code: '1.1',
         text: 'เพิ่มผู้ใช้งานระบบ'
       }
-      this.editRow.mode = 'add'
-      this.editRow.app_id = 0
-      this.editRow.user_id = 0
-      this.editRow.status = 1
-      this.editRow.type_login = 1
-      this.editRow.admin_menu = 0
-      this.editRow.group_id = ''
-      this.editRow.name_en = ''
-      this.editRow.name_th = ''
-      this.editRow.postname_th = ''
-      this.editRow.postname_en = ''
-      this.editRow.emp_code = ''
-      this.editRow.email = ''
-      this.editRow.cx = ''
-      this.editRow.phone = ''
-      this.editRow.nickname1_th = ''
-      this.editRow.nickname1_en = ''
-      this.editRow.nickname2_th = ''
-      this.editRow.nickname2_en = ''
-      this.editRow.status_permission = ''
-      this.editRow.username = ''
-      this.editRow.password = ''
-      this.editRow.origin_password = ''
+      this.editRow = this.masterUser
     },
     editUser (value) {
       this.currentView = {

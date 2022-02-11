@@ -739,6 +739,10 @@ export default {
     data: {
       type: Object,
       required: true
+    },
+    master: {
+      type: Object,
+      required: true
     }
   },
   data () {
@@ -799,6 +803,10 @@ export default {
             })
             .catch(error => {
               if (error && error.response && error.response.status === 500) {
+                if (this.editRow.mode == 'add') {
+                  this.editRow = this.master
+                  this.applist = []
+                }
                 this.list = []
               } else if (
                 error &&
@@ -983,6 +991,10 @@ export default {
           .catch(error => {
             if (error && error.response && error.response.status === 500) {
               this.list = []
+              if (this.editRow.mode == 'add') {
+                this.editRow = this.master
+                this.applist = []
+              }
             } else if (
               error &&
               error.response &&
@@ -1014,6 +1026,10 @@ export default {
           .catch(error => {
             if (error && error.response && error.response.status === 500) {
               this.list = []
+              if (this.editRow.mode == 'add') {
+                this.editRow = this.master
+                this.applist = []
+              }
             } else if (
               error &&
               error.response &&
@@ -1080,7 +1096,9 @@ export default {
       let postname_en = item.postname_en.trim()
       let emp_code = item.emp_code.toString()
       let email = item.email.trim()
-      let password = item.password.trim()
+      if (item.type_login == 0) {
+        let password = item.password.trim()
+      }
 
       if (
         group_id.length > 0 &&
@@ -1238,6 +1256,7 @@ export default {
       field: 'name_th',
       sort: 'asc'
     }
+    console.log(this.editRow)
     if (this.editRow.mode == 'add') {
       this.enableInput = true
       this.statusPermission = false

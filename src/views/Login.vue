@@ -93,10 +93,10 @@ export default {
       radio: false,
       objA: { name: 'a' },
       objB: { name: 'b' },
-      radioGroup: '',
+      radioGroup: 1,
       dataRole: [
-        { code: '1', title: 'LDAP(AD)' },
-        { code: '2', title: 'Username Portal' }
+        { code: 1, title: 'LDAP(AD)' },
+        { code: 0, title: 'Username Portal' }
       ],
       systemName: 'PORTAL',
       err_text: 'ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง'
@@ -104,6 +104,14 @@ export default {
   },
   methods: {
     login () {
+      // let result = {
+      //   username: this.user.username,
+      //   password: this.user.password,
+      //   type: this.radioGroup
+      // }
+      // this.$store.dispatch('Login', result).then(res => {
+      //   this.$router.push('/home')
+      // })
       this.$router.push('/home')
     }
   },
