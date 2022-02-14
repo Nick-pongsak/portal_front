@@ -325,9 +325,9 @@ export default {
       }
       this.activeTab = value
       if (value.code == '2.1') {
-        this.editRow = this.defaultEditRow
+        this.editRow = JSON.parse(JSON.stringify(this.defaultEditRow))
       } else {
-        this.editRow2 = this.defaultEditRow2
+        this.editRow2 = JSON.parse(JSON.stringify(this.defaultEditRow2))
         this.editRow2.app = []
         this.editRow2.name_th = ''
         this.editRow2.name_en = ''
