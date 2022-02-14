@@ -18,7 +18,7 @@ const store = {
   },
   actions: {
     Login({ state, commit, dispatch }, data) {
-      console.log("login ==>", JSON.stringify(data))
+      // console.log("login ==>", JSON.stringify(data))
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/auth/login`, { "username": data.username, "password": data.password, "type": data.type }, {
           headers: {
@@ -39,7 +39,6 @@ const store = {
       return new Promise((resolve, reject) => {
         sessionStorage.removeItem("token_seesion")
         commit('SetAccessToken', '');
-
         resolve();
       })
     },

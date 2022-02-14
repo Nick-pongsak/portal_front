@@ -167,7 +167,7 @@
               >
                 {{ okBtn }}
               </v-btn> -->
-            <v-btn class="cancel-btn" @click="LoginOut()">
+            <v-btn class="cancel-btn" @click="signOut()">
               {{ $t('btn_signout') }}
             </v-btn>
           </div>
@@ -751,8 +751,8 @@ export default {
         this.CloseDialogs()
       }
     },
-    LoginOut () {
-      this.$store.dispatch('LogOut', result).then(res => {
+    signOut () {
+      this.$store.dispatch('LogOut').then(() => {
         this.$router.push('/')
       })
     },

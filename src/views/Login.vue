@@ -89,7 +89,7 @@ export default {
         password: ''
       },
       firstname: '',
-      error: true,
+      error: false,
       radio: false,
       objA: { name: 'a' },
       objB: { name: 'b' },
@@ -109,9 +109,17 @@ export default {
         password: this.user.password,
         type: this.radioGroup
       }
-      this.$store.dispatch('Login', result).then(res => {
-        this.$router.push('/home')
-      })
+      this.$store
+        .dispatch('Login', result)
+        .then(res => {
+          this.error = false
+          this.$router.push('/home')
+        })
+        .catch(error => {
+          if (error && error.response && error.response.status === 400) {
+            this.error = true
+          }
+        })
     }
   },
   created () {},
