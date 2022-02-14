@@ -267,7 +267,7 @@ export default {
         code: '1.1',
         text: 'เพิ่มผู้ใช้งานระบบ'
       }
-      this.editRow = this.masterUser
+      this.editRow = JSON.parse(JSON.stringify(this.masterUser))
     },
     editUser (value) {
       this.currentView = {
