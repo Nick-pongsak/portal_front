@@ -11,13 +11,12 @@
           :key="item.code"
           @click="selectedMenu(item, index)"
         >
-          {{ $t('set.left_menu' + index) }}
+          {{ item[$i18n.locale] }}
         </div>
       </div>
     </div>
     <div class="right">
-      <!-- <div class="header">{{ $t('set.right_menu') }}</div> -->
-      <div class="header">{{ currentView.text }}</div>
+      <div class="header">{{ currentView[$i18n.locale] }}</div>
       <main-admin-app
         v-if="currentView.code == '1'"
         @add="addUser"
@@ -72,123 +71,29 @@ export default {
       menu: [
         {
           code: '1',
-          text: 'ผู้ใช้งานระบบ',
+          th: 'ผู้ใช้งานระบบ',
+          en: 'User',
           child: []
         },
         {
           code: '2',
-          text: 'การจัดการแอปพลิเคชันที่เชื่อมต่อ',
+          th: 'การจัดการแอปพลิเคชันที่เชื่อมต่อ',
+          en: 'Application Management',
           child: [
             {
               code: '2.1',
-              text: 'รายการแอปพลิเคชัน'
+              th: 'รายการแอปพลิเคชัน',
+              en: 'Application List'
             },
             {
               code: '2.2',
-              text: 'จัดกลุ่มผู้ใช้งานแอปพลิเคชัน'
+              th: 'จัดกลุ่มผู้ใช้งานแอปพลิเคชัน',
+              en: 'Application Group'
             }
           ]
         }
       ],
       selectedItem: {},
-      list: [
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'LDAP (AD)',
-          status: false
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        },
-        {
-          app_name: 'app',
-          type: 'CRM',
-          access: 'ผู้ใช้งานแอปพลิเคชัน',
-          status: true
-        }
-      ],
       searchApp: '',
       sortNo: false,
       sortAppName: false,
@@ -200,11 +105,13 @@ export default {
       rightMenu: [
         {
           code: '2.1',
-          text: 'รายการแอปพลิเคชัน'
+          th: 'รายการแอปพลิเคชัน',
+          en: 'Application List'
         },
         {
           code: '2.2',
-          text: 'จัดกลุ่มผู้ใช้งานแอปพลิเคชัน'
+          th: 'จัดกลุ่มผู้ใช้งานแอปพลิเคชัน',
+          en: 'Application Group'
         }
       ],
       activeTab: {},
@@ -316,9 +223,15 @@ export default {
       }
     },
     addApp (value) {
+      // console.log(value)
+      // console.log(this.$i18n.locale)
       this.currentView = {
         code: value.code,
-        text:
+        th:
+          value.code == '2.1'
+            ? 'เพิ่มแอปพลิเคชัน'
+            : 'เพิ่มกลุ่มผู้ใช้งานแอปพลิเคชัน',
+        en:
           value.code == '2.1'
             ? 'เพิ่มแอปพลิเคชัน'
             : 'เพิ่มกลุ่มผู้ใช้งานแอปพลิเคชัน'
@@ -336,7 +249,11 @@ export default {
     editApp (value) {
       this.currentView = {
         code: value.current.code,
-        text:
+        th:
+          value.current.code == '2.1'
+            ? 'แก้ไขแอปพลิเคชัน'
+            : 'แก้ไขกลุ่มผู้ใช้งานแอปพลิเคชัน',
+        en:
           value.current.code == '2.1'
             ? 'แก้ไขแอปพลิเคชัน'
             : 'แก้ไขกลุ่มผู้ใช้งานแอปพลิเคชัน'

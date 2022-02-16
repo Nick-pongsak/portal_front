@@ -8,7 +8,7 @@
           :key="item.code"
           @click="tabs(item, index)"
         >
-          {{ $t('set.app_tab' + index) }}
+          {{ item[$i18n.locale] }}
           <div v-show="active.code == item.code" class="line-active"></div>
         </div>
       </div>
@@ -120,10 +120,12 @@
               class="body"
               style="width:25%;padding-left:5px;padding-top:5px"
             >
+              <!-- {{ item['name_' + $i18n.locale] }} -->
               {{ item.name_th }}
             </div>
             <div class="body" style="width:22%;padding-top:5px">
               {{ item.category_name_th }}
+              <!-- {{ item['category_name_' + $i18n.locale] }} -->
             </div>
             <div class="body" style="width:20%;display:flex">
               {{ item.type_login ? 'LDAP (AD)' : 'ผู้ใช้งานบนแอปพลิเคชัน' }}
@@ -217,6 +219,7 @@
               style="width:40%;padding-left:5px;padding-top:5px"
             >
               {{ item.name_th }}
+              <!-- {{ item['name_' + $i18n.locale] }} -->
             </div>
             <div class="body" style="width:20%;padding-top:5px">
               {{ item.total_app }}

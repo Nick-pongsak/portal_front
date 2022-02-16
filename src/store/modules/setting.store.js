@@ -24,7 +24,9 @@ const store = {
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/add-application`, data, {
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
+            'Accept': 'application/json',
+            // 'Content-Type': 'application/json',
             'Authorization': `Bearer ${this.getters.access_token}`
           }
         }).then(res => {

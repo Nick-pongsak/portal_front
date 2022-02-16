@@ -19,7 +19,8 @@
             <span
               :style="{
                 'margin-left': resizeHeader ? '15px' : '0px',
-                'font-weight': 400
+                'font-weight': 400,
+                'text-transform': 'uppercase'
               }"
             >
               {{ language }}
@@ -36,22 +37,22 @@
         </template>
         <v-list id="change-languages-body">
           <div class="first">
-            <div class="text" @click="SetLanguages('TH')">
+            <div class="text" @click="SetLanguages('th')">
               ภาษาไทย (TH)
             </div>
             <v-icon
-              v-show="language == 'TH'"
+              v-show="language == 'th'"
               v-text="'mdi-check'"
               style="color:#CE1212;"
               size="20"
             ></v-icon>
           </div>
           <div class="second">
-            <div class="text" @click="SetLanguages('EN')">
+            <div class="text" @click="SetLanguages('en')">
               ภาษาอังกฤษ (EN)
             </div>
             <v-icon
-              v-show="language == 'EN'"
+              v-show="language == 'en'"
               v-text="'mdi-check'"
               style="color:#CE1212;"
               size="20"
@@ -470,7 +471,7 @@ export default {
   data () {
     return {
       profilePicPath: '@/assets/images/account_demo.png',
-      language: 'TH',
+      language: 'th',
       accountName: 'กิตติชัย กำแพงทอง',
       accountNameEng: 'K',
       position: 'Product Manager (IT)',
@@ -627,6 +628,7 @@ export default {
       this.setAppDialog = false
     },
     SetLanguages (value) {
+      this.$i18n.locale = value
       this.language = value
     },
     DisableBtn () {

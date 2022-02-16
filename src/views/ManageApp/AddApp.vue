@@ -220,11 +220,12 @@
                 :className="['fileinput', { 'fileinput--loaded': hasImage }]"
                 capture="environment"
                 :debug="1"
-                accept="image/*"
+                accept="image/jpeg"
                 :autoRotate="true"
-                outputFormat="verbose"
+                outputFormat="blob"
                 @input="setImage"
               >
+                <!-- accept="image/*" -->
                 <label
                   for="fileInput"
                   slot="upload-label"
@@ -235,8 +236,19 @@
                 </label>
               </image-uploader>
             </div>
-            <div class="pic-upload" v-if="editRow.image == ''">
+            <div
+              class="pic-upload"
+              v-if="editRow.image == '' && editRow.mode == 'add' && !hasImage"
+            >
               240*180
+            </div>
+            <div
+              v-else-if="
+                editRow.image !== '' && editRow.mode == 'edit' && !hasImage
+              "
+            >
+              <v-img max-height="180" max-width="240" :src="editRow.image">
+              </v-img>
             </div>
           </div>
         </div>
@@ -520,7 +532,8 @@ export default {
       editRowPop: {},
       btnClick: null,
       detailDialog: null,
-      enableBtn: true
+      enableBtn: true,
+      file: ''
     }
   },
   computed: {},
@@ -536,11 +549,9 @@ export default {
   methods: {
     setImage: function (output) {
       this.hasImage = true
-      this.editRow.image = output.info.name
+      this.file = output
+      this.editRow.image = 'output'
       this.enableBtnSave()
-      // console.log('Info', output)
-      // console.log('Info', output.info)
-      // console.log('Exif', output.exif)
     },
     AddNewType () {
       this.modeAdd = true
@@ -700,7 +711,23 @@ export default {
     save () {
       if (this.btnClick == 'save') {
         let url = this.editRow.mode == 'add' ? 'addAppList' : 'updateAppList'
-        this.$store.dispatch(url, this.editRow).then(res => {
+        let formData = new FormData()
+        if (this.editRow.mode == 'edit') {
+          formData.append('app_id', this.editRow.app_id)
+        }
+        formData.append('image', this.file)
+        formData.append('category_id', this.editRow.category_id)
+        formData.append('description_en', this.editRow.description_en)
+        formData.append('description_th', this.editRow.description_th)
+        formData.append('key_app', this.editRow.key_app)
+        formData.append('name_en', this.editRow.name_en)
+        formData.append('name_th', this.editRow.name_th)
+        formData.append('status', this.editRow.status)
+        formData.append('status_sso', this.editRow.status_sso)
+        formData.append('type_login', this.editRow.type_login)
+        formData.append('url', this.editRow.url)
+
+        this.$store.dispatch(url, formData).then(res => {
           this.$emit('save', null)
           this.dialog = false
         })

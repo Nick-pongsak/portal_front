@@ -51,7 +51,6 @@ export default {
         // this.$router.push('/')
       })
     } else if (sessionStorage.getItem('token_seesion') !== null) {
-      console.log("=====>")
       // this.$store.commit(
       //   'SetAccessToken',
       //   sessionStorage.getItem('token_seesion')

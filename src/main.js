@@ -37,7 +37,6 @@ import locales from './locales'
 Vue.use(VueI18n)
 var i18n = new VueI18n({
   locale: 'th',
-  // locale: Vue.config.lang,
   messages: locales
 })
 
