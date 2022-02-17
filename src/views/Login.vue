@@ -1,6 +1,6 @@
 <template>
-  <div id="login">
-    <div id="login-box">
+  <div id="login" v-resize="onResize">
+    <div id="login-box" :style="{ transform: tranformScale }">
       <div class="part-top justify-center">
         <div class="logo">
           <img src="@/assets/icons/logo.png" />
@@ -99,7 +99,8 @@ export default {
         { code: 0, title: 'Username Portal' }
       ],
       systemName: 'PORTAL',
-      err_text: 'ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง'
+      err_text: 'ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง',
+      tranformScale: 'scale(1)'
     }
   },
   methods: {
@@ -120,23 +121,24 @@ export default {
             this.error = true
           }
         })
+    },
+    onResize () {
+      let x = window.innerWidth
+      let y = window.innerHeight
+      if (x <= 375) {
+        this.tranformScale = 'scale(0.5)'
+      } else if (x > 375 && x <= 550) {
+        this.tranformScale = 'scale(0.6)'
+      } else if (x <= 1110 && x >= 960) {
+        this.tranformScale = 'scale(0.5)'
+      } else {
+        this.tranformScale = 'scale(1)'
+      }
     }
   },
   created () {},
   mounted () {
-    /*
-    this.$store.dispatch("checkServ").then((res) => {
-      if (res.data.status == "offline" || res.data.status == "going_down") {
-        this.$router.push("/maintenance");
-      } else if (res.data.status == "processing") {
-        if (this.$store.getters.administrator === false) {
-          this.$router.push("/maintenance");
-        }
-      } else if (res.data.status == "online") {
-        this.$store.dispatch("LogOut");
-      }
-    });
-    */
+    this.onResize()
   },
   computed: {}
 }

@@ -4,7 +4,7 @@ import router from './../../router'
 import { fb } from "@/firebase"
 const store = {
   state: {
-    user: null,
+    user: {},
     access_token: ''
   },
   mutations: {
@@ -41,7 +41,7 @@ const store = {
         sessionStorage.removeItem("token_seesion")
         sessionStorage.removeItem("info")
         commit('SetAccessToken', '');
-        commit('SetUser', null);
+        commit('SetUser', {});
         resolve();
       })
     }

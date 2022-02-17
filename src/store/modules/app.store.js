@@ -16,12 +16,41 @@ const store = {
     }
   },
   actions: {
-    FetchMainData({
-      state,
-      commit,
-      dispatch
-    }, data) {
-      // TEST
+    getHomeData({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
+      console.log("application-user ==>", JSON.stringify(data))
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/application-user`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          commit('SetLoading', false)
+          resolve(res.data.success)
+        }).catch(error => {
+          commit('SetLoading', false)
+          reject(error)
+        })
+      })
+    },
+    saveHome({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
+      console.log("save-order ==>", JSON.stringify(data))
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/save-order`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          commit('SetLoading', false)
+          resolve(res.data.success)
+        }).catch(error => {
+          commit('SetLoading', false)
+          reject(error)
+        })
+      })
     },
 
   },

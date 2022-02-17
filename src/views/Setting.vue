@@ -68,31 +68,7 @@ export default {
   name: 'setting',
   data () {
     return {
-      menu: [
-        {
-          code: '1',
-          th: 'ผู้ใช้งานระบบ',
-          en: 'User',
-          child: []
-        },
-        {
-          code: '2',
-          th: 'การจัดการแอปพลิเคชันที่เชื่อมต่อ',
-          en: 'Application Management',
-          child: [
-            {
-              code: '2.1',
-              th: 'รายการแอปพลิเคชัน',
-              en: 'Application List'
-            },
-            {
-              code: '2.2',
-              th: 'จัดกลุ่มผู้ใช้งานแอปพลิเคชัน',
-              en: 'Application Group'
-            }
-          ]
-        }
-      ],
+      menu: [],
       selectedItem: {},
       searchApp: '',
       sortNo: false,
@@ -166,7 +142,11 @@ export default {
       }
     }
   },
-  computed: {},
+  computed: {
+    info () {
+      return this.$store.getters.user
+    }
+  },
   watch: {},
   methods: {
     addUser (value) {
@@ -293,10 +273,41 @@ export default {
       }
     },
     int () {
-      this.selectedItem = this.menu[0]
-      this.currentView = this.menu[0]
-      this.activeTab = null
-      // this.activeTab = this.rightMenu[0]
+      let masterMenu = [
+        {
+          code: '1',
+          th: 'ผู้ใช้งานระบบ',
+          en: 'User',
+          child: []
+        },
+        {
+          code: '2',
+          th: 'การจัดการแอปพลิเคชันที่เชื่อมต่อ',
+          en: 'Application Management',
+          child: [
+            {
+              code: '2.1',
+              th: 'รายการแอปพลิเคชัน',
+              en: 'Application List'
+            },
+            {
+              code: '2.2',
+              th: 'จัดกลุ่มผู้ใช้งานแอปพลิเคชัน',
+              en: 'Application Group'
+            }
+          ]
+        }
+      ]
+      if (this.info.admin_menu == 0) {
+        this.menu = [masterMenu[0]]
+      } else {
+        this.menu = masterMenu
+      }
+      if (this.menu.length > 0) {
+        this.selectedItem = this.menu[0]
+        this.currentView = this.menu[0]
+        this.activeTab = null
+      }
     }
   },
   created () {

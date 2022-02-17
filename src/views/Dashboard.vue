@@ -45,7 +45,7 @@
       >
         <div :style="{ width: '15%' }"></div>
         <div :style="{ width: '70%' }">
-          <dnd-zone :transition-duration="0.3">
+          <dnd-zone :transition-duration="0.3" v-show="list.length > 0">
             <dnd-container
               :dnd-model="list"
               dnd-id="grid-example"
@@ -54,8 +54,8 @@
             >
               <dnd-item
                 v-for="item in list"
-                :key="item.sys_code"
-                :dnd-id="item.sys_code"
+                :key="item.app_id"
+                :dnd-id="item.app_id"
                 :dnd-model="item"
                 :is-draggable="showDragAndDrop"
               >
@@ -77,21 +77,18 @@
                       <v-img
                         :style="{ cursor: showDragAndDrop ? '' : 'pointer' }"
                         height="180"
-                        :src="
-                          'https://cdn.vuetifyjs.com/images/cards/' +
-                            item.pic_path
-                        "
+                        :src="item.image"
                         @click="openDialog(item)"
                       >
                         <div class="sys-text">
-                          <div class="sys-name" v-text="item.sys_name"></div>
+                          <div class="sys-name" v-text="item.name_th"></div>
                           <div
                             class="sys-type"
-                            v-text="'(' + item.sys_type + ')'"
+                            v-text="'(' + item.category_name_th + ')'"
                           ></div>
                         </div>
                       </v-img>
-                      <v-card-text>{{ item.sys_desc }} </v-card-text>
+                      <v-card-text>{{ item.description_th }} </v-card-text>
                       <v-card-actions class="justify-end">
                         <v-btn text @click="openLogin(item)">
                           {{ $t('btn_signin') }}
@@ -159,89 +156,7 @@ export default {
   name: 'dashboard',
   data () {
     return {
-      list: [
-        {
-          pic_path: 'cooking.png',
-          sys_name: 'GDB',
-          sys_type: 'CRM',
-          sys_code: '1',
-          sys_desc:
-            'ระบบที่ใช้สำหรับกำหนด Master รายละเอียดต่าง ๆ ของสินค้า เช่น ราคาขายของ MT TT MTT รวมถึงรายละเอียดของแพ็คเก็ตสินค้า หีบ ห่อ ต่าง ๆ',
-          login_path: ''
-        },
-        {
-          pic_path: 'cooking.png',
-          sys_name: 'Cipher',
-          sys_type: 'Data Center',
-          sys_code: '2',
-          sys_desc:
-            'ระบบที่ใช้สำหรับกำหนด Master รายละเอียดต่าง ๆ ของสินค้า เช่น ราคาขายของ MT TT MTT รวมถึงรายละเอียดของแพ็คเก็ตสินค้า หีบ ห่อ ต่าง ๆ',
-          login_path: ''
-        },
-        {
-          pic_path: 'cooking.png',
-          sys_name: 'Corporate Planning',
-          sys_type: 'CRM',
-          sys_code: '3',
-          sys_desc:
-            'ระบบที่ใช้สำหรับกำหนด Master รายละเอียดต่าง ๆ ของสินค้า เช่น ราคาขายของ MT TT MTT รวมถึงรายละเอียดของแพ็คเก็ตสินค้า หีบ ห่อ ต่าง ๆ',
-          login_path: ''
-        },
-        {
-          pic_path: 'cooking.png',
-          sys_name: 'S&OP',
-          sys_type: 'CRM',
-          sys_code: '4',
-          sys_desc:
-            'ระบบที่ใช้สำหรับกำหนด Master รายละเอียดต่าง ๆ ของสินค้า เช่น ราคาขายของ MT TT MTT รวมถึงรายละเอียดของแพ็คเก็ตสินค้า หีบ ห่อ ต่าง ๆ',
-          login_path: ''
-        },
-        {
-          pic_path: 'cooking.png',
-          sys_name: 'MktOps',
-          sys_type: 'CRM',
-          sys_code: '5',
-          sys_desc:
-            'ระบบที่ใช้สำหรับกำหนด Master รายละเอียดต่าง ๆ ของสินค้า เช่น ราคาขายของ MT TT MTT รวมถึงรายละเอียดของแพ็คเก็ตสินค้า หีบ ห่อ ต่าง ๆ',
-          login_path: ''
-        },
-        {
-          pic_path: 'cooking.png',
-          sys_name: 'Bill Collection',
-          sys_type: 'CRM',
-          sys_code: '6',
-          sys_desc:
-            'ระบบที่ใช้สำหรับกำหนด Master รายละเอียดต่าง ๆ ของสินค้า เช่น ราคาขายของ MT TT MTT รวมถึงรายละเอียดของแพ็คเก็ตสินค้า หีบ ห่อ ต่าง ๆ',
-          login_path: ''
-        },
-        {
-          pic_path: 'cooking.png',
-          sys_name: 'MktOps',
-          sys_type: 'CRM',
-          sys_code: '7',
-          sys_desc:
-            'ระบบที่ใช้สำหรับกำหนด Master รายละเอียดต่าง ๆ ของสินค้า เช่น ราคาขายของ MT TT MTT รวมถึงรายละเอียดของแพ็คเก็ตสินค้า หีบ ห่อ ต่าง ๆ',
-          login_path: ''
-        },
-        {
-          pic_path: 'cooking.png',
-          sys_name: 'Portal Setting',
-          sys_type: 'CRM',
-          sys_code: '8',
-          sys_desc:
-            'ระบบที่ใช้สำหรับกำหนด Master รายละเอียดต่าง ๆ ของสินค้า เช่น ราคาขายของ MT TT MTT รวมถึงรายละเอียดของแพ็คเก็ตสินค้า หีบ ห่อ ต่าง ๆ',
-          login_path: ''
-        },
-        {
-          pic_path: 'cooking.png',
-          sys_name: 'Portal Setting',
-          sys_type: 'CRM',
-          sys_code: '9',
-          sys_desc:
-            'ระบบที่ใช้สำหรับกำหนด Master รายละเอียดต่าง ๆ ของสินค้า เช่น ราคาขายของ MT TT MTT รวมถึงรายละเอียดของแพ็คเก็ตสินค้า หีบ ห่อ ต่าง ๆ',
-          login_path: ''
-        }
-      ],
+      list: [],
       dialog: false,
       selectedRow: {},
       showDragAndDrop: false,
@@ -251,16 +166,16 @@ export default {
   computed: {
     loading () {
       return this.$store.getters.isLoading
+    },
+    info () {
+      return this.$store.getters.user
     }
-  },
-  mounted () {
-    this.onResize()
   },
   watch: {
     list: {
       handler: function (todos) {
         if (this.showDragAndDrop) {
-          console.log(todos)
+          // console.log(todos)
         }
       },
       deep: true
@@ -283,6 +198,19 @@ export default {
     saveDragAndDrop () {
       this.showDragAndDrop = false
       this.onResize()
+      if (this.list.length > 0) {
+        let theArray = this.list.filter(word => word.app_id !== 999)
+        let results = theArray.map(a => a.app_id)
+        if (results.length > 0) {
+          let req = {
+            user_id: this.info.user_id,
+            order: results.toString()
+          }
+          this.$store.dispatch('saveHome', req).then(res => {
+            console.log('Success')
+          })
+        }
+      }
     },
     clearDragAndDrop () {
       this.showDragAndDrop = false
@@ -302,11 +230,60 @@ export default {
       this.dialog = false
     },
     openLogin (row) {
-      if (row.sys_name == 'Portal Setting') {
+      if (row.app_id == 999) {
         this.$router.push('/setting')
       } else if (this.showDragAndDrop == false) {
-        console.log('openLogin => ')
+        window.open(row.url, '_blank')
       }
+    }
+  },
+  created () {
+    if (
+      this.$store.getters.access_token === '' &&
+      sessionStorage.getItem('token_seesion') === null
+    ) {
+      this.$store.dispatch('LogOut').then(() => {
+        this.$router.push('/')
+      })
+    } else if (sessionStorage.getItem('token_seesion') !== null) {
+      this.$store.commit(
+        'SetAccessToken',
+        sessionStorage.getItem('token_seesion')
+      )
+      this.onResize()
+      let req = {
+        group_id: this.info.group_id,
+        user_id: this.info.user_id
+      }
+      this.list = []
+      this.$store.dispatch('getHomeData', req).then(res => {
+        let app = res.data.app
+        let order = res.data.order.split(',')
+        for (let i = 0; i < order.length; i++) {
+          let index = app.findIndex(h => h.app_id == order[i])
+          if (index >= 0) {
+            app[index].image = res.data.path + app[index].image
+            this.list.push(app[index])
+          }
+        }
+        for (let i = 0; i < app.length; i++) {
+          let index = this.list.findIndex(h => h.app_id == app[i].app_id)
+          if (index < 0) {
+            app[i].image = res.data.path + app[i].image
+            this.list.push(app[i])
+          }
+        }
+        if (this.info.status_permission == 1) {
+          this.list.push({
+            image: res.data.path + '1645086704.png',
+            name_th: 'Portal Setting',
+            category_name_th: 'Admin',
+            app_id: 999,
+            description_th:
+              'ระบบที่ใช้สำหรับกำหนด Master รายละเอียดต่าง ๆ ของสินค้า เช่น ราคาขายของ MT TT MTT รวมถึงรายละเอียดของแพ็คเก็ตสินค้า หีบ ห่อ ต่าง ๆ'
+          })
+        }
+      })
     }
   },
   mounted () {

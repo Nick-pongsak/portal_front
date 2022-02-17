@@ -79,9 +79,7 @@
               </v-avatar>
             </div>
             <div :style="{ 'margin-left': '14px' }" v-show="resizeHeader">
-              <div class="account-name">
-                {{ info.name_th ? info.name_th : '' }}
-              </div>
+              <div class="account-name">{{ info.name_th }}</div>
               <div class="account-name" style="padding-top:1px">
                 {{ info.postname_th }}
               </div>
@@ -128,14 +126,9 @@
               {{ info.postname_th }}
             </div>
           </div>
-          <!-- <div style="text-align:center;padding-bottom:20px">
-              <v-chip class="account-chip">
-                {{ status_account }}
-              </v-chip>
-            </div> -->
           <div class="line-page" style="margin-top:10px"></div>
           <div class="menu-line">
-            <div class="menu-rows">
+            <!-- <div class="menu-rows">
               <v-icon
                 v-text="'mdi-account-circle'"
                 style="color:#CE1212;"
@@ -164,7 +157,7 @@
                 size="20"
               ></v-icon>
               <span style="margin-left:8px"> {{ 'เปลี่ยนรหัสผ่าน' }}</span>
-            </div>
+            </div> -->
             <div @click="signOut()" class="menu-rows" style="padding-left:2px">
               <v-icon
                 v-text="'mdi-export'"
@@ -766,7 +759,9 @@ export default {
       })
     },
     UploadPic () {
+      /*
       this.picDialog = true
+      */
     },
     CloseDialogs () {
       this.picDialog = false
