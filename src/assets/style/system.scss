@@ -95,6 +95,15 @@
     border-radius: 50%;
     border: 1px solid #ffffff;
   }
+  .menu-line {
+    padding-left: 30px;
+    .menu-rows {
+      cursor: pointer;
+      padding-top: 15px;
+      color: $dark_red;
+      font-size: nth($font-sizes, 3);
+    }
+  }
   .account {
     padding: 20px 38px 5px 38px;
     .account-name,

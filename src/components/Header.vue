@@ -131,7 +131,48 @@
                 {{ status_account }}
               </v-chip>
             </div> -->
-          <div
+          <div class="line-page" style="margin-top:10px"></div>
+          <div class="menu-line">
+            <div class="menu-rows">
+              <v-icon
+                v-text="'mdi-face'"
+                style="color:#CE1212;"
+                size="18"
+              ></v-icon>
+              <span style="margin-left:8px"> {{ 'ข้อมูลส่วนตัว' }}</span>
+            </div>
+            <div @click="SettingApp()" class="menu-rows">
+              <v-icon
+                v-text="'mdi-settings-box'"
+                style="color:#CE1212;"
+                size="18"
+              ></v-icon>
+              <span style="margin-left:8px">{{
+                'จัดการรายการแอปพลิเคชัน'
+              }}</span>
+            </div>
+            <div
+              @click="ChangePassword()"
+              v-show="permissinoAccount"
+              class="menu-rows"
+            >
+              <v-icon
+                v-text="'mdi-camera'"
+                style="color:#000000;"
+                size="18"
+              ></v-icon>
+              <span style="margin-left:8px"> {{ 'เปลี่ยนรหัสผ่าน' }}</span>
+            </div>
+            <div @click="signOut()" class="menu-rows">
+              <v-icon
+                v-text="'mdi-camera'"
+                style="color:#000000;"
+                size="18"
+              ></v-icon>
+              <span style="margin-left:8px">{{ $t('btn_signout') }}</span>
+            </div>
+          </div>
+          <!-- <div
             :style="{
               'text-align': 'center',
               'padding-bottom': permissinoAccount ? '10px' : '20px',
@@ -157,21 +198,13 @@
             >
               {{ 'เปลี่ยนรหัสผ่าน' }}
             </v-chip>
-          </div>
-          <div class="line-page"></div>
-          <div class="account-button">
-            <!-- <v-btn
-                class="ok-btn"
-                style="margin-right:35px"
-                v-show="permissinoAccount"
-                @click="ChangePassword()"
-              >
-                {{ okBtn }}
-              </v-btn> -->
+          </div> -->
+
+          <!-- <div class="account-button">
             <v-btn class="cancel-btn" @click="signOut()">
               {{ $t('btn_signout') }}
             </v-btn>
-          </div>
+          </div> -->
         </v-list>
       </v-menu>
     </div>

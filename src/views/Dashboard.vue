@@ -260,7 +260,7 @@ export default {
     list: {
       handler: function (todos) {
         if (this.showDragAndDrop) {
-          // console.log(todos)
+          console.log(todos)
         }
       },
       deep: true
