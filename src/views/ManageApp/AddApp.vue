@@ -321,11 +321,7 @@
         </div>
         <div>
           <div class="head-menu5">
-            {{
-              editMode
-                ? 'เพิ่มหมวดหมู่ของแอปพลิเคชัน'
-                : 'การจัดการหมวดหมู่ของแอปพลิเคชัน'
-            }}
+            {{ renderTitle() }}
           </div>
           <div class="line-page" style="margin-top:8px"></div>
           <div v-if="editMode">
@@ -547,6 +543,12 @@ export default {
     }
   },
   methods: {
+    renderTitle () {
+      let mode = this.modeAdd ? 'เพิ่ม' : 'แก้ไข'
+      return this.editMode
+        ? mode + 'หมวดหมู่ของแอปพลิเคชัน'
+        : 'การจัดการหมวดหมู่ของแอปพลิเคชัน'
+    },
     setImage: function (output) {
       this.hasImage = true
       this.file = output
@@ -556,6 +558,8 @@ export default {
     AddNewType () {
       this.modeAdd = true
       this.editMode = true
+      this.NameThInput = ''
+      this.NameEnInput = ''
     },
     EditNewType (item) {
       this.editMode = true
@@ -715,7 +719,11 @@ export default {
         if (this.editRow.mode == 'edit') {
           formData.append('app_id', this.editRow.app_id)
         }
-        formData.append('image', this.file)
+        if (this.editRow.image == 'output') {
+          formData.append('image', this.file)
+        } else {
+          formData.append('image', '')
+        }
         formData.append('category_id', this.editRow.category_id)
         formData.append('description_en', this.editRow.description_en)
         formData.append('description_th', this.editRow.description_th)
@@ -826,6 +834,7 @@ export default {
       )
     }
     if (this.editRow.mode == 'edit') {
+      this.file = this.editRow.image
       this.enableBtnSave()
     }
     this.getTypeList()

@@ -983,6 +983,7 @@ export default {
               this.editRow = res.data[0]
               this.editRow.mode = mode
               this.editRow.status = 1
+              this.editRow.password = ''
             } else if (res.data.length > 1) {
               this.empeDialog = true
               this.list = res.data

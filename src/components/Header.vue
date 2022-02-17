@@ -1,6 +1,6 @@
 <template>
   <div class="header-main" v-resize="onResize">
-    <div style="width:50%;display:flex">
+    <div style="width:50%;display:flex;cursor:pointer" @click="goHome">
       <img src="@/assets/icons/logo.png" :style="{ height: logo }" />
       <div class="sys-name" :style="{ 'font-size': sysName }">
         DHAS PORTAL
@@ -79,7 +79,9 @@
               </v-avatar>
             </div>
             <div :style="{ 'margin-left': '14px' }" v-show="resizeHeader">
-              <div class="account-name">{{ info.name_th }}</div>
+              <div class="account-name">
+                {{ info.name_th ? info.name_th : '' }}
+              </div>
               <div class="account-name" style="padding-top:1px">
                 {{ info.postname_th }}
               </div>
@@ -135,17 +137,17 @@
           <div class="menu-line">
             <div class="menu-rows">
               <v-icon
-                v-text="'mdi-face'"
+                v-text="'mdi-account-circle'"
                 style="color:#CE1212;"
-                size="18"
+                size="21"
               ></v-icon>
               <span style="margin-left:8px"> {{ 'ข้อมูลส่วนตัว' }}</span>
             </div>
             <div @click="SettingApp()" class="menu-rows">
               <v-icon
-                v-text="'mdi-settings-box'"
+                v-text="'mdi-cog-box'"
                 style="color:#CE1212;"
-                size="18"
+                size="23"
               ></v-icon>
               <span style="margin-left:8px">{{
                 'จัดการรายการแอปพลิเคชัน'
@@ -157,54 +159,21 @@
               class="menu-rows"
             >
               <v-icon
-                v-text="'mdi-camera'"
-                style="color:#000000;"
-                size="18"
+                v-text="'mdi-account-convert'"
+                style="color:#CE1212;"
+                size="20"
               ></v-icon>
               <span style="margin-left:8px"> {{ 'เปลี่ยนรหัสผ่าน' }}</span>
             </div>
-            <div @click="signOut()" class="menu-rows">
+            <div @click="signOut()" class="menu-rows" style="padding-left:2px">
               <v-icon
-                v-text="'mdi-camera'"
-                style="color:#000000;"
-                size="18"
+                v-text="'mdi-export'"
+                style="color:#CE1212;"
+                size="20"
               ></v-icon>
               <span style="margin-left:8px">{{ $t('btn_signout') }}</span>
             </div>
           </div>
-          <!-- <div
-            :style="{
-              'text-align': 'center',
-              'padding-bottom': permissinoAccount ? '10px' : '20px',
-              'padding-top': '15px'
-            }"
-          >
-            <v-chip
-              class="account-chip"
-              style="width:200px"
-              @click="SettingApp()"
-            >
-              {{ 'จัดการรายการแอปพลิเคชัน' }}
-            </v-chip>
-          </div>
-          <div
-            style="text-align:center;padding-bottom:20px;"
-            v-show="permissinoAccount"
-          >
-            <v-chip
-              class="account-chip"
-              @click="ChangePassword()"
-              style="width:200px"
-            >
-              {{ 'เปลี่ยนรหัสผ่าน' }}
-            </v-chip>
-          </div> -->
-
-          <!-- <div class="account-button">
-            <v-btn class="cancel-btn" @click="signOut()">
-              {{ $t('btn_signout') }}
-            </v-btn>
-          </div> -->
         </v-list>
       </v-menu>
     </div>
@@ -634,7 +603,9 @@ export default {
       }
     },
     goHome () {
-      this.$router.push('/home')
+      if (this.$router.app._route.path !== '/home') {
+        this.$router.push('/home')
+      }
     },
     edit (item, index) {
       this.editRow = index
