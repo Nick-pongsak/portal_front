@@ -5,7 +5,6 @@ import { fb } from "@/firebase"
 const store = {
   state: {
     user: null,
-    role: null,
     access_token: ''
   },
   mutations: {
@@ -26,7 +25,9 @@ const store = {
           }
         }).then(response => {
           let res = response.data.success.data
+          sessionStorage.setItem('info', JSON.stringify(res))
           sessionStorage.setItem('token_seesion', res.access_token)
+          commit("SetUser", res)
           commit("SetAccessToken", res.access_token)
           resolve(response.data);
         }).catch(error => {
@@ -38,23 +39,12 @@ const store = {
     LogOut({ state, commit, dispatch }) {
       return new Promise((resolve, reject) => {
         sessionStorage.removeItem("token_seesion")
+        sessionStorage.removeItem("info")
         commit('SetAccessToken', '');
+        commit('SetUser', null);
         resolve();
       })
-    },
-    checkServ({ }) {
-      // return new Promise((resolve, reject) => {
-      //   axios.get(`${url}/api/server/info`, {
-      //     headers: {
-      //       'Content-Type': 'application/json'
-      //     }
-      //   }).then(response => {
-      //     resolve(response.data);
-      //   }).catch(error => {
-      //     reject(error)
-      //   })
-      // })
-    },
+    }
   },
   getters: {
     user(state) {

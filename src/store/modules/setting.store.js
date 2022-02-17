@@ -4,17 +4,11 @@ import router from '../../router'
 
 const store = {
   state: {
-    // user: null,
-    // role: null,
     // access_token: '',
-    // approval: null,
   },
   mutations: {
     // SetAccessToken(state, data) {
     //   state.access_token = data;
-    // },
-    // SetUser(state, data) {
-    //   state.user = data;
     // },
   },
   actions: {

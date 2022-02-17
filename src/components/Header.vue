@@ -79,9 +79,9 @@
               </v-avatar>
             </div>
             <div :style="{ 'margin-left': '14px' }" v-show="resizeHeader">
-              <div class="account-name">{{ accountName }}</div>
+              <div class="account-name">{{ info.name_th }}</div>
               <div class="account-name" style="padding-top:1px">
-                {{ position }}
+                {{ info.postname_th }}
               </div>
             </div>
             <v-icon
@@ -120,10 +120,10 @@
           </div>
           <div class="account">
             <div class="account-name">
-              {{ accountName }}
+              {{ info.name_th }}
             </div>
             <div class="position-name">
-              {{ position }}
+              {{ info.postname_th }}
             </div>
           </div>
           <!-- <div style="text-align:center;padding-bottom:20px">
@@ -472,9 +472,8 @@ export default {
     return {
       profilePicPath: '@/assets/images/account_demo.png',
       language: 'th',
-      accountName: 'กิตติชัย กำแพงทอง',
+      // accountName: 'กิตติชัย กำแพงทอง',
       accountNameEng: 'K',
-      position: 'Product Manager (IT)',
       okBtn: 'เปลี่ยนรหัสผ่าน',
       status_account: 'ผู้ดูแลระบบ',
       stepChangePic: 0,
@@ -579,7 +578,11 @@ export default {
       this.DisableBtn()
     }
   },
-  computed: {},
+  computed: {
+    info () {
+      return this.$store.getters.user
+    }
+  },
   methods: {
     onResize () {
       let x = window.innerWidth
@@ -765,6 +768,19 @@ export default {
       this.picDialog = false
       this.showEditPic = false
       this.stepChangePic = 0
+    }
+  },
+  created () {
+    if (
+      this.$store.getters.user === null &&
+      sessionStorage.getItem('info') === null
+    ) {
+      this.$store.dispatch('LogOut').then(() => {
+        this.$router.push('/')
+      })
+    } else if (sessionStorage.getItem('info') !== null) {
+      console.log(JSON.parse(sessionStorage.getItem('info')))
+      this.$store.commit('SetUser', JSON.parse(sessionStorage.getItem('info')))
     }
   },
   components: {
