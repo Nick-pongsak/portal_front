@@ -300,7 +300,7 @@
         </div>
         <div class="rows" style="padding-bottom:3px">
           <div style="width:50%;display: flex;">
-            <div style="width:40%" class="rows-name">เบอร์โทร</div>
+            <div style="width:40%;height:27px" class="rows-name" >เบอร์โทร</div>
             <div style="width:60%" class="rows-input">
               <div class="input-with-icon">
                 <input
@@ -318,10 +318,10 @@
             </div>
           </div>
           <div style="width:50%;;display: flex;">
-            <div style="width:40%" class="rows-name">
+            <div style="width:40%;height:27px" class="rows-name">
               สถานะ
             </div>
-            <div style="width:60%;padding-right:25px" class="rows-input">
+            <div style="width:60%;padding-right:25px;padding-top:5px" class="rows-input">
               <v-radio-group v-model="editRow.status" style="display:flex">
                 <div class="radio" style="margin-right: 30px;">
                   <v-radio

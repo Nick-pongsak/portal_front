@@ -128,7 +128,7 @@
           </div>
           <div class="line-page" style="margin-top:10px"></div>
           <div class="menu-line">
-            <!-- <div class="menu-rows">
+            <div class="menu-rows" @click="openProfile">
               <v-icon
                 v-text="'mdi-account-circle'"
                 style="color:#CE1212;"
@@ -136,6 +136,7 @@
               ></v-icon>
               <span style="margin-left:8px"> {{ 'ข้อมูลส่วนตัว' }}</span>
             </div>
+            <!-- 
             <div @click="SettingApp()" class="menu-rows">
               <v-icon
                 v-text="'mdi-cog-box'"
@@ -455,6 +456,373 @@
         </div>
       </v-card>
     </v-dialog>
+
+    <v-dialog
+      v-model="profileDialog"
+      :width="profileView ? 500 : 1000"
+      :no-click-animation="false"
+    >
+      <v-card id="profile-dialogs">
+        <v-card-text v-if="profileView" style="padding:unset">
+          <div class="center-vh" style="margin-top:45px">
+            <v-avatar style="background:#66BB6A;width:90px;height:90px">
+              <v-icon style="color:white" size="30">
+                mdi-check
+              </v-icon>
+            </v-avatar>
+          </div>
+          <div class="head-menu5" style="margin-top:35px; text-align:center">
+            {{ 'เปลี่ยนแปลงข้อมูลส่วนตัวสำเร็จ' }}
+          </div>
+        </v-card-text>
+        <v-card-text v-else style="padding:unset">
+          <div class="justify-end" style="display: flex;">
+            <v-icon
+              @click="CloseProfileDialog()"
+              v-text="'mdi-close'"
+              style="color:#000000;"
+              size="20"
+            ></v-icon>
+          </div>
+          <div>
+            <div class="head-menu5">
+              {{ 'ข้อมูลส่วนตัว' }}
+            </div>
+            <div class="line-page" style="margin-top:8px;"></div>
+          </div>
+          <div class="rows" style="margin-top:18px">
+            <div style="width:20%" class="rows-name">
+              ประเภทการเข้าใช้งานระบบ
+            </div>
+            <div
+              :style="{ width: '80%', 'padding-left': '8px', color: '#414141' }"
+              class="rows-name"
+            >
+              {{
+                profile.type_login == 1 ? 'LDAP (AD)' : 'ผู้ใช้งานบนแอปพลิเคชัน'
+              }}
+            </div>
+          </div>
+          <div class="rows">
+            <div style="width:20%" class="rows-name">รหัสพนักงาน</div>
+            <div style="width:80%" class="rows-input">
+              <div
+                class="input-with-icon"
+                :style="{ 'box-shadow': 'unset', width: ' 250px' }"
+              >
+                <input
+                  type="text"
+                  v-model="profile.emp_code"
+                  :placeholder="$t('input_selected')"
+                  :readonly="true"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="rows">
+            <div style="width:50%;display: flex;">
+              <div style="width:40%" class="rows-name">ชื่อ - นามสกุล (TH)</div>
+              <div style="width:60%" class="rows-input">
+                <div
+                  class="input-with-icon"
+                  :style="{
+                    'box-shadow': enableInput ? 'unset' : colInput,
+                    width: ' 250px'
+                  }"
+                >
+                  <input
+                    type="text"
+                    v-model="profile.name_th"
+                    :placeholder="$t('input_selected')"
+                    :readonly="enableInput"
+                    @keyup="enableBtnSave"
+                    @keypress="enableBtnSave"
+                  />
+                </div>
+              </div>
+            </div>
+            <div style="width:50%;;display: flex;">
+              <div style="width:40%" class="rows-name">
+                ชื่อ - นามสกุล (EN)
+              </div>
+              <div style="width:60%;padding-right:25px" class="rows-input">
+                <div
+                  class="input-with-icon"
+                  :style="{
+                    'box-shadow': enableInput ? 'unset' : colInput,
+                    width: ' 250px'
+                  }"
+                >
+                  <input
+                    type="text"
+                    v-model="profile.name_en"
+                    :placeholder="$t('input_selected')"
+                    :readonly="enableInput"
+                    @keyup="enableBtnSave"
+                    @keypress="enableBtnSave"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="rows">
+            <div style="width:50%;display: flex;">
+              <div style="width:40%" class="rows-name">ชื่อเล่น (TH)</div>
+              <div style="width:60%" class="rows-input">
+                <div
+                  class="input-with-icon"
+                  :style="{
+                    'box-shadow': enableInput ? 'unset' : colInput,
+                    width: ' 250px'
+                  }"
+                >
+                  <input
+                    type="text"
+                    v-model="profile.nickname1_th"
+                    :placeholder="enableInput ? '-' : '-- หากมีโปรดระบุ --'"
+                    :readonly="enableInput"
+                  />
+                </div>
+              </div>
+            </div>
+            <div style="width:50%;;display: flex;">
+              <div style="width:40%" class="rows-name">
+                ชื่อเล่น (EN)
+              </div>
+              <div style="width:60%;padding-right:25px" class="rows-input">
+                <div
+                  class="input-with-icon"
+                  :style="{
+                    'box-shadow': enableInput ? 'unset' : colInput,
+                    width: ' 250px'
+                  }"
+                >
+                  <input
+                    type="text"
+                    v-model="profile.nickname1_en"
+                    :placeholder="enableInput ? '-' : '-- หากมีโปรดระบุ --'"
+                    :readonly="enableInput"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="rows">
+            <div style="width:50%;display: flex;">
+              <div style="width:40%" class="rows-name">ฉายา (TH)</div>
+              <div style="width:60%" class="rows-input">
+                <div
+                  class="input-with-icon"
+                  :style="{
+                    'box-shadow': enableInput ? 'unset' : colInput,
+                    width: ' 250px'
+                  }"
+                >
+                  <input
+                    type="text"
+                    v-model="profile.nickname2_th"
+                    :placeholder="enableInput ? '-' : '-- หากมีโปรดระบุ --'"
+                    :readonly="enableInput"
+                  />
+                </div>
+              </div>
+            </div>
+            <div style="width:50%;;display: flex;">
+              <div style="width:40%" class="rows-name">
+                ฉายา (EN)
+              </div>
+              <div style="width:60%;padding-right:25px" class="rows-input">
+                <div
+                  class="input-with-icon"
+                  :style="{
+                    'box-shadow': enableInput ? 'unset' : colInput,
+                    width: ' 250px'
+                  }"
+                >
+                  <input
+                    type="text"
+                    v-model="profile.nickname2_en"
+                    :placeholder="enableInput ? '-' : '-- หากมีโปรดระบุ --'"
+                    :readonly="enableInput"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="rows">
+            <div style="width:50%;display: flex;">
+              <div style="width:40%" class="rows-name">ตำแหน่งงาน (TH)</div>
+              <div style="width:60%" class="rows-input">
+                <div
+                  class="input-with-icon"
+                  :style="{
+                    'box-shadow': enableInput ? 'unset' : colInput,
+                    width: ' 250px'
+                  }"
+                >
+                  <input
+                    type="text"
+                    v-model="profile.postname_th"
+                    :placeholder="$t('input_selected')"
+                    :readonly="enableInput"
+                    @keyup="enableBtnSave"
+                    @keypress="enableBtnSave"
+                  />
+                </div>
+              </div>
+            </div>
+            <div style="width:50%;;display: flex;">
+              <div style="width:40%" class="rows-name">
+                ตำแหน่งงาน (EN)
+              </div>
+              <div style="width:60%;padding-right:25px" class="rows-input">
+                <div
+                  class="input-with-icon"
+                  :style="{
+                    'box-shadow': enableInput ? 'unset' : colInput,
+                    width: ' 250px'
+                  }"
+                >
+                  <input
+                    type="text"
+                    @keyup="enableBtnSave"
+                    @keypress="enableBtnSave"
+                    v-model="profile.postname_en"
+                    :placeholder="$t('input_selected')"
+                    :readonly="enableInput"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="rows">
+            <div style="width:50%;display: flex;">
+              <div style="width:40%" class="rows-name">อีเมล</div>
+              <div style="width:60%" class="rows-input">
+                <div
+                  class="input-with-icon"
+                  :style="{ 'box-shadow': 'unset', width: ' 250px' }"
+                >
+                  <input
+                    type="text"
+                    v-model="profile.email"
+                    :placeholder="$t('input_selected')"
+                    :readonly="true"
+                  />
+                </div>
+              </div>
+            </div>
+            <div style="width:50%;;display: flex;">
+              <div style="width:40%" class="rows-name">
+                3CX
+              </div>
+              <div style="width:60%;padding-right:25px" class="rows-input">
+                <div
+                  class="input-with-icon"
+                  :style="{
+                    'box-shadow': enableInput ? 'unset' : colInput,
+                    width: ' 250px'
+                  }"
+                >
+                  <input
+                    type="text"
+                    v-model="profile.cx"
+                    :placeholder="enableInput ? '-' : '-- หากมีโปรดระบุ --'"
+                    :readonly="enableInput"
+                    @keypress="isNumber"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="rows" style="padding-bottom:3px">
+            <div style="width:50%;display: flex;">
+              <div style="width:40%;height:28px" class="rows-name">
+                เบอร์โทร
+              </div>
+              <div style="width:60%" class="rows-input">
+                <div
+                  class="input-with-icon"
+                  :style="{
+                    'box-shadow': enableInput ? 'unset' : colInput,
+                    width: ' 250px'
+                  }"
+                >
+                  <input
+                    type="text"
+                    v-model="profile.phone"
+                    :placeholder="enableInput ? '-' : '-- หากมีโปรดระบุ --'"
+                    :readonly="enableInput"
+                    @keypress="isNumber"
+                  />
+                </div>
+                <div style="color:#CE1212;font-size:8px;padding-top:5px">
+                  * หากระบุข้อมูลดังกล่าวจะเป็นสาธารณะ
+                </div>
+              </div>
+            </div>
+            <div style="width:50%;;display: flex;"></div>
+          </div>
+        </v-card-text>
+        <v-card-actions
+          v-if="profileView"
+          class="justify-center"
+          style="margin-top:40px;margin-bottom:20px"
+        >
+          <v-btn
+            text
+            @click="CloseProfileDialog()"
+            class="ok-btn"
+            style="width:200px"
+          >
+            {{ $t('btn_close') }}
+          </v-btn>
+        </v-card-actions>
+        <v-card-actions
+          v-else
+          class="justify-center"
+          style="margin-top:35px;margin-bottom:20px"
+        >
+          <v-btn
+            v-show="enableInput"
+            text
+            @click="editProfile()"
+            class="cancel-btn"
+            style="width:200px"
+          >
+            <v-icon
+              v-text="'mdi-pencil'"
+              style="color:#ffffff;margin-right:8px;"
+              size="18"
+            ></v-icon>
+            {{ 'แก้ไขข้อมูล' }}
+          </v-btn>
+          <v-btn
+            v-show="!enableInput"
+            text
+            @click="closeProfile()"
+            class="ok-btn"
+            style="width:200px"
+          >
+            {{ $t('btn_cancel') }}
+          </v-btn>
+          <v-btn
+            v-show="!enableInput"
+            text
+            @click="profileViewfile()"
+            class="cancel-btn"
+            :style="{
+              width: '200px',
+              background: enableBtn ? '#CE1212' : '',
+              opacity: enableBtn ? '0.51' : ''
+            }"
+            :disabled="enableBtn"
+          >
+            {{ $t('btn_save_close') }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -529,7 +897,13 @@ export default {
       tranformScale: 'scale(1)',
       sysName: '20px',
       logo: '45px',
-      resizeHeader: true
+      resizeHeader: true,
+      profileDialog: false,
+      enableInput: true,
+      profile: {},
+      colInput: '0px 0px 3px #00000080',
+      profileView: false,
+      enableBtn: false
     }
   },
   watch: {
@@ -579,6 +953,45 @@ export default {
     }
   },
   methods: {
+    profileViewfile () {
+      console.log(this.profile)
+      this.profileView = true
+      // this.enableInput = false
+    },
+    editProfile () {
+      this.enableInput = false
+    },
+    closeProfile () {
+      this.profile = JSON.parse(JSON.stringify(this.info))
+      this.enableInput = true
+    },
+    enableBtnSave () {
+      let item = this.profile
+      let name_th = item.name_th.trim()
+      let name_en = item.name_en.trim()
+      let postname_th = item.postname_th.trim()
+      let postname_en = item.postname_en.trim()
+      if (
+        name_th.length > 0 &&
+        name_en.length > 0 &&
+        postname_th.length > 0 &&
+        postname_en.length > 0
+      ) {
+        this.enableBtn = false
+      } else {
+        this.enableBtn = true
+      }
+    },
+    openProfile () {
+      this.profileDialog = true
+      this.profileView = false
+      this.profile = JSON.parse(JSON.stringify(this.info))
+    },
+    CloseProfileDialog () {
+      this.profileDialog = false
+      this.profile = {}
+      this.profileView = false
+    },
     onResize () {
       let x = window.innerWidth
       let y = window.innerHeight
@@ -767,6 +1180,16 @@ export default {
       this.picDialog = false
       this.showEditPic = false
       this.stepChangePic = 0
+    },
+    isNumber (evt) {
+      this.enableBtnSave()
+      evt = evt ? evt : window.event
+      var charCode = evt.which ? evt.which : evt.keyCode
+      if (charCode > 31 && (charCode < 48 || charCode > 57 || charCode == 46)) {
+        evt.preventDefault()
+      } else {
+        return true
+      }
     }
   },
   created () {
@@ -778,7 +1201,7 @@ export default {
         this.$router.push('/')
       })
     } else if (sessionStorage.getItem('info') !== null) {
-      console.log(JSON.parse(sessionStorage.getItem('info')))
+      // console.log(JSON.parse(sessionStorage.getItem('info')))
       this.$store.commit('SetUser', JSON.parse(sessionStorage.getItem('info')))
     }
   },

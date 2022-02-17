@@ -124,25 +124,25 @@
         <div class="img-detail" :style="{ transform: tranformScale }">
           <v-img
             :style="{ transform: tranformScale }"
-            max-height="257"
-            max-width="498"
-            :src="
-              'https://cdn.vuetifyjs.com/images/cards/' + selectedRow.pic_path
-            "
+            :src="selectedRow.image"
+            max-height="240"
+            max-width="280"
           >
+            <!-- max-height="180" max-width="240" -->
+            <!-- max-height="230" max-width="498" -->
           </v-img>
         </div>
         <div class="sys-name">
-          {{ selectedRow.sys_name + ' (' + selectedRow.sys_type + ')' }}
+          {{ selectedRow.name_th + ' (' + selectedRow.category_name_th + ')' }}
         </div>
         <div class="details">
-          <textarea v-model="selectedRow.sys_desc"></textarea>
+          <textarea v-model="selectedRow.description_th"></textarea>
         </div>
         <v-card-actions
           class="justify-center"
           style="padding-bottom:20px;padding-top:20px"
         >
-          <v-btn text @click="CloseDialogs()" class="cancel-btn">
+          <v-btn text @click="openLogin(selectedRow)" class="cancel-btn">
             {{ $t('btn_signin') }}
           </v-btn>
         </v-card-actions>

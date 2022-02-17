@@ -18,7 +18,6 @@ const store = {
   actions: {
     getHomeData({ state, commit, dispatch }, data) {
       commit('SetLoading', true)
-      console.log("application-user ==>", JSON.stringify(data))
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/application-user`, data, {
           headers: {

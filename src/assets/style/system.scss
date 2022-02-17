@@ -498,7 +498,7 @@
     padding-bottom: 8px;
   }
   .img-detail {
-    padding-top: 20px;
+    // padding-top: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -506,15 +506,18 @@
   .details {
     color: #767676;
     font-size: nth($font-sizes, 3);
-    overflow-x: hidden;
-    overflow-y: auto;
+    // overflow-x: hidden;
+    // overflow-y: auto;
     max-height: 126px;
     padding-left: 20px;
     padding-right: 10px;
     textarea {
+      overflow-x: hidden;
+      overflow-y: auto;
       color: #767676;
       resize: none;
       width: 100%;
+      height: 150px;
     }
     &::-webkit-scrollbar {
       width: 8px;
@@ -557,4 +560,66 @@
 }
 .loading-bar {
   background: rgba($color: #000000, $alpha: 0.25);
+}
+#profile-dialogs {
+  overflow-x: hidden;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar:horizontal {
+    height: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #efefef;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background: #a8a8a8;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgb(145, 145, 145);
+  }
+  .rows {
+    display: flex;
+    width: 100%;
+    padding-bottom: 10px;
+    .rows-name {
+      display: flex;
+      align-items: center;
+      color: #797979;
+      font-size: nth($font-sizes, 2);
+    }
+    .rows-input {
+      .input-with-icon {
+        border: none;
+        input[type="text"],
+        [type="password"] {
+          width: 100%;
+          padding-left: 8px;
+        }
+        .v-text-field {
+          padding: 0px;
+          margin: 0px;
+          height: 25px;
+          .v-input__append-inner {
+            margin-top: 0px;
+          }
+        }
+        .v-select__selections {
+          height: 25px;
+        }
+        .v-select__selection--comma {
+          padding-left: 8px;
+          font-size: nth($font-sizes, 2);
+        }
+        .v-text-field > .v-input__control > .v-input__slot:before {
+          width: 0%;
+        }
+        .v-text-field > .v-input__control > .v-input__slot:after {
+          width: 0%;
+        }
+      }
+    }
+  }
 }

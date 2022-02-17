@@ -225,7 +225,6 @@
                 outputFormat="blob"
                 @input="setImage"
               >
-                <!-- accept="image/*" -->
                 <label
                   for="fileInput"
                   slot="upload-label"
