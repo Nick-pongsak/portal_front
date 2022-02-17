@@ -128,6 +128,7 @@
           </div>
           <div class="line-page" style="margin-top:10px"></div>
           <div class="menu-line">
+            <!-- 
             <div class="menu-rows" @click="openProfile">
               <v-icon
                 v-text="'mdi-account-circle'"
@@ -136,7 +137,6 @@
               ></v-icon>
               <span style="margin-left:8px"> {{ 'ข้อมูลส่วนตัว' }}</span>
             </div>
-            <!-- 
             <div @click="SettingApp()" class="menu-rows">
               <v-icon
                 v-text="'mdi-cog-box'"
