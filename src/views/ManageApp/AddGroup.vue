@@ -641,11 +641,7 @@ export default {
         group_id: this.editRow.group_id
       }
       this.$store.dispatch('groupDetail', result).then(res => {
-        let result = []
-        for (let i = 0; i < res.data.app.length; i++) {
-          res.data.app[i].index = i
-          result.push(res.data.app[i])
-        }
+        let result = res.data.app
         let feild = 'name_th'
         this.editRow = res.data
         result = result.sort((a, b) =>
@@ -653,7 +649,12 @@ export default {
             ? 1
             : -1
         )
-        this.editRow.app = result
+        let temp = []
+        for (let i = 0; i < result.length; i++) {
+          result[i].index = i
+          temp.push(result[i])
+        }
+        this.editRow.app = temp
         this.editRow.mode = mode
         this.enableBtnSave()
       })

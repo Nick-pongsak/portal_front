@@ -300,7 +300,7 @@
         </div>
         <div class="rows" style="padding-bottom:3px">
           <div style="width:50%;display: flex;">
-            <div style="width:40%;height:27px" class="rows-name" >เบอร์โทร</div>
+            <div style="width:40%;height:27px" class="rows-name">เบอร์โทร</div>
             <div style="width:60%" class="rows-input">
               <div class="input-with-icon">
                 <input
@@ -321,7 +321,10 @@
             <div style="width:40%;height:27px" class="rows-name">
               สถานะ
             </div>
-            <div style="width:60%;padding-right:25px;padding-top:5px" class="rows-input">
+            <div
+              style="width:60%;padding-right:25px;padding-top:5px"
+              class="rows-input"
+            >
               <v-radio-group v-model="editRow.status" style="display:flex">
                 <div class="radio" style="margin-right: 30px;">
                   <v-radio
@@ -788,7 +791,11 @@ export default {
       defaultPassword: '99999999'
     }
   },
-  computed: {},
+  computed: {
+    info () {
+      return this.$store.getters.user
+    }
+  },
   watch: {
     searchApp: {
       handler: function (todos) {
@@ -1164,18 +1171,31 @@ export default {
         result.app = JSON.stringify(arr)
         let url = this.editRow.mode == 'add' ? 'registerUser' : 'updateUser'
 
-        // console.log(this.oldPassword)
-        // console.log(result.password)
-
         if (this.editRow.type_login == 1) {
           this.$store.dispatch(url, result).then(res => {
-            this.$emit('save', null)
+            if (
+              this.editRow.mode == 'edit' &&
+              this.info.user_id == result.user_id &&
+              this.info.type_login == result.type_login
+            ) {
+              this.$router.push('/')
+            } else {
+              this.$emit('save', null)
+            }
             this.dialog = false
           })
         } else {
           if (this.InCondition(this.editRow.password)) {
             this.$store.dispatch(url, result).then(res => {
-              this.$emit('save', null)
+              if (
+                this.editRow.mode == 'edit' &&
+                this.info.user_id == result.user_id &&
+                this.info.type_login == result.type_login
+              ) {
+                this.$router.push('/')
+              } else {
+                this.$emit('save', null)
+              }
               this.dialog = false
             })
           } else {
@@ -1194,7 +1214,15 @@ export default {
       }
       this.$store.dispatch('delteUser', result).then(res => {
         this.dialog = false
-        this.$emit('clear', null)
+        if (
+          this.editRow.mode == 'edit' &&
+          this.info.user_id == result.user_id &&
+          this.info.type_login == result.type_login
+        ) {
+          this.$router.push('/')
+        } else {
+          this.$emit('clear', null)
+        }
       })
     },
     InCondition (value) {

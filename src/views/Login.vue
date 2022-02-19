@@ -136,7 +136,11 @@ export default {
       }
     }
   },
-  created () {},
+  created () {
+    if (sessionStorage.getItem('token_seesion') !== null) {
+      this.$store.dispatch('LogOut')
+    }
+  },
   mounted () {
     this.onResize()
   },

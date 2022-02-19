@@ -75,7 +75,7 @@
                 <div class="deafult-name">{{ accountNameEng }}</div>
               </v-avatar>
               <v-avatar v-show="!showDefaultAccount" size="37">
-                <v-img src="@/assets/images/account_demo.png"></v-img>
+                <v-img :src="info.image"></v-img>
               </v-avatar>
             </div>
             <div :style="{ 'margin-left': '14px' }" v-show="resizeHeader">
@@ -94,10 +94,7 @@
             ></v-icon>
           </div>
         </template>
-        <v-list
-          id="account-menu-body"
-          :style="{ height: permissinoAccount ? '385px' : '340px' }"
-        >
+        <v-list id="account-menu-body">
           <div class="logo-line" @click="UploadPic()">
             <v-badge avatar bordered overlap bottom offset-x="24" offset-y="24">
               <template v-slot:badge>
@@ -111,7 +108,7 @@
               </template>
 
               <v-avatar v-show="!showDefaultAccount" size="100">
-                <v-img src="@/assets/images/account_demo.png"></v-img>
+                <v-img :src="info.image"></v-img>
               </v-avatar>
               <div v-show="showDefaultAccount" class="deafult-name">
                 {{ accountNameEng }}
@@ -127,8 +124,7 @@
             </div>
           </div>
           <div class="line-page" style="margin-top:10px"></div>
-          <div class="menu-line">
-            <!-- 
+          <div class="menu-line" style="margin-bottom:10px">
             <div class="menu-rows" @click="openProfile">
               <v-icon
                 v-text="'mdi-account-circle'"
@@ -149,7 +145,7 @@
             </div>
             <div
               @click="ChangePassword()"
-              v-show="permissinoAccount"
+              v-show="info.type_login == 0"
               class="menu-rows"
             >
               <v-icon
@@ -158,7 +154,7 @@
                 size="20"
               ></v-icon>
               <span style="margin-left:8px"> {{ 'เปลี่ยนรหัสผ่าน' }}</span>
-            </div> -->
+            </div>
             <div @click="signOut()" class="menu-rows" style="padding-left:2px">
               <v-icon
                 v-text="'mdi-export'"
@@ -184,13 +180,33 @@
               size="20"
             ></v-icon>
           </div>
-          <div class="center-vh" style="padding-top:20px">
+          <div class="center-vh">
             <v-avatar v-show="!showDefaultAccount" size="230">
-              <v-img src="@/assets/images/account_demo.png"> </v-img>
-              <!-- <img :src="`${profilePicPath}`"/> -->
-              <!-- <img src="@/assets/images/account_demo.png"/> -->
-              <!-- <v-img :src="`${profilePicPath}`"></v-img> -->
-              <!-- <v-img :src="`${profilePicPath}`"></v-img> -->
+              <div v-show="file !== ''" class="upload-block">
+                <image-uploader
+                  v-model="file"
+                  :preview="true"
+                  :maxHeight="768"
+                  :className="['fileinput', { 'fileinput--loaded': hasImage }]"
+                  capture="environment"
+                  :debug="1"
+                  accept="image/jpeg"
+                  :autoRotate="true"
+                  outputFormat="blob"
+                  @input="setImage"
+                >
+                  <label
+                    for="fileInput"
+                    slot="upload-label"
+                    ref="uploader2"
+                    style="visibility: hidden;"
+                  >
+                    {{ hasImage ? 'Replace' : 'Click to upload' }}
+                  </label>
+                </image-uploader>
+              </div>
+              <v-img v-if="file == '' && info.image !== ''" :src="info.image">
+              </v-img>
             </v-avatar>
             <div v-show="showDefaultAccount" class="deafult-name">
               {{ accountNameEng }}
@@ -199,67 +215,124 @@
           <div class="profile-desc">
             {{ renderProfileDesc() }}
           </div>
-        </v-card-text>
-        <v-card-actions class="justify-center">
-          <v-btn
-            v-show="showEditPic && stepChangePic != 3"
-            text
-            @click="DeletePic()"
-            class="ok-btn"
-            :style="{ 'margin-right': stepChangePic == 4 ? '' : '35px' }"
+          <div
+            v-if="stepChangePic == 4"
+            style="color:#CE1212;font-size:8px;padding-top:5px;text-align:center"
           >
-            <v-icon
-              v-show="stepChangePic == 1"
-              v-text="'mdi-delete'"
-              style="color:#CE1212;margin-right:5px;"
-              size="20"
-            ></v-icon>
-            {{ renderBtnLeft() }}
-          </v-btn>
-
-          <v-btn
-            text
-            @click="ChangePic()"
-            class="cancel-btn"
-            v-show="stepChangePic < 2"
+            {{ '* หากระบุข้อมูลดังกล่าวจะเป็นสาธารณะ' }}
+          </div>
+          <div
+            v-if="stepChangePic == 0"
+            style="margin-top:70px;margin-bottom:30px;display:flex"
+            class="justify-center"
           >
-            <v-icon
-              v-text="'mdi-pencil'"
-              style="color:#ffffff;margin-right:8px;"
-              size="18"
-            ></v-icon>
-            {{ $t('btn_change') }}
-          </v-btn>
-
-          <div v-show="stepChangePic == 2 && stepChangePic != 3">
+            <v-btn text @click="ChangePic()" class="cancel-btn">
+              <v-icon
+                v-text="'mdi-pencil'"
+                style="color:#ffffff;margin-right:8px;"
+                size="18"
+              ></v-icon>
+              {{ $t('btn_change') }}
+            </v-btn>
+          </div>
+          <div
+            v-if="stepChangePic == 1"
+            style="margin-top:70px;margin-bottom:30px;display:flex"
+            class="justify-center"
+          >
+            <v-btn
+              text
+              @click="stepChangePic = 2"
+              class="ok-btn"
+              :style="{ 'margin-right': '35px' }"
+            >
+              <v-icon
+                v-text="'mdi-delete'"
+                style="color:#CE1212;margin-right:5px;"
+                size="20"
+              ></v-icon>
+              {{ 'ลบ' }}
+            </v-btn>
+            <v-btn text @click="stepChangePic = 4" class="cancel-btn">
+              <v-icon
+                v-text="'mdi-pencil'"
+                style="color:#ffffff;margin-right:8px;"
+                size="18"
+              ></v-icon>
+              {{ $t('btn_change') }}
+            </v-btn>
+          </div>
+          <div
+            v-else-if="stepChangePic == 2"
+            style="margin-top:70px;margin-bottom:30px;display:flex"
+            class="justify-center"
+          >
+            <v-btn
+              text
+              @click="stepChangePic = 0"
+              class="ok-btn"
+              :style="{ 'margin-right': '35px' }"
+            >
+              {{ 'ยกเลิก' }}
+            </v-btn>
+            <v-btn text @click="DeletePic()" class="cancel-btn">
+              {{ 'ลบ' }}
+            </v-btn>
+          </div>
+          <div
+            v-else-if="stepChangePic == 3 || stepChangePic == 5"
+            style="margin-top:70px;margin-bottom:30px;display:flex"
+            class="justify-center"
+          >
+            <v-btn text @click="CloseDialogs()" class="ok-btn">
+              {{ 'ปิด' }}
+            </v-btn>
+          </div>
+          <div
+            v-else-if="stepChangePic == 4"
+            style="margin-top:70px;margin-bottom:30px;display:flex"
+            class="justify-center"
+          >
+            <v-btn
+              text
+              @click="stepChangePic = 0"
+              class="ok-btn"
+              :style="{ 'margin-right': '35px' }"
+            >
+              {{ 'ยกเลิก' }}
+            </v-btn>
             <v-btn class="cancel-btn" @click="onButtonClick">
-              <!-- :loading="isSelecting" -->
               {{ $t('btn_upload') }}
             </v-btn>
-            <input ref="uploader" class="d-none" type="file" accept="image/*" />
-            <!-- @change="onFileChanged" -->
           </div>
-        </v-card-actions>
+        </v-card-text>
       </v-card>
     </v-dialog>
 
     <v-dialog v-model="pwdDialog" width="650" :no-click-animation="false">
       <v-card id="pwd-dialogs">
         <v-card-text v-if="stepChangePwd == 0" style="padding:unset">
-          <div class="head-menu7 justify-center" style="display:flex">
+          <div class="head-menu7  center-vh" style="display:flex;">
             {{ 'กรุณายืนยันตัวตน' }}
           </div>
-          <div style="padding-top:90px;display:flex">
-            <div class="head-menu3 center-vh" style="margin-right: 45px;">
-              {{ 'รหัสผ่านปัจจุบัน' }}
-            </div>
-            <div class="input-with-icon" :class="{ active: errorPwd }">
-              <input
-                type="password"
-                v-model="password"
-                @keypress="IsNumber"
-                :placeholder="$t('input_selected')"
-              />
+          <div style="margin-top:90px">
+            <div style="display:flex;width:100%;padding-right:30px">
+              <div class="head-menu3 center-vh" style="width:30%">
+                {{ 'รหัสผ่านปัจจุบัน' }}
+              </div>
+              <div
+                class="input-with-icon"
+                style="width:70%;"
+                :class="{ active: errorPwd }"
+              >
+                <input
+                  style="width:100%"
+                  type="password"
+                  v-model="password"
+                  @keypress="IsNumber"
+                  :placeholder="$t('input_selected')"
+                />
+              </div>
             </div>
           </div>
           <div
@@ -271,9 +344,9 @@
           </div>
         </v-card-text>
         <v-card-text v-else style="padding:unset">
-          <div v-show="stepChangePwd < 2">
+          <div v-show="stepChangePwd == 1">
             <div style="display:flex">
-              <div class="head-menu3 center-vh" style="padding-top:8px">
+              <div class="head-menu3 center-vh" style="padding-top:4px">
                 {{ 'รหัสผ่านใหม่' }}
               </div>
               <div
@@ -282,6 +355,7 @@
                 :class="{ active: errorNewPassword }"
               >
                 <input
+                  style="width:100%"
                   type="password"
                   v-model="newPassword"
                   :placeholder="$t('input_selected')"
@@ -291,9 +365,9 @@
               </div>
             </div>
           </div>
-          <div v-show="stepChangePwd < 2">
+          <div v-show="stepChangePwd == 1">
             <div style="padding-top:30px;display:flex">
-              <div class="head-menu3 center-vh" style="padding-top:8px">
+              <div class="head-menu3 center-vh" style="padding-top:6px">
                 {{ 'ยืนยันรหัสผ่าน' }}
               </div>
               <div
@@ -302,6 +376,7 @@
                 :class="{ active: errorCfNewPassword }"
               >
                 <input
+                  style="width:100%"
                   type="password"
                   v-model="cfNewPassword"
                   @keypress="IsNumber"
@@ -311,7 +386,7 @@
             </div>
           </div>
           <div
-            v-show="stepChangePwd < 2"
+            v-show="stepChangePwd == 1"
             class="details"
             style="padding-top:30px"
           >
@@ -343,9 +418,14 @@
           </v-btn>
 
           <v-btn
+            :disabled="disPwdBtn"
             v-show="stepChangePwd < 2"
             @click="ConfirmDialogs()"
-            :class="disPwdBtn ? 'cancel-btn-disabled' : 'cancel-btn'"
+            class="cancel-btn"
+            :style="{
+              background: disPwdBtn ? '#CE1212' : '',
+              opacity: disPwdBtn ? '0.51' : ''
+            }"
           >
             {{ stepChangePwd == 0 ? $t('btn_confirm') : $t('btn_change_pwd') }}
           </v-btn>
@@ -353,8 +433,12 @@
       </v-card>
     </v-dialog>
 
-    <v-dialog v-model="setAppDialog" width="800" :no-click-animation="false">
-      <v-card>
+    <v-dialog
+      v-model="setAppDialog"
+      :width="viewListApp ? 800 : 600"
+      :no-click-animation="false"
+    >
+      <v-card v-if="viewListApp">
         <div class="justify-end" style="display: flex">
           <v-icon
             @click="CloseSetAppDialogs()"
@@ -419,40 +503,108 @@
                     {{ index + 1 }}
                   </div>
                   <div class="body" style="width:30%;padding-top:5px">
-                    {{ item.app_name }}
+                    {{ item.name_th }}
                   </div>
                   <div class="body" style="width:60%;display:flex">
                     <div style="padding-top:5px;margin-right:15px">
                       {{ renderText(item) }}
                     </div>
                     <div
-                      v-show="item.user_status == 'web_portal'"
-                      :class="
-                        editRow == index
-                          ? 'input-with-icon able-input'
-                          : 'input-with-icon disabled-input'
-                      "
+                      v-show="item.status_sso == 1 && item.type_login == 0"
+                      :class="'input-with-icon disabled-input'"
                       style="display: flex;width: 200px;height: 30px;margin-right:10px"
                     >
                       <input
                         type="text"
-                        v-model="item.user_name"
+                        v-model="item.username"
                         :placeholder="'-- โปรดระบุ --'"
                       />
                     </div>
                     <v-btn
-                      v-show="item.user_status == 'web_portal'"
+                      v-show="item.status_sso == 1 && !item.type_login"
                       text
                       @click="edit(item, index)"
                       class="cancel-btn"
                     >
-                      {{ editRow == index ? 'เพิ่ม' : 'เปลี่ยน' }}
+                      {{ item.username == '' ? 'เพิ่ม' : 'เปลี่ยน' }}
                     </v-btn>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+      </v-card>
+      <v-card v-else>
+        <div
+          class="head-menu6 center-vh"
+          style="display: flex;
+              text-align:center;
+              margin-top:30px;"
+        >
+          {{ 'กรุณายืนยันตัวตนด้วยชื่อผู้ใช้และรหัสผ่าน' }}<br />
+          {{ 'ของแอปพลิเคชันดังกล่าว' }}
+        </div>
+        <div
+          style="color:#CE1212;
+          font-size:13px;
+          padding-top:5px;
+          text-align:center;
+          margin-bottom:55px;"
+        >
+          {{ viewListData.name_th }}
+        </div>
+        <div class="rows" style="margin-bottom:30px;width:100%;display: flex;">
+          <div style="width:20%" class="rows-name">ชื่อผู้ใช้งาน</div>
+          <div style="width:80%" class="rows-input">
+            <div class="input-with-icon">
+              <input
+                style="width:100%"
+                type="text"
+                v-model="usernameList"
+                :placeholder="$t('input_selected')"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="rows" style="width:100%;display: flex;">
+          <div style="width:20%" class="rows-name">รหัสผ่าน</div>
+          <div style="width:80%" class="rows-input">
+            <div class="input-with-icon">
+              <input
+                style="width:100%"
+                type="password"
+                v-model="passwordList"
+                @keypress="IsNumber"
+                :placeholder="$t('input_selected')"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="center-vh"
+          style="margin-top:50px;margin-bottom:20px;display:flex"
+        >
+          <v-btn
+            text
+            @click="CloseSetAppDialogs()"
+            class="ok-btn"
+            :style="{ 'margin-right': '35px', width: '200px' }"
+          >
+            {{ $t('btn_cancel') }}
+          </v-btn>
+          <v-btn
+            :disabled="disPwdBtnList"
+            @click="ConfirmUsername()"
+            class="cancel-btn"
+            :style="{
+              background: disPwdBtnList ? '#CE1212' : '',
+              opacity: disPwdBtnList ? '0.51' : '',
+              width: '200px'
+            }"
+          >
+            {{ $t('btn_confirm') }}
+          </v-btn>
         </div>
       </v-card>
     </v-dialog>
@@ -828,6 +980,7 @@
 
 <script>
 import ImageUploader from 'vue-image-upload-resize'
+var bcrypt = require('bcryptjs')
 export default {
   name: 'headers',
   props: {},
@@ -835,20 +988,13 @@ export default {
     return {
       profilePicPath: '@/assets/images/account_demo.png',
       language: 'th',
-      // accountName: 'กิตติชัย กำแพงทอง',
-      accountNameEng: 'K',
-      okBtn: 'เปลี่ยนรหัสผ่าน',
-      status_account: 'ผู้ดูแลระบบ',
+      accountNameEng: '',
       stepChangePic: 0,
       showDefaultAccount: false,
-      permissinoAccount: true,
       picDialog: false,
-      showEditPic: false,
-      selectedFile: null,
-      // isSelecting: false,
       pwdDialog: false,
       password: '',
-      errorPwd: true,
+      errorPwd: false,
       error: true,
       disPwdBtn: true,
       stepChangePwd: 0,
@@ -893,7 +1039,6 @@ export default {
           user_status: 'web_portal'
         }
       ],
-      editRow: -1,
       tranformScale: 'scale(1)',
       sysName: '20px',
       logo: '45px',
@@ -903,16 +1048,28 @@ export default {
       profile: {},
       colInput: '0px 0px 3px #00000080',
       profileView: false,
-      enableBtn: false
+      enableBtn: false,
+      hasImage: false,
+      file: '',
+      viewListApp: true,
+      viewListData: {},
+      usernameList: '',
+      passwordList: '',
+      errorPasswordList: false,
+      disPwdBtnList: true
     }
   },
   watch: {
+    usernameList (newValue) {
+      this.enableDisPwdBtnList()
+    },
+    passwordList (newValue) {
+      this.enableDisPwdBtnList()
+    },
     password (newValue) {
-      if (newValue.length >= 6) {
-        // this.errorPwd = false
+      if (newValue.length >= 4) {
         this.disPwdBtn = false
       } else {
-        // this.errorPwd = true
         this.disPwdBtn = true
       }
     },
@@ -949,14 +1106,55 @@ export default {
   },
   computed: {
     info () {
-      return this.$store.getters.user
+      let data = this.$store.getters.user
+      let isEmpty = Object.keys(data).length === 0
+      if (!isEmpty) {
+        if (data.image == '') {
+          this.showDefaultAccount = true
+        } else {
+          this.showDefaultAccount = false
+        }
+        if (data.name_en.length > 0) {
+          this.accountNameEng = data.name_en.substring(0, 1)
+        } else if (data.name_th.length > 0) {
+          this.accountNameEng = data.name_th.substring(0, 1)
+        }
+      }
+      return data
     }
   },
   methods: {
+    ConfirmUsername () {
+      console.log('ConfirmUsername ===>')
+    },
+    ChangePic () {
+      if (this.stepChangePic == 0) {
+        if (this.info.image == '') {
+          this.stepChangePic = 4
+          this.showDefaultAccount = true
+        } else {
+          this.stepChangePic = 1
+          this.showDefaultAccount = false
+        }
+      }
+    },
+    DeletePic () {
+      let req = {
+        user_id: this.info.user_id
+      }
+      this.$store.dispatch('deletePicProfile', req).then(res => {
+        this.showDefaultAccount = true
+        this.stepChangePic = 3
+        let data = JSON.parse(JSON.stringify(this.info))
+        data.image = ''
+        this.$store.commit('SetUser', data)
+        sessionStorage.setItem('info', JSON.stringify(data))
+      })
+    },
     profileViewfile () {
-      console.log(this.profile)
-      this.profileView = true
-      // this.enableInput = false
+      this.$store.dispatch('updateProfile', this.profile).then(res => {
+        this.profileView = true
+      })
     },
     editProfile () {
       this.enableInput = false
@@ -1014,15 +1212,25 @@ export default {
       }
     },
     edit (item, index) {
-      this.editRow = index
+      this.viewListApp = false
+      this.viewListData = item
+      this.usernameList = item.username
+      this.passwordList = ''
+      this.errorPasswordList = false
+      this.disPwdBtnList = true
     },
-    renderText (row) {
-      if (row.user_status == 'web_portal') {
-        return 'Username :'
-      } else if (row.user_status == 'LDAP') {
-        return 'LDAP'
-      } else if (row.user_status == 'only') {
-        return 'เข้าใช้งานผ่านระบบตัวเองเท่านั้น'
+    enableDisPwdBtnList () {
+      if (this.usernameList.length > 3 && this.passwordList.length > 3) {
+        this.disPwdBtnList = false
+      } else {
+        this.disPwdBtnList = true
+      }
+    },
+    renderText (item) {
+      if (item.status_sso == 1) {
+        return item.type_login ? 'LDAP (AD)' : 'Username : '
+      } else {
+        return 'เข้าใช้งานผ่านตัวระบบเท่านั้น'
       }
     },
     sort (feild) {
@@ -1035,9 +1243,22 @@ export default {
       }
     },
     SettingApp () {
-      this.setAppDialog = true
+      let req = {
+        group_id: this.info.group_id,
+        user_id: this.info.user_id
+      }
+      this.list = []
+      this.$store.dispatch('getHomeData', req).then(res => {
+        this.list = res.data.app
+        this.setAppDialog = true
+      })
     },
     CloseSetAppDialogs () {
+      this.viewListApp = true
+      this.viewListData = {}
+      this.usernameList = ''
+      this.passwordList = ''
+      this.errorPasswordList = false
       this.setAppDialog = false
     },
     SetLanguages (value) {
@@ -1088,16 +1309,43 @@ export default {
     },
     ConfirmDialogs () {
       if (this.stepChangePwd == 0) {
-        // this.errorPwd = false
-        this.disPwdBtn = true
-        this.stepChangePwd = 1
+        let req = {
+          user_id: this.info.user_id,
+          old_password: this.password
+        }
+        this.$store
+          .dispatch('changePassword', req)
+          .then(res => {
+            this.disPwdBtn = true
+            this.errorPwd = false
+            this.stepChangePwd = 1
+          })
+          .catch(error => {
+            if (error && error.response && error.response.status === 400) {
+              this.errorPwd = true
+              this.disPwdBtn = true
+            }
+          })
       } else if (this.stepChangePwd == 1) {
-        this.stepChangePwd = 2
+        let req = {
+          user_id: this.info.user_id,
+          new_password: bcrypt.hashSync(this.newPassword, 10)
+        }
+        this.$store
+          .dispatch('changePasswordNew', req)
+          .then(res => {
+            this.stepChangePwd = 2
+          })
+          .catch(error => {
+            if (error && error.response && error.response.status === 400) {
+            }
+          })
       }
-      console.log('ConfirmDialogs =>')
     },
     ClosePwdDialogs () {
       this.pwdDialog = false
+    },
+    ChangePassword () {
       this.password = ''
       this.errorPwd = false
       this.error = false
@@ -1107,20 +1355,19 @@ export default {
       this.errorNewPassword = false
       this.cfNewPassword = ''
       this.errorCfNewPassword = false
-    },
-    ChangePassword () {
       this.pwdDialog = true
     },
     renderProfileDesc () {
       if (this.stepChangePic == 0 || this.stepChangePic == 1) {
         return 'รูปโปรไฟล์'
       } else if (this.stepChangePic == 2) {
-        return 'อัปโหลดรูปโปรไฟล์'
+        return 'ลบรูปโปรไฟล์'
       } else if (this.stepChangePic == 3) {
-        return 'กำลังลบรูปภาพ...'
-      } else if (this.stepChangePic == 4) {
         return 'ลบรูปโปรไฟล์สำเร็จ'
-      } else {
+      } else if (this.stepChangePic == 4) {
+        return 'อัปโหลดรูปโปรไฟล์'
+      } else if (this.stepChangePic == 5) {
+        return 'เปลี่ยนรูปโปรไฟล์สำเร็จ'
       }
     },
     renderBtnLeft () {
@@ -1130,41 +1377,27 @@ export default {
         return 'ยกเลิก'
       } else if (this.stepChangePic == 3) {
         // return 'กำลังลบรูปภาพ...'
-      } else if (this.stepChangePic == 4) {
+      } else if (this.stepChangePic == 4 || this.stepChangePic == 5) {
         return 'ปิด'
       } else {
       }
     },
     onButtonClick () {
-      this.$refs.uploader.click()
+      this.$refs.uploader2.click()
     },
-    ChangePic () {
-      this.showEditPic = true
-      if (this.stepChangePic == 0) {
-        //CHANHE
-        this.stepChangePic = 1
-      } else if (this.stepChangePic == 1) {
-        //CHANHE 2
-        this.stepChangePic = 2
-      } else if (this.stepChangePic == 2) {
-        //UPLOAD PIC
-        this.stepChangePic = 3
-      }
-      console.log('ChangePic', this.stepChangePic)
-    },
-    DeletePic () {
-      console.log('DeletePic', this.stepChangePic)
-      if (this.stepChangePic == 1) {
-        this.showDefaultAccount = true
-        this.stepChangePic = 3
-        setTimeout(() => {
-          this.stepChangePic = 4
-        }, 1000)
-      } else if (this.stepChangePic == 2) {
-      } else if (this.stepChangePic == 3) {
-      } else if (this.stepChangePic == 4) {
-        this.CloseDialogs()
-      }
+    setImage: function (output) {
+      this.hasImage = true
+      this.file = output
+      let formData = new FormData()
+      formData.append('user_id', this.info.user_id)
+      formData.append('image', output)
+      this.$store.dispatch('uploadPicProfile', formData).then(res => {
+        let data = JSON.parse(JSON.stringify(this.info))
+        data.image = res.data
+        this.stepChangePic = 5
+        this.$store.commit('SetUser', data)
+        sessionStorage.setItem('info', JSON.stringify(data))
+      })
     },
     signOut () {
       this.$store.dispatch('LogOut').then(() => {
@@ -1172,13 +1405,10 @@ export default {
       })
     },
     UploadPic () {
-      /*
       this.picDialog = true
-      */
     },
     CloseDialogs () {
       this.picDialog = false
-      this.showEditPic = false
       this.stepChangePic = 0
     },
     isNumber (evt) {

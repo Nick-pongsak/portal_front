@@ -75,7 +75,7 @@
 }
 
 #account-menu-body {
-  width: 410px;
+  width: 320px;
   .logo-line {
     padding-top: 13px;
     display: flex;
@@ -245,6 +245,10 @@
     .head-menu5 {
       color: #797979;
       font-size: nth($font-sizes, 5);
+    }
+    .head-menu6 {
+      color: #797979;
+      font-size: nth($font-sizes, 6);
     }
     .head-menu7 {
       color: #797979;
@@ -540,7 +544,7 @@
 .upload-block {
   .img-preview {
     width: 240px;
-    height: 180px;
+    // height: 180px;
     margin-top: 18px;
   }
   #fileInput {

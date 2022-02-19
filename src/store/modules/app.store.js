@@ -29,13 +29,20 @@ const store = {
           resolve(res.data.success)
         }).catch(error => {
           commit('SetLoading', false)
+          if (error && error.response && error.response.status === 500) {
+            if (error.response.data.message == "Token has expired") {
+              router.push('/');
+            }
+          }
           reject(error)
         })
       })
     },
     saveHome({ state, commit, dispatch }, data) {
       commit('SetLoading', true)
-      console.log("save-order ==>", JSON.stringify(data))
+      if (debug == 'debug') {
+        console.log("save-order ==>", JSON.stringify(data))
+      }
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/save-order`, data, {
           headers: {
@@ -47,11 +54,141 @@ const store = {
           resolve(res.data.success)
         }).catch(error => {
           commit('SetLoading', false)
+          if (error && error.response && error.response.status === 500) {
+            if (error.response.data.message == "Token has expired") {
+              router.push('/');
+            }
+          }
           reject(error)
         })
       })
     },
-
+    updateProfile({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
+      if (debug == 'debug') {
+        console.log("update-profile ==>", JSON.stringify(data))
+      }
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/update-profile`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          commit('SetLoading', false)
+          resolve(res.data.success)
+        }).catch(error => {
+          commit('SetLoading', false)
+          if (error && error.response && error.response.status === 500) {
+            if (error.response.data.message == "Token has expired") {
+              router.push('/');
+            }
+          }
+          reject(error)
+        })
+      })
+    },
+    deletePicProfile({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
+      if (debug == 'debug') {
+        console.log("delete-image ==>", JSON.stringify(data))
+      }
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/delete-image`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          commit('SetLoading', false)
+          resolve(res.data.success)
+        }).catch(error => {
+          commit('SetLoading', false)
+          if (error && error.response && error.response.status === 500) {
+            if (error.response.data.message == "Token has expired") {
+              router.push('/');
+            }
+          }
+          reject(error)
+        })
+      })
+    },
+    uploadPicProfile({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
+      if (debug == 'debug') {
+        console.log("upload-image ==>", JSON.stringify(data))
+      }
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/upload-image`, data, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          commit('SetLoading', false)
+          resolve(res.data.success)
+        }).catch(error => {
+          commit('SetLoading', false)
+          if (error && error.response && error.response.status === 500) {
+            if (error.response.data.message == "Token has expired") {
+              router.push('/');
+            }
+          }
+          reject(error)
+        })
+      })
+    },
+    changePassword({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
+      if (debug == 'debug') {
+        console.log("change-password ==>", JSON.stringify(data))
+      }
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/change-password`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          commit('SetLoading', false)
+          resolve(res.data.success)
+        }).catch(error => {
+          commit('SetLoading', false)
+          if (error && error.response && error.response.status === 500) {
+            if (error.response.data.message == "Token has expired") {
+              router.push('/');
+            }
+          }
+          reject(error)
+        })
+      })
+    },
+    changePasswordNew({ state, commit, dispatch }, data) {
+      commit('SetLoading', true)
+      if (debug == 'debug') {
+        console.log("change-password-new ==>", JSON.stringify(data))
+      }
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/change-password-new`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          commit('SetLoading', false)
+          resolve(res.data.success)
+        }).catch(error => {
+          commit('SetLoading', false)
+          if (error && error.response && error.response.status === 500) {
+            if (error.response.data.message == "Token has expired") {
+              router.push('/');
+            }
+          }
+          reject(error)
+        })
+      })
+    },
   },
   getters: {
     isLoading(state) {

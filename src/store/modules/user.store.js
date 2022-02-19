@@ -1,7 +1,8 @@
 import axios from 'axios';
 const url = `${process.env.VUE_APP_API_URL}${process.env.VUE_APP_API_PORT}`;
+const debug = process.env.VUE_APP_PRODUCTION_STATUS;
 import router from './../../router'
-import { fb } from "@/firebase"
+// import { fb } from "@/firebase"
 const store = {
   state: {
     user: {},
