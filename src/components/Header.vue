@@ -463,7 +463,11 @@
             </div>
             <div class="table">
               <div class="head-table">
-                <div class="head" style="width:10%" @click="sort(headCol[0], 0)">
+                <div
+                  class="head"
+                  style="width:10%"
+                  @click="sort(headCol[0], 0)"
+                >
                   <div class="column-name">No</div>
                   <v-icon
                     v-text="sortNo == 0 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -471,7 +475,11 @@
                     size="22"
                   ></v-icon>
                 </div>
-                <div class="head" style="width:30%" @click="sort(headCol[1], 1)">
+                <div
+                  class="head"
+                  style="width:30%"
+                  @click="sort(headCol[1], 1)"
+                >
                   <div class="column-name">แอปพิเคชั่น</div>
                   <v-icon
                     v-text="sortNo == 1 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -479,7 +487,11 @@
                     size="22"
                   ></v-icon>
                 </div>
-                <div class="head" style="width:60%" @click="sort(headCol[2], 2)">
+                <div
+                  class="head"
+                  style="width:60%"
+                  @click="sort(headCol[2], 2)"
+                >
                   <div class="column-name">
                     ชื่อผู้ใช้งานในการเข้าสู่ระบบด้วย SSO
                   </div>
@@ -500,7 +512,7 @@
                     class="body"
                     style="width:10%;padding-left:5px;padding-top:5px"
                   >
-                    {{ index + 1 }}
+                    {{ item.index + 1 }}
                   </div>
                   <div class="body" style="width:30%;padding-top:5px">
                     {{ item.name_th }}
@@ -1004,7 +1016,7 @@ export default {
       errorCfNewPassword: false,
       setAppDialog: false,
       searchApp: '',
-      sortNo: false,
+      sortNo: null,
       sortAppName: false,
       sortUser: false,
       list: [
@@ -1062,7 +1074,7 @@ export default {
         feild: 'name_th',
         orderby: true
       },
-       headCol: ['index','name_th', 'type_login'],
+      headCol: ['index', 'name_th', 'type_login']
     }
   },
   watch: {
@@ -1254,7 +1266,7 @@ export default {
         return 'เข้าใช้งานผ่านตัวระบบเท่านั้น'
       }
     },
-    sort (feild , index) {
+    sort (feild, index) {
       this.sortNo = this.sortNo == index ? null : index
       let table = this.list
       if (feild == 'index') {
@@ -1298,8 +1310,13 @@ export default {
       }
       this.list = []
       this.$store.dispatch('getHomeData', req).then(res => {
-        this.list = res.data.app
-        this.masterList = res.data.app
+        let temp = []
+        for (let i = 0; i < res.data.app.length; i++) {
+          res.data.app[i].index = i
+          temp.push(res.data.app[i])
+        }
+        this.list = temp
+        this.masterList = temp
         this.setAppDialog = true
       })
     },
