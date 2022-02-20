@@ -463,28 +463,28 @@
             </div>
             <div class="table">
               <div class="head-table">
-                <div class="head" style="width:10%" @click="sort('no')">
+                <div class="head" style="width:10%" @click="sort(headCol[0], 0)">
                   <div class="column-name">No</div>
                   <v-icon
-                    v-text="sortNo ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    v-text="sortNo == 0 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
                     size="22"
                   ></v-icon>
                 </div>
-                <div class="head" style="width:30%" @click="sort('name')">
+                <div class="head" style="width:30%" @click="sort(headCol[1], 1)">
                   <div class="column-name">แอปพิเคชั่น</div>
                   <v-icon
-                    v-text="sortAppName ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    v-text="sortNo == 1 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
                     size="22"
                   ></v-icon>
                 </div>
-                <div class="head" style="width:60%" @click="sort('user')">
+                <div class="head" style="width:60%" @click="sort(headCol[2], 2)">
                   <div class="column-name">
                     ชื่อผู้ใช้งานในการเข้าสู่ระบบด้วย SSO
                   </div>
                   <v-icon
-                    v-text="sortUser ? 'mdi-menu-up' : 'mdi-menu-down'"
+                    v-text="sortNo == 2 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
                     size="22"
                   ></v-icon>
@@ -1056,7 +1056,13 @@ export default {
       usernameList: '',
       passwordList: '',
       errorPasswordList: false,
-      disPwdBtnList: true
+      disPwdBtnList: true,
+      masterList: [],
+      mainSort: {
+        feild: 'name_th',
+        orderby: true
+      },
+       headCol: ['index','name_th', 'type_login'],
     }
   },
   watch: {
@@ -1102,6 +1108,21 @@ export default {
         this.errorCfNewPassword = false
       }
       this.DisableBtn()
+    },
+    searchApp (todos) {
+      if (todos.trim().length > 2) {
+        let keyword = todos.trim()
+        let temp = []
+        for (let i = 0; i < this.list.length; i++) {
+          let str = this.list[i].name_th.toUpperCase()
+          if (str.indexOf(keyword) >= 0) {
+            temp.push(this.list[i])
+          }
+        }
+        this.list = temp
+      } else if (todos.trim().length == 0) {
+        this.list = this.masterList
+      }
     }
   },
   computed: {
@@ -1233,13 +1254,41 @@ export default {
         return 'เข้าใช้งานผ่านตัวระบบเท่านั้น'
       }
     },
-    sort (feild) {
-      if (feild == 'no') {
-        this.sortNo = !this.sortNo
-      } else if (feild == 'name') {
-        this.sortAppName = !this.sortAppName
-      } else if (feild == 'user') {
-        this.sortUser = !this.sortUser
+    sort (feild , index) {
+      this.sortNo = this.sortNo == index ? null : index
+      let table = this.list
+      if (feild == 'index') {
+        if (this.mainSort.orderby) {
+          this.list = table.sort(function (a, b) {
+            return b.index - a.index
+          })
+        } else {
+          this.list = table.sort(function (a, b) {
+            return a.index - b.index
+          })
+        }
+        this.mainSort.orderby = !this.mainSort.orderby
+      } else {
+        if (this.mainSort.feild == feild) {
+          this.mainSort.orderby = !this.mainSort.orderby
+        } else {
+          this.mainSort.orderby = false
+        }
+        this.mainSort.feild = feild
+
+        if (this.mainSort.orderby) {
+          this.list = table.sort((a, b) =>
+            String(a[feild]).toLowerCase() < String(b[feild]).toLowerCase()
+              ? -1
+              : 1
+          )
+        } else {
+          this.list = table.sort((a, b) =>
+            String(a[feild]).toLowerCase() < String(b[feild]).toLowerCase()
+              ? 1
+              : -1
+          )
+        }
       }
     },
     SettingApp () {
@@ -1250,6 +1299,7 @@ export default {
       this.list = []
       this.$store.dispatch('getHomeData', req).then(res => {
         this.list = res.data.app
+        this.masterList = res.data.app
         this.setAppDialog = true
       })
     },
