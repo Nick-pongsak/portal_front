@@ -7,6 +7,7 @@
           v-for="(item, index) in menu"
           :key="item.code"
           @click="tabs(item, index)"
+          :id="'tab' + item.code"
         >
           {{ item[$i18n.locale] }}
           <div v-show="active.code == item.code" class="line-active"></div>

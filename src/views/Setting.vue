@@ -249,12 +249,15 @@ export default {
       }
     },
     selectedMenu (item, index) {
-      // if (item.code == '2') {
       this.selectedItem = item
       this.currentView = item
+      if (this.activeTab !== null) {
+        if (item.code == '2' && this.activeTab.code == '2.2') {
+          document.getElementById('tab' + item.child[0].code).click()
+        }
+      }
       this.activeTab = item.child.length > 0 ? item.child[0] : {}
       this.rightMenu = item !== undefined ? item.child : []
-      // }
     },
     selectedTabs (item) {
       this.activeTab = item
