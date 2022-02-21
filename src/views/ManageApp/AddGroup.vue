@@ -420,10 +420,15 @@ export default {
           let keyword = todos.trim()
           let temp = []
           for (let i = 0; i < this.list.length; i++) {
+            let type =
+              this.list[i].type_login == 0
+                ? 'ผู้ใช้งานบนแอปพลิเคชัน'
+                : 'LDAP (AP)'
             let str2 =
               this.list[i].name_th +
               this.list[i].category_name_en +
-              this.list[i].type_login
+              this.list[i].type_login +
+              type
             let str = str2.toUpperCase()
             if (str.indexOf(keyword.toUpperCase()) >= 0) {
               this.list[i].index = i
@@ -617,6 +622,7 @@ export default {
       this.rightBtn = 'บันทึก'
     },
     clearBtn () {
+      this.error = false
       this.btnClick = 'clear'
       this.dialog = true
       this.errorDialog = 'คุณต้องการลบข้อมูลใช่หรือไม่ ?'

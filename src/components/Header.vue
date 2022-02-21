@@ -1125,8 +1125,15 @@ export default {
       if (todos.trim().length > 2) {
         let keyword = todos.trim()
         let temp = []
+        let type = ''
         for (let i = 0; i < this.list.length; i++) {
-          let str = this.list[i].name_th.toUpperCase()
+          if (item.status_sso == 1) {
+            type = item.type_login ? 'LDAP (AD)' : 'Username : '
+          } else {
+            type = 'เข้าใช้งานผ่านตัวระบบเท่านั้น'
+          }
+          let str2 = this.list[i].name_th + type
+          let str = str2.toUpperCase()
           if (str.indexOf(keyword.toUpperCase()) >= 0) {
             this.list[i].index = i
             temp.push(this.list[i])
