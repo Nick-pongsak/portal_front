@@ -358,7 +358,12 @@
               </v-btn>
               <v-btn
                 @click="SaveNewType()"
-                :class="enableType ? 'cancel-btn-disabled' : 'cancel-btn'"
+                :disabled="enableType"
+                class="cancel-btn"
+                :style="{
+                  background: enableType ? '#CE1212' : '',
+                  opacity: enableType ? '0.51' : ''
+                }"
               >
                 {{ $t('btn_save') }}
               </v-btn>
@@ -454,7 +459,7 @@
                     {{ item.name_th }}
                   </div>
                   <div class="body" style="width:40%;padding-top:5px">
-                    {{ item.name_en }}
+                    {{ item.category_name_en }}
                   </div>
                   <div class="body" style="width:10%;padding-top:5px">
                     <v-icon
@@ -511,7 +516,7 @@ export default {
       editMode: false,
       NameThInput: '',
       NameEnInput: '',
-      enableType: false,
+      enableType: true,
       hasImage: false,
       editRow: this.data,
       mainSort: {
@@ -533,6 +538,20 @@ export default {
         if (todos.trim().length > 2 || todos.trim().length == 0) {
           this.getTypeList()
         }
+      }
+    },
+    NameThInput (todos) {
+      if (todos.trim().length > 0 && this.NameEnInput.trim().length > 0) {
+        this.enableType = false
+      } else {
+        this.enableType = true
+      }
+    },
+    NameEnInput (todos) {
+      if (todos.trim().length > 0 && this.NameThInput.trim().length > 0) {
+        this.enableType = false
+      } else {
+        this.enableType = true
       }
     }
   },
@@ -556,6 +575,7 @@ export default {
       this.NameEnInput = ''
     },
     EditNewType (item) {
+      this.enableType = true
       this.editMode = true
       this.modeAdd = false
       this.editRowPop = item

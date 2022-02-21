@@ -408,11 +408,35 @@ export default {
         feild: 'name_th',
         orderby: true
       },
-      enableBtn: true
+      enableBtn: true,
+      masterList: []
     }
   },
   computed: {},
-  watch: {},
+  watch: {
+    searchApp: {
+      handler: function (todos) {
+        if (todos.trim().length > 2) {
+          let keyword = todos.trim()
+          let temp = []
+          for (let i = 0; i < this.list.length; i++) {
+            let str2 =
+              this.list[i].name_th +
+              this.list[i].category_name_en +
+              this.list[i].type_login
+            let str = str2.toUpperCase()
+            if (str.indexOf(keyword.toUpperCase()) >= 0) {
+              this.list[i].index = i
+              temp.push(this.list[i])
+            }
+          }
+          this.list = temp
+        } else if (todos.trim().length == 0) {
+          this.list = this.masterList
+        }
+      }
+    }
+  },
   methods: {
     SaveGroup () {
       let results = this.list.filter(a => a.selected)
@@ -522,6 +546,7 @@ export default {
       }
       this.$store.dispatch('getAppList', req).then(res => {
         this.mapList(res)
+        this.masterList = res.data
         this.groupDialog = true
       })
     },

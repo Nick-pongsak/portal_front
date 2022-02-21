@@ -1127,7 +1127,7 @@ export default {
         let temp = []
         for (let i = 0; i < this.list.length; i++) {
           let str = this.list[i].name_th.toUpperCase()
-          if (str.indexOf(keyword) >= 0) {
+          if (str.indexOf(keyword.toUpperCase()) >= 0) {
             this.list[i].index = i
             temp.push(this.list[i])
           }
