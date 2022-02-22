@@ -90,8 +90,18 @@
                       </v-img>
                       <v-card-text>{{ item.description_th }} </v-card-text>
                       <v-card-actions class="justify-end">
-                        <v-btn text @click="openLogin(item)">
-                          {{ $t('btn_signin') }}
+                        <v-btn
+                          text
+                          @click="openLogin(item)"
+                          :style="{
+                            background:
+                              item.status == 1 ? '#ce1212' : '#FBC02D',
+                            cursor: item.status == 1 ? 'pointer' : 'unset'
+                          }"
+                        >
+                          {{
+                            item.status == 1 ? $t('btn_signin') : 'ปิดปรับปรุง'
+                          }}
                         </v-btn>
                       </v-card-actions>
                     </v-card>
@@ -142,8 +152,13 @@
           class="justify-center"
           style="padding-bottom:20px;padding-top:20px"
         >
-          <v-btn text @click="openLogin(selectedRow)" class="cancel-btn">
-            {{ $t('btn_signin') }}
+          <v-btn
+            text
+            @click="openLogin(selectedRow)"
+            class="cancel-btn"
+            v-show="selectedRow.status == 1"
+          >
+            {{ selectedRow.status == 1 ? $t('btn_signin') : 'ปิดปรับปรุง' }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -233,7 +248,9 @@ export default {
       if (row.app_id == 999) {
         this.$router.push('/setting')
       } else if (this.showDragAndDrop == false) {
-        window.open(row.url, '_blank')
+        if (row.status) {
+          window.open(row.url, '_blank')
+        }
       }
     }
   },
