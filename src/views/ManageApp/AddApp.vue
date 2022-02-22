@@ -459,7 +459,7 @@
                     {{ item.name_th }}
                   </div>
                   <div class="body" style="width:40%;padding-top:5px">
-                    {{ item.category_name_en }}
+                    {{ item.name_en }}
                   </div>
                   <div class="body" style="width:10%;padding-top:5px">
                     <v-icon
