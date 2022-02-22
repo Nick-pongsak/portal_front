@@ -249,13 +249,14 @@ export default {
         this.$router.push('/setting')
       } else if (this.showDragAndDrop == false) {
         if (row.status) {
-          let username = '23121'
-          let password = '@1234'
-          // let username = row.username
+          // let username = '23121'
+          let username = row.username
           // let password = row.password
-          if (row.app_id == 11) {
+          let password = 'aswd'
+          if (username.trim().length > 0 && password.trim().length > 0) {
             let str = '?username=' + username + '&password=' + password
             window.open(row.url + str, '_blank')
+            // window.open('http://localhost:9080/#/' + str, '_blank')
           } else {
             window.open(row.url, '_blank')
           }
