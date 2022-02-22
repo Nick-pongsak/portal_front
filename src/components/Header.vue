@@ -75,7 +75,10 @@
                 <div class="deafult-name">{{ accountNameEng }}</div>
               </v-avatar>
               <v-avatar v-show="!showDefaultAccount" size="37">
-                <v-img :src="info.image"></v-img>
+                <v-img
+                  :src="info.image"
+                  style="border: 2px solid #ffff;"
+                ></v-img>
               </v-avatar>
             </div>
             <div :style="{ 'margin-left': '14px' }" v-show="resizeHeader">
