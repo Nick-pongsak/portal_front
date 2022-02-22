@@ -296,6 +296,7 @@ export default {
             name_th: 'Portal Setting',
             category_name_th: 'Admin',
             app_id: 999,
+            status: true,
             description_th:
               'ระบบที่ใช้สำหรับกำหนด Master รายละเอียดต่าง ๆ ของสินค้า เช่น ราคาขายของ MT TT MTT รวมถึงรายละเอียดของแพ็คเก็ตสินค้า หีบ ห่อ ต่าง ๆ'
           })
