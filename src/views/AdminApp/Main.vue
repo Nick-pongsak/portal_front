@@ -193,7 +193,7 @@ export default {
   watch: {
     searchApp: {
       handler: function (todos) {
-        if (todos.trim().length > 2 || todos.trim().length == 0) {
+        if (todos.trim().length > 1 || todos.trim().length == 0) {
           this.fetchData()
         }
       }

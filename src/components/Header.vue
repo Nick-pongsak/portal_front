@@ -126,19 +126,11 @@
           <div class="line-page" style="margin-top:10px"></div>
           <div class="menu-line" style="margin-bottom:10px">
             <div class="menu-rows" @click="openProfile">
-              <v-icon
-                v-text="'mdi-account-circle'"
-                style="color:#CE1212;"
-                size="21"
-              ></v-icon>
+              <img src="@/assets/icons/people.png" class="eye eye-hided" />
               <span style="margin-left:8px"> {{ 'ข้อมูลส่วนตัว' }}</span>
             </div>
             <div @click="SettingApp()" class="menu-rows">
-              <v-icon
-                v-text="'mdi-cog-box'"
-                style="color:#CE1212;"
-                size="23"
-              ></v-icon>
+              <img src="@/assets/icons/settingapp.png" class="eye eye-hided" />
               <span style="margin-left:8px">{{
                 'จัดการรายการแอปพลิเคชัน'
               }}</span>
@@ -148,19 +140,11 @@
               v-show="info.type_login == 0"
               class="menu-rows"
             >
-              <v-icon
-                v-text="'mdi-account-convert'"
-                style="color:#CE1212;"
-                size="20"
-              ></v-icon>
+              <img src="@/assets/icons/password.png" class="eye eye-hided" />
               <span style="margin-left:8px"> {{ 'เปลี่ยนรหัสผ่าน' }}</span>
             </div>
             <div @click="signOut()" class="menu-rows" style="padding-left:2px">
-              <v-icon
-                v-text="'mdi-export'"
-                style="color:#CE1212;"
-                size="20"
-              ></v-icon>
+              <img src="@/assets/icons/Logout.png" class="eye eye-hided" />
               <span style="margin-left:8px">{{ $t('btn_signout') }}</span>
             </div>
           </div>
@@ -1122,13 +1106,13 @@ export default {
       this.DisableBtn()
     },
     searchApp (todos) {
-      if (todos.trim().length > 2) {
+      if (todos.trim().length > 1) {
         let keyword = todos.trim()
         let temp = []
         let type = ''
         for (let i = 0; i < this.list.length; i++) {
-          if (item.status_sso == 1) {
-            type = item.type_login ? 'LDAP (AD)' : 'Username : '
+          if (this.list[i].status_sso == 1) {
+            type = this.list[i].type_login ? 'LDAP (AD)' : 'Username : '
           } else {
             type = 'เข้าใช้งานผ่านตัวระบบเท่านั้น'
           }

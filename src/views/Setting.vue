@@ -251,9 +251,11 @@ export default {
     selectedMenu (item, index) {
       this.selectedItem = item
       this.currentView = item
-      if (this.activeTab !== null) {
+      if (this.activeTab !== null && item.code == '2') {
         if (item.code == '2' && this.activeTab.code == '2.2') {
-          document.getElementById('tab' + item.child[0].code).click()
+          if (document.getElementById('tab2.1') !== null) {
+            document.getElementById('tab2.1').click()
+          }
         }
       }
       this.activeTab = item.child.length > 0 ? item.child[0] : {}

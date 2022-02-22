@@ -799,7 +799,7 @@ export default {
   watch: {
     searchApp: {
       handler: function (todos) {
-        if (todos.trim().length > 2 || todos.trim().length == 0) {
+        if (todos.trim().length > 1 || todos.trim().length == 0) {
           let req = {
             emp_code: todos.trim()
           }
@@ -1103,7 +1103,7 @@ export default {
       let postname_th = item.postname_th.trim()
       let postname_en = item.postname_en.trim()
       let emp_code = item.emp_code.toString()
-      let email = item.email.trim()
+      // let email = item.email.trim()
       let password = ''
       if (item.password !== undefined) {
         password = item.password.trim()
@@ -1116,7 +1116,7 @@ export default {
         postname_th.length > 0 &&
         postname_en.length > 0 &&
         emp_code.trim().length > 0 &&
-        email.length > 0 &&
+        // email.length > 0 &&
         this.applist.length > 0
       ) {
         if (item.type_login == 0) {
