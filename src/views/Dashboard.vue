@@ -249,7 +249,16 @@ export default {
         this.$router.push('/setting')
       } else if (this.showDragAndDrop == false) {
         if (row.status) {
-          window.open(row.url, '_blank')
+          let username = '23121'
+          let password = '@1234'
+          // let username = row.username
+          // let password = row.password
+          if (row.app_id == 11) {
+            let str = '?username=' + username + '&password=' + password
+            window.open(row.url + str, '_blank')
+          } else {
+            window.open(row.url, '_blank')
+          }
         }
       }
     }
