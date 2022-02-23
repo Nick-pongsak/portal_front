@@ -81,14 +81,21 @@
                         @click="openDialog(item)"
                       >
                         <div class="sys-text">
-                          <div class="sys-name" v-text="item.name_th"></div>
+                          <div
+                            class="sys-name"
+                            v-text="item['name_' + $i18n.locale]"
+                          ></div>
                           <div
                             class="sys-type"
-                            v-text="'(' + item.category_name_th + ')'"
+                            v-text="
+                              '(' + item['category_name_' + $i18n.locale] + ')'
+                            "
                           ></div>
                         </div>
                       </v-img>
-                      <v-card-text>{{ item.description_th }} </v-card-text>
+                      <v-card-text
+                        >{{ item['description_' + $i18n.locale] }}
+                      </v-card-text>
                       <v-card-actions class="justify-end">
                         <v-btn
                           text
@@ -143,10 +150,17 @@
           </v-img>
         </div>
         <div class="sys-name">
-          {{ selectedRow.name_th + ' (' + selectedRow.category_name_th + ')' }}
+          {{
+            selectedRow['name_' + $i18n.locale] +
+              ' (' +
+              selectedRow['category_name_' + $i18n.locale] +
+              ')'
+          }}
         </div>
         <div class="details">
-          <textarea v-model="selectedRow.description_th"></textarea>
+          <textarea
+            v-model="selectedRow['description_' + $i18n.locale]"
+          ></textarea>
         </div>
         <v-card-actions
           class="justify-center"
@@ -308,6 +322,8 @@ export default {
             image: res.data.path + '1645086704.png',
             name_th: 'DHAS PORTAL SETTING',
             category_name_th: 'ADMIN',
+            name_en: 'DHAS PORTAL SETTING',
+            category_name_en: 'ADMIN',
             app_id: 999,
             status: true,
             description_th: 'ตั้งค่าระบบ DHAS PORTAL (Administrator Menu)',

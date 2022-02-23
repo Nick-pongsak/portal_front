@@ -517,7 +517,7 @@
                     {{ item.index + 1 }}
                   </div>
                   <div class="body" style="width:30%;padding-top:5px">
-                    {{ item.name_th }}
+                    {{ item['name_' + $i18n.locale] }}
                   </div>
                   <div
                     class="body"
@@ -710,7 +710,7 @@
                     {{ item.emp_code }}
                   </div>
                   <div class="body" style="width:30%;padding-top:5px">
-                    {{ item.name_th }}
+                    {{ item['name_' + $i18n.locale] }}
                   </div>
                   <div class="body" style="width:30%;padding-top:5px">
                     {{ item.postname_th }}

@@ -128,13 +128,13 @@
               {{ item.emp_code }}
             </div>
             <div class="body" style="width:17%;padding-top:5px">
-              {{ item.name_th }}
+              {{ item['name_' + $i18n.locale] }}
             </div>
             <div class="body" style="width:18%;padding-top:5px">
-              {{ item.postname_th }}
+              {{ item['postname_' + $i18n.locale]}}
             </div>
             <div class="body" style="width:17%;padding-top:5px">
-              {{ item.group_name_th }}
+              {{ item['group_name_' + $i18n.locale]}}
             </div>
             <div class="body" style="width:15%;display:flex;padding-top: 5px;">
               {{ item.type_login ? 'LDAP (AD)' : 'ผู้ใช้งานบนแอปพลิเคชัน' }}

@@ -137,7 +137,7 @@
                     {{ item.index + 1 }}
                   </div>
                   <div class="body" style="width:30%">
-                    {{ item.name_th }}
+                    {{ item['name_' + $i18n.locale]}}
                   </div>
                   <div class="body" style="width:20%">
                     {{ item.category_name_en }}
@@ -326,7 +326,7 @@
                     ></v-checkbox>
                   </div>
                   <div class="body" style="width:30%">
-                    {{ item.name_th }}
+                    {{ item['name_' + $i18n.locale] }}
                   </div>
                   <div class="body" style="width:20%">
                     {{ item.category_name_en }}
