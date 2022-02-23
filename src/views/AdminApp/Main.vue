@@ -247,13 +247,36 @@ export default {
       }
     },
     fetchData (item) {
+      let str1 = 'LDAP(AD)'
+      let str2 = 'ผู้ใช้งานบนแอปพลิเคชัน'
+      let search = this.searchApp.trim()
+      let type = null
+      if (search.length > 0) {
+        if (str1.indexOf(search.toUpperCase()) >= 0) {
+          type = 1
+        } else if (str2.indexOf(search.toUpperCase()) >= 0) {
+          type = 0
+        }
+      }
+
       let req = {
-        keyword: this.searchApp.trim(),
+        keyword: type == null ? this.searchApp.trim() : '',
         field: this.mainSort.feild,
         sort: this.mainSort.orderby ? 'asc' : 'desc'
       }
       this.$store.dispatch('getUserList', req).then(res => {
-        this.list = res.data
+        let temp = []
+        if (type !== null) {
+          let results = res.data.filter(a => a.type_login == type)
+          for (let i = 0; i < results.length; i++) {
+            results[i].index = i
+            temp.push(results[i])
+          }
+          this.list = temp
+        } else {
+          this.list = res.data
+        }
+        // this.list = res.data
       })
     }
   },
