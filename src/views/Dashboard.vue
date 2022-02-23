@@ -1,7 +1,7 @@
 <template>
   <div id="dashboard" v-resize="onResize">
     <div class="name-page">
-      {{ $t('das.menu') }}
+      {{ group['name_' + $i18n.locale] }}
       <div class="line-page" style="margin-top: 15px;"></div>
     </div>
     <div>
@@ -175,7 +175,8 @@ export default {
       dialog: false,
       selectedRow: {},
       showDragAndDrop: false,
-      tranformScale: 'scale(1)'
+      tranformScale: 'scale(1)',
+      group: {}
     }
   },
   computed: {
@@ -283,8 +284,10 @@ export default {
         user_id: this.info.user_id
       }
       this.list = []
+      this.group = {}
       this.$store.dispatch('getHomeData', req).then(res => {
         let app = res.data.app
+        this.group = res.data
         let order = res.data.order.split(',')
         for (let i = 0; i < order.length; i++) {
           let index = app.findIndex(h => h.app_id == order[i])
@@ -303,12 +306,13 @@ export default {
         if (this.info.status_permission == 1) {
           this.list.push({
             image: res.data.path + '1645086704.png',
-            name_th: 'Portal Setting',
-            category_name_th: 'Admin',
+            name_th: 'DHAS PORTAL SETTING',
+            category_name_th: 'ADMIN',
             app_id: 999,
             status: true,
-            description_th:
-              'ระบบที่ใช้สำหรับกำหนด Master รายละเอียดต่าง ๆ ของสินค้า เช่น ราคาขายของ MT TT MTT รวมถึงรายละเอียดของแพ็คเก็ตสินค้า หีบ ห่อ ต่าง ๆ'
+            description_th: 'ตั้งค่าระบบ DHAS PORTAL (Administrator Menu)',
+            description_en:
+              'DHAS PORTAL application settings (Administrator Menu)'
           })
         }
       })

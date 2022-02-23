@@ -578,6 +578,12 @@
                 :placeholder="$t('input_selected')"
               />
             </div>
+            <div
+              v-show="errorList"
+              style="color:#CE1212;font-size:8px;padding-top:8px;padding-left:3px"
+            >
+              ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง
+            </div>
           </div>
         </div>
         <div
@@ -1061,7 +1067,8 @@ export default {
         feild: 'name_th',
         orderby: true
       },
-      headCol: ['index', 'name_th', 'type_login']
+      headCol: ['index', 'name_th', 'type_login'],
+      errorList: false
     }
   },
   watch: {
@@ -1153,7 +1160,20 @@ export default {
   },
   methods: {
     ConfirmUsername () {
-      console.log('ConfirmUsername ===>')
+      let obj = {
+        url: '/auth/login?',
+        username: this.usernameList.trim(),
+        password: this.passwordList.trim(),
+        host: '10.7.200.178:82'
+      }
+      this.$store.dispatch('CheckUserAccess', obj).then(res => {
+        if (res.data) {
+          this.errorList = false
+        } else {
+          this.errorList = true
+        }
+        console.log('ConfirmUsername ===>')
+      })
     },
     ChangePic () {
       if (this.stepChangePic == 0) {
@@ -1299,6 +1319,7 @@ export default {
       }
     },
     SettingApp () {
+      this.viewListApp = true
       let req = {
         group_id: this.info.group_id,
         user_id: this.info.user_id
