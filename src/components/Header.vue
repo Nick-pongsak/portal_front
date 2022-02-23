@@ -863,7 +863,7 @@
                   <input
                     type="text"
                     v-model="profile.email"
-                    :placeholder="$t('input_selected')"
+                    :placeholder="'-- หากมีโปรดระบุ --'"
                     :readonly="true"
                   />
                 </div>

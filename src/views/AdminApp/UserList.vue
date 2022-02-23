@@ -272,7 +272,7 @@
                 <input
                   type="text"
                   v-model="editRow.email"
-                  :placeholder="$t('input_selected')"
+                  :placeholder="'-- หากมีโปรดระบุ --'"
                   :disabled="enableInput"
                   @keypress="IsEmail"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
@@ -364,7 +364,7 @@
                 <input
                   type="text"
                   v-model="editRow.username"
-                  :placeholder="'-- หากมีโปรดระบุ --'"
+                  :placeholder="$t('input_selected')"
                   :disabled="enableInput"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
                   @keyup="enableBtnSave"
@@ -400,9 +400,10 @@
                 <input
                   type="password"
                   v-model="editRow.password"
-                  :placeholder="'-- หากมีโปรดระบุ --'"
+                  :placeholder="$t('input_selected')"
                   :disabled="enableInput"
                   @keypress="IsPassword"
+                  @keyup="enableBtnSave"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
                 />
               </div>
