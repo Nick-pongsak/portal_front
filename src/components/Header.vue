@@ -1083,7 +1083,7 @@ export default {
       this.enableDisPwdBtnList()
     },
     password (newValue) {
-      if (newValue.length >= 4) {
+      if (newValue.length >= 6) {
         this.disPwdBtn = false
       } else {
         this.disPwdBtn = true
@@ -1092,7 +1092,10 @@ export default {
     newPassword (newValue) {
       let newPassword = JSON.stringify(newValue)
       let cfNewPassword = JSON.stringify(this.cfNewPassword)
-      if (newPassword.length == cfNewPassword.length) {
+      let password = JSON.stringify(this.password)
+      if (newPassword == password) {
+        this.errorNewPassword = true
+      } else if (newPassword.length == cfNewPassword.length) {
         this.errorNewPassword = newPassword == cfNewPassword ? false : true
       } else if (
         newPassword.length < cfNewPassword.length &&
@@ -1102,13 +1105,18 @@ export default {
       } else {
         this.errorNewPassword = false
       }
-
       this.DisableBtn()
     },
     cfNewPassword (newValue) {
       let newPassword = JSON.stringify(this.newPassword)
       let cfNewPassword = JSON.stringify(newValue)
-      if (newValue.length > 0 && this.newPassword.length <= newValue.length) {
+      let password = JSON.stringify(this.password)
+      if (newPassword == password) {
+        this.errorCfNewPassword = true
+      } else if (
+        newValue.length > 0 &&
+        this.newPassword.length <= newValue.length
+      ) {
         if (newPassword == cfNewPassword) {
           this.errorCfNewPassword = false
         } else {
@@ -1369,12 +1377,17 @@ export default {
     DisableBtn () {
       let newPassword = JSON.stringify(this.newPassword)
       let cfNewPassword = JSON.stringify(this.cfNewPassword)
+      let password = JSON.stringify(this.password)
       if (
         this.newPassword.length >= 6 &&
         this.cfNewPassword.length >= 6 &&
         newPassword == cfNewPassword
       ) {
-        this.disPwdBtn = false
+        if (password == newPassword || password == cfNewPassword) {
+          this.disPwdBtn = true
+        } else {
+          this.disPwdBtn = false
+        }
       } else {
         this.disPwdBtn = true
       }
@@ -1397,20 +1410,26 @@ export default {
     },
     InCondition (evt) {
       let newPassword = JSON.stringify(this.newPassword)
-      if (this.newPassword.length >= 6) {
-        let condChar = /[a-zA-Z]/g
-        let condNum = /[0-9]/g
-        let rsChar = newPassword.search(condChar)
-        let rsNum = newPassword.search(condNum)
-        if (rsChar >= 0 && rsNum >= 0) {
-          this.errorNewPassword = false
-          if (this.cfNewPassword.length >= 6) {
-            this.disPwdBtn = false
-          }
-        } else {
-          this.errorNewPassword = true
-          if (this.cfNewPassword.length >= 6) {
-            this.disPwdBtn = true
+      let cfNewPassword = JSON.stringify(this.cfNewPassword)
+      let password = JSON.stringify(this.password)
+      if (newPassword == password || password == cfNewPassword) {
+        this.disPwdBtn = true
+      } else {
+        if (this.newPassword.length >= 6) {
+          let condChar = /[a-zA-Z]/g
+          let condNum = /[0-9]/g
+          let rsChar = newPassword.search(condChar)
+          let rsNum = newPassword.search(condNum)
+          if (rsChar >= 0 && rsNum >= 0) {
+            this.errorNewPassword = false
+            if (this.cfNewPassword.length >= 6) {
+              this.disPwdBtn = false
+            }
+          } else {
+            this.errorNewPassword = true
+            if (this.cfNewPassword.length >= 6) {
+              this.disPwdBtn = true
+            }
           }
         }
       }
@@ -1452,6 +1471,9 @@ export default {
     },
     ClosePwdDialogs () {
       this.pwdDialog = false
+      this.errorPwd = false
+      this.errorNewPassword = false
+      this.errorCfNewPassword = false
     },
     ChangePassword () {
       this.password = ''
