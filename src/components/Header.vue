@@ -1222,6 +1222,8 @@ export default {
           data.nickname1_th = res.data.success.data.nickname1_th
           data.nickname2_en = res.data.success.data.nickname2_en
           data.nickname2_th = res.data.success.data.nickname2_th
+          data.postname_en = res.data.success.data.postname_en
+          data.postname_th = res.data.success.data.postname_th
           data.phone = res.data.success.data.phone
           this.$store.commit('SetUser', data)
           sessionStorage.setItem('info', JSON.stringify(data))
