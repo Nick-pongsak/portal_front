@@ -272,7 +272,11 @@
                 <input
                   type="text"
                   v-model="editRow.email"
-                  :placeholder="'-- หากมีโปรดระบุ --'"
+                  :placeholder="
+                    editRow.type_login == 0
+                      ? '-- หากมีโปรดระบุ --'
+                      : $t('input_selected')
+                  "
                   :disabled="enableInput"
                   @keypress="IsEmail"
                   @keyup="enableBtnSave"
@@ -1150,7 +1154,7 @@ export default {
     },
     save () {
       if (this.btnClick == 'save') {
-        let result = this.editRow
+        let result = JSON.parse(JSON.stringify(this.editRow))
         let arr = []
         var pwdCrypt = result.password
         if (result.password == this.defaultPassword) {
@@ -1179,20 +1183,14 @@ export default {
 
         if (this.editRow.type_login == 1) {
           this.$store.dispatch(url, result).then(res => {
-            if (
-              this.editRow.mode == 'edit' &&
-              this.info.user_id == result.user_id &&
-              this.info.type_login == result.type_login
-            ) {
-              this.$router.push('/')
+            if (res.data.success == undefined) {
+              this.btnClick = 'error'
+              this.dialog = true
+              this.error = true
+              this.errorDialog =
+                'ไม่สามารถบันทึกข้อมูลได้ เนื่องจากระบบพบข้อมูลผู้ใช้งานซ้ำ'
+              this.rightBtn = 'ปิด'
             } else {
-              this.$emit('save', null)
-            }
-            this.dialog = false
-          })
-        } else {
-          if (this.InCondition(this.editRow.password)) {
-            this.$store.dispatch(url, result).then(res => {
               if (
                 this.editRow.mode == 'edit' &&
                 this.info.user_id == result.user_id &&
@@ -1203,6 +1201,30 @@ export default {
                 this.$emit('save', null)
               }
               this.dialog = false
+            }
+          })
+        } else {
+          if (this.InCondition(this.editRow.password)) {
+            this.$store.dispatch(url, result).then(res => {
+              if (res.data.success == undefined) {
+                this.btnClick = 'error'
+                this.dialog = true
+                this.error = true
+                this.errorDialog =
+                  'ไม่สามารถบันทึกข้อมูลได้ เนื่องจากระบบพบข้อมูลผู้ใช้งานซ้ำ'
+                this.rightBtn = 'ปิด'
+              } else {
+                if (
+                  this.editRow.mode == 'edit' &&
+                  this.info.user_id == result.user_id &&
+                  this.info.type_login == result.type_login
+                ) {
+                  this.$router.push('/')
+                } else {
+                  this.$emit('save', null)
+                }
+                this.dialog = false
+              }
             })
           } else {
             console.log('No save...')
@@ -1276,9 +1298,12 @@ export default {
       evt = evt ? evt : window.event
       var keyCode = evt.which ? evt.which : evt.keyCode
       if (
+        keyCode == 33 ||
+        keyCode == 35 ||
+        keyCode == 36 ||
         (keyCode >= 48 && keyCode <= 57) ||
         (keyCode >= 97 && keyCode <= 122) ||
-        (keyCode >= 65 && keyCode <= 91)
+        (keyCode >= 64 && keyCode <= 91)
       ) {
         return true
       } else {

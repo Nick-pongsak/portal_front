@@ -863,7 +863,11 @@
                   <input
                     type="text"
                     v-model="profile.email"
-                    :placeholder="'-- หากมีโปรดระบุ --'"
+                    :placeholder="
+                      profile.type_login == 0
+                        ? '-- หากมีโปรดระบุ --'
+                        : $t('input_selected')
+                    "
                     :readonly="true"
                   />
                 </div>
@@ -1377,9 +1381,12 @@ export default {
       evt = evt ? evt : window.event
       var keyCode = evt.which ? evt.which : evt.keyCode
       if (
+        keyCode == 33 ||
+        keyCode == 35 ||
+        keyCode == 36 ||
         (keyCode >= 48 && keyCode <= 57) ||
         (keyCode >= 97 && keyCode <= 122) ||
-        (keyCode >= 65 && keyCode <= 91)
+        (keyCode >= 64 && keyCode <= 91)
       ) {
         return true
       } else {
