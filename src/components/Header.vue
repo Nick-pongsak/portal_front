@@ -1446,6 +1446,8 @@ export default {
             this.disPwdBtn = true
             this.errorPwd = false
             this.stepChangePwd = 1
+            this.errorNewPassword = false
+            this.errorCfNewPassword = false
           })
           .catch(error => {
             if (error && error.response && error.response.status === 400) {
