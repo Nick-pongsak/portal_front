@@ -275,6 +275,7 @@
                   :placeholder="'-- หากมีโปรดระบุ --'"
                   :disabled="enableInput"
                   @keypress="IsEmail"
+                  @keyup="enableBtnSave"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
                 />
               </div>
@@ -1104,7 +1105,7 @@ export default {
       let postname_th = item.postname_th.trim()
       let postname_en = item.postname_en.trim()
       let emp_code = item.emp_code.toString()
-      // let email = item.email.trim()
+      let email = item.email.trim()
       let password = ''
       if (item.password !== undefined) {
         password = item.password.trim()
@@ -1137,7 +1138,11 @@ export default {
             }
           }
         } else {
-          this.enableBtn = false
+          if (email.length > 0) {
+            this.enableBtn = false
+          } else {
+            this.enableBtn = true
+          }
         }
       } else {
         this.enableBtn = true
@@ -1250,7 +1255,6 @@ export default {
       }
     },
     IsEmail (evt) {
-      this.enableBtnSave()
       evt = evt ? evt : window.event
       var keyCode = evt.which ? evt.which : evt.keyCode
       if (
@@ -1261,6 +1265,7 @@ export default {
         (keyCode >= 97 && keyCode <= 122) ||
         (keyCode >= 64 && keyCode <= 91)
       ) {
+        this.enableBtnSave()
         return true
       } else {
         evt.preventDefault()

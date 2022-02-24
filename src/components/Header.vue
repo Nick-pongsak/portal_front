@@ -1201,7 +1201,19 @@ export default {
     },
     profileViewfile () {
       this.$store.dispatch('updateProfile', this.profile).then(res => {
+        let data = JSON.parse(JSON.stringify(this.info))
+        data.cx = this.profile.cx
+        data.name_en = this.profile.name_en
+        data.name_th = this.profile.name_th
+        data.nickname1_en = this.profile.nickname1_en
+        data.nickname1_th = this.profile.nickname1_th
+        data.nickname2_en = this.profile.nickname2_en
+        data.nickname2_th = this.profile.nickname2_th
+        data.phone = this.profile.phone
+        this.$store.commit('SetUser', data)
+        sessionStorage.setItem('info', JSON.stringify(data))
         this.profileView = true
+        this.enableInput = true
       })
     },
     editProfile () {
@@ -1351,7 +1363,11 @@ export default {
     DisableBtn () {
       let newPassword = JSON.stringify(this.newPassword)
       let cfNewPassword = JSON.stringify(this.cfNewPassword)
-      if (this.newPassword.length >= 6 && newPassword == cfNewPassword) {
+      if (
+        this.newPassword.length >= 6 &&
+        this.cfNewPassword.length >= 6 &&
+        newPassword == cfNewPassword
+      ) {
         this.disPwdBtn = false
       } else {
         this.disPwdBtn = true
