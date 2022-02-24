@@ -794,7 +794,8 @@ export default {
       enableBtn: true,
       oldUsername: this.data.password,
       oldPassword: this.data.origin_password,
-      defaultPassword: '99999999'
+      defaultPassword: '99999999',
+      typeLogin: 1
     }
   },
   computed: {
@@ -817,7 +818,7 @@ export default {
             .catch(error => {
               if (error && error.response && error.response.status === 500) {
                 if (this.editRow.mode == 'add') {
-                  this.editRow = this.master
+                  this.editRow = JSON.parse(JSON.stringify(this.master))
                   this.applist = []
                 }
                 this.list = []
@@ -853,6 +854,14 @@ export default {
       this.enableBtnSave()
     },
     selectedType (value) {
+      if (this.typeLogin !== value && this.editRow.mode == 'add') {
+        this.searchEmpCode = ''
+        this.typeLogin = value
+        this.editRow = JSON.parse(JSON.stringify(this.master))
+        this.editRow.emp_code = ''
+        this.applist = []
+        this.statusPermission = false
+      }
       this.editRow.type_login = value
       this.enableBtnSave()
       if (this.editRow.mode == 'add') {
@@ -1006,7 +1015,7 @@ export default {
             if (error && error.response && error.response.status === 500) {
               this.list = []
               if (this.editRow.mode == 'add') {
-                this.editRow = this.master
+                this.editRow = JSON.parse(JSON.stringify(this.master))
                 this.applist = []
               }
             } else if (
@@ -1041,7 +1050,7 @@ export default {
             if (error && error.response && error.response.status === 500) {
               this.list = []
               if (this.editRow.mode == 'add') {
-                this.editRow = this.master
+                this.editRow = JSON.parse(JSON.stringify(this.master))
                 this.applist = []
               }
             } else if (
@@ -1093,6 +1102,7 @@ export default {
             'พบการแก้ไขข้อมูล Username หรือ Password กรุณายืนยันการดำเนินการแก้ไข และบันทึกข้อมูลทั้งหมด'
           this.rightBtn = 'บันทึก'
         } else {
+          this.error = false
           this.dialog = true
           this.errorDialog = 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?'
           this.rightBtn = 'บันทึก'
@@ -1254,7 +1264,9 @@ export default {
       })
     },
     InCondition (value) {
-      if (value.length >= 6) {
+      if (value == this.defaultPassword && this.editRow.mode == 'edit') {
+        return true
+      } else if (value.length >= 6) {
         let condChar = /[a-zA-Z]/g
         let condNum = /[0-9]/g
         let rsChar = value.search(condChar)

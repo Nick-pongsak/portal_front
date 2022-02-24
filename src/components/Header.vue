@@ -1184,7 +1184,7 @@ export default {
         } else {
           this.errorList = true
         }
-        console.log('ConfirmUsername ===>')
+        // console.log('ConfirmUsername ===>')
       })
     },
     ChangePic () {
