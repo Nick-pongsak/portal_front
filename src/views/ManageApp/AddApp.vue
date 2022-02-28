@@ -842,6 +842,7 @@ export default {
       let rsCharac = value.search(charac)
       if (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0) {
         evt.target.value = ''
+         this.enableBtnSave()
       }
     }
   },
