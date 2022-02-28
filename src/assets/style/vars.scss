@@ -47,7 +47,8 @@ $lang: "th";
 //   @return Vue.config[lang];
 // }
 
-$mainFont: "Kanit";
-@if $lang == "en" {
-  $mainFont: "Roboto";
-}
+$mainFont: "";
+// $mainFont: "Kanit";
+// @if $lang == "en" {
+//   $mainFont: "Roboto";
+// }
