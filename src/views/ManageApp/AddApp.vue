@@ -100,7 +100,7 @@
                 :placeholder="$t('input_selected')"
                 maxlength="50"
                 @keypress="IsNumber"
-                @keyup="enableBtnSave"
+                @keyup="IsNumberUp"
               />
             </div>
           </div>
@@ -830,6 +830,18 @@ export default {
         return true
       } else {
         evt.preventDefault()
+      }
+    },
+    IsNumberUp (evt) {
+      let value = evt.target.value
+      let thai = /[ก-ฮ]/g
+      let numThai = /[๑-๙]/g
+      let charac = /[=%฿.-_$~`:;'"!@#^&{}/|+()[\]*\\]/g
+      let rsChar = value.search(thai)
+      let rsNum = value.search(numThai)
+      let rsCharac = value.search(charac)
+      if (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0) {
+        evt.target.value = ''
       }
     }
   },
