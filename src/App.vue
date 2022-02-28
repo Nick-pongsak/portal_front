@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :style="{ 'font-family': $i18n.locale == 'th' ? 'Kanit' : 'Roboto' }">
     <v-main>
       <router-view />
     </v-main>
