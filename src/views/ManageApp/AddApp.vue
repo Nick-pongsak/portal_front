@@ -836,13 +836,14 @@ export default {
       let value = evt.target.value
       let thai = /[ก-ฮ]/g
       let numThai = /[๑-๙]/g
-      let charac = /[=%฿.-_$~`:;'"!><@#^&{}/|+()[\]*\\]/g
+      let charac = /[-_=.%฿~`:;'"!><@#^&{}/|+()[\]*\\$]/g
+      // let charac = /[=%฿.-_$~`:;'"!><@#^&{}/|+()[\]*\\]/g
       let rsChar = value.search(thai)
       let rsNum = value.search(numThai)
       let rsCharac = value.search(charac)
       if (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0) {
-        evt.target.value = ''
-         this.enableBtnSave()
+        this.editRow.key_app = ''
+        this.enableBtnSave()
       }
     }
   },

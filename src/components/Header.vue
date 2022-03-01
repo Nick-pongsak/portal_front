@@ -206,7 +206,7 @@
             v-if="stepChangePic == 4"
             style="color:#CE1212;font-size:8px;padding-top:5px;text-align:center"
           >
-            {{ '* หากระบุข้อมูลดังกล่าวจะเป็นสาธารณะ' }}
+            <!-- {{ '* หากระบุข้อมูลดังกล่าวจะเป็นสาธารณะ' }} -->
           </div>
           <div
             v-if="stepChangePic == 0"
