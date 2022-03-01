@@ -152,14 +152,16 @@ export default {
     addUser (value) {
       this.currentView = {
         code: '1.1',
-        text: 'เพิ่มผู้ใช้งานระบบ'
+        th: 'เพิ่มผู้ใช้งานระบบ',
+        en: 'เพิ่มผู้ใช้งานระบบ'
       }
       this.editRow = JSON.parse(JSON.stringify(this.masterUser))
     },
     editUser (value) {
       this.currentView = {
         code: '1.1',
-        text: 'แก้ไขผู้ใช้งานระบบ'
+        th: 'แก้ไขผู้ใช้งานระบบ',
+        en: 'แก้ไขผู้ใช้งานระบบ'
       }
       this.editRow = value
       this.editRow.mode = 'edit'

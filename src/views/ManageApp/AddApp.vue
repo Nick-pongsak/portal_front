@@ -202,7 +202,7 @@
           </div>
         </div>
         <div class="rows">
-          <div style="width:30%" class="rows-name">รูปแบนเนอร์</div>
+          <div style="width:30%;align-items: start;" class="rows-name">รูปแบนเนอร์</div>
           <div style="width:70%" class="rows-input">
             <!-- :loading="isSelecting" -->
             <v-btn

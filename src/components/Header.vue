@@ -1173,7 +1173,7 @@ export default {
   methods: {
     ConfirmUsername () {
       let obj = {
-        url: '/auth/login?',
+        url: '/auth/loginapp?',
         username: this.usernameList.trim(),
         password: this.passwordList.trim(),
         host: '10.7.200.178:82'
