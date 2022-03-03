@@ -698,7 +698,7 @@ export default {
             if (res.status == 215) {
               this.btnClick = 'confirm-clear'
               this.dialog = true
-              this.errorDialog = this.$t('popup.text7')
+              this.errorDialog = this.$t('popup.text4')
               this.rightBtn = this.$t('btn_confirm')
             } else {
               this.btnClick = 'error'

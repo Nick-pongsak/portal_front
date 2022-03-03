@@ -597,8 +597,7 @@ export default {
             if (res.status == 222) {
               this.btnClick = 'error'
               this.dialog = true
-              this.errorDialog =
-                'ไม่สามารถลบข้อมูลได้ เนื่องจากพบการใช้งาน ข้อมูลดังกล่าวอยู่ กรุณาตรวจสอบอีกครั้ง'
+              this.errorDialog = this.$t('popup.text7')
               this.error = true
             } else {
               this.btnClick = 'error'
