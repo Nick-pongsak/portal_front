@@ -101,13 +101,16 @@
                           text
                           @click="openLogin(item)"
                           :style="{
+                            width: 'auto',
                             background:
                               item.status == 1 ? '#ce1212' : '#FBC02D',
                             cursor: item.status == 1 ? 'pointer' : 'unset'
                           }"
                         >
                           {{
-                            item.status == 1 ? $t('btn_signin') : 'ปิดปรับปรุง'
+                            item.status == 1
+                              ? $t('btn_signin')
+                              : $t('btn_maintenance')
                           }}
                         </v-btn>
                       </v-card-actions>
@@ -172,7 +175,9 @@
             class="cancel-btn"
             v-show="selectedRow.status == 1"
           >
-            {{ selectedRow.status == 1 ? $t('btn_signin') : 'ปิดปรับปรุง' }}
+            {{
+              selectedRow.status == 1 ? $t('btn_signin') : $t('btn_maintenance')
+            }}
           </v-btn>
         </v-card-actions>
       </v-card>

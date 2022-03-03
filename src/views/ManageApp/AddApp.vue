@@ -3,7 +3,7 @@
     <v-card style="padding:20px 5px 20px 20px;height: calc(100% - 10px);">
       <div class="detail-add">
         <div class="rows">
-          <div style="width:30%" class="rows-name">ชื่อแอปพลิเคชัน (TH)</div>
+          <div style="width:30%" class="rows-name">{{ $t('app.text3') }}</div>
           <div style="width:70%" class="rows-input">
             <div class="input-with-icon" style="width: 365px;">
               <input
@@ -18,7 +18,7 @@
           </div>
         </div>
         <div class="rows">
-          <div style="width:30%" class="rows-name">ชื่อแอปพลิเคชัน (EN)</div>
+          <div style="width:30%" class="rows-name">{{ $t('app.text4') }}</div>
           <div style="width:70%" class="rows-input">
             <div class="input-with-icon" style="width: 365px;">
               <input
@@ -34,7 +34,7 @@
         </div>
         <div class="rows">
           <div style="width:30%" class="rows-name">
-            คำอธิบายแอปพลิเคชั่น (TH)
+            {{ $t('app.text5') }}
           </div>
           <div style="width:70%;padding-right:25px" class="rows-input">
             <div class="input-with-icon" style="width: 100%">
@@ -49,7 +49,7 @@
         </div>
         <div class="rows">
           <div style="width:30%" class="rows-name">
-            คำอธิบายแอปพลิเคชั่น (EN)
+            {{ $t('app.text6') }}
           </div>
           <div style="width:70%;padding-right:25px" class="rows-input">
             <div class="input-with-icon" style="width: 100%">
@@ -63,7 +63,7 @@
           </div>
         </div>
         <div class="rows">
-          <div style="width:30%" class="rows-name">หมวดหมู่</div>
+          <div style="width:30%" class="rows-name">{{ $t('app.text1') }}</div>
           <div style="width:70%;display:flex" class="rows-input">
             <div class="input-with-icon" style="width: 365px;">
               <v-select
@@ -91,7 +91,7 @@
           </div>
         </div>
         <div class="rows">
-          <div style="width:30%" class="rows-name">รหัสแอปพลิเคชัน</div>
+          <div style="width:30%" class="rows-name">{{ $t('app.text7') }}</div>
           <div style="width:70%" class="rows-input">
             <div class="input-with-icon" style="width: 365px;">
               <input
@@ -106,7 +106,9 @@
           </div>
         </div>
         <div class="rows">
-          <div style="width:30%" class="rows-name">ประเภทการเข้าใช้งานระบบ</div>
+          <div style="width:30%" class="rows-name">
+            {{ $t('profile.account_2') }}
+          </div>
           <div style="width:70%" class="rows-input">
             <v-radio-group v-model="editRow.type_login" style="display:flex">
               <div class="radio" style="margin-right: 65px;">
@@ -117,7 +119,7 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div>LDAP (AD)</div>
+                <div>{{ $t('master.type_login_0') }}</div>
               </div>
               <div class="radio">
                 <v-radio
@@ -127,13 +129,13 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div>ผู้ใช้งานภายในระบบ</div>
+                <div>{{ $t('app.text20') }}</div>
               </div>
             </v-radio-group>
           </div>
         </div>
         <div class="rows">
-          <div style="width:30%" class="rows-name">สถานะการเชื่อมต่อ SSO</div>
+          <div style="width:30%" class="rows-name">{{ $t('app.text8') }}</div>
           <div style="width:70%" class="rows-input">
             <v-radio-group v-model="editRow.status_sso" style="display:flex">
               <div class="radio">
@@ -144,7 +146,7 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div>เปิดใช้งาน</div>
+                <div>{{ $t('user.text7') }}</div>
               </div>
               <div class="radio">
                 <v-radio
@@ -154,13 +156,13 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div>ปิดใช้งาน</div>
+                <div>{{ $t('user.text8') }}</div>
               </div>
             </v-radio-group>
           </div>
         </div>
         <div class="rows">
-          <div style="width:30%" class="rows-name">สถานะแอปพลิเคชัน</div>
+          <div style="width:30%" class="rows-name">{{ $t('app.text9') }}</div>
           <div style="width:70%" class="rows-input">
             <v-radio-group v-model="editRow.status" style="display:flex">
               <div class="radio">
@@ -171,7 +173,7 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div>เปิดใช้งาน</div>
+                <div>{{ $t('user.text7') }}</div>
               </div>
               <div class="radio">
                 <v-radio
@@ -181,13 +183,13 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div>ปิดใช้งาน</div>
+                <div>{{ $t('user.text8') }}</div>
               </div>
             </v-radio-group>
           </div>
         </div>
         <div class="rows">
-          <div style="width:30%" class="rows-name">URL ระบบ</div>
+          <div style="width:30%" class="rows-name">{{ $t('app.text10') }}</div>
           <div style="width:70%" class="rows-input">
             <div class="input-with-icon" style="width: 544px;">
               <input
@@ -203,7 +205,7 @@
         </div>
         <div class="rows">
           <div style="width:30%;align-items: start;" class="rows-name">
-            รูปแบนเนอร์
+            {{ $t('app.text11') }}
           </div>
           <div style="width:70%" class="rows-input">
             <!-- :loading="isSelecting" -->
@@ -300,10 +302,10 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn class="cancel" text @click="cancel()" v-show="!error">
-            ยกเลิก
+            {{ $t('btn_cancel') }}
           </v-btn>
           <v-btn text @click="save()" class="save">
-            {{ error ? 'ปิด' : rightBtn }}
+            {{ error ? $t('btn_close') : rightBtn }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -327,7 +329,7 @@
           <div v-if="editMode">
             <div class="rows-form" style="padding-top:30px">
               <div class="rows-title" style="margin-right:70px">
-                {{ 'หมวดหมู่ (TH)' }}
+                {{ $t('app.text13') }}
               </div>
               <div class="input-with-icon">
                 <input
@@ -340,7 +342,7 @@
             </div>
             <div class="rows-form" style="margin-top:30px">
               <div class="rows-title" style="margin-right:70px">
-                {{ 'หมวดหมู่ (EN)' }}
+                {{ $t('app.text14') }}
               </div>
               <div class="input-with-icon">
                 <input
@@ -407,7 +409,7 @@
                   style="width:10%"
                   @click="sort(headCol[0], 0)"
                 >
-                  <div class="column-name">No</div>
+                  <div class="column-name">{{ $t('manageapp.text0') }}</div>
                   <v-icon
                     v-text="sortNo == 0 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
@@ -419,7 +421,7 @@
                   style="width:40%"
                   @click="sort(headCol[1], 1)"
                 >
-                  <div class="column-name">หมวดหมู่ (TH)</div>
+                  <div class="column-name">{{ $t('app.text13') }}</div>
                   <v-icon
                     v-text="sortNo == 1 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
@@ -432,7 +434,7 @@
                   @click="sort(headCol[2], 2)"
                 >
                   <div class="column-name">
-                    หมวดหมู่ (EN)
+                    {{ $t('app.text14') }}
                   </div>
                   <v-icon
                     v-text="sortNo == 2 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -568,10 +570,13 @@ export default {
   },
   methods: {
     renderTitle () {
-      let mode = this.modeAdd ? 'เพิ่ม' : 'แก้ไข'
-      return this.editMode
-        ? mode + 'หมวดหมู่ของแอปพลิเคชัน'
-        : 'การจัดการหมวดหมู่ของแอปพลิเคชัน'
+      let mode = ''
+      if (this.$i18n.locale == 'en') {
+        mode = this.modeAdd ? 'Add Category' : 'Edit Category'
+      } else {
+        mode = this.modeAdd ? this.$t('app.text15') : this.$t('app.text18')
+      }
+      return this.editMode ? mode : this.$t('app.text12')
     },
     setImage: function (output) {
       this.hasImage = true

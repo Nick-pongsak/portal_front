@@ -152,16 +152,16 @@ export default {
     addUser (value) {
       this.currentView = {
         code: '1.1',
-        th: 'เพิ่มผู้ใช้งานระบบ',
-        en: 'เพิ่มผู้ใช้งานระบบ'
+        th: 'เพิ่มข้อมูลผู้ใช้งาน',
+        en: 'Add User Information'
       }
       this.editRow = JSON.parse(JSON.stringify(this.masterUser))
     },
     editUser (value) {
       this.currentView = {
         code: '1.1',
-        th: 'แก้ไขผู้ใช้งานระบบ',
-        en: 'แก้ไขผู้ใช้งานระบบ'
+        th: 'แก้ไขข้อมูลผู้ใช้งาน',
+        en: 'Edit User Information'
       }
       this.editRow = value
       this.editRow.mode = 'edit'
@@ -189,19 +189,19 @@ export default {
     clearApp (value) {
       this.currentView = {
         code: '2',
-        text: 'การจัดการแอปพลิเคชันที่เชื่อมต่อ'
+        text: 'รายการแอปพลิเคชัน'
       }
     },
     cancelApp (value) {
       this.currentView = {
         code: '2',
-        text: 'การจัดการแอปพลิเคชันที่เชื่อมต่อ'
+        text: 'รายการแอปพลิเคชัน'
       }
     },
     saveApp (value) {
       this.currentView = {
         code: '2',
-        text: 'การจัดการแอปพลิเคชันที่เชื่อมต่อ'
+        text: 'รายการแอปพลิเคชัน'
       }
     },
     addApp (value) {
@@ -211,11 +211,11 @@ export default {
         code: value.code,
         th:
           value.code == '2.1'
-            ? 'เพิ่มแอปพลิเคชัน'
+            ? 'Add Application'
             : 'เพิ่มกลุ่มผู้ใช้งานแอปพลิเคชัน',
         en:
           value.code == '2.1'
-            ? 'เพิ่มแอปพลิเคชัน'
+            ? 'Add Application'
             : 'เพิ่มกลุ่มผู้ใช้งานแอปพลิเคชัน'
       }
       this.activeTab = value
@@ -283,14 +283,14 @@ export default {
       let masterMenu = [
         {
           code: '1',
-          th: 'ผู้ใช้งานระบบ',
-          en: 'User',
+          th: 'ข้อมูลผู้ใช้งาน',
+          en: 'User Information',
           child: []
         },
         {
           code: '2',
-          th: 'การจัดการแอปพลิเคชันที่เชื่อมต่อ',
-          en: 'Application Management',
+          th: 'รายการแอปพลิเคชัน',
+          en: 'Application List',
           child: [
             {
               code: '2.1',
@@ -300,7 +300,7 @@ export default {
             {
               code: '2.2',
               th: 'จัดกลุ่มผู้ใช้งานแอปพลิเคชัน',
-              en: 'Application Group'
+              en: 'Application Grouping'
             }
           ]
         }

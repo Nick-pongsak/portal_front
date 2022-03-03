@@ -3,7 +3,9 @@
     <v-card style="padding:20px 5px 20px 20px;height: calc(100% - 10px);">
       <div class="detail-add">
         <div class="rows">
-          <div style="width:20%" class="rows-name">ประเภทการเข้าใช้งานระบบ</div>
+          <div style="width:20%" class="rows-name">
+            {{ $t('profile.account_2') }}
+          </div>
           <div
             v-if="editRow.mode == 'edit'"
             :style="{
@@ -13,7 +15,9 @@
             class="rows-name"
           >
             {{
-              editRow.type_login == 1 ? 'LDAP (AD)' : 'ผู้ใช้งานบนแอปพลิเคชัน'
+              editRow.type_login == 0
+                ? $t('master.type_login_0')
+                : $t('master.type_login_1')
             }}
           </div>
           <div
@@ -34,7 +38,7 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div style="padding-top:4px">LDAP (AD)</div>
+                <div style="padding-top:4px">{{$t('master.type_login_1')}}</div>
               </div>
               <div class="radio">
                 <v-radio
@@ -45,7 +49,7 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div style="padding-top:4px">ผู้ใช้งานบนแอปพลิเคชัน</div>
+                <div style="padding-top:4px">{{$t('master.type_login_0')}}</div>
               </div>
             </v-radio-group>
           </div>
@@ -62,7 +66,7 @@
               v-model="editRow.status_permission"
               hide-details
             ></v-checkbox>
-            <div style="padding-top:4px">ผู้ดูแลระบบ</div>
+            <div style="padding-top:5px">{{$t('user.text10')}}</div>
             <div
               class="input-with-icon"
               v-show="statusPermission"
@@ -72,7 +76,7 @@
                 v-model="editRow.admin_menu"
                 :items="items_menu"
                 :placeholder="$t('input_selected')"
-                item-text="name_th"
+                :item-text="'name_' + $i18n.locale"
                 item-value="menu_id"
                 persistent-hint
                 single-line
@@ -85,14 +89,14 @@
           class="rows"
           v-show="editRow.type_login == 1 && editRow.mode == 'add'"
         >
-          <div style="width:20%" class="rows-name">ค้นหาพนักงาน</div>
+          <div style="width:20%" class="rows-name">{{ $t('user.text12') }}</div>
           <div style="width:80%;display:flex" class="rows-input">
             <div class="input-with-icon" style="width: 200px;">
               <div class="input-with-icon" style="width: 200px;">
                 <input
                   type="text"
                   v-model="searchEmpCode"
-                  :placeholder="'-- โปรดระบุรหัสพนักงาน --'"
+                  :placeholder="$t('user.text13')"
                   maxlength="250"
                   v-on:keyup.enter="onEnter"
                 />
@@ -112,7 +116,9 @@
           </div>
         </div>
         <div class="rows">
-          <div style="width:20%" class="rows-name">รหัสพนักงาน</div>
+          <div style="width:20%" class="rows-name">
+            {{ $t('profile.account_3') }}
+          </div>
           <div style="width:80%" class="rows-input">
             <div class="input-with-icon" style="width: 200px;">
               <input
@@ -130,7 +136,9 @@
         </div>
         <div class="rows">
           <div style="width:50%;display: flex;">
-            <div style="width:40%" class="rows-name">ชื่อ - นามสกุล (TH)</div>
+            <div style="width:40%" class="rows-name">
+              {{ $t('profile.account_4') }}
+            </div>
             <div style="width:60%" class="rows-input">
               <div class="input-with-icon">
                 <input
@@ -147,7 +155,7 @@
           </div>
           <div style="width:50%;;display: flex;">
             <div style="width:40%" class="rows-name">
-              ชื่อ - นามสกุล (EN)
+              {{ $t('profile.account_5') }}
             </div>
             <div style="width:60%;padding-right:25px" class="rows-input">
               <div class="input-with-icon">
@@ -166,13 +174,15 @@
         </div>
         <div class="rows">
           <div style="width:50%;display: flex;">
-            <div style="width:40%" class="rows-name">ชื่อเล่น (TH)</div>
+            <div style="width:40%" class="rows-name">
+              {{ $t('profile.account_6') }}
+            </div>
             <div style="width:60%" class="rows-input">
               <div class="input-with-icon">
                 <input
                   type="text"
                   v-model="editRow.nickname1_th"
-                  :placeholder="'-- หากมีโปรดระบุ --'"
+                  :placeholder="$t('input_not_selected')"
                   :disabled="enableInput"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
                 />
@@ -181,14 +191,14 @@
           </div>
           <div style="width:50%;;display: flex;">
             <div style="width:40%" class="rows-name">
-              ชื่อเล่น (EN)
+              {{ $t('profile.account_7') }}
             </div>
             <div style="width:60%;padding-right:25px" class="rows-input">
               <div class="input-with-icon">
                 <input
                   type="text"
                   v-model="editRow.nickname1_en"
-                  :placeholder="'-- หากมีโปรดระบุ --'"
+                  :placeholder="$t('input_not_selected')"
                   :disabled="enableInput"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
                 />
@@ -198,13 +208,15 @@
         </div>
         <div class="rows">
           <div style="width:50%;display: flex;">
-            <div style="width:40%" class="rows-name">ฉายา (TH)</div>
+            <div style="width:40%" class="rows-name">
+              {{ $t('profile.account_8') }}
+            </div>
             <div style="width:60%" class="rows-input">
               <div class="input-with-icon">
                 <input
                   type="text"
                   v-model="editRow.nickname2_th"
-                  :placeholder="'-- หากมีโปรดระบุ --'"
+                  :placeholder="$t('input_not_selected')"
                   :disabled="enableInput"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
                 />
@@ -213,14 +225,14 @@
           </div>
           <div style="width:50%;;display: flex;">
             <div style="width:40%" class="rows-name">
-              ฉายา (EN)
+              {{ $t('profile.account_9') }}
             </div>
             <div style="width:60%;padding-right:25px" class="rows-input">
               <div class="input-with-icon">
                 <input
                   type="text"
                   v-model="editRow.nickname2_en"
-                  :placeholder="'-- หากมีโปรดระบุ --'"
+                  :placeholder="$t('input_not_selected')"
                   :disabled="enableInput"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
                 />
@@ -230,7 +242,9 @@
         </div>
         <div class="rows">
           <div style="width:50%;display: flex;">
-            <div style="width:40%" class="rows-name">ตำแหน่งงาน (TH)</div>
+            <div style="width:40%" class="rows-name">
+              {{ $t('profile.account_10') }}
+            </div>
             <div style="width:60%" class="rows-input">
               <div class="input-with-icon">
                 <input
@@ -247,7 +261,7 @@
           </div>
           <div style="width:50%;;display: flex;">
             <div style="width:40%" class="rows-name">
-              ตำแหน่งงาน (EN)
+              {{ $t('profile.account_11') }}
             </div>
             <div style="width:60%;padding-right:25px" class="rows-input">
               <div class="input-with-icon">
@@ -266,7 +280,9 @@
         </div>
         <div class="rows">
           <div style="width:50%;display: flex;">
-            <div style="width:40%" class="rows-name">อีเมล</div>
+            <div style="width:40%" class="rows-name">
+              {{ $t('profile.account_12') }}
+            </div>
             <div style="width:60%" class="rows-input">
               <div class="input-with-icon">
                 <input
@@ -274,7 +290,7 @@
                   v-model="editRow.email"
                   :placeholder="
                     editRow.type_login == 0
-                      ? '-- หากมีโปรดระบุ --'
+                      ? $t('input_not_selected')
                       : $t('input_selected')
                   "
                   :disabled="enableInput"
@@ -287,14 +303,14 @@
           </div>
           <div style="width:50%;;display: flex;">
             <div style="width:40%" class="rows-name">
-              3CX
+              {{ $t('profile.account_13') }}
             </div>
             <div style="width:60%;padding-right:25px" class="rows-input">
               <div class="input-with-icon">
                 <input
                   type="text"
                   v-model="editRow.cx"
-                  :placeholder="'-- หากมีโปรดระบุ --'"
+                  :placeholder="$t('input_not_selected')"
                   :disabled="enableInput"
                   @keypress="isNumber"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
@@ -305,26 +321,28 @@
         </div>
         <div class="rows" style="padding-bottom:3px">
           <div style="width:50%;display: flex;">
-            <div style="width:40%;height:27px" class="rows-name">เบอร์โทร</div>
+            <div style="width:40%;height:27px" class="rows-name">
+              {{ $t('profile.account_14') }}
+            </div>
             <div style="width:60%" class="rows-input">
               <div class="input-with-icon">
                 <input
                   type="text"
                   v-model="editRow.phone"
-                  :placeholder="'-- หากมีโปรดระบุ --'"
+                  :placeholder="$t('input_not_selected')"
                   :disabled="enableInput"
                   @keypress="isNumber"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
                 />
               </div>
               <div style="color:#CE1212;font-size:8px;padding-top:5px">
-                * หากระบุข้อมูลดังกล่าวจะเป็นสาธารณะ
+                {{ $t('profile.account_15') }}
               </div>
             </div>
           </div>
           <div style="width:50%;;display: flex;">
             <div style="width:40%;height:27px" class="rows-name">
-              สถานะ
+              {{ $t('user.text5') }}
             </div>
             <div
               style="width:60%;padding-right:25px;padding-top:5px"
@@ -340,7 +358,7 @@
                     :messages="false"
                     :light="false"
                   ></v-radio>
-                  <div>เปิดใช้งาน</div>
+                  <div>{{ $t('user.text7') }}</div>
                 </div>
                 <div class="radio">
                   <v-radio
@@ -351,7 +369,7 @@
                     :messages="false"
                     :light="false"
                   ></v-radio>
-                  <div>ปิดใช้งาน</div>
+                  <div>{{ $t('user.text8') }}</div>
                 </div>
               </v-radio-group>
             </div>
@@ -363,7 +381,9 @@
           style="margin-top:8px"
         >
           <div style="width:50%;display: flex;">
-            <div style="width:40%" class="rows-name">ชื่อผู้ใช้งาน</div>
+            <div style="width:40%" class="rows-name">
+              {{ $t('manageapp.text6') }}
+            </div>
             <div style="width:60%;display:flex" class="rows-input">
               <div class="input-with-icon" style="margin-right:10px">
                 <input
@@ -387,15 +407,15 @@
                   ></v-icon>
                 </template>
                 <span style="font-size:13px"
-                  >ชื่อผู้ใช้งานต้องยาวอย่างน้อย 6 ตัวอักษรประกอบไปด้วย<br />
-                  ตัวเลขหรือตัวอักษรภาษาอังกฤษ ตัวพิมพ์เล็กหรือพิมพ์<br />ใหญ่</span
+                  >{{ $t('user.text15') }}<br />
+                  {{ $t('user.text16') }}</span
                 >
               </v-tooltip>
             </div>
           </div>
           <div style="width:50%;;display: flex;">
             <div style="width:40%" class="rows-name">
-              รหัสผ่าน
+              {{ $t('manageapp.text7') }}
             </div>
             <div
               style="width:60%;padding-right:25px;display:flex;"
@@ -423,9 +443,9 @@
                   ></v-icon>
                 </template>
                 <span style="font-size:13px"
-                  >รหัสผ่านต้องยาวอย่างน้อย 6 ตัวอักษรและประกอบไปด้วย<br />
-                  1) ตัวเลข 0 - 9<br />
-                  2) ตัวอักษรภาษาอังกฤษตัวพิมพ์เล็กหรือพิมพ์ใหญ่</span
+                  >{{ $t('pwd.text9') }}<br />
+                  {{ $t('pwd.text7') }}<br />
+                  {{ $t('pwd.text8') }}</span
                 >
               </v-tooltip>
             </div>
@@ -436,7 +456,7 @@
           :style="{ 'margin-top': editRow.type_login == 1 ? '8px' : '0px' }"
         >
           <div style="width:20%" class="rows-name">
-            กลุ่มผู้ใช้งานแอปพลิเคชัน
+            {{ $t('user.text3') }}
           </div>
           <div style="width:80%" class="rows-input">
             <div class="input-with-icon" style="width: 300px;">
@@ -447,7 +467,7 @@
                 v-model="editRow.group_id"
                 :items="items"
                 :placeholder="$t('input_selected')"
-                item-text="name_th"
+                :item-text="'name_' + $i18n.locale"
                 item-value="group_id"
                 persistent-hint
                 single-line
@@ -483,7 +503,7 @@
                   @click="sort2(headCol2[1], 1)"
                 >
                   <div class="column-name">
-                    {{ 'แอปพิเคชัน' }}
+                    {{ $t('manageapp.text1') }}
                   </div>
                   <v-icon
                     v-text="sortNo2 == 1 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -497,7 +517,7 @@
                   @click="sort2(headCol2[2], 2)"
                 >
                   <div class="column-name">
-                    {{ 'การเข้าใช้งานระบบ' }}
+                    {{ $t('manageapp.text2') }}
                   </div>
                   <v-icon
                     v-text="sortNo2 == 2 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -539,7 +559,7 @@
                       <input
                         type="text"
                         v-model="item.username"
-                        :placeholder="'-- หากมีโปรดระบุ --'"
+                        :placeholder="$t('input_not_selected')"
                       />
                       <!-- :disabled="enableInput"
                         :style="{ background: enableInput ? '#D1D1D1' : '' }" -->
@@ -598,10 +618,10 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn class="cancel" text @click="cancel()" v-show="!error">
-            ยกเลิก
+            {{ $t('btn_cancel') }}
           </v-btn>
           <v-btn text @click="save()" class="save">
-            {{ error ? 'ปิด' : rightBtn }}
+            {{ error ? $t('btn_close') : rightBtn }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -619,7 +639,7 @@
         </div>
         <div>
           <div class="head-menu5">
-            {{ 'รายชื่อพนักงานที่พบ' }}
+            {{  $t('user.text14') }}
           </div>
           <div class="line-page" style="margin-top:8px"></div>
           <div style="width:100%;margin-top:15px">
@@ -643,7 +663,7 @@
                   style="width:10%"
                   @click="sort(headCol[0], 0)"
                 >
-                  <div class="column-name">No</div>
+                  <div class="column-name">{{ $t('manageapp.text0') }}</div>
                   <v-icon
                     v-text="sortNo == 0 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
@@ -655,7 +675,7 @@
                   style="width:20%"
                   @click="sort(headCol[1], 1)"
                 >
-                  <div class="column-name">รหัสพนักงาน</div>
+                  <div class="column-name">{{ $t('profile.account_3') }}</div>
                   <v-icon
                     v-text="sortNo == 1 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
@@ -668,7 +688,7 @@
                   @click="sort(headCol[2], 2)"
                 >
                   <div class="column-name">
-                    ชื่อ - นามสกุล
+                    {{ $t('user.text1') }}
                   </div>
                   <v-icon
                     v-text="sortNo == 2 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -682,7 +702,7 @@
                   @click="sort(headCol[3], 3)"
                 >
                   <div class="column-name">
-                    ตำแหน่ง
+                    {{ $t('user.text2') }}
                   </div>
                   <v-icon
                     v-text="sortNo == 3 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -718,7 +738,7 @@
                     {{ item['name_' + $i18n.locale] }}
                   </div>
                   <div class="body" style="width:30%;padding-top:5px">
-                    {{ item.postname_th }}
+                    {{ item['postname_' + $i18n.locale] }}
                   </div>
                   <div
                     class="body center-vh"
@@ -783,10 +803,12 @@ export default {
       items_menu: [
         {
           name_th: 'ข้อมูลผู้ใช้งาน',
+          name_en: 'User Information',
           menu_id: 0
         },
         {
           name_th: 'ทั้งหมด',
+          name_en: 'All Menu',
           menu_id: 1
         }
       ],
@@ -845,9 +867,11 @@ export default {
   methods: {
     renderAcess (item) {
       if (item.status_sso == 1) {
-        return item.type_login ? 'LDAP (AD)' : 'Username : '
+        return item.type_login
+          ? this.$t('master.type_login_1')
+          : this.$t('manageapp.text4')
       } else {
-        return 'เข้าใช้งานผ่านตัวระบบเท่านั้น'
+        return this.$t('manageapp.text3')
       }
     },
     selectedPermission (evt) {
@@ -1215,7 +1239,7 @@ export default {
               this.error = true
               this.errorDialog =
                 'ไม่สามารถบันทึกข้อมูลได้ เนื่องจากรหัสพนักงานหรือชื่อผู้ใช้งานนี้ ถูกใช้งานแล้ว'
-              this.rightBtn = 'ปิด'
+              this.rightBtn = this.$t('btn_close')
             } else {
               if (
                 this.editRow.mode == 'edit' &&
@@ -1238,7 +1262,7 @@ export default {
                 this.error = true
                 this.errorDialog =
                   'ไม่สามารถบันทึกข้อมูลได้ เนื่องจากรหัสพนักงานหรือชื่อผู้ใช้งานนี้ ถูกใช้งานแล้ว'
-                this.rightBtn = 'ปิด'
+                this.rightBtn = this.$t('btn_close')
               } else {
                 if (
                   this.editRow.mode == 'edit' &&

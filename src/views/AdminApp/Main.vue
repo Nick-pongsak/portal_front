@@ -46,7 +46,7 @@
             style="width:12%;padding-left:8px"
             @click="sort(headCol[1], 1)"
           >
-            <div class="column-name">{{ 'รหัสพนักงาน' }}</div>
+            <div class="column-name">{{ $t('profile.account_3')}}</div>
             <v-icon
               v-text="sortNo == 1 ? 'mdi-menu-up' : 'mdi-menu-down'"
               style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
@@ -55,7 +55,7 @@
           </div>
           <div class="head" style="width:17%" @click="sort(headCol[2], 2)">
             <div class="column-name">
-              {{ 'ชื่อ-นามสกุล' }}
+              {{ $t('user.text1') }}
             </div>
             <v-icon
               v-text="sortNo == 2 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -65,7 +65,7 @@
           </div>
           <div class="head" style="width:18%" @click="sort(headCol[3], 3)">
             <div class="column-name">
-              {{ 'ตำแหน่ง' }}
+              {{ $t('user.text2') }}
             </div>
             <v-icon
               v-text="sortNo == 3 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -75,7 +75,7 @@
           </div>
           <div class="head" style="width:17%" @click="sort(headCol[4], 4)">
             <div class="column-name">
-              {{ 'กลุ่มผู้ใช้งานแอปฯ' }}
+              {{ $t('user.text3') }}
             </div>
             <v-icon
               v-text="sortNo == 4 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -85,7 +85,7 @@
           </div>
           <div class="head" style="width:15%" @click="sort(headCol[5], 5)">
             <div class="column-name">
-              {{ 'การเข้าใช้งาน' }}
+              {{ $t('user.text4') }}
             </div>
             <v-icon
               v-text="sortNo == 5 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -95,7 +95,7 @@
           </div>
           <div class="head" style="width:9%" @click="sort(headCol[6], 6)">
             <div class="column-name">
-              {{ 'สถานะ' }}
+              {{ $t('user.text5') }}
             </div>
             <v-icon
               v-text="sortNo == 6 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -131,13 +131,17 @@
               {{ item['name_' + $i18n.locale] }}
             </div>
             <div class="body" style="width:18%;padding-top:5px">
-              {{ item['postname_' + $i18n.locale]}}
+              {{ item['postname_' + $i18n.locale] }}
             </div>
             <div class="body" style="width:17%;padding-top:5px">
-              {{ item['group_name_' + $i18n.locale]}}
+              {{ item['group_name_' + $i18n.locale] }}
             </div>
             <div class="body" style="width:15%;display:flex;padding-top: 5px;">
-              {{ item.type_login ? 'LDAP (AD)' : 'ผู้ใช้งานบนแอปพลิเคชัน' }}
+              {{
+                item.type_login == 0
+                  ? $t('master.type_login_0')
+                  : $t('master.type_login_1')
+              }}
             </div>
             <div
               class="body"
@@ -148,7 +152,7 @@
                 color: item.status ? '#66BB6A' : '#FBC02D'
               }"
             >
-              {{ item.status ? 'เปิดใช้งาน' : 'ปิดการใช้งาน' }}
+              {{ item.status ? $t('user.text7') :  $t('user.text8') }}
             </div>
             <div class="body" style="width:6%;display:flex;padding-left:12px">
               <v-icon

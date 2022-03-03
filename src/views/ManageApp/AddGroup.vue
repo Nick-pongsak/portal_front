@@ -56,7 +56,7 @@
                   style="width:10%"
                   @click="sort(headCol[0], 0)"
                 >
-                  <div class="column-name">No</div>
+                  <div class="column-name">{{ $t('manageapp.text0') }}</div>
                   <v-icon
                     v-text="sortNo == 0 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
@@ -152,7 +152,7 @@
                       color: item.status == true ? '#66BB6A' : '#FBC02D'
                     }"
                   >
-                    {{ item.status == true ? 'เปิดใช้งาน' : 'ปิดการใช้งาน' }}
+                    {{ item.status == true ? $t('user.text7') : $t('user.text8') }}
                   </div>
                 </div>
               </div>
@@ -211,7 +211,7 @@
             ยกเลิก
           </v-btn>
           <v-btn text @click="save()" class="save">
-            {{ error ? 'ปิด' : rightBtn }}
+            {{ error ? $t('btn_close') : rightBtn }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -250,7 +250,7 @@
                   style="width:10%"
                   @click="sort2(headCol[0], 0)"
                 >
-                  <div class="column-name">No</div>
+                  <div class="column-name">{{ $t('manageapp.text0') }}</div>
                   <v-icon
                     v-text="sortNo2 == 0 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
@@ -262,7 +262,7 @@
                   style="width:30%"
                   @click="sort2(headCol[1], 1)"
                 >
-                  <div class="column-name">แอปพิเคชัน</div>
+                  <div class="column-name">{{ $t('manageapp.text1') }}</div>
                   <v-icon
                     v-text="sortNo2 == 1 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
@@ -341,7 +341,7 @@
                       color: item.status == true ? '#66BB6A' : '#FBC02D'
                     }"
                   >
-                    {{ item.status == true ? 'เปิดใช้งาน' : 'ปิดการใช้งาน' }}
+                    {{ item.status == true ? $t('user.text7') : $t('user.text8') }}
                   </div>
                 </div>
               </div>
@@ -459,11 +459,9 @@ export default {
       this.groupDialog = false
     },
     renderText (row) {
-      if (row.type_login == 1) {
-        return 'LDAP (AP)'
-      } else if (row.type_login == 0) {
-        return 'ผู้ใช้งานบนแอปพลิเคชัน'
-      }
+      return row.type_login == 0
+        ? this.$t('master.type_login_0')
+        : this.$t('master.type_login_1')
     },
     sort (feild, index) {
       this.sortNo = this.sortNo == index ? null : index

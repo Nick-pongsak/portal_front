@@ -38,7 +38,7 @@
         <v-list id="change-languages-body">
           <div class="first">
             <div class="text" @click="SetLanguages('th')">
-              ภาษาไทย (TH)
+              {{ $t('lang.list_1') }}
             </div>
             <v-icon
               v-show="language == 'th'"
@@ -49,7 +49,7 @@
           </div>
           <div class="second">
             <div class="text" @click="SetLanguages('en')">
-              ภาษาอังกฤษ (EN)
+              {{ $t('lang.list_2') }}
             </div>
             <v-icon
               v-show="language == 'en'"
@@ -82,9 +82,9 @@
               </v-avatar>
             </div>
             <div :style="{ 'margin-left': '14px' }" v-show="resizeHeader">
-              <div class="account-name">{{ info.name_th }}</div>
+              <div class="account-name">{{ info['name_' + $i18n.locale] }}</div>
               <div class="account-name" style="padding-top:1px">
-                {{ info.postname_th }}
+                {{ info['postname_' + $i18n.locale] }}
               </div>
             </div>
             <v-icon
@@ -120,23 +120,21 @@
           </div>
           <div class="account">
             <div class="account-name">
-              {{ info.name_th }}
+              {{ info['name_' + $i18n.locale] }}
             </div>
             <div class="position-name">
-              {{ info.postname_th }}
+              {{ info['postname_' + $i18n.locale] }}
             </div>
           </div>
           <div class="line-page" style="margin-top:10px"></div>
           <div class="menu-line" style="margin-bottom:10px">
             <div class="menu-rows" @click="openProfile">
               <img src="@/assets/icons/people.png" class="eye eye-hided" />
-              <span style="margin-left:8px"> {{ 'ข้อมูลส่วนตัว' }}</span>
+              <span style="margin-left:8px"> {{ $t('profile.menu_1') }}</span>
             </div>
             <div @click="SettingApp()" class="menu-rows">
               <img src="@/assets/icons/settingapp.png" class="eye eye-hided" />
-              <span style="margin-left:8px">{{
-                'จัดการรายการแอปพลิเคชัน'
-              }}</span>
+              <span style="margin-left:8px">{{ $t('profile.menu_2') }}</span>
             </div>
             <div
               @click="ChangePassword()"
@@ -144,11 +142,11 @@
               class="menu-rows"
             >
               <img src="@/assets/icons/password.png" class="eye eye-hided" />
-              <span style="margin-left:8px"> {{ 'เปลี่ยนรหัสผ่าน' }}</span>
+              <span style="margin-left:8px"> {{ $t('profile.menu_3') }}</span>
             </div>
             <div @click="signOut()" class="menu-rows" style="padding-left:2px">
               <img src="@/assets/icons/Logout.png" class="eye eye-hided" />
-              <span style="margin-left:8px">{{ $t('btn_signout') }}</span>
+              <span style="margin-left:8px">{{ $t('profile.menu_4') }}</span>
             </div>
           </div>
         </v-list>
@@ -238,7 +236,7 @@
                 style="color:#CE1212;margin-right:5px;"
                 size="20"
               ></v-icon>
-              {{ 'ลบ' }}
+              {{ $t('btn_delete') }}
             </v-btn>
             <v-btn text @click="stepChangePic = 4" class="cancel-btn">
               <v-icon
@@ -260,10 +258,10 @@
               class="ok-btn"
               :style="{ 'margin-right': '35px' }"
             >
-              {{ 'ยกเลิก' }}
+              {{ $t('btn_cancel') }}
             </v-btn>
             <v-btn text @click="DeletePic()" class="cancel-btn">
-              {{ 'ลบ' }}
+              {{ $t('btn_delete') }}
             </v-btn>
           </div>
           <div
@@ -272,7 +270,7 @@
             class="justify-center"
           >
             <v-btn text @click="CloseDialogs()" class="ok-btn">
-              {{ 'ปิด' }}
+              {{ $t('btn_close') }}
             </v-btn>
           </div>
           <div
@@ -286,7 +284,7 @@
               class="ok-btn"
               :style="{ 'margin-right': '35px' }"
             >
-              {{ 'ยกเลิก' }}
+              {{ $t('btn_cancel') }}
             </v-btn>
             <v-btn class="cancel-btn" @click="onButtonClick">
               {{ $t('btn_upload') }}
@@ -300,12 +298,12 @@
       <v-card id="pwd-dialogs">
         <v-card-text v-if="stepChangePwd == 0" style="padding:unset">
           <div class="head-menu7  center-vh" style="display:flex;">
-            {{ 'กรุณายืนยันตัวตน' }}
+            {{ $t('pwd.text1') }}
           </div>
           <div style="margin-top:90px">
             <div style="display:flex;width:100%;padding-right:30px">
               <div class="head-menu3 center-vh" style="width:30%">
-                {{ 'รหัสผ่านปัจจุบัน' }}
+                {{ $t('pwd.text2') }}
               </div>
               <div
                 class="input-with-icon"
@@ -332,13 +330,13 @@
         </v-card-text>
         <v-card-text v-else style="padding:unset">
           <div v-show="stepChangePwd == 1">
-            <div style="display:flex">
-              <div class="head-menu3 center-vh" style="padding-top:4px">
-                {{ 'รหัสผ่านใหม่' }}
+            <div style="display:flex;width:100%">
+              <div class="head-menu3" style="padding-top:4px;width:40%">
+                {{ $t('pwd.text3') }}
               </div>
               <div
                 class="input-with-icon"
-                style="margin-left:72px"
+                style="width:60%"
                 :class="{ active: errorNewPassword }"
               >
                 <input
@@ -353,13 +351,13 @@
             </div>
           </div>
           <div v-show="stepChangePwd == 1">
-            <div style="padding-top:30px;display:flex">
-              <div class="head-menu3 center-vh" style="padding-top:6px">
-                {{ 'ยืนยันรหัสผ่าน' }}
+            <div style="padding-top:30px;display:flex;width:100%">
+              <div class="head-menu3" style="padding-top:6px;width:40%">
+                {{ $t('pwd.text4') }}
               </div>
               <div
                 class="input-with-icon"
-                style="margin-left:62px"
+                style="width:60%"
                 :class="{ active: errorCfNewPassword }"
               >
                 <input
@@ -377,9 +375,9 @@
             class="details"
             style="padding-top:30px"
           >
-            หมายเหตุ - รหัสผ่านต้องยาวอย่างน้อย 6 ตัวอักษรและประกอบไปด้วย<br />
-            1) ตัวเลข 0 - 9 <br />
-            2) ตัวอักษรภาษาอังกฤษตัวพิมพ์เล็กหรือพิมพ์ใหญ่
+            {{ $t('pwd.text6') }}<br />
+            {{ $t('pwd.text7') }} <br />
+            {{ $t('pwd.text8') }}
           </div>
           <div v-show="stepChangePwd == 2">
             <div class="center-vh">
@@ -390,7 +388,7 @@
               </v-avatar>
             </div>
             <div class="head-menu7" style="margin-top:50px; text-align:center">
-              {{ 'เปลี่ยนรหัสผ่านสำเร็จ' }}
+              {{ $t('pwd.text5') }}
             </div>
           </div>
         </v-card-text>
@@ -436,7 +434,7 @@
         </div>
         <div>
           <div class="head-menu5">
-            {{ 'รายการแอปพลิเคชันของคุณ' }}
+            {{ $t('manageapp.title') }}
           </div>
           <div class="line-page" style="margin-top:8px"></div>
           <div style="width:100%;margin-top:15px">
@@ -455,7 +453,7 @@
                   style="width:10%"
                   @click="sort(headCol[0], 0)"
                 >
-                  <div class="column-name">No</div>
+                  <div class="column-name">{{ $t('manageapp.text0') }}</div>
                   <v-icon
                     v-text="sortNo == 0 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
@@ -467,7 +465,7 @@
                   style="width:30%"
                   @click="sort(headCol[1], 1)"
                 >
-                  <div class="column-name">แอปพิเคชั่น</div>
+                  <div class="column-name">{{ $t('manageapp.text1') }}</div>
                   <v-icon
                     v-text="sortNo == 1 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
@@ -480,7 +478,7 @@
                   @click="sort(headCol[2], 2)"
                 >
                   <div class="column-name">
-                    ชื่อผู้ใช้งานในการเข้าสู่ระบบด้วย SSO
+                    {{ $t('manageapp.text2') }}
                   </div>
                   <v-icon
                     v-text="sortNo == 2 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -502,7 +500,7 @@
                     {{ item.index + 1 }}
                   </div>
                   <div class="body" style="width:30%;padding-top:5px">
-                    {{ item.name_th }}
+                    {{ item['name_' + $i18n.locale] }}
                   </div>
                   <div class="body" style="width:60%;display:flex">
                     <div style="padding-top:5px;margin-right:15px">
@@ -516,7 +514,7 @@
                       <input
                         type="text"
                         v-model="item.username"
-                        :placeholder="'-- โปรดระบุ --'"
+                        :placeholder="$t('input_selected')"
                       />
                     </div>
                     <v-btn
@@ -525,7 +523,9 @@
                       @click="edit(item, index)"
                       class="cancel-btn"
                     >
-                      {{ item.username == '' ? 'เพิ่ม' : 'เปลี่ยน' }}
+                      {{
+                        item.username == '' ? $t('btn_add') : $t('btn_change')
+                      }}
                     </v-btn>
                   </div>
                 </div>
@@ -541,8 +541,7 @@
               text-align:center;
               margin-top:30px;"
         >
-          {{ 'กรุณายืนยันตัวตนด้วยชื่อผู้ใช้และรหัสผ่าน' }}<br />
-          {{ 'ของแอปพลิเคชันดังกล่าว' }}
+          {{ $t('manageapp.text5') }}
         </div>
         <div
           style="color:#CE1212;
@@ -554,7 +553,9 @@
           {{ viewListData.name_th }}
         </div>
         <div class="rows" style="margin-bottom:30px;width:100%;display: flex;">
-          <div style="width:20%" class="rows-name">ชื่อผู้ใช้งาน</div>
+          <div style="width:20%;padding-top:3px" class="rows-name">
+            {{ $t('manageapp.text6') }}
+          </div>
           <div style="width:80%" class="rows-input">
             <div class="input-with-icon">
               <input
@@ -567,7 +568,9 @@
           </div>
         </div>
         <div class="rows" style="width:100%;display: flex;">
-          <div style="width:20%" class="rows-name">รหัสผ่าน</div>
+          <div style="width:20%" class="rows-name">
+            {{ $t('manageapp.text7') }}
+          </div>
           <div style="width:80%" class="rows-input">
             <div class="input-with-icon">
               <input
@@ -629,7 +632,7 @@
             </v-avatar>
           </div>
           <div class="head-menu5" style="margin-top:35px; text-align:center">
-            {{ 'เปลี่ยนแปลงข้อมูลส่วนตัวสำเร็จ' }}
+            {{ $t('profile.account_17') }}
           </div>
         </v-card-text>
         <v-card-text v-else style="padding:unset">
@@ -643,25 +646,29 @@
           </div>
           <div>
             <div class="head-menu5">
-              {{ 'ข้อมูลส่วนตัว' }}
+              {{ $t('profile.account_1') }}
             </div>
             <div class="line-page" style="margin-top:8px;"></div>
           </div>
           <div class="rows" style="margin-top:18px">
             <div style="width:20%" class="rows-name">
-              ประเภทการเข้าใช้งานระบบ
+              {{ $t('profile.account_2') }}
             </div>
             <div
               :style="{ width: '80%', 'padding-left': '8px', color: '#414141' }"
               class="rows-name"
             >
               {{
-                profile.type_login == 1 ? 'LDAP (AD)' : 'ผู้ใช้งานบนแอปพลิเคชัน'
+                profile.type_login == 0
+                  ? $t('master.type_login_0')
+                  : $t('master.type_login_1')
               }}
             </div>
           </div>
           <div class="rows">
-            <div style="width:20%" class="rows-name">รหัสพนักงาน</div>
+            <div style="width:20%" class="rows-name">
+              {{ $t('profile.account_3') }}
+            </div>
             <div style="width:80%" class="rows-input">
               <div
                 class="input-with-icon"
@@ -678,7 +685,9 @@
           </div>
           <div class="rows">
             <div style="width:50%;display: flex;">
-              <div style="width:40%" class="rows-name">ชื่อ - นามสกุล (TH)</div>
+              <div style="width:40%" class="rows-name">
+                {{ $t('profile.account_4') }}
+              </div>
               <div style="width:60%" class="rows-input">
                 <div
                   class="input-with-icon"
@@ -700,7 +709,7 @@
             </div>
             <div style="width:50%;;display: flex;">
               <div style="width:40%" class="rows-name">
-                ชื่อ - นามสกุล (EN)
+                {{ $t('profile.account_5') }}
               </div>
               <div style="width:60%;padding-right:25px" class="rows-input">
                 <div
@@ -724,7 +733,9 @@
           </div>
           <div class="rows">
             <div style="width:50%;display: flex;">
-              <div style="width:40%" class="rows-name">ชื่อเล่น (TH)</div>
+              <div style="width:40%" class="rows-name">
+                {{ $t('profile.account_6') }}
+              </div>
               <div style="width:60%" class="rows-input">
                 <div
                   class="input-with-icon"
@@ -744,7 +755,7 @@
             </div>
             <div style="width:50%;;display: flex;">
               <div style="width:40%" class="rows-name">
-                ชื่อเล่น (EN)
+                {{ $t('profile.account_7') }}
               </div>
               <div style="width:60%;padding-right:25px" class="rows-input">
                 <div
@@ -766,7 +777,9 @@
           </div>
           <div class="rows">
             <div style="width:50%;display: flex;">
-              <div style="width:40%" class="rows-name">ฉายา (TH)</div>
+              <div style="width:40%" class="rows-name">
+                {{ $t('profile.account_8') }}
+              </div>
               <div style="width:60%" class="rows-input">
                 <div
                   class="input-with-icon"
@@ -786,7 +799,7 @@
             </div>
             <div style="width:50%;;display: flex;">
               <div style="width:40%" class="rows-name">
-                ฉายา (EN)
+                {{ $t('profile.account_9') }}
               </div>
               <div style="width:60%;padding-right:25px" class="rows-input">
                 <div
@@ -808,7 +821,9 @@
           </div>
           <div class="rows">
             <div style="width:50%;display: flex;">
-              <div style="width:40%" class="rows-name">ตำแหน่งงาน (TH)</div>
+              <div style="width:40%" class="rows-name">
+                {{ $t('profile.account_10') }}
+              </div>
               <div style="width:60%" class="rows-input">
                 <div
                   class="input-with-icon"
@@ -830,7 +845,7 @@
             </div>
             <div style="width:50%;;display: flex;">
               <div style="width:40%" class="rows-name">
-                ตำแหน่งงาน (EN)
+                {{ $t('profile.account_11') }}
               </div>
               <div style="width:60%;padding-right:25px" class="rows-input">
                 <div
@@ -854,7 +869,9 @@
           </div>
           <div class="rows">
             <div style="width:50%;display: flex;">
-              <div style="width:40%" class="rows-name">อีเมล</div>
+              <div style="width:40%" class="rows-name">
+                {{ $t('profile.account_12') }}
+              </div>
               <div style="width:60%" class="rows-input">
                 <div
                   class="input-with-icon"
@@ -875,7 +892,7 @@
             </div>
             <div style="width:50%;;display: flex;">
               <div style="width:40%" class="rows-name">
-                3CX
+                {{ $t('profile.account_13') }}
               </div>
               <div style="width:60%;padding-right:25px" class="rows-input">
                 <div
@@ -899,7 +916,7 @@
           <div class="rows" style="padding-bottom:3px">
             <div style="width:50%;display: flex;">
               <div style="width:40%;height:28px" class="rows-name">
-                เบอร์โทร
+                {{ $t('profile.account_14') }}
               </div>
               <div style="width:60%" class="rows-input">
                 <div
@@ -918,7 +935,7 @@
                   />
                 </div>
                 <div style="color:#CE1212;font-size:8px;padding-top:5px">
-                  * หากระบุข้อมูลดังกล่าวจะเป็นสาธารณะ
+                  {{ $t('profile.account_15') }}
                 </div>
               </div>
             </div>
@@ -956,7 +973,7 @@
               style="color:#ffffff;margin-right:8px;"
               size="18"
             ></v-icon>
-            {{ 'แก้ไขข้อมูล' }}
+            {{ $t('profile.account_16') }}
           </v-btn>
           <v-btn
             v-show="!enableInput"
@@ -979,7 +996,7 @@
             }"
             :disabled="enableBtn"
           >
-            {{ $t('btn_save_close') }}
+            {{ $t('btn_save') }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -988,6 +1005,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import ImageUploader from 'vue-image-upload-resize'
 var bcrypt = require('bcryptjs')
 var CryptoJS = require('crypto-js')
@@ -1135,9 +1153,11 @@ export default {
         let type = ''
         for (let i = 0; i < this.list.length; i++) {
           if (this.list[i].status_sso == 1) {
-            type = this.list[i].type_login ? 'LDAP (AD)' : 'Username : '
+            type = this.list[i].type_login
+              ? this.$t('master.type_login_1')
+              : this.$t('manageapp.text4')
           } else {
-            type = 'เข้าใช้งานผ่านตัวระบบเท่านั้น'
+            type = this.$t('manageapp.text3')
           }
           let str2 = this.list[i].name_th + type
           let str = str2.toUpperCase()
@@ -1178,27 +1198,13 @@ export default {
     ConfirmUsername () {
       var data = this.passwordList.trim()
       var key = this.viewListData.key_app
-      /*
+      let iv = CryptoJS.enc.Hex.parse('FgLFXEr1MZl2mEnk')
+      var encrypted = CryptoJS.AES.encrypt(data, key, { iv: iv }).toString()
 
-      // var KeyObj = CryptoJS.enc.Utf8.parse(key)
-      var encrypted1 = CryptoJS.AES.encrypt(data, key, {
-        mode: CryptoJS.mode.ECB
-      })
-
-      var dncrypted = CryptoJS.AES.decrypt(encrypted1, key, {
-        mode: CryptoJS.mode.ECB
-      })
-
-      console.log('data => ', data)
-      console.log('key => ', key)
-      console.log(encrypted1.toString())
-      console.log(dncrypted.toString(CryptoJS.enc.Utf8))
-
-*/
       let obj = {
         url: '/auth/access-app?',
         username: this.usernameList.trim(),
-        password: data,
+        password: encrypted,
         host: '10.7.200.178:82'
       }
       this.$store.dispatch('CheckUserAccess', obj).then(res => {
@@ -1327,9 +1333,11 @@ export default {
     },
     renderText (item) {
       if (item.status_sso == 1) {
-        return item.type_login ? 'LDAP (AD)' : 'Username : '
+        return item.type_login
+          ? this.$t('master.type_login_1')
+          : this.$t('manageapp.text4')
       } else {
-        return 'เข้าใช้งานผ่านตัวระบบเท่านั้น'
+        return this.$t('manageapp.text3')
       }
     },
     sort (feild, index) {
@@ -1516,26 +1524,26 @@ export default {
     },
     renderProfileDesc () {
       if (this.stepChangePic == 0 || this.stepChangePic == 1) {
-        return 'รูปโปรไฟล์'
+        return this.$t('profile.pic_1')
       } else if (this.stepChangePic == 2) {
-        return 'ลบรูปโปรไฟล์'
+        return this.$t('profile.pic_2')
       } else if (this.stepChangePic == 3) {
-        return 'ลบรูปโปรไฟล์สำเร็จ'
+        return this.$t('profile.pic_3')
       } else if (this.stepChangePic == 4) {
-        return 'อัปโหลดรูปโปรไฟล์'
+        return this.$t('profile.pic_4')
       } else if (this.stepChangePic == 5) {
-        return 'เปลี่ยนรูปโปรไฟล์สำเร็จ'
+        return this.$t('profile.pic_5')
       }
     },
     renderBtnLeft () {
       if (this.stepChangePic == 0 || this.stepChangePic == 1) {
-        return 'ลบ'
+        return this.$t('btn_delete')
       } else if (this.stepChangePic == 2) {
-        return 'ยกเลิก'
+        return this.$t('btn_cancel')
       } else if (this.stepChangePic == 3) {
         // return 'กำลังลบรูปภาพ...'
       } else if (this.stepChangePic == 4 || this.stepChangePic == 5) {
-        return 'ปิด'
+        return this.$t('btn_close')
       } else {
       }
     },

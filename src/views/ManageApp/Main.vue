@@ -121,14 +121,17 @@
               class="body"
               style="width:25%;padding-left:5px;padding-top:5px"
             >
-              {{ item['name_' + $i18n.locale]}}
+              {{ item['name_' + $i18n.locale] }}
             </div>
             <div class="body" style="width:22%;padding-top:5px">
               {{ item['category_name_' + $i18n.locale] }}
-              <!-- {{ item['category_name_' + $i18n.locale] }} -->
             </div>
             <div class="body" style="width:20%;display:flex">
-              {{ item.type_login ? 'LDAP (AD)' : 'ผู้ใช้งานบนแอปพลิเคชัน' }}
+              {{
+                item.type_login == 0
+                  ? $t('master.type_login_0')
+                  : $t('master.type_login_1')
+              }}
             </div>
             <div
               class="body"
@@ -138,7 +141,7 @@
                 color: item.status ? '#66BB6A' : '#FBC02D'
               }"
             >
-              {{ item.status ? 'เปิดใช้งาน' : 'ปิดการใช้งาน' }}
+              {{ item.status ? $t('user.text7') : $t('user.text8') }}
             </div>
             <div class="body" style="width:10%;display:flex;padding-left:12px">
               <v-icon
