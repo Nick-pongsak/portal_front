@@ -532,7 +532,7 @@
               </div>
               <div class="body-table">
                 <div v-if="applist.length == 0" class="no-data">
-                  -- ไม่พบรายการ --
+                 {{$t('popup.text9')}}
                 </div>
                 <div
                   class="body-row"
@@ -722,7 +722,7 @@
               </div>
               <div class="body-table" style="height: 290px">
                 <div v-if="list.length == 0" class="no-data">
-                  -- ไม่พบรายการ --
+                 {{$t('popup.text9')}}
                 </div>
                 <div
                   class="body-row"

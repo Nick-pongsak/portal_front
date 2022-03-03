@@ -107,7 +107,7 @@
         </div>
         <div class="rows">
           <div style="width:30%" class="rows-name">
-            {{ $t('profile.account_2') }}
+            {{ $t('user.text4') }}
           </div>
           <div style="width:70%" class="rows-input">
             <v-radio-group v-model="editRow.type_login" style="display:flex">
@@ -119,7 +119,7 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div>{{ $t('master.type_login_0') }}</div>
+                <div>{{ $t('master.type_login_1') }}</div>
               </div>
               <div class="radio">
                 <v-radio
@@ -450,7 +450,7 @@
               </div>
               <div class="body-table">
                 <div v-if="items.length == 0" class="no-data">
-                  -- ไม่พบรายการ --
+                 {{$t('popup.text9')}}
                 </div>
                 <div
                   class="body-row"

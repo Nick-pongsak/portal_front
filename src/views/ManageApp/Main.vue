@@ -9,7 +9,7 @@
           @click="tabs(item, index)"
           :id="'tab' + item.code"
         >
-          {{ item[$i18n.locale] }}
+          {{ $t(item.text) }}
           <div v-show="active.code == item.code" class="line-active"></div>
         </div>
       </div>
@@ -78,7 +78,8 @@
           </div>
           <div class="head" style="width:20%" @click="sort(headCol[3], 3)">
             <div class="column-name">
-              {{ $t('set.list_col4') }}
+              {{ $t('user.text4') }}
+              <!-- {{ $t('set.list_col4') }} -->
             </div>
             <v-icon
               v-text="sortNo == 3 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -104,7 +105,7 @@
         </div>
         <div class="body-table">
           <div v-if="list.length == 0" class="no-data">
-            -- ไม่พบรายการ --
+            {{ $t('popup.text9') }}
           </div>
           <div
             class="body-row"
@@ -204,7 +205,7 @@
         </div>
         <div class="body-table">
           <div v-if="list.length == 0" class="no-data">
-            -- ไม่พบรายการ --
+            {{ $t('popup.text9') }}
           </div>
           <div
             class="body-row"

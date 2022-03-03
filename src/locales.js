@@ -23,10 +23,7 @@ const locales = {
 
     /*set => setting*/
     'set.menu': 'Settings',
-    'set.left_menu0': 'User Information',
-    'set.left_menu1': 'Application List',
-    'set.app_tab0': 'Application List',
-    'set.app_tab1': 'Application Group',
+    'set.app_tab1': 'Application Grouping',
     'set.list_col1': 'No.',
     'set.list_col2': 'Application',
     'set.list_col3': 'Category',
@@ -73,6 +70,7 @@ const locales = {
     'manageapp.text5': 'Please verify your identity with username and password this application.',
     'manageapp.text6': 'username',
     'manageapp.text7': 'Password',
+    'manageapp.text8': 'Application List',
     'pwd.text1': 'Please verify your identity.',
     'pwd.text2': 'Current Password',
     'pwd.text3': 'New Password',
@@ -96,8 +94,9 @@ const locales = {
     'user.text12': 'Search Employee',
     'user.text13': '-- Please enter employee code --',
     'user.text14': 'List of employees found',
-    'user.text15': 'ชื่อผู้ใช้งานต้องยาวอย่างน้อย 6 ตัวอักษรประกอบไปด้วย',
-    'user.text16': 'ตัวเลขหรือตัวอักษรภาษาอังกฤษ ตัวพิมพ์เล็กหรือพิมพ์ใหญ่',
+    'user.text15': 'Username must be at least 6 characters.',
+    'user.text16': 'It consists of numbers or English letters. lowercase or uppercase',
+    'user.text17': 'Edit User Infomation',
     'app.text1': 'Category',
     'app.text2': 'Add Application',
     'app.text3': 'Application Name (TH)',
@@ -125,6 +124,8 @@ const locales = {
     'group.text5': 'Application Group',
     'group.text6': 'Number Of Applications',
     'group.text7': 'Number Of Users',
+    'group.text8': 'Applications Accessed',
+    'group.text9': 'Edit Application Group',
 
 
     'master.type_login_0': 'DHAS PORTAL USER',
@@ -138,6 +139,7 @@ const locales = {
     'popup.text6': 'Do you want to cancel the operation?',
     'popup.text7': "Can't delete data because the use of such information was found please check again.",
     'popup.text8': "Can't save data. Because of this employee code or username has been used.",
+    'popup.text9': '-- Item not found --',
   },
   'th': {
     'btn_add': 'เพิ่ม',
@@ -163,9 +165,6 @@ const locales = {
 
     /*set => setting*/
     'set.menu': 'ตั้งค่าระบบ',
-    'set.left_menu0': 'ข้อมูลผู้ใช้งาน',
-    'set.left_menu1': 'รายการแอปพลิเคชัน',
-    'set.app_tab0': 'รายการแอปพลิเคชัน',
     'set.app_tab1': 'จัดกลุ่มผู้ใช้งานแอปพลิเคชัน',
     'set.list_col1': 'ลำดับ',
     'set.list_col2': 'แอปพิเคชั่น',
@@ -213,6 +212,7 @@ const locales = {
     'manageapp.text5': 'กรุณายืนยันตัวตนด้วยชื่อผู้ใช้และรหัสผ่านของแอปพลิเคชันดังกล่าว',
     'manageapp.text6': 'ชื่อผู้ใช้งาน',
     'manageapp.text7': 'รหัสผ่าน',
+    'manageapp.text8': 'รายการแอปพลิเคชัน',
     'pwd.text1': 'กรุณายืนยันตัวตน',
     'pwd.text2': 'รหัสผ่านปัจจุบัน',
     'pwd.text3': 'รหัสผ่านใหม่',
@@ -238,6 +238,7 @@ const locales = {
     'user.text14': 'รายชื่อพนักงานที่พบ',
     'user.text15': 'ชื่อผู้ใช้งานต้องยาวอย่างน้อย 6 ตัวอักษรประกอบไปด้วย',
     'user.text16': 'ตัวเลขหรือตัวอักษรภาษาอังกฤษ ตัวพิมพ์เล็กหรือพิมพ์ใหญ่',
+    'user.text17': 'แก้ไขข้อมูลผู้ใช้งาน',
     'app.text1': 'หมวดหมู่',
     'app.text2': 'เพิ่มแอปพลิเคชัน',
     'app.text3': 'ชื่อแอปพลิเคชัน (TH)',
@@ -265,8 +266,8 @@ const locales = {
     'group.text5': 'กลุ่มผู้ใช้งานแอปพลิเคชัน',
     'group.text6': 'จำนวนแอปพลิเคชัน',
     'group.text7': 'จำนวนผู้ใช้งาน',
-
-
+    'group.text8': 'แอปพลิเคชันที่สามารถเข้าใช้งานได้',
+    'group.text9': 'แก้ไขกลุ่มผู้ใช้งานแอปพลิเคชัน',
 
     'master.type_login_0': 'ผู้ใช้งานบนแอปพลิเคชัน',
     'master.type_login_1': 'LDAP (AD)',
@@ -279,6 +280,7 @@ const locales = {
     'popup.text6': 'คุณต้องการยกเลิกการดำเนินการใช่หรือไม่ ?',
     'popup.text7': 'ไม่สามารถลบข้อมูลได้ เนื่องจากพบการใช้งานข้อมูลดังกล่าวอยู่ กรุณาตรวจสอบอีกครั้ง',
     'popup.text8': 'ไม่สามารถบันทึกข้อมูลได้ เนื่องจากรหัสพนักงานหรือชื่อผู้ใช้งานนี้ ถูกใช้งานแล้ว',
+    'popup.text9': '-- ไม่พบรายการ --',
   }
 }
 export default locales

@@ -81,7 +81,7 @@
                   @click="sort(headCol[2], 2)"
                 >
                   <div class="column-name">
-                    {{ $t('app.text14') }}
+                    {{ $t('app.text1') }}
                   </div>
                   <v-icon
                     v-text="sortNo == 2 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -125,7 +125,7 @@
                 }"
               >
                 <div v-if="editRow.app.length == 0" class="no-data">
-                  -- ไม่พบรายการ --
+                  {{ $t('popup.text9') }}
                 </div>
                 <div
                   v-else
@@ -140,7 +140,7 @@
                     {{ item['name_' + $i18n.locale] }}
                   </div>
                   <div class="body" style="width:20%">
-                    {{ item.category_name_en }}
+                    {{ item['category_name_' + $i18n.locale] }}
                   </div>
                   <div class="body" style="width:25%">
                     {{ renderText(item) }}
@@ -231,7 +231,7 @@
         </div>
         <div>
           <div class="head-menu5">
-            {{ $t('group.text5') }}
+            {{ $t('group.text8') }}
           </div>
           <div class="line-page" style="margin-top:8px"></div>
           <div style="width:100%;margin-top:15px">
@@ -331,7 +331,7 @@
                     {{ item['name_' + $i18n.locale] }}
                   </div>
                   <div class="body" style="width:20%">
-                    {{ item.category_name_en }}
+                    {{ item['category_name_' + $i18n.locale] }}
                   </div>
                   <div class="body" style="width:25%">
                     {{ renderText(item) }}
@@ -464,7 +464,7 @@ export default {
     },
     renderText (row) {
       return row.type_login == 0
-        ? this.$t('master.type_login_0')
+        ? this.$t('app.text20')
         : this.$t('master.type_login_1')
     },
     sort (feild, index) {

@@ -1198,7 +1198,7 @@ export default {
     ConfirmUsername () {
       var data = this.passwordList.trim()
       var key = this.viewListData.key_app
-      let iv = CryptoJS.enc.Hex.parse('FgLFXEr1MZl2mEnk')
+      var iv = CryptoJS.lib.WordArray.random(16)
       var encrypted = CryptoJS.AES.encrypt(data, key, { iv: iv }).toString()
 
       let obj = {

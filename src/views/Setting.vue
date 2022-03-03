@@ -11,12 +11,12 @@
           :key="item.code"
           @click="selectedMenu(item, index)"
         >
-          {{ item[$i18n.locale] }}
+          {{ $t(item.text) }}
         </div>
       </div>
     </div>
     <div class="right">
-      <div class="header">{{ currentView[$i18n.locale] }}</div>
+      <div class="header">{{ $t(currentView.text) }}</div>
       <main-admin-app
         v-if="currentView.code == '1'"
         @add="addUser"
@@ -81,13 +81,11 @@ export default {
       rightMenu: [
         {
           code: '2.1',
-          th: 'รายการแอปพลิเคชัน',
-          en: 'Application List'
+          text: 'manageapp.text1'
         },
         {
           code: '2.2',
-          th: 'จัดกลุ่มผู้ใช้งานแอปพลิเคชัน',
-          en: 'Application Group'
+          text: 'set.app_tab1'
         }
       ],
       activeTab: {},
@@ -152,16 +150,14 @@ export default {
     addUser (value) {
       this.currentView = {
         code: '1.1',
-        th: 'เพิ่มข้อมูลผู้ใช้งาน',
-        en: 'Add User Information'
+        text: 'user.text9'
       }
       this.editRow = JSON.parse(JSON.stringify(this.masterUser))
     },
     editUser (value) {
       this.currentView = {
         code: '1.1',
-        th: 'แก้ไขข้อมูลผู้ใช้งาน',
-        en: 'Edit User Information'
+        text: 'user.text17'
       }
       this.editRow = value
       this.editRow.mode = 'edit'
@@ -169,54 +165,36 @@ export default {
       this.editRow.password = '99999999'
     },
     clearUser (value) {
-      this.currentView = {
-        code: '1',
-        text: 'ผู้ใช้งานระบบ'
-      }
+      this.currentView = this.menu[0]
     },
     cancelUser (value) {
-      this.currentView = {
-        code: '1',
-        text: 'ผู้ใช้งานระบบ'
-      }
+      this.currentView = this.menu[0]
     },
     saveUser (value) {
-      this.currentView = {
-        code: '1',
-        text: 'ผู้ใช้งานระบบ'
-      }
+      this.currentView = this.menu[0]
     },
     clearApp (value) {
       this.currentView = {
         code: '2',
-        text: 'รายการแอปพลิเคชัน'
+        text: 'manageapp.text8'
       }
     },
     cancelApp (value) {
       this.currentView = {
         code: '2',
-        text: 'รายการแอปพลิเคชัน'
+        text: 'manageapp.text8'
       }
     },
     saveApp (value) {
       this.currentView = {
         code: '2',
-        text: 'รายการแอปพลิเคชัน'
+        text: 'manageapp.text8'
       }
     },
     addApp (value) {
-      // console.log(value)
-      // console.log(this.$i18n.locale)
       this.currentView = {
         code: value.code,
-        th:
-          value.code == '2.1'
-            ? 'เพิ่มแอปพลิเคชัน'
-            : 'เพิ่มกลุ่มผู้ใช้งานแอปพลิเคชัน',
-        en:
-          value.code == '2.1'
-            ? 'Add Application'
-            : 'Add Application Group'
+        text: value.code == '2.1' ? 'app.text2' : 'set.app_tab1'
       }
       this.activeTab = value
       if (value.code == '2.1') {
@@ -231,14 +209,7 @@ export default {
     editApp (value) {
       this.currentView = {
         code: value.current.code,
-        th:
-          value.current.code == '2.1'
-            ? 'แก้ไขแอปพลิเคชัน'
-            : 'แก้ไขกลุ่มผู้ใช้งานแอปพลิเคชัน',
-        en:
-          value.current.code == '2.1'
-            ? 'แก้ไขแอปพลิเคชัน'
-            : 'แก้ไขกลุ่มผู้ใช้งานแอปพลิเคชัน'
+        text: value.code == '2.1' ? 'app.text19' : 'group.text9'
       }
       this.activeTab = value.current
       if (value.current.code == '2.1') {
@@ -283,24 +254,20 @@ export default {
       let masterMenu = [
         {
           code: '1',
-          th: 'ข้อมูลผู้ใช้งาน',
-          en: 'User Information',
+          text: 'user.text11',
           child: []
         },
         {
           code: '2',
-          th: 'รายการแอปพลิเคชัน',
-          en: 'Application List',
+          text: 'manageapp.text8',
           child: [
             {
               code: '2.1',
-              th: 'รายการแอปพลิเคชัน',
-              en: 'Application List'
+              text: 'manageapp.text1'
             },
             {
               code: '2.2',
-              th: 'จัดกลุ่มผู้ใช้งานแอปพลิเคชัน',
-              en: 'Application Grouping'
+              text: 'set.app_tab1'
             }
           ]
         }

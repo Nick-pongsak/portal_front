@@ -186,6 +186,7 @@
 </template>
 
 <script>
+var CryptoJS = require('crypto-js')
 export default {
   name: 'dashboard',
   data () {
@@ -270,9 +271,13 @@ export default {
       } else if (this.showDragAndDrop == false) {
         if (row.status) {
           // let username = '23121'
-          let username = row.username
+          // let password = 'aswd'
           // let password = row.password
-          let password = 'aswd'
+          let username = row.username
+          var iv = CryptoJS.lib.WordArray.random(16)
+          var password = CryptoJS.AES.encrypt(row.password, row.key_app, {
+            iv: iv
+          }).toString()
           if (username.trim().length > 0 && password.trim().length > 0) {
             let str = '?username=' + username + '&password=' + password
             window.open(row.url + str, '_blank')
