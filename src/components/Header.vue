@@ -990,6 +990,7 @@
 <script>
 import ImageUploader from 'vue-image-upload-resize'
 var bcrypt = require('bcryptjs')
+var CryptoJS = require('crypto-js')
 export default {
   name: 'headers',
   props: {},
@@ -1172,10 +1173,29 @@ export default {
   },
   methods: {
     ConfirmUsername () {
+      var data = this.passwordList.trim()
+      var key = this.viewListData.key_app
+      /*
+
+      // var KeyObj = CryptoJS.enc.Utf8.parse(key)
+      var encrypted1 = CryptoJS.AES.encrypt(data, key, {
+        mode: CryptoJS.mode.ECB
+      })
+
+      var dncrypted = CryptoJS.AES.decrypt(encrypted1, key, {
+        mode: CryptoJS.mode.ECB
+      })
+
+      console.log('data => ', data)
+      console.log('key => ', key)
+      console.log(encrypted1.toString())
+      console.log(dncrypted.toString(CryptoJS.enc.Utf8))
+
+*/
       let obj = {
-        url: '/auth/loginapp?',
+        url: '/auth/access-app?',
         username: this.usernameList.trim(),
-        password: this.passwordList.trim(),
+        password: data,
         host: '10.7.200.178:82'
       }
       this.$store.dispatch('CheckUserAccess', obj).then(res => {

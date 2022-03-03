@@ -1076,6 +1076,10 @@ export default {
     },
     cancel () {
       if (!this.dialog) {
+        // this.btnClick = 'cancel'
+        // this.dialog = true
+        // this.errorDialog = 'คุณต้องการยกเลิกการดำเนินการใช่หรือไม่ ?'
+        // this.rightBtn = 'ตกลง'
         this.$emit('cancel', null)
       }
       this.dialog = false
