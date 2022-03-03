@@ -137,7 +137,7 @@
                     {{ item.index + 1 }}
                   </div>
                   <div class="body" style="width:30%">
-                    {{ item['name_' + $i18n.locale]}}
+                    {{ item['name_' + $i18n.locale] }}
                   </div>
                   <div class="body" style="width:20%">
                     {{ item.category_name_en }}
@@ -174,7 +174,7 @@
       </div>
       <div style="width:50%;display:flex" class="justify-end">
         <v-btn
-          @click="cancel()"
+          @click="cancelBtn()"
           class="ok-btn"
           style="margin-right:6px;height: 22px;"
         >
@@ -409,7 +409,8 @@ export default {
         orderby: true
       },
       enableBtn: true,
-      masterList: []
+      masterList: [],
+      masterEdit: {}
     }
   },
   computed: {},
@@ -614,6 +615,20 @@ export default {
         })
         .catch(error => {})
     },
+    cancelBtn () {
+      let str1 = this.masterEdit
+      let str2 = JSON.stringify(this.editRow)
+      console.log(str1)
+      console.log(str2)
+      if (str1 == str2) {
+        this.cancel()
+      } else {
+        this.btnClick = 'cancel'
+        this.dialog = true
+        this.errorDialog = 'คุณต้องการยกเลิกการดำเนินการใช่หรือไม่ ?'
+        this.rightBtn = 'ตกลง'
+      }
+    },
     cancel () {
       if (!this.dialog) {
         this.$emit('cancel', null)
@@ -647,6 +662,10 @@ export default {
         })
       } else if (this.btnClick == 'clear') {
         this.clear()
+      } else if (this.btnClick == 'cancel') {
+        this.dialog = false
+        this.rightBtn = 'บันทึก'
+        this.$emit('cancel', null)
       } else {
         this.dialog = false
       }
@@ -687,9 +706,11 @@ export default {
         }
         this.editRow.app = temp
         this.editRow.mode = mode
+        this.masterEdit = JSON.stringify(this.editRow)
         this.enableBtnSave()
       })
     } else {
+      this.masterEdit = JSON.stringify(this.editRow)
       // this.editRow.name_th = ''
       // this.editRow.name_en = ''
     }

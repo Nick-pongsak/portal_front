@@ -565,7 +565,7 @@
       </div>
       <div style="width:50%;display:flex" class="justify-end">
         <v-btn
-          @click="cancel()"
+          @click="cancelBtn()"
           class="ok-btn"
           style="margin-right:6px;height: 22px;"
         >
@@ -795,7 +795,8 @@ export default {
       oldUsername: this.data.password,
       oldPassword: this.data.origin_password,
       defaultPassword: '99999999',
-      typeLogin: 1
+      typeLogin: 1,
+      masterEdit: {}
     }
   },
   computed: {
@@ -1074,12 +1075,23 @@ export default {
       this.empeDialog = false
       this.searchApp = ''
     },
+    cancelBtn () {
+      let str1 =
+        this.editRow.mode == 'add'
+          ? JSON.stringify(this.master)
+          : this.masterEdit
+      let str2 = JSON.stringify(this.editRow)
+      if (str1 == str2) {
+        this.cancel()
+      } else {
+        this.btnClick = 'cancel'
+        this.dialog = true
+        this.errorDialog = 'คุณต้องการยกเลิกการดำเนินการใช่หรือไม่ ?'
+        this.rightBtn = 'ตกลง'
+      }
+    },
     cancel () {
       if (!this.dialog) {
-        // this.btnClick = 'cancel'
-        // this.dialog = true
-        // this.errorDialog = 'คุณต้องการยกเลิกการดำเนินการใช่หรือไม่ ?'
-        // this.rightBtn = 'ตกลง'
         this.$emit('cancel', null)
       }
       this.dialog = false
@@ -1246,6 +1258,10 @@ export default {
         }
       } else if (this.btnClick == 'clear') {
         this.clear()
+      } else if (this.btnClick == 'cancel') {
+        this.dialog = false
+        this.rightBtn = 'บันทึก'
+        this.$emit('cancel', null)
       } else {
         this.dialog = false
       }
@@ -1354,6 +1370,7 @@ export default {
         this.applist = []
       })
     } else {
+      this.masterEdit = JSON.stringify(this.editRow)
       this.enableInput = false
       this.statusPermission = this.editRow.status_permission
       let req = {

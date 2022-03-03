@@ -1150,6 +1150,9 @@ export default {
       } else if (todos.trim().length == 0) {
         this.list = this.masterList
       }
+    },
+    picDialog (newValue) {
+      this.$store.commit('SetDialogProfile', newValue)
     }
   },
   computed: {

@@ -5,12 +5,12 @@ import router from '../../router'
 
 const store = {
   state: {
-    // access_token: '',
+    dialog_profile: false,
   },
   mutations: {
-    // SetAccessToken(state, data) {
-    //   state.access_token = data;
-    // },
+    SetDialogProfile(state, data) {
+      state.dialog_profile = data;
+    },
   },
   actions: {
     addAppList({ state, commit, dispatch }, data) {
@@ -521,9 +521,9 @@ const store = {
     // user(state) {
     //   return state.user;
     // },
-    // access_token(state) {
-    //   return state.access_token;
-    // },
+    dialog_profile(state) {
+      return state.dialog_profile;
+    },
   }
 }
 

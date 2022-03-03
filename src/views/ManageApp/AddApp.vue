@@ -202,17 +202,23 @@
           </div>
         </div>
         <div class="rows">
-          <div style="width:30%;align-items: start;" class="rows-name">รูปแบนเนอร์</div>
+          <div style="width:30%;align-items: start;" class="rows-name">
+            รูปแบนเนอร์
+          </div>
           <div style="width:70%" class="rows-input">
             <!-- :loading="isSelecting" -->
             <v-btn
               class="cancel-btn"
-              style="width:200px;margin-top:5px"
+              :style="{
+                width: '200px',
+                'margin-top': '5px',
+                'margin-bottom': dialog_profile ? '20px' : ''
+              }"
               @click="onButtonClick"
             >
               {{ $t('btn_upload') }}
             </v-btn>
-            <div class="upload-block">
+            <div class="upload-block" v-if="!dialog_profile">
               <image-uploader
                 v-model="editRow.image"
                 :preview="true"
@@ -266,7 +272,7 @@
       </div>
       <div style="width:50%;display:flex" class="justify-end">
         <v-btn
-          @click="cancel()"
+          @click="cancelBtn()"
           class="ok-btn"
           style="margin-right:6px;height: 22px;"
         >
@@ -528,10 +534,15 @@ export default {
       btnClick: null,
       detailDialog: null,
       enableBtn: true,
-      file: ''
+      file: '',
+      masterEdit: {}
     }
   },
-  computed: {},
+  computed: {
+    dialog_profile () {
+      return this.$store.getters.dialog_profile
+    }
+  },
   watch: {
     searchApp: {
       handler: function (todos) {
@@ -640,6 +651,18 @@ export default {
       this.NameThInput = ''
       this.NameEnInput = ''
       this.searchApp = ''
+    },
+    cancelBtn () {
+      let str1 = this.masterEdit
+      let str2 = JSON.stringify(this.editRow)
+      if (str1 == str2) {
+        this.cancel()
+      } else {
+        this.btnClick = 'cancel'
+        this.dialog = true
+        this.errorDialog = 'คุณต้องการยกเลิกการดำเนินการใช่หรือไม่ ?'
+        this.rightBtn = 'ตกลง'
+      }
     },
     cancel () {
       if (!this.dialog) {
@@ -801,6 +824,12 @@ export default {
           this.detailDialog = null
           this.getTypeList()
         })
+      } else if (this.btnClick == 'cancel') {
+        this.dialog = false
+        this.rightBtn = 'บันทึก'
+        this.selectedFile = null
+        this.detailDialog = null
+        this.$emit('cancel', null)
       } else {
         this.dialog = false
       }
@@ -861,6 +890,7 @@ export default {
         sessionStorage.getItem('token_seesion')
       )
     }
+    this.masterEdit = JSON.stringify(this.editRow)
     if (this.editRow.mode == 'edit') {
       this.file = this.editRow.image
       this.enableBtnSave()
