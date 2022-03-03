@@ -194,7 +194,7 @@ export default {
     addApp (value) {
       this.currentView = {
         code: value.code,
-        text: value.code == '2.1' ? 'app.text2' : 'set.app_tab1'
+        text: value.code == '2.1' ? 'app.text2' : 'group.text10'
       }
       this.activeTab = value
       if (value.code == '2.1') {
@@ -209,7 +209,7 @@ export default {
     editApp (value) {
       this.currentView = {
         code: value.current.code,
-        text: value.code == '2.1' ? 'app.text19' : 'group.text9'
+        text: value.current.code == '2.1' ? 'app.text19' : 'group.text9'
       }
       this.activeTab = value.current
       if (value.current.code == '2.1') {

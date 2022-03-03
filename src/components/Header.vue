@@ -550,7 +550,7 @@
           text-align:center;
           margin-bottom:55px;"
         >
-          {{ viewListData.name_th }}
+          {{ viewListData['name_' + $i18n.locale]}}
         </div>
         <div class="rows" style="margin-bottom:30px;width:100%;display: flex;">
           <div style="width:20%;padding-top:3px" class="rows-name">
@@ -747,7 +747,7 @@
                   <input
                     type="text"
                     v-model="profile.nickname1_th"
-                    :placeholder="enableInput ? '-' : '-- หากมีโปรดระบุ --'"
+                    :placeholder="enableInput ? '-' : $t('input_not_selected')"
                     :readonly="enableInput"
                   />
                 </div>
@@ -768,7 +768,7 @@
                   <input
                     type="text"
                     v-model="profile.nickname1_en"
-                    :placeholder="enableInput ? '-' : '-- หากมีโปรดระบุ --'"
+                    :placeholder="enableInput ? '-' : $t('input_not_selected')"
                     :readonly="enableInput"
                   />
                 </div>
@@ -791,7 +791,7 @@
                   <input
                     type="text"
                     v-model="profile.nickname2_th"
-                    :placeholder="enableInput ? '-' : '-- หากมีโปรดระบุ --'"
+                    :placeholder="enableInput ? '-' : $t('input_not_selected')"
                     :readonly="enableInput"
                   />
                 </div>
@@ -812,7 +812,7 @@
                   <input
                     type="text"
                     v-model="profile.nickname2_en"
-                    :placeholder="enableInput ? '-' : '-- หากมีโปรดระบุ --'"
+                    :placeholder="enableInput ? '-' : $t('input_not_selected')"
                     :readonly="enableInput"
                   />
                 </div>
@@ -882,7 +882,7 @@
                     v-model="profile.email"
                     :placeholder="
                       profile.type_login == 0
-                        ? '-- หากมีโปรดระบุ --'
+                        ? $t('input_not_selected')
                         : $t('input_selected')
                     "
                     :readonly="true"
@@ -905,7 +905,7 @@
                   <input
                     type="text"
                     v-model="profile.cx"
-                    :placeholder="enableInput ? '-' : '-- หากมีโปรดระบุ --'"
+                    :placeholder="enableInput ? '-' : $t('input_not_selected')"
                     :readonly="enableInput"
                     @keypress="isNumber"
                   />
@@ -929,7 +929,7 @@
                   <input
                     type="text"
                     v-model="profile.phone"
-                    :placeholder="enableInput ? '-' : '-- หากมีโปรดระบุ --'"
+                    :placeholder="enableInput ? '-' : $t('input_not_selected')"
                     :readonly="enableInput"
                     @keypress="isNumber"
                   />

@@ -18,9 +18,6 @@ const locales = {
     'input_selected': '-- Please Input --',
     'input_not_selected': '-- If Any --',
 
-    /*home => Dashboard*/
-    'das.menu': 'Product Manager (IT) Services',
-
     /*set => setting*/
     'set.menu': 'Settings',
     'set.app_tab1': 'Application Grouping',
@@ -31,8 +28,6 @@ const locales = {
     'set.list_col5': 'Status',
     'set.list_col6': 'Tools',
 
-    // 'set.login_type0': 'Application User',
-    // 'set.login_type1': 'LDAP (AD',
     'lang.list_1': 'Thai (TH)',
     'lang.list_2': 'English (EN)',
     'profile.menu_1': 'Personal Infomation',
@@ -126,7 +121,7 @@ const locales = {
     'group.text7': 'Number Of Users',
     'group.text8': 'Applications Accessed',
     'group.text9': 'Edit Application Group',
-
+    'group.text10': 'Add Application Group',
 
     'master.type_login_0': 'DHAS PORTAL USER',
     'master.type_login_1': 'LDAP (AD)',
@@ -160,9 +155,6 @@ const locales = {
     'input_selected': '-- โปรดระบุ --',
     'input_not_selected': '-- หากมีโปรดระบุ --',
 
-    /*home => Dashboard*/
-    'das.menu': 'Product Manager (IT) Services',
-
     /*set => setting*/
     'set.menu': 'ตั้งค่าระบบ',
     'set.app_tab1': 'จัดกลุ่มผู้ใช้งานแอปพลิเคชัน',
@@ -173,8 +165,6 @@ const locales = {
     'set.list_col5': 'สถานะ',
     'set.list_col6': 'เครื่องมือ',
 
-    // 'set.login_type0': 'ผู้ใช้งานแอปพลิเคชัน',
-    // 'set.login_type1': 'LDAP (AD',
     'lang.list_1': 'ภาษาไทย (TH)',
     'lang.list_2': 'ภาษาอังกฤษ (EN)',
     'profile.menu_1': 'ข้อมุลส่วนตัว',
@@ -268,6 +258,7 @@ const locales = {
     'group.text7': 'จำนวนผู้ใช้งาน',
     'group.text8': 'แอปพลิเคชันที่สามารถเข้าใช้งานได้',
     'group.text9': 'แก้ไขกลุ่มผู้ใช้งานแอปพลิเคชัน',
+    'group.text10': 'เพิ่มกลุ่มผู้ใช้งานแอปพลิเคชัน',
 
     'master.type_login_0': 'ผู้ใช้งานบนแอปพลิเคชัน',
     'master.type_login_1': 'LDAP (AD)',
