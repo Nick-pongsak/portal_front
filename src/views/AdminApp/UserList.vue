@@ -38,7 +38,9 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div style="padding-top:4px">{{$t('master.type_login_1')}}</div>
+                <div style="padding-top:4px">
+                  {{ $t('master.type_login_1') }}
+                </div>
               </div>
               <div class="radio">
                 <v-radio
@@ -49,7 +51,9 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div style="padding-top:4px">{{$t('master.type_login_0')}}</div>
+                <div style="padding-top:4px">
+                  {{ $t('master.type_login_0') }}
+                </div>
               </div>
             </v-radio-group>
           </div>
@@ -66,7 +70,7 @@
               v-model="editRow.status_permission"
               hide-details
             ></v-checkbox>
-            <div style="padding-top:5px">{{$t('user.text10')}}</div>
+            <div style="padding-top:5px">{{ $t('user.text10') }}</div>
             <div
               class="input-with-icon"
               v-show="statusPermission"
@@ -639,7 +643,7 @@
         </div>
         <div>
           <div class="head-menu5">
-            {{  $t('user.text14') }}
+            {{ $t('user.text14') }}
           </div>
           <div class="line-page" style="margin-top:8px"></div>
           <div style="width:100%;margin-top:15px">
@@ -778,9 +782,9 @@ export default {
     return {
       editRow: this.data,
       dialog: false,
-      errorDialog: 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?',
+      errorDialog: this.$t('popup.text1'),
       error: false,
-      rightBtn: 'บันทึก',
+      rightBtn: this.$t('btn_save'),
       empeDialog: false,
       sortNo: null,
       headCol: ['index', 'emp_code', 'name_th', 'postname_th'],
@@ -854,7 +858,8 @@ export default {
                 this.dialog = true
                 this.error = true
                 this.errorDialog =
-                  'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ (Error Code ' +
+                  this.$t('popup.text2') +
+                  ' (Error Code ' +
                   error.response.status +
                   ')'
                 this.list = []
@@ -1052,7 +1057,8 @@ export default {
               this.dialog = true
               this.error = true
               this.errorDialog =
-                'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ (Error Code ' +
+                this.$t('popup.text2') +
+                ' (Error Code ' +
                 error.response.status +
                 ')'
               this.list = []
@@ -1087,7 +1093,8 @@ export default {
               this.dialog = true
               this.error = true
               this.errorDialog =
-                'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ (Error Code ' +
+                this.$t('popup.text2') +
+                ' (Error Code ' +
                 error.response.status +
                 ')'
               this.list = []
@@ -1110,8 +1117,8 @@ export default {
       } else {
         this.btnClick = 'cancel'
         this.dialog = true
-        this.errorDialog = 'คุณต้องการยกเลิกการดำเนินการใช่หรือไม่ ?'
-        this.rightBtn = 'ตกลง'
+        this.errorDialog = this.$t('popup.text6')
+        this.rightBtn = this.$t('btn_ok')
       }
     },
     cancel () {
@@ -1119,13 +1126,13 @@ export default {
         this.$emit('cancel', null)
       }
       this.dialog = false
-      this.rightBtn = 'บันทึก'
+      this.rightBtn = this.$t('btn_save')
     },
     clearBtn () {
       this.btnClick = 'clear'
       this.dialog = true
-      this.errorDialog = 'คุณต้องการลบข้อมูลใช่หรือไม่ ?'
-      this.rightBtn = 'ลบ'
+      this.errorDialog = this.$t('popup.text3')
+      this.rightBtn = this.$t('btn_delete')
     },
     saveBtn () {
       this.btnClick = 'save'
@@ -1140,12 +1147,12 @@ export default {
           this.dialog = true
           this.errorDialog =
             'พบการแก้ไขข้อมูล Username หรือ Password กรุณายืนยันการดำเนินการแก้ไข และบันทึกข้อมูลทั้งหมด'
-          this.rightBtn = 'บันทึก'
+          this.rightBtn = this.$t('btn_save')
         } else {
           this.error = false
           this.dialog = true
-          this.errorDialog = 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?'
-          this.rightBtn = 'บันทึก'
+          this.errorDialog = this.$t('popup.text1')
+          this.rightBtn = this.$t('btn_save')
         }
       } else {
         console.log('Valid...', item)
@@ -1237,8 +1244,7 @@ export default {
               this.btnClick = 'error'
               this.dialog = true
               this.error = true
-              this.errorDialog =
-                'ไม่สามารถบันทึกข้อมูลได้ เนื่องจากรหัสพนักงานหรือชื่อผู้ใช้งานนี้ ถูกใช้งานแล้ว'
+              this.errorDialog = this.$t('popup.text8')
               this.rightBtn = this.$t('btn_close')
             } else {
               if (
@@ -1260,8 +1266,7 @@ export default {
                 this.btnClick = 'error'
                 this.dialog = true
                 this.error = true
-                this.errorDialog =
-                  'ไม่สามารถบันทึกข้อมูลได้ เนื่องจากรหัสพนักงานหรือชื่อผู้ใช้งานนี้ ถูกใช้งานแล้ว'
+                this.errorDialog = this.$t('popup.text8')
                 this.rightBtn = this.$t('btn_close')
               } else {
                 if (
@@ -1284,7 +1289,7 @@ export default {
         this.clear()
       } else if (this.btnClick == 'cancel') {
         this.dialog = false
-        this.rightBtn = 'บันทึก'
+        this.rightBtn = this.$t('btn_save')
         this.$emit('cancel', null)
       } else {
         this.dialog = false

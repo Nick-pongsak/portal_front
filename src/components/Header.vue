@@ -1207,11 +1207,21 @@ export default {
         password: encrypted,
         host: '10.7.200.178:82'
       }
+
       this.$store.dispatch('CheckUserAccess', obj).then(res => {
         if (res.data) {
           this.errorList = false
         } else {
           this.errorList = true
+          let obj2 = {
+            emp_code: this.info.emp_code,
+            username: this.usernameList.trim(),
+            user_id: this.info.user_id,
+            app_id: this.viewListData.app_id
+          }
+          this.$store.dispatch('UpdateUsernameSSO', obj2).then(res => {
+            console.log('-->')
+          })
         }
         // console.log('ConfirmUsername ===>')
       })

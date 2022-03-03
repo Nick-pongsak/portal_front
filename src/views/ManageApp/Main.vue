@@ -169,7 +169,7 @@
             style="width:40%;padding-left:8px"
             @click="sort(headCol2[1], 1)"
           >
-            <div class="column-name">{{ $t('set.manege_col2') }}</div>
+            <div class="column-name">{{ $t('group.text5') }}</div>
             <v-icon
               v-text="sortNo == 1 ? 'mdi-menu-up' : 'mdi-menu-down'"
               style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
@@ -178,7 +178,7 @@
           </div>
           <div class="head" style="width:20%" @click="sort(headCol2[2], 2)">
             <div class="column-name">
-              {{ $t('set.manege_col3') }}
+              {{ $t('group.text6') }}
             </div>
             <v-icon
               v-text="sortNo == 2 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -188,7 +188,7 @@
           </div>
           <div class="head" style="width:20%" @click="sort(headCol2[3], 3)">
             <div class="column-name">
-              {{ $t('set.manege_col4') }}
+              {{ $t('group.text7') }}
             </div>
             <v-icon
               v-text="sortNo == 3 ? 'mdi-menu-up' : 'mdi-menu-down'"

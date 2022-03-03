@@ -3,6 +3,7 @@ const locales = {
     'btn_add': 'Add',
     'btn_upload': 'Upload',
     'btn_save': 'Save',
+    'btn_ok': 'OK',
     'btn_cancel': 'Cancel',
     'btn_close': 'Close',
     'btn_delete': 'Delete',
@@ -33,9 +34,6 @@ const locales = {
     'set.list_col5': 'Status',
     'set.list_col6': 'Tools',
 
-    'set.manege_col2': 'กลุ่มผู้ใช้งานแอปพลิเคชัน',
-    'set.manege_col3': 'จำนวนแอปฯ',
-    'set.manege_col4': 'จำนวนผู้ใช้งาน',
     // 'set.login_type0': 'Application User',
     // 'set.login_type1': 'LDAP (AD',
     'lang.list_1': 'Thai (TH)',
@@ -120,13 +118,32 @@ const locales = {
     'app.text18': 'Edit Category',
     'app.text19': 'Edit Application',
     'app.text20': 'System User',
+    'group.text1': 'Group Name (TH)',
+    'group.text2': 'Group Name (EN)',
+    'group.text3': 'Applications Accessed',
+    'group.text4': 'Add / Edit',
+    'group.text5': 'Application Group',
+    'group.text6': 'Number Of Applications',
+    'group.text7': 'Number Of Users',
+
+
     'master.type_login_0': 'DHAS PORTAL USER',
     'master.type_login_1': 'LDAP (AD)',
+
+    'popup.text1': 'Do you want to save data?',
+    'popup.text2': "Can't save data. Please contact the administrator",
+    'popup.text3': 'Do you want to delete data?',
+    'popup.text4': 'Application is active in the menu "Application Grouping" Please confirm the action.',
+    'popup.text5': 'Found a change in Username or Password, please confirm the corrective action and save all data.',
+    'popup.text6': 'Do you want to cancel the operation?',
+    'popup.text7': "Can't delete data because the use of such information was found please check again.",
+    'popup.text8': "Can't save data. Because of this employee code or username has been used.",
   },
   'th': {
     'btn_add': 'เพิ่ม',
     'btn_upload': 'อัปโหลด',
     'btn_save': 'บันทึก',
+    'btn_ok': 'ตกลง',
     'btn_cancel': 'ยกเลิก',
     'btn_close': 'ปิด',
     'btn_delete': 'ลบ',
@@ -157,9 +174,6 @@ const locales = {
     'set.list_col5': 'สถานะ',
     'set.list_col6': 'เครื่องมือ',
 
-    'set.manege_col2': 'กลุ่มผู้ใช้งานแอปพลิเคชัน',
-    'set.manege_col3': 'จำนวนแอปฯ',
-    'set.manege_col4': 'จำนวนผู้ใช้งาน',
     // 'set.login_type0': 'ผู้ใช้งานแอปพลิเคชัน',
     // 'set.login_type1': 'LDAP (AD',
     'lang.list_1': 'ภาษาไทย (TH)',
@@ -244,11 +258,27 @@ const locales = {
     'app.text18': 'แก้ไขหมวดหมู่',
     'app.text19': 'แก้ไขแอปพลิเคชัน',
     'app.text20': 'ผู้ใช้งานภายในระบบ',
+    'group.text1': 'ชื่อกลุ่มผู้ใช้งานแอปพลิเคชัน (TH)',
+    'group.text2': 'ชื่อกลุ่มผู้ใช้งานแอปพลิเคชัน (EN)',
+    'group.text3': 'แอปพลิเคชันที่สามารถเข้าใช้งานได้',
+    'group.text4': 'เพิ่ม/แก้ไข',
+    'group.text5': 'กลุ่มผู้ใช้งานแอปพลิเคชัน',
+    'group.text6': 'จำนวนแอปพลิเคชัน',
+    'group.text7': 'จำนวนผู้ใช้งาน',
 
 
 
     'master.type_login_0': 'ผู้ใช้งานบนแอปพลิเคชัน',
     'master.type_login_1': 'LDAP (AD)',
+
+    'popup.text1': 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?',
+    'popup.text2': 'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ',
+    'popup.text3': 'คุณต้องการลบข้อมูลใช่หรือไม่ ?',
+    'popup.text4': 'ข้อมูลแอปพลิเคชันดังกล่าวถูกใช้งานอยู่ในเมนู "จัดกลุ่มผู้ใช้งานแอปพลิเคชัน" กรุณายืนยันการดำเนินการ',
+    'popup.text5': 'พบการแก้ไขข้อมูล Username หรือ Password กรุณายืนยันการดำเนินการแก้ไข และบันทึกข้อมูลทั้งหมด',
+    'popup.text6': 'คุณต้องการยกเลิกการดำเนินการใช่หรือไม่ ?',
+    'popup.text7': 'ไม่สามารถลบข้อมูลได้ เนื่องจากพบการใช้งานข้อมูลดังกล่าวอยู่ กรุณาตรวจสอบอีกครั้ง',
+    'popup.text8': 'ไม่สามารถบันทึกข้อมูลได้ เนื่องจากรหัสพนักงานหรือชื่อผู้ใช้งานนี้ ถูกใช้งานแล้ว',
   }
 }
 export default locales

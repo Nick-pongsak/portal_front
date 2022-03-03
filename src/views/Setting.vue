@@ -211,12 +211,12 @@ export default {
         code: value.code,
         th:
           value.code == '2.1'
-            ? 'Add Application'
+            ? 'เพิ่มแอปพลิเคชัน'
             : 'เพิ่มกลุ่มผู้ใช้งานแอปพลิเคชัน',
         en:
           value.code == '2.1'
             ? 'Add Application'
-            : 'เพิ่มกลุ่มผู้ใช้งานแอปพลิเคชัน'
+            : 'Add Application Group'
       }
       this.activeTab = value
       if (value.code == '2.1') {

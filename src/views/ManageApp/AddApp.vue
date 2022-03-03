@@ -70,7 +70,7 @@
                 v-model="editRow.category_id"
                 :items="items"
                 :placeholder="$t('input_selected')"
-                item-text="name_th"
+                :item-text="'name_' + $i18n.locale"
                 item-value="category_id"
                 persistent-hint
                 single-line
@@ -514,9 +514,9 @@ export default {
       enableBtn: false,
       selectedFile: null,
       dialog: false,
-      errorDialog: 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?',
+      errorDialog: this.$t('popup.text1'),
       error: false,
-      rightBtn: 'บันทึก',
+      rightBtn: this.$t('btn_save'),
       typeDialog: false,
       searchApp: '',
       sortNo: null,
@@ -606,16 +606,16 @@ export default {
       if (name_th.length > 0 && name_en.length > 0) {
         this.btnClick = 'save-type'
         this.dialog = true
-        this.errorDialog = 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?'
-        this.rightBtn = 'บันทึก'
+        this.errorDialog = this.$t('popup.text1')
+        this.rightBtn = this.$t('btn_save')
         this.detailDialog = item
       }
     },
     DeleteNewType (item) {
       this.btnClick = 'del-type'
       this.dialog = true
-      this.errorDialog = 'คุณต้องการลบข้อมูลใช่หรือไม่ ?'
-      this.rightBtn = 'ลบ'
+      this.errorDialog = this.$t('popup.text3')
+      this.rightBtn = this.$t('btn_delete')
       this.detailDialog = item
     },
     CloseNewType () {
@@ -665,8 +665,8 @@ export default {
       } else {
         this.btnClick = 'cancel'
         this.dialog = true
-        this.errorDialog = 'คุณต้องการยกเลิกการดำเนินการใช่หรือไม่ ?'
-        this.rightBtn = 'ตกลง'
+        this.errorDialog = this.$t('popup.text6')
+        this.rightBtn = this.$t('btn_ok')
       }
     },
     cancel () {
@@ -674,15 +674,15 @@ export default {
         this.$emit('cancel', null)
       }
       this.dialog = false
-      this.rightBtn = 'บันทึก'
+      this.rightBtn = this.$t('btn_save')
       this.selectedFile = null
       this.detailDialog = null
     },
     clearBtn () {
       this.btnClick = 'clear'
       this.dialog = true
-      this.errorDialog = 'คุณต้องการลบข้อมูลใช่หรือไม่ ?'
-      this.rightBtn = 'ลบ'
+      this.errorDialog = this.$t('popup.text3')
+      this.rightBtn = this.$t('btn_delete')
     },
     clear () {
       let result = {
@@ -698,18 +698,14 @@ export default {
             if (res.status == 215) {
               this.btnClick = 'confirm-clear'
               this.dialog = true
-              this.errorDialog =
-                'ข้อมูลแอปพลิเคชันดังกล่าวถูกใช้งานอยู่ในเมนู "จัดกลุ่มผู้ใช้ งานแอปพลิเคชัน" กรุณายืนยันการดำเนินการ'
-              this.rightBtn = 'ยืนยัน'
+              this.errorDialog = this.$t('popup.text7')
+              this.rightBtn = this.$t('btn_confirm')
             } else {
               this.btnClick = 'error'
               this.dialog = true
               this.error = true
               this.errorDialog =
-                'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ (Error Code ' +
-                res.status +
-                ')'
-              // this.rightBtn = 'ยืนยัน'
+                this.$t('popup.text2') + ' (Error Code ' + res.status + ')'
             }
           } else {
             this.dialog = false
@@ -723,8 +719,8 @@ export default {
       let item = this.editRow
       if (this.enableBtn == false) {
         this.dialog = true
-        this.errorDialog = 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?'
-        this.rightBtn = 'บันทึก'
+        this.errorDialog = this.$t('popup.text1')
+        this.rightBtn = this.$t('btn_save')
       } else {
         console.log('Valid...', item)
       }
@@ -804,9 +800,7 @@ export default {
                 this.dialog = true
                 this.error = true
                 this.errorDialog =
-                  'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ (Error Code ' +
-                  res.status +
-                  ')'
+                  this.$t('popup.text2') + ' (Error Code ' + res.status + ')'
               }
             } else {
               this.modeAdd = null
@@ -831,7 +825,7 @@ export default {
         })
       } else if (this.btnClick == 'cancel') {
         this.dialog = false
-        this.rightBtn = 'บันทึก'
+        this.rightBtn = this.$t('btn_save')
         this.selectedFile = null
         this.detailDialog = null
         this.$emit('cancel', null)

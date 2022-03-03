@@ -4,7 +4,7 @@
       <div class="detail-add" style="overflow:hidden">
         <div class="rows">
           <div style="width:30%" class="rows-name">
-            ชื่อกลุ่มผู้ใช้งานแอปพลิเคชัน (TH)
+            {{ $t('group.text1') }}
           </div>
           <div style="width:70%" class="rows-input">
             <div class="input-with-icon" style="width: 365px;">
@@ -21,7 +21,7 @@
         </div>
         <div class="rows">
           <div style="width:30%" class="rows-name">
-            ชื่อกลุ่มผู้ใช้งานแอปพลิเคชัน (EN)
+            {{ $t('group.text2') }}
           </div>
           <div style="width:70%" class="rows-input">
             <div class="input-with-icon" style="width: 365px;">
@@ -38,11 +38,11 @@
         </div>
         <div class="rows">
           <div style="width:30%" class="rows-name">
-            แอปพลิเคชันที่สามารถเข้าใช้งานได้
+            {{ $t('group.text3') }}
           </div>
           <div style="width:70%" class="rows-input">
             <v-btn class="cancel-btn" style="width:200px" @click="openPopup">
-              {{ 'เพิ่ม/แก้ไข' }}
+              {{ $t('group.text4') }}
             </v-btn>
           </div>
         </div>
@@ -68,7 +68,7 @@
                   style="width:30%"
                   @click="sort(headCol[1], 1)"
                 >
-                  <div class="column-name">แอปพิเคชัน</div>
+                  <div class="column-name">{{ $t('manageapp.text1') }}</div>
                   <v-icon
                     v-text="sortNo == 1 ? 'mdi-menu-up' : 'mdi-menu-down'"
                     style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
@@ -81,7 +81,7 @@
                   @click="sort(headCol[2], 2)"
                 >
                   <div class="column-name">
-                    หมวดหมู่ (EN)
+                    {{ $t('app.text14') }}
                   </div>
                   <v-icon
                     v-text="sortNo == 2 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -95,7 +95,7 @@
                   @click="sort(headCol[3], 3)"
                 >
                   <div class="column-name">
-                    การเข้าใช้งาน
+                    {{ $t('user.text4') }}
                   </div>
                   <v-icon
                     v-text="sortNo == 3 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -109,7 +109,7 @@
                   @click="sort(headCol[4], 4)"
                 >
                   <div class="column-name">
-                    สถานะ
+                    {{ $t('user.text5') }}
                   </div>
                   <v-icon
                     v-text="sortNo == 4 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -152,7 +152,9 @@
                       color: item.status == true ? '#66BB6A' : '#FBC02D'
                     }"
                   >
-                    {{ item.status == true ? $t('user.text7') : $t('user.text8') }}
+                    {{
+                      item.status == true ? $t('user.text7') : $t('user.text8')
+                    }}
                   </div>
                 </div>
               </div>
@@ -208,7 +210,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn class="cancel" text @click="cancel()" v-show="!error">
-            ยกเลิก
+            {{ $t('btn_cancel') }}
           </v-btn>
           <v-btn text @click="save()" class="save">
             {{ error ? $t('btn_close') : rightBtn }}
@@ -229,7 +231,7 @@
         </div>
         <div>
           <div class="head-menu5">
-            {{ 'การจัดการหมวดหมู่ของแอปพลิเคชัน' }}
+            {{ $t('group.text5') }}
           </div>
           <div class="line-page" style="margin-top:8px"></div>
           <div style="width:100%;margin-top:15px">
@@ -275,7 +277,7 @@
                   @click="sort2(headCol[2], 2)"
                 >
                   <div class="column-name">
-                    หมวดหมู่ (EN)
+                    {{ $t('app.text1') }}
                   </div>
                   <v-icon
                     v-text="sortNo2 == 2 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -289,7 +291,7 @@
                   @click="sort2(headCol[3], 3)"
                 >
                   <div class="column-name">
-                    การเข้าใช้งาน
+                    {{ $t('user.text4') }}
                   </div>
                   <v-icon
                     v-text="sortNo2 == 3 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -303,7 +305,7 @@
                   @click="sort2(headCol[4], 4)"
                 >
                   <div class="column-name">
-                    สถานะ
+                    {{ $t('user.text5') }}
                   </div>
                   <v-icon
                     v-text="sortNo2 == 4 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -341,7 +343,9 @@
                       color: item.status == true ? '#66BB6A' : '#FBC02D'
                     }"
                   >
-                    {{ item.status == true ? $t('user.text7') : $t('user.text8') }}
+                    {{
+                      item.status == true ? $t('user.text7') : $t('user.text8')
+                    }}
                   </div>
                 </div>
               </div>
@@ -388,9 +392,9 @@ export default {
   data () {
     return {
       dialog: false,
-      errorDialog: 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?',
+      errorDialog: this.$t('popup.text1'),
       error: false,
-      rightBtn: 'บันทึก',
+      rightBtn: this.$t('btn_save'),
       groupDialog: false,
       searchApp: '',
       sortNo: null,
@@ -563,8 +567,8 @@ export default {
       let item = this.editRow
       if (this.enableBtn == false) {
         this.dialog = true
-        this.errorDialog = 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?'
-        this.rightBtn = 'บันทึก'
+        this.errorDialog = this.$t('popup.text1')
+        this.rightBtn = this.$t('btn_save')
       } else {
         console.log('Valid...', item)
       }
@@ -601,10 +605,7 @@ export default {
               this.dialog = true
               this.error = true
               this.errorDialog =
-                'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ (Error Code ' +
-                res.status +
-                ')'
-              // this.rightBtn = 'ยืนยัน'
+                this.$t('popup.text2') + ' (Error Code ' + res.status + ')'
             }
           } else {
             this.dialog = false
@@ -623,8 +624,8 @@ export default {
       } else {
         this.btnClick = 'cancel'
         this.dialog = true
-        this.errorDialog = 'คุณต้องการยกเลิกการดำเนินการใช่หรือไม่ ?'
-        this.rightBtn = 'ตกลง'
+        this.errorDialog = this.$t('popup.text6')
+        this.rightBtn = this.$t('btn_ok')
       }
     },
     cancel () {
@@ -632,14 +633,14 @@ export default {
         this.$emit('cancel', null)
       }
       this.dialog = false
-      this.rightBtn = 'บันทึก'
+      this.rightBtn = this.$t('btn_save')
     },
     clearBtn () {
       this.error = false
       this.btnClick = 'clear'
       this.dialog = true
-      this.errorDialog = 'คุณต้องการลบข้อมูลใช่หรือไม่ ?'
-      this.rightBtn = 'ลบ'
+      this.errorDialog = this.$t('popup.text3')
+      this.rightBtn = this.$t('btn_delete')
     },
     save () {
       if (this.btnClick == 'save') {
@@ -662,7 +663,7 @@ export default {
         this.clear()
       } else if (this.btnClick == 'cancel') {
         this.dialog = false
-        this.rightBtn = 'บันทึก'
+        this.rightBtn = this.$t('btn_save')
         this.$emit('cancel', null)
       } else {
         this.dialog = false
