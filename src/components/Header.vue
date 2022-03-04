@@ -1343,7 +1343,8 @@ export default {
     edit (item, index) {
       this.viewListApp = false
       this.viewListData = item
-      this.usernameList = item.username
+      this.usernameList = ''
+      // this.usernameList = item.username
       this.passwordList = ''
       this.errorPasswordList = false
       this.disPwdBtnList = true

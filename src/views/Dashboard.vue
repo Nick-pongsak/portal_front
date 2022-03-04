@@ -281,8 +281,8 @@ export default {
             // console.log(encodeURI(password))
             let str =
               '?username=' + username + '&password=' + encodeURI(password)
-            // window.open(row.url + str, '_blank')
-            window.open('http://localhost:9080/#/' + str, '_blank')
+            window.open(row.url + str, '_blank')
+            // window.open('http://localhost:9080/#/' + str, '_blank')
           } else {
             window.open(row.url, '_blank')
           }
