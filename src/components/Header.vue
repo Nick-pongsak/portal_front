@@ -1622,8 +1622,11 @@ export default {
         this.$router.push('/')
       })
     } else if (sessionStorage.getItem('info') !== null) {
-      // console.log(JSON.parse(sessionStorage.getItem('info')))
-      this.$store.commit('SetUser', JSON.parse(sessionStorage.getItem('info')))
+      let data = JSON.parse(sessionStorage.getItem('info'))
+      if (data.language !== undefined) {
+        this.$i18n.locale = data.language
+      }
+      this.$store.commit('SetUser', data)
     }
   },
   components: {
