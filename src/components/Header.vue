@@ -1234,6 +1234,7 @@ export default {
           }
           this.$store.dispatch('UpdateUsernameSSO', obj2).then(res => {
             // this.viewListApp = true
+            this.CloseSetAppDialogs()
             this.$store.commit('SetLoadHome', true)
           })
         })
