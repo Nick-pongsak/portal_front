@@ -107,7 +107,7 @@
         </div>
         <div class="rows">
           <div style="width:30%" class="rows-name">
-            {{ $t('user.text4') }}
+            {{ $t('app.text21') }}
           </div>
           <div style="width:70%" class="rows-input">
             <v-radio-group v-model="editRow.type_login" style="display:flex">
