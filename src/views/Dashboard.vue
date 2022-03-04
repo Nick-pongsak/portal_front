@@ -1,7 +1,7 @@
 <template>
   <div id="dashboard" v-resize="onResize">
     <div class="name-page">
-      {{ group['name_' + $i18n.locale] }}
+      {{ group['name_' + $i18n.locale] }} <span style="visibility: hidden;">{{loadHome}}</span>
       <div class="line-page" style="margin-top: 15px;"></div>
     </div>
     <div>
@@ -93,8 +93,8 @@
                           ></div>
                         </div>
                       </v-img>
-                      <v-card-text
-                        >{{ item['description_' + $i18n.locale] }}
+                      <v-card-text>
+                        {{ item['description_' + $i18n.locale] }}
                       </v-card-text>
                       <v-card-actions class="justify-end">
                         <v-btn
@@ -205,6 +205,13 @@ export default {
     },
     info () {
       return this.$store.getters.user
+    },
+    loadHome () {
+      if (this.$store.getters.loadHome) {
+        this.fetchData()
+         this.$store.commit('SetLoadHome', false)
+      }
+      return this.$store.getters.loadHome
     }
   },
   watch: {
@@ -290,6 +297,49 @@ export default {
           }
         }
       }
+    },
+    fetchData () {
+      let req = {
+        group_id: this.info.group_id,
+        user_id: this.info.user_id
+      }
+      this.list = []
+      this.group = {}
+      let dataTemp =[]
+      this.$store.dispatch('getHomeData', req).then(res => {
+        let app = res.data.app
+        this.group = res.data
+        let order = res.data.order.split(',')
+        for (let i = 0; i < order.length; i++) {
+          let index = app.findIndex(h => h.app_id == order[i])
+          if (index >= 0) {
+            app[index].image = res.data.path + app[index].image
+            dataTemp.push(app[index])
+          }
+        }
+        for (let i = 0; i < app.length; i++) {
+          let index = dataTemp.findIndex(h => h.app_id == app[i].app_id)
+          if (index < 0) {
+            app[i].image = res.data.path + app[i].image
+            dataTemp.push(app[i])
+          }
+        }
+        if (this.info.status_permission == 1) {
+          dataTemp.push({
+            image: res.data.path + '1645086704.png',
+            name_th: 'DHAS PORTAL SETTING',
+            category_name_th: 'ADMIN',
+            name_en: 'DHAS PORTAL SETTING',
+            category_name_en: 'ADMIN',
+            app_id: 999,
+            status: true,
+            description_th: 'ตั้งค่าระบบ DHAS PORTAL (Administrator Menu)',
+            description_en:
+              'DHAS PORTAL application settings (Administrator Menu)'
+          })
+        }
+        this.list = dataTemp
+      })
     }
   },
   created () {
@@ -306,45 +356,7 @@ export default {
         sessionStorage.getItem('token_seesion')
       )
       this.onResize()
-      let req = {
-        group_id: this.info.group_id,
-        user_id: this.info.user_id
-      }
-      this.list = []
-      this.group = {}
-      this.$store.dispatch('getHomeData', req).then(res => {
-        let app = res.data.app
-        this.group = res.data
-        let order = res.data.order.split(',')
-        for (let i = 0; i < order.length; i++) {
-          let index = app.findIndex(h => h.app_id == order[i])
-          if (index >= 0) {
-            app[index].image = res.data.path + app[index].image
-            this.list.push(app[index])
-          }
-        }
-        for (let i = 0; i < app.length; i++) {
-          let index = this.list.findIndex(h => h.app_id == app[i].app_id)
-          if (index < 0) {
-            app[i].image = res.data.path + app[i].image
-            this.list.push(app[i])
-          }
-        }
-        if (this.info.status_permission == 1) {
-          this.list.push({
-            image: res.data.path + '1645086704.png',
-            name_th: 'DHAS PORTAL SETTING',
-            category_name_th: 'ADMIN',
-            name_en: 'DHAS PORTAL SETTING',
-            category_name_en: 'ADMIN',
-            app_id: 999,
-            status: true,
-            description_th: 'ตั้งค่าระบบ DHAS PORTAL (Administrator Menu)',
-            description_en:
-              'DHAS PORTAL application settings (Administrator Menu)'
-          })
-        }
-      })
+      this.fetchData()
     }
   },
   mounted () {

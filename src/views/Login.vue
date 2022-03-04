@@ -78,6 +78,7 @@
 </template>
 
 <script>
+var CryptoJS = require('crypto-js')
 export default {
   name: 'login',
   components: {},
@@ -105,9 +106,16 @@ export default {
   },
   methods: {
     login () {
+      var data = this.user.password
+      var iv = CryptoJS.lib.WordArray.random(16)
+      let keyapp = 'WebPortalKey'
+      var encrypted = CryptoJS.AES.encrypt(data, keyapp, {
+        iv: iv
+      }).toString()
+
       let result = {
         username: this.user.username,
-        password: this.user.password,
+        password: encodeURI(encrypted),
         type: this.radioGroup
       }
       this.$store

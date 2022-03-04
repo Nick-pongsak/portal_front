@@ -1233,11 +1233,13 @@ export default {
             app_id: this.viewListData.app_id
           }
           this.$store.dispatch('UpdateUsernameSSO', obj2).then(res => {
-            this.SettingApp()
+            // this.viewListApp = true
+            this.$store.commit('SetLoadHome', true)
           })
         })
         .catch(error => {
           this.errorList = true
+          this.$store.commit('SetLoadHome', false)
         })
     },
     ChangePic () {

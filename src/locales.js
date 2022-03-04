@@ -77,7 +77,7 @@ const locales = {
     'pwd.text9': 'Password must be at least 6 characters long and consist of',
     'user.text1': 'Name - Surname',
     'user.text2': 'Position',
-    'user.text3': 'Group Application',
+    'user.text3': 'Application Group',
     'user.text4': 'System Access',
     'user.text5': 'Status',
     'user.text6': 'Tools',

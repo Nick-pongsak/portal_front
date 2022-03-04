@@ -8,11 +8,15 @@ import router from './../../router'
 const store = {
   state: {
     loading: false,
+    loadHome: false,
 
   },
   mutations: {
     SetLoading(state, data) {
       state.loading = data;
+    },
+    SetLoadHome(state, data) {
+      state.loadHome = data;
     }
   },
   actions: {
@@ -268,6 +272,9 @@ const store = {
   getters: {
     isLoading(state) {
       return state.loading;
+    },
+    loadHome(state) {
+      return state.loadHome;
     },
   }
 }
