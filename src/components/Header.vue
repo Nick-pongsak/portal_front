@@ -1201,22 +1201,31 @@ export default {
     ConfirmUsername () {
       var data = this.passwordList.trim()
       var key = this.viewListData.key_app
+      // var iv = 'FgLFXEr1MZl2mEnk'
       var iv = CryptoJS.lib.WordArray.random(16)
       let keyapp = this.usernameList.trim() + key
-      var encrypted = CryptoJS.AES.encrypt(data, keyapp, { iv: iv }).toString()
+      var encrypted = CryptoJS.AES.encrypt(data, keyapp, {
+        iv: iv
+      }).toString()
+
+      // console.log(data)
+      // console.log(key)
+      // console.log(iv)
+      // console.log(encrypted)
+      // console.log(encodeURI(encrypted))
+      // console.log("----------------->")
 
       let obj = {
         url: '/auth/access-app?',
         username: this.usernameList.trim(),
-        password: encrypted,
+        password: encodeURI(encrypted),
         host: '10.7.200.178:82'
       }
 
-      this.$store.dispatch('CheckUserAccess', obj).then(res => {
-        if (res.data) {
+      this.$store
+        .dispatch('CheckUserAccess', obj)
+        .then(res => {
           this.errorList = false
-        } else {
-          this.errorList = true
           let obj2 = {
             emp_code: this.info.emp_code,
             username: this.usernameList.trim(),
@@ -1224,11 +1233,12 @@ export default {
             app_id: this.viewListData.app_id
           }
           this.$store.dispatch('UpdateUsernameSSO', obj2).then(res => {
-            console.log('-->')
+            this.SettingApp()
           })
-        }
-        // console.log('ConfirmUsername ===>')
-      })
+        })
+        .catch(error => {
+          this.errorList = true
+        })
     },
     ChangePic () {
       if (this.stepChangePic == 0) {

@@ -270,19 +270,19 @@ export default {
         this.$router.push('/setting')
       } else if (this.showDragAndDrop == false) {
         if (row.status) {
-          // let username = '23121'
-          // let password = 'aswd'
-          let password = row.password
           let username = row.username
-          if (username.trim().length > 0 && password.trim().length > 0) {
+          if (username.trim().length > 0) {
+            // var iv = 'FgLFXEr1MZl2mEnk'
             var iv = CryptoJS.lib.WordArray.random(16)
             let keyapp = username + row.key_app
-            password = CryptoJS.AES.encrypt(row.password, keyapp, {
+            let password = CryptoJS.AES.encrypt(username, keyapp, {
               iv: iv
             }).toString()
-            let str = '?username=' + username + '&password=' + password
-            window.open(row.url + str, '_blank')
-            // window.open('http://localhost:9080/#/' + str, '_blank')
+            // console.log(encodeURI(password))
+            let str =
+              '?username=' + username + '&password=' + encodeURI(password)
+            // window.open(row.url + str, '_blank')
+            window.open('http://localhost:9080/#/' + str, '_blank')
           } else {
             window.open(row.url, '_blank')
           }
