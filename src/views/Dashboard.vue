@@ -278,9 +278,11 @@ export default {
             let password = CryptoJS.AES.encrypt(username, keyapp, {
               iv: iv
             }).toString()
-            // console.log(encodeURI(password))
             let str =
-              '?username=' + username + '&password=' + encodeURI(password)
+              '?username=' +
+              username +
+              '&password=' +
+              encodeURIComponent(password)
             window.open(row.url + str, '_blank')
             // window.open('http://localhost:9080/#/' + str, '_blank')
           } else {
