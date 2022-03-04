@@ -550,7 +550,7 @@
           text-align:center;
           margin-bottom:55px;"
         >
-          {{ viewListData['name_' + $i18n.locale]}}
+          {{ viewListData['name_' + $i18n.locale] }}
         </div>
         <div class="rows" style="margin-bottom:30px;width:100%;display: flex;">
           <div style="width:20%;padding-top:3px" class="rows-name">
@@ -1190,6 +1190,9 @@ export default {
         } else if (data.name_th.length > 0) {
           this.accountNameEng = data.name_th.substring(0, 1)
         }
+        if (data.language !== undefined) {
+          this.language = data.language
+        }
       }
       return data
     }
@@ -1416,6 +1419,18 @@ export default {
     SetLanguages (value) {
       this.$i18n.locale = value
       this.language = value
+      let req = {
+        user_id: this.info.user_id,
+        language: value
+      }
+      this.$store.dispatch('UpdateLanguage', req).then(res => {
+        let data = JSON.parse(JSON.stringify(this.info))
+        data.language = value
+        this.$store.commit('SetUser', data)
+        sessionStorage.setItem('info', JSON.stringify(data))
+      })
+
+      // UpdateLanguage
     },
     DisableBtn () {
       let newPassword = JSON.stringify(this.newPassword)
