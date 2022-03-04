@@ -1421,6 +1421,7 @@ export default {
       this.language = value
       let req = {
         user_id: this.info.user_id,
+        emp_code: this.info.emp_code,
         language: value
       }
       this.$store.dispatch('UpdateLanguage', req).then(res => {
