@@ -272,13 +272,14 @@ export default {
         if (row.status) {
           // let username = '23121'
           // let password = 'aswd'
-          // let password = row.password
+          let password = row.password
           let username = row.username
-          var iv = CryptoJS.lib.WordArray.random(16)
-          var password = CryptoJS.AES.encrypt(row.password, row.key_app, {
-            iv: iv
-          }).toString()
           if (username.trim().length > 0 && password.trim().length > 0) {
+            var iv = CryptoJS.lib.WordArray.random(16)
+            let keyapp = username + row.key_app
+            password = CryptoJS.AES.encrypt(row.password, keyapp, {
+              iv: iv
+            }).toString()
             let str = '?username=' + username + '&password=' + password
             window.open(row.url + str, '_blank')
             // window.open('http://localhost:9080/#/' + str, '_blank')

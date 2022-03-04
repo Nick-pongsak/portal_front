@@ -1202,7 +1202,8 @@ export default {
       var data = this.passwordList.trim()
       var key = this.viewListData.key_app
       var iv = CryptoJS.lib.WordArray.random(16)
-      var encrypted = CryptoJS.AES.encrypt(data, key, { iv: iv }).toString()
+      let keyapp = this.usernameList.trim() + key
+      var encrypted = CryptoJS.AES.encrypt(data, keyapp, { iv: iv }).toString()
 
       let obj = {
         url: '/auth/access-app?',
