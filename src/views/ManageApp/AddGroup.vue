@@ -239,6 +239,7 @@
               <div class="input-with-icon search-form">
                 <v-icon v-text="'mdi-magnify'" size="20"></v-icon>
                 <input
+                  style="width:100%"
                   type="text"
                   v-model="searchApp"
                   :placeholder="$t('input_search')"
@@ -315,6 +316,9 @@
                 </div>
               </div>
               <div class="body-table">
+                <div v-if="list.length == 0" class="no-data">
+                  {{ $t('popup.text9') }}
+                </div>
                 <div
                   class="body-row"
                   v-for="(item, index) in list"
@@ -431,7 +435,12 @@ export default {
                 : 'LDAP (AP)'
             let str2 =
               this.list[i].name_th +
+              this.list[i].name_en +
+              this.list[i].category_name_th +
               this.list[i].category_name_en +
+              this.list[i].category_name_en +
+              this.list[i].description_en +
+              this.list[i].description_th +
               this.list[i].type_login +
               type
             let str = str2.toUpperCase()

@@ -441,6 +441,7 @@
             <div class="input-with-icon search-form">
               <v-icon v-text="'mdi-magnify'" size="20"></v-icon>
               <input
+                style="width:100%"
                 type="text"
                 v-model="searchApp"
                 :placeholder="$t('input_search')"
@@ -1159,7 +1160,7 @@ export default {
           } else {
             type = this.$t('manageapp.text3')
           }
-          let str2 = this.list[i].name_th + type
+          let str2 = this.list[i].name_th + type +this.list[i].name_en
           let str = str2.toUpperCase()
           if (str.indexOf(keyword.toUpperCase()) >= 0) {
             this.list[i].index = i
