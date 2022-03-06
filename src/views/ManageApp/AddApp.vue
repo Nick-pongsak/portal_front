@@ -119,7 +119,9 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div :class="'radio-text' + $i18n.locale">{{ $t('master.type_login_1') }}</div>
+                <div :class="'radio-text' + $i18n.locale">
+                  {{ $t('master.type_login_1') }}
+                </div>
               </div>
               <div class="radio">
                 <v-radio
@@ -129,7 +131,9 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div :class="'radio-text' + $i18n.locale">{{ $t('app.text20') }}</div>
+                <div :class="'radio-text' + $i18n.locale">
+                  {{ $t('app.text20') }}
+                </div>
               </div>
             </v-radio-group>
           </div>
@@ -146,7 +150,9 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div :class="'radio-text' + $i18n.locale">{{ $t('user.text7') }}</div>
+                <div :class="'radio-text' + $i18n.locale">
+                  {{ $t('user.text7') }}
+                </div>
               </div>
               <div class="radio">
                 <v-radio
@@ -156,7 +162,9 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div :class="'radio-text' + $i18n.locale">{{ $t('user.text8') }}</div>
+                <div :class="'radio-text' + $i18n.locale">
+                  {{ $t('user.text8') }}
+                </div>
               </div>
             </v-radio-group>
           </div>
@@ -173,7 +181,9 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div :class="'radio-text' + $i18n.locale">{{ $t('user.text7') }}</div>
+                <div :class="'radio-text' + $i18n.locale">
+                  {{ $t('user.text7') }}
+                </div>
               </div>
               <div class="radio">
                 <v-radio
@@ -183,7 +193,9 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div :class="'radio-text' + $i18n.locale">{{ $t('user.text8') }}</div>
+                <div :class="'radio-text' + $i18n.locale">
+                  {{ $t('user.text8') }}
+                </div>
               </div>
             </v-radio-group>
           </div>
@@ -358,7 +370,7 @@
               class="justify-center"
             >
               <v-btn
-                @click="CloseNewType()"
+                @click="CancelNewType()"
                 class="ok-btn"
                 style="margin-right:30px;"
               >
@@ -450,7 +462,7 @@
               </div>
               <div class="body-table">
                 <div v-if="items.length == 0" class="no-data">
-                 {{$t('popup.text9')}}
+                  {{ $t('popup.text9') }}
                 </div>
                 <div
                   class="body-row"
@@ -618,7 +630,31 @@ export default {
       this.rightBtn = this.$t('btn_delete')
       this.detailDialog = item
     },
+    CancelNewType () {
+      let name_th = this.NameThInput.trim()
+      let name_en = this.NameEnInput.trim()
+      if (this.modeAdd && (name_th.length > 0 || name_en.length > 0)) {
+        this.btnClick = 'cancel-popup'
+        this.dialog = true
+        this.errorDialog = this.$t('popup.text6')
+        this.rightBtn = this.$t('btn_ok')
+      } else if (
+        !this.modeAdd &&
+        (name_th !== this.editRowPop.name_th ||
+          name_en !== this.editRowPop.name_en)
+      ) {
+        this.btnClick = 'cancel-popup'
+        this.dialog = true
+        this.errorDialog = this.$t('popup.text6')
+        this.rightBtn = this.$t('btn_ok')
+      } else {
+        this.CloseNewType()
+      }
+    },
     CloseNewType () {
+      if (this.dialog) {
+        this.dialog = false
+      }
       this.modeAdd = null
       this.editMode = false
       this.NameThInput = ''
@@ -829,6 +865,8 @@ export default {
         this.selectedFile = null
         this.detailDialog = null
         this.$emit('cancel', null)
+      } else if (this.btnClick == 'cancel-popup') {
+        this.CloseNewType()
       } else {
         this.dialog = false
       }
