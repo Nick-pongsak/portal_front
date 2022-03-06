@@ -111,7 +111,7 @@
           </div>
           <div style="width:70%" class="rows-input">
             <v-radio-group v-model="editRow.type_login" style="display:flex">
-              <div class="radio" style="margin-right: 65px;">
+              <div class="radio" style="width:95px">
                 <v-radio
                   :color="'#CE1212'"
                   :value="1"
@@ -119,7 +119,7 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div class="radio-text">{{ $t('master.type_login_1') }}</div>
+                <div :class="'radio-text' + $i18n.locale">{{ $t('master.type_login_1') }}</div>
               </div>
               <div class="radio">
                 <v-radio
@@ -129,7 +129,7 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div class="radio-text">{{ $t('app.text20') }}</div>
+                <div :class="'radio-text' + $i18n.locale">{{ $t('app.text20') }}</div>
               </div>
             </v-radio-group>
           </div>
@@ -138,7 +138,7 @@
           <div style="width:30%" class="rows-name">{{ $t('app.text8') }}</div>
           <div style="width:70%" class="rows-input">
             <v-radio-group v-model="editRow.status_sso" style="display:flex">
-              <div class="radio">
+              <div class="radio" style="width:95px">
                 <v-radio
                   :color="'#CE1212'"
                   :value="1"
@@ -146,7 +146,7 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div class="radio-text">{{ $t('user.text7') }}</div>
+                <div :class="'radio-text' + $i18n.locale">{{ $t('user.text7') }}</div>
               </div>
               <div class="radio">
                 <v-radio
@@ -156,7 +156,7 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div class="radio-text">{{ $t('user.text8') }}</div>
+                <div :class="'radio-text' + $i18n.locale">{{ $t('user.text8') }}</div>
               </div>
             </v-radio-group>
           </div>
@@ -165,7 +165,7 @@
           <div style="width:30%" class="rows-name">{{ $t('app.text9') }}</div>
           <div style="width:70%" class="rows-input">
             <v-radio-group v-model="editRow.status" style="display:flex">
-              <div class="radio">
+              <div class="radio" style="width:95px">
                 <v-radio
                   :color="'#CE1212'"
                   :value="1"
@@ -173,7 +173,7 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div class="radio-text">{{ $t('user.text7') }}</div>
+                <div :class="'radio-text' + $i18n.locale">{{ $t('user.text7') }}</div>
               </div>
               <div class="radio">
                 <v-radio
@@ -183,7 +183,7 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div class="radio-text">{{ $t('user.text8') }}</div>
+                <div :class="'radio-text' + $i18n.locale">{{ $t('user.text8') }}</div>
               </div>
             </v-radio-group>
           </div>

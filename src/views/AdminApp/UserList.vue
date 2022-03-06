@@ -38,7 +38,7 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div  class="radio-text">
+                <div :class="'radio-text' + $i18n.locale">
                   {{ $t('master.type_login_1') }}
                 </div>
               </div>
@@ -51,7 +51,7 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div  class="radio-text">
+                <div :class="'radio-text' + $i18n.locale">
                   {{ $t('master.type_login_0') }}
                 </div>
               </div>
@@ -362,7 +362,7 @@
                     :messages="false"
                     :light="false"
                   ></v-radio>
-                  <div  class="radio-text">{{ $t('user.text7') }}</div>
+                  <div :class="'radio-text' + $i18n.locale">{{ $t('user.text7') }}</div>
                 </div>
                 <div class="radio">
                   <v-radio
@@ -373,7 +373,7 @@
                     :messages="false"
                     :light="false"
                   ></v-radio>
-                  <div  class="radio-text">{{ $t('user.text8') }}</div>
+                  <div :class="'radio-text' + $i18n.locale">{{ $t('user.text8') }}</div>
                 </div>
               </v-radio-group>
             </div>
@@ -532,7 +532,7 @@
               </div>
               <div class="body-table">
                 <div v-if="applist.length == 0" class="no-data">
-                 {{$t('popup.text9')}}
+                  {{ $t('popup.text9') }}
                 </div>
                 <div
                   class="body-row"
@@ -722,7 +722,7 @@
               </div>
               <div class="body-table" style="height: 290px">
                 <div v-if="list.length == 0" class="no-data">
-                 {{$t('popup.text9')}}
+                  {{ $t('popup.text9') }}
                 </div>
                 <div
                   class="body-row"

@@ -231,8 +231,11 @@
                 font-size: nth($font-sizes, 2);
                 font-weight: map-get($font-weight, "regular");
                 margin-right: 76px;
-                .radio-text {
+                .radio-texten {
                   padding-top: 4px;
+                }
+                .radio-textth {
+                  padding-top: 2px;
                 }
               }
               .v-messages {
