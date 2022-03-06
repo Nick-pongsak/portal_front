@@ -119,7 +119,7 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div>{{ $t('master.type_login_1') }}</div>
+                <div class="radio-text">{{ $t('master.type_login_1') }}</div>
               </div>
               <div class="radio">
                 <v-radio
@@ -129,7 +129,7 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div>{{ $t('app.text20') }}</div>
+                <div class="radio-text">{{ $t('app.text20') }}</div>
               </div>
             </v-radio-group>
           </div>
@@ -146,7 +146,7 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div>{{ $t('user.text7') }}</div>
+                <div class="radio-text">{{ $t('user.text7') }}</div>
               </div>
               <div class="radio">
                 <v-radio
@@ -156,7 +156,7 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div>{{ $t('user.text8') }}</div>
+                <div class="radio-text">{{ $t('user.text8') }}</div>
               </div>
             </v-radio-group>
           </div>
@@ -173,7 +173,7 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div>{{ $t('user.text7') }}</div>
+                <div class="radio-text">{{ $t('user.text7') }}</div>
               </div>
               <div class="radio">
                 <v-radio
@@ -183,7 +183,7 @@
                   :messages="false"
                   :light="false"
                 ></v-radio>
-                <div>{{ $t('user.text8') }}</div>
+                <div class="radio-text">{{ $t('user.text8') }}</div>
               </div>
             </v-radio-group>
           </div>

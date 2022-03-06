@@ -231,6 +231,9 @@
                 font-size: nth($font-sizes, 2);
                 font-weight: map-get($font-weight, "regular");
                 margin-right: 76px;
+                .radio-text {
+                  padding-top: 4px;
+                }
               }
               .v-messages {
                 display: none;
