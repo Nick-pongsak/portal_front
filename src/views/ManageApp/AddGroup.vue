@@ -426,7 +426,8 @@ export default {
     searchApp: {
       handler: function (todos) {
         if (todos.trim().length > 1) {
-          let keyword = todos.trim()
+          let keyword = todos
+          // let keyword = todos.trim()
           let temp = []
           for (let i = 0; i < this.list.length; i++) {
             let type =
