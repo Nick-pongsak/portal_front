@@ -188,6 +188,7 @@
 
 <script>
 var CryptoJS = require('crypto-js')
+var aesEcb = require('aes-ecb')
 export default {
   name: 'dashboard',
   data () {
@@ -280,13 +281,14 @@ export default {
         if (row.status) {
           let username = row.username
           if (row.app_id == 10) {
-            var iv = CryptoJS.lib.WordArray.random(16)
-            let keyapp = 'fake_pmd_1' + row.key_app
-            let password = CryptoJS.AES.encrypt('fake_pmd_1', keyapp, {
-              iv: iv
-            }).toString()
+            username = 'fake_sales_mg_2'
+            var keyString = row.key_app
+            let keyEn = username + keyString
+            let strKeyEn = keyEn.substring(0, 16)
+            var password = aesEcb.encrypt(strKeyEn, username)
             let str =
-              '?username=fake_pmd_1' +
+              '?username=' +
+              username +
               '&password=' +
               encodeURIComponent(password)
             window.open('http://localhost:8081' + str, '_blank')
