@@ -279,7 +279,18 @@ export default {
       } else if (this.showDragAndDrop == false) {
         if (row.status) {
           let username = row.username
-          if (row.app_id == 36) {
+          if (row.app_id == 10) {
+            var iv = CryptoJS.lib.WordArray.random(16)
+            let keyapp = 'fake_pmd_1' + row.key_app
+            let password = CryptoJS.AES.encrypt('fake_pmd_1', keyapp, {
+              iv: iv
+            }).toString()
+            let str =
+              '?username=fake_pmd_1' +
+              '&password=' +
+              encodeURIComponent(password)
+            window.open('http://localhost:8081' + str, '_blank')
+          } else if (row.app_id == 36) {
             var iv = CryptoJS.lib.WordArray.random(16)
             let keyapp = 'nattaphat' + row.key_app
             let password = CryptoJS.AES.encrypt('nattaphat', keyapp, {
