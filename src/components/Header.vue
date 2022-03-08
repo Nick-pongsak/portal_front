@@ -1148,28 +1148,29 @@ export default {
       this.DisableBtn()
     },
     searchApp (todos) {
+      let tempData = JSON.parse(JSON.stringify(this.masterList))
       if (todos.trim().length > 1) {
         let keyword = todos.trim()
         let temp = []
         let type = ''
-        for (let i = 0; i < this.list.length; i++) {
-          if (this.list[i].status_sso == 1) {
-            type = this.list[i].type_login
+        for (let i = 0; i < tempData.length; i++) {
+          if (tempData[i].status_sso == 1) {
+            type = tempData[i].type_login
               ? this.$t('master.type_login_1')
               : this.$t('manageapp.text4')
           } else {
             type = this.$t('manageapp.text3')
           }
-          let str2 = this.list[i].name_th + type +this.list[i].name_en
+          let str2 = tempData[i].name_th + type +tempData[i].name_en
           let str = str2.toUpperCase()
           if (str.indexOf(keyword.toUpperCase()) >= 0) {
-            this.list[i].index = i
-            temp.push(this.list[i])
+            tempData[i].index = i
+            temp.push(tempData[i])
           }
         }
         this.list = temp
       } else if (todos.trim().length == 0) {
-        this.list = this.masterList
+        this.list = tempData
       }
     },
     picDialog (newValue) {

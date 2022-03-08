@@ -425,34 +425,35 @@ export default {
   watch: {
     searchApp: {
       handler: function (todos) {
+        let tempData = JSON.parse(JSON.stringify(this.masterList))
         if (todos.trim().length > 1) {
           let keyword = todos
           // let keyword = todos.trim()
           let temp = []
-          for (let i = 0; i < this.list.length; i++) {
+          for (let i = 0; i < tempData.length; i++) {
             let type =
-              this.list[i].type_login == 0
+              tempData[i].type_login == 0
                 ? 'ผู้ใช้งานบนแอปพลิเคชัน'
                 : 'LDAP (AP)'
             let str2 =
-              this.list[i].name_th +
-              this.list[i].name_en +
-              this.list[i].category_name_th +
-              this.list[i].category_name_en +
-              this.list[i].category_name_en +
-              this.list[i].description_en +
-              this.list[i].description_th +
-              this.list[i].type_login +
+              tempData[i].name_th +
+              tempData[i].name_en +
+              tempData[i].category_name_th +
+              tempData[i].category_name_en +
+              tempData[i].category_name_en +
+              tempData[i].description_en +
+              tempData[i].description_th +
+              tempData[i].type_login +
               type
             let str = str2.toUpperCase()
             if (str.indexOf(keyword.toUpperCase()) >= 0) {
-              this.list[i].index = i
-              temp.push(this.list[i])
+              tempData[i].index = i
+              temp.push(tempData[i])
             }
           }
           this.list = temp
         } else if (todos.trim().length == 0) {
-          this.list = this.masterList
+          this.list = tempData
         }
       }
     }

@@ -70,7 +70,6 @@ export default {
     return {
       menu: [],
       selectedItem: {},
-      searchApp: '',
       sortNo: false,
       sortAppName: false,
       sortType: false,
