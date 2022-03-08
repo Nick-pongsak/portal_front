@@ -1,7 +1,8 @@
 <template>
   <div id="dashboard" v-resize="onResize">
     <div class="name-page">
-      {{ group['name_' + $i18n.locale] }} <span style="visibility: hidden;">{{loadHome}}</span>
+      {{ group['name_' + $i18n.locale] }}
+      <span style="visibility: hidden;">{{ loadHome }}</span>
       <div class="line-page" style="margin-top: 15px;"></div>
     </div>
     <div>
@@ -209,7 +210,7 @@ export default {
     loadHome () {
       if (this.$store.getters.loadHome) {
         this.fetchData()
-         this.$store.commit('SetLoadHome', false)
+        this.$store.commit('SetLoadHome', false)
       }
       return this.$store.getters.loadHome
     }
@@ -278,7 +279,18 @@ export default {
       } else if (this.showDragAndDrop == false) {
         if (row.status) {
           let username = row.username
-          if (username.trim().length > 0) {
+          if (row.app_id == 36) {
+            var iv = CryptoJS.lib.WordArray.random(16)
+            let keyapp = 'nattaphat' + row.key_app
+            let password = CryptoJS.AES.encrypt('nattaphat', keyapp, {
+              iv: iv
+            }).toString()
+            let str =
+              '?username=nattaphat' +
+              '&password=' +
+              encodeURIComponent(password)
+            window.open('http://localhost:8080/#/login/' + str, '_blank')
+          } else if (username.trim().length > 0) {
             // var iv = 'FgLFXEr1MZl2mEnk'
             var iv = CryptoJS.lib.WordArray.random(16)
             let keyapp = username + row.key_app
@@ -291,6 +303,8 @@ export default {
               '&password=' +
               encodeURIComponent(password)
             window.open(row.url + str, '_blank')
+            // http://localhost:8080/#/login
+
             // window.open('http://localhost:9080/#/' + str, '_blank')
           } else {
             window.open(row.url, '_blank')
@@ -305,7 +319,7 @@ export default {
       }
       this.list = []
       this.group = {}
-      let dataTemp =[]
+      let dataTemp = []
       this.$store.dispatch('getHomeData', req).then(res => {
         let app = res.data.app
         this.group = res.data
