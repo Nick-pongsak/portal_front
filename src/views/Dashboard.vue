@@ -279,48 +279,46 @@ export default {
         this.$router.push('/setting')
       } else if (this.showDragAndDrop == false) {
         if (row.status) {
+          let url = row.url
           let username = row.username
-          if (row.app_id == 10) {
-            username = 'fake_sales_mg_2'
-            var keyString = row.key_app
-            let keyEn = username + keyString
-            let strKeyEn = keyEn.substring(0, 16)
-            var password = aesEcb.encrypt(strKeyEn, username)
-            let str =
-              '?username=' +
-              username +
-              '&password=' +
-              encodeURIComponent(password)
-            window.open('http://localhost:8081' + str, '_blank')
-          } else if (row.app_id == 36) {
-            var iv = CryptoJS.lib.WordArray.random(16)
-            let keyapp = 'nattaphat' + row.key_app
-            let password = CryptoJS.AES.encrypt('nattaphat', keyapp, {
-              iv: iv
-            }).toString()
-            let str =
-              '?username=nattaphat' +
-              '&password=' +
-              encodeURIComponent(password)
-            window.open('http://localhost:8080/#/login/' + str, '_blank')
-          } else if (username.trim().length > 0) {
-            // var iv = 'FgLFXEr1MZl2mEnk'
-            var iv = CryptoJS.lib.WordArray.random(16)
-            let keyapp = username + row.key_app
-            let password = CryptoJS.AES.encrypt(username, keyapp, {
-              iv: iv
-            }).toString()
-            let str =
-              '?username=' +
-              username +
-              '&password=' +
-              encodeURIComponent(password)
-            window.open(row.url + str, '_blank')
-            // http://localhost:8080/#/login
+          let iv = CryptoJS.lib.WordArray.random(16)
+          let keyapp = username + row.key_app
+          let password = CryptoJS.AES.encrypt(username, keyapp, {
+            iv: iv
+          }).toString()
 
-            // window.open('http://localhost:9080/#/' + str, '_blank')
+          if (row.key_app == 'mktopskey') {
+            username = 'nattaphat'
+            url = 'http://localhost:8080/#/login/'
+          } else if (row.key_app == 'CorporateAndRollingSecretKeysAES') {
+            username = 'fake_pmd_1'
+            url = 'http://localhost:8081'
+            let strKeyEn = keyapp.substring(0, 16)
+            password = aesEcb.encrypt(strKeyEn, username)
+          }
+          if (row.type_login == 1 && row.status_sso == 1) {
+            username = row.user_ldap
+          }
+
+          let str =
+            '?username=' +
+            username +
+            '&password=' +
+            encodeURIComponent(password)
+
+          console.log(row)
+          if (row.type_login == 0) {
+            if (row.status_sso == 1 && row.verify == 1) {
+              window.open(url + str, '_blank')
+            } else {
+              window.open(url, '_blank')
+            }
           } else {
-            window.open(row.url, '_blank')
+            if (row.status_sso == 1) {
+              window.open(url, '_blank')
+            } else {
+              window.open(url + str, '_blank')
+            }
           }
         }
       }
