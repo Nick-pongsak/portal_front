@@ -306,7 +306,7 @@ export default {
             '&password=' +
             encodeURIComponent(password)
 
-          console.log(row)
+          console.log(username)
           if (row.type_login == 0) {
             if (row.status_sso == 1 && row.verify == 1) {
               window.open(url + str, '_blank')
