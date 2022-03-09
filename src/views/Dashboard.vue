@@ -289,7 +289,6 @@ export default {
 
           if (row.key_app == 'mktopskey') {
             username = 'nattaphat'
-            url = 'http://localhost:8080/#/login/'
           } else if (row.key_app == 'CorporateAndRollingSecretKeysAES') {
             username = 'fake_pmd_1'
             url = 'http://localhost:8081'
@@ -305,8 +304,7 @@ export default {
             username +
             '&password=' +
             encodeURIComponent(password)
-
-          console.log(username)
+          console.log(str)
           if (row.type_login == 0) {
             if (row.status_sso == 1 && row.verify == 1) {
               window.open(url + str, '_blank')
