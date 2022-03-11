@@ -28,7 +28,7 @@ const store = {
           }
         }).then(res => {
           commit('SetLoading', false)
-          resolve(res.data.success)
+          resolve(res)
         }).catch(error => {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 500) {
@@ -53,7 +53,7 @@ const store = {
           }
         }).then(res => {
           commit('SetLoading', false)
-          resolve(res.data.success)
+          resolve(res)
         }).catch(error => {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 500) {

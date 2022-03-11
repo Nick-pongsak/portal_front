@@ -659,6 +659,7 @@ export default {
       this.editMode = false
       this.NameThInput = ''
       this.NameEnInput = ''
+      this.error = false
     },
     sort (feild, index) {
       this.sortNo = this.sortNo == index ? null : index
@@ -713,6 +714,7 @@ export default {
       this.rightBtn = this.$t('btn_save')
       this.selectedFile = null
       this.detailDialog = null
+      this.error = false
     },
     clearBtn () {
       this.btnClick = 'clear'
@@ -754,6 +756,7 @@ export default {
       this.btnClick = 'save'
       let item = this.editRow
       if (this.enableBtn == false) {
+        console.log('==>')
         this.dialog = true
         this.errorDialog = this.$t('popup.text1')
         this.rightBtn = this.$t('btn_save')
@@ -810,8 +813,20 @@ export default {
         formData.append('url', this.editRow.url)
 
         this.$store.dispatch(url, formData).then(res => {
-          this.$emit('save', null)
-          this.dialog = false
+          if (res.data.success == undefined) {
+            if (res.status == 213) {
+              this.btnClick = 'error'
+              this.dialog = true
+              this.errorDialog = this.$t('popup.text7')
+              this.error = true
+            } else {
+              this.dialog = false
+            }
+          } else {
+            this.dialog = false
+            this.error = false
+            this.$emit('save', null)
+          }
         })
       } else if (this.btnClick == 'clear' || this.btnClick == 'confirm-clear') {
         this.clear()
@@ -831,13 +846,11 @@ export default {
         this.$store.dispatch(url, result).then(res => {
           if (res.data.success == undefined) {
             if (res.status == 217) {
-              {
-                this.btnClick = 'error'
-                this.dialog = true
-                this.error = true
-                this.errorDialog =
-                  this.$t('popup.text2') + ' (Error Code ' + res.status + ')'
-              }
+              this.btnClick = 'error'
+              this.dialog = true
+              this.error = true
+              this.errorDialog =
+                this.$t('popup.text2') + ' (Error Code ' + res.status + ')'
             } else {
               this.modeAdd = null
               this.editMode = false
@@ -869,6 +882,7 @@ export default {
         this.CloseNewType()
       } else {
         this.dialog = false
+        this.error = false
       }
     },
     onButtonClick () {
