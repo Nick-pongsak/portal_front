@@ -196,10 +196,10 @@ const store = {
     CheckUserAccess({ state, commit, dispatch }, data) {
       commit('SetLoading', true)
       if (debug == 'debug') {
-        // console.log("check-authen-app ==>", JSON.stringify(data))
+        console.log("check-authen-app ==>", JSON.stringify(data))
       }
       return new Promise((resolve, reject) => {
-        axios.post(`${url}/apiweb/api/check-authen-app`, data, {
+        axios.post(`${url}/apiweb/api/` + data.api, data, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${this.getters.access_token}`

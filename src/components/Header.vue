@@ -1010,6 +1010,7 @@ import Vue from 'vue'
 import ImageUploader from 'vue-image-upload-resize'
 var bcrypt = require('bcryptjs')
 var CryptoJS = require('crypto-js')
+var aesEcb = require('aes-ecb')
 export default {
   name: 'headers',
   props: {},
@@ -1161,7 +1162,7 @@ export default {
           } else {
             type = this.$t('manageapp.text3')
           }
-          let str2 = tempData[i].name_th + type +tempData[i].name_en
+          let str2 = tempData[i].name_th + type + tempData[i].name_en
           let str = str2.toUpperCase()
           if (str.indexOf(keyword.toUpperCase()) >= 0) {
             tempData[i].index = i
@@ -1203,9 +1204,10 @@ export default {
     ConfirmUsername () {
       var data = this.passwordList.trim()
       var key = this.viewListData.key_app
+      let username = this.usernameList.trim()
       // var iv = 'FgLFXEr1MZl2mEnk'
       var iv = CryptoJS.lib.WordArray.random(16)
-      let keyapp = this.usernameList.trim() + key
+      let keyapp = username + key
       var encrypted = CryptoJS.AES.encrypt(data, keyapp, {
         iv: iv
       }).toString()
@@ -1216,12 +1218,25 @@ export default {
       // console.log(encrypted)
       // console.log(encodeURI(encrypted))
       // console.log("----------------->")
-
       let obj = {
-        url: '/auth/access-app?',
-        username: this.usernameList.trim(),
+        url: '',
+        username: username,
         password: encodeURI(encrypted),
-        host: '10.7.200.178:82'
+        host: '',
+        api: ''
+      }
+      if (this.viewListData.key_app == 'SalesOpsKEY') {
+        obj.url = '/auth/access-app?'
+        obj.host = '10.7.200.178:82'
+        obj.api = 'check-authen-app'
+      } else if (
+        this.viewListData.key_app == 'CorporateAndRollingSecretKeysAES'
+      ) {
+        let strKeyEn = keyapp.substring(0, 16)
+        obj.url = '/api/auth/verify'
+        obj.host = 'dev-corp-plan.dhas.com'
+        obj.password = aesEcb.encrypt(strKeyEn, data)
+        obj.api = 'check-authen-corp'
       }
 
       this.$store
