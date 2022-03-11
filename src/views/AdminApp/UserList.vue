@@ -299,9 +299,10 @@
                   "
                   :disabled="enableInput"
                   @keypress="IsEmail"
-                  @keyup="enableBtnSave"
+                  @keyup="IsNumberUpEmail"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
                 />
+                <!-- @keyup="enableBtnSave" -->
               </div>
             </div>
           </div>
@@ -317,6 +318,7 @@
                   :placeholder="$t('input_not_selected')"
                   :disabled="enableInput"
                   @keypress="isNumber"
+                  @keyup="IsNumberUpCx"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
                 />
               </div>
@@ -336,6 +338,7 @@
                   :placeholder="$t('input_not_selected')"
                   :disabled="enableInput"
                   @keypress="isNumber"
+                  @keyup="IsNumberUpTel"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
                 />
               </div>
@@ -362,7 +365,9 @@
                     :messages="false"
                     :light="false"
                   ></v-radio>
-                  <div :class="'radio-text' + $i18n.locale">{{ $t('user.text7') }}</div>
+                  <div :class="'radio-text' + $i18n.locale">
+                    {{ $t('user.text7') }}
+                  </div>
                 </div>
                 <div class="radio">
                   <v-radio
@@ -373,7 +378,9 @@
                     :messages="false"
                     :light="false"
                   ></v-radio>
-                  <div :class="'radio-text' + $i18n.locale">{{ $t('user.text8') }}</div>
+                  <div :class="'radio-text' + $i18n.locale">
+                    {{ $t('user.text8') }}
+                  </div>
                 </div>
               </v-radio-group>
             </div>
@@ -396,7 +403,7 @@
                   :placeholder="$t('input_selected')"
                   :disabled="enableInput"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
-                  @keyup="enableBtnSave"
+                  @keyup="IsUsername"
                   @keypress="enableBtnSave"
                 />
               </div>
@@ -1182,12 +1189,15 @@ export default {
         // email.length > 0 &&
         this.applist.length > 0
       ) {
+        console.log(item)
         if (item.type_login == 0) {
-          if (password == this.defaultPassword) {
+          let username = item.username.trim()
+          if (username.length > 5 && password == this.defaultPassword) {
             this.enableBtn = false
+            console.log('=====>')
           } else {
-            let username = item.username.trim()
             let password = item.password.trim()
+            console.log('--->')
             if (
               username.length > 5 &&
               password.length > 5 &&
@@ -1369,6 +1379,63 @@ export default {
         return true
       } else {
         evt.preventDefault()
+      }
+    },
+    IsNumberUpTel (evt) {
+      this.keyUpText('phone', evt)
+    },
+    IsNumberUpCx (evt) {
+      this.keyUpText('cx', evt)
+    },
+    keyUpText (input, evt) {
+      let value = evt.target.value
+      let thai = /[ก-ฮ]/g
+      let eng = /[A-Z]/g
+      let engsmall = /[a-z]/g
+      let numThai = /[๑-๙]/g
+      let charac = /[-_=.%฿~`:;'"!><@#^&{}/|+()[\]*\\$]/g
+      let rsChar = value.search(thai)
+      let rsNum = value.search(numThai)
+      let rsCharac = value.search(charac)
+      let rsEng = value.search(eng)
+      let rsEngSmall = value.search(engsmall)
+      if (
+        rsChar >= 0 ||
+        rsNum >= 0 ||
+        rsCharac >= 0 ||
+        rsEng >= 0 ||
+        rsEngSmall >= 0
+      ) {
+        this.editRow[input] = ''
+        this.enableBtnSave()
+      }
+    },
+    IsNumberUpEmail (evt) {
+      let value = evt.target.value
+      let thai = /[ก-ฮ]/g
+      let numThai = /[๑-๙]/g
+      let charac = /[=%฿~`:;'"!><#^&{}/|+()[\]*\\$]/g
+      // let charac = /[=%฿.-_$~`:;'"!><@#^&{}/|+()[\]*\\]/g
+      let rsChar = value.search(thai)
+      let rsNum = value.search(numThai)
+      let rsCharac = value.search(charac)
+      if (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0) {
+        this.editRow.email = ''
+        this.enableBtnSave()
+      }
+    },
+    IsUsername (evt) {
+      let value = evt.target.value
+      let thai = /[ก-ฮ]/g
+      let numThai = /[๑-๙]/g
+      let charac = /[=%฿~`:;'"!><#^&{}/|+()[\]*\\$]/g
+      // let charac = /[=%฿.-_$~`:;'"!><@#^&{}/|+()[\]*\\]/g
+      let rsChar = value.search(thai)
+      let rsNum = value.search(numThai)
+      let rsCharac = value.search(charac)
+      if (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0) {
+        this.editRow.username = ''
+        this.enableBtnSave()
       }
     }
   },

@@ -279,7 +279,7 @@ export default {
         this.$router.push('/setting')
       } else if (this.showDragAndDrop == false) {
         if (row.status) {
-          // row.verify = 1
+          row.verify = 1
           let url = row.url
           let username = row.username
           let iv = CryptoJS.lib.WordArray.random(16)
@@ -288,11 +288,14 @@ export default {
             iv: iv
           }).toString()
 
-          if (row.key_app == 'mktopskey') {
-            username = 'nattaphat'
-          } else if (row.key_app == 'CorporateAndRollingSecretKeysAES') {
+          if (row.key_app == 'CorporateAndRollingSecretKeysAES') {
             let strKeyEn = keyapp.substring(0, 16)
             password = aesEcb.encrypt(strKeyEn, username)
+          } else if (row.key_app == 'mktopskey') {
+            password = CryptoJS.AES.encrypt(username, keyapp)
+            // var decrypted = CryptoJS.AES.decrypt(password, keyapp).toString(
+            //   CryptoJS.enc.Utf8
+            // )
           }
           if (row.type_login == 1 && row.status_sso == 1) {
             username = row.user_ldap
@@ -303,6 +306,11 @@ export default {
             username +
             '&password=' +
             encodeURIComponent(password)
+
+          // console.log(username)
+          // console.log(keyapp)
+          // console.log(password.toString())
+          // console.log(decrypted)
 
           if (row.type_login == 0) {
             if (row.status_sso == 1 && row.verify == 1) {

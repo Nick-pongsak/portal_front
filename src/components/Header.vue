@@ -1240,6 +1240,13 @@ export default {
         obj.host = 'dev-corp-plan.dhas.com'
         obj.password = aesEcb.encrypt(strKeyEn, data)
         obj.api = 'check-authen-corp'
+      } else if (this.viewListData.key_app == 'mktopskey') {
+        // username:nattaphat
+        // password:Dh@sP@ssw0rd
+        obj.url = '/api/login'
+        obj.host = '10.7.200.134'
+        obj.password = CryptoJS.AES.encrypt(data, keyapp).toString()
+        obj.api = 'check-authen-mktops'
       }
 
       this.$store
