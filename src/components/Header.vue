@@ -489,6 +489,9 @@
                 </div>
               </div>
               <div class="body-table">
+                <div v-if="list.length == 0" class="no-data">
+                  {{ $t('popup.text9') }}
+                </div>
                 <div
                   class="body-row"
                   v-for="(item, index) in list"

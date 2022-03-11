@@ -279,6 +279,7 @@ export default {
         this.$router.push('/setting')
       } else if (this.showDragAndDrop == false) {
         if (row.status) {
+          // row.verify = 1
           let url = row.url
           let username = row.username
           let iv = CryptoJS.lib.WordArray.random(16)
@@ -290,8 +291,6 @@ export default {
           if (row.key_app == 'mktopskey') {
             username = 'nattaphat'
           } else if (row.key_app == 'CorporateAndRollingSecretKeysAES') {
-            // url = 'http://localhost:8081'
-            // console.log(strKeyEn)
             let strKeyEn = keyapp.substring(0, 16)
             password = aesEcb.encrypt(strKeyEn, username)
           }
@@ -304,7 +303,7 @@ export default {
             username +
             '&password=' +
             encodeURIComponent(password)
-          // console.log(str)
+
           if (row.type_login == 0) {
             if (row.status_sso == 1 && row.verify == 1) {
               window.open(url + str, '_blank')
