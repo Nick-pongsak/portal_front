@@ -93,15 +93,23 @@
         <div class="rows">
           <div style="width:30%" class="rows-name">{{ $t('app.text7') }}</div>
           <div style="width:70%" class="rows-input">
-            <div class="input-with-icon" style="width: 365px;">
+            <div
+              class="input-with-icon"
+              style="width: 365px;"
+              v-show="editRow.status_sso == 1"
+            >
               <input
                 type="text"
                 v-model="editRow.key_app"
                 :placeholder="$t('input_selected')"
+                :disabled="editRow.status_sso == 1 ? false : true"
                 maxlength="50"
                 @keypress="IsNumber"
                 @keyup="IsNumberUp"
               />
+              <!-- :style="{
+                  background: editRow.status_sso == 1 ? '' : '#D1D1D1'
+                }" -->
             </div>
           </div>
         </div>
@@ -240,7 +248,7 @@
                 :className="['fileinput', { 'fileinput--loaded': hasImage }]"
                 capture="environment"
                 :debug="1"
-                accept="image/jpeg"
+                accept="image/jpeg,.png"
                 :autoRotate="true"
                 outputFormat="blob"
                 @input="setImage"
@@ -780,11 +788,14 @@ export default {
         description_th.length > 0 &&
         description_en.length > 0 &&
         category_id.length > 0 &&
-        key_app.length > 0 &&
         image.length > 0 &&
         url.length > 0
       ) {
-        this.enableBtn = false
+        if (key_app.length > 0 && item.status_sso == 1) {
+          this.enableBtn = false
+        } else {
+          this.enableBtn = true
+        }
       } else {
         this.enableBtn = true
       }
@@ -817,7 +828,7 @@ export default {
             if (res.status == 213) {
               this.btnClick = 'error'
               this.dialog = true
-              this.errorDialog = this.$t('popup.text7')
+              this.errorDialog = this.$t('popup.text2')
               this.error = true
             } else {
               this.dialog = false

@@ -175,7 +175,7 @@
                   :className="['fileinput', { 'fileinput--loaded': hasImage }]"
                   capture="environment"
                   :debug="1"
-                  accept="image/jpeg"
+                  accept="image/jpeg,.png"
                   :autoRotate="true"
                   outputFormat="blob"
                   @input="setImage"
@@ -879,7 +879,10 @@
               <div style="width:60%" class="rows-input">
                 <div
                   class="input-with-icon"
-                  :style="{ 'box-shadow': 'unset', width: ' 250px' }"
+                  :style="{
+                    'box-shadow': renderEmail('shadow'),
+                    width: ' 250px'
+                  }"
                 >
                   <input
                     type="text"
@@ -889,7 +892,7 @@
                         ? $t('input_not_selected')
                         : $t('input_selected')
                     "
-                    :readonly="true"
+                    :readonly="renderEmail('readonly')"
                   />
                 </div>
               </div>
@@ -1204,6 +1207,21 @@ export default {
     }
   },
   methods: {
+    renderEmail (mode) {
+      if (mode == 'shadow') {
+        if (this.profile.type_login == 0) {
+          return this.enableInput ? 'unset' : this.colInput
+        } else {
+          return 'unset'
+        }
+      } else {
+        if (this.profile.type_login == 0) {
+          return this.enableInput ? true : false
+        } else {
+          return true
+        }
+      }
+    },
     ConfirmUsername () {
       var data = this.passwordList.trim()
       var key = this.viewListData.key_app
@@ -1299,6 +1317,7 @@ export default {
         this.$store.dispatch('getUserProfile', {}).then(res => {
           let data = JSON.parse(JSON.stringify(this.info))
           data.cx = res.data.success.data.cx
+          data.email = res.data.success.data.email
           data.name_en = res.data.success.data.name_en
           data.name_th = res.data.success.data.name_th
           data.nickname1_en = res.data.success.data.nickname1_en

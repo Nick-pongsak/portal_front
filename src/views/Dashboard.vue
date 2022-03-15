@@ -282,6 +282,9 @@ export default {
           row.verify = 1
           let url = row.url
           let username = row.username
+          if (row.type_login == 1 && row.status_sso == 1) {
+            username = row.user_ldap
+          }
           let iv = CryptoJS.lib.WordArray.random(16)
           let keyapp = username + row.key_app
           let password = CryptoJS.AES.encrypt(username, keyapp, {
@@ -297,9 +300,6 @@ export default {
             //   CryptoJS.enc.Utf8
             // )
           }
-          if (row.type_login == 1 && row.status_sso == 1) {
-            username = row.user_ldap
-          }
 
           let str =
             '?username=' +
@@ -311,7 +311,7 @@ export default {
           // console.log(keyapp)
           // console.log(password.toString())
           // console.log(decrypted)
-
+          // console.log(row)
           if (row.type_login == 0) {
             if (row.status_sso == 1 && row.verify == 1) {
               window.open(url + str, '_blank')
@@ -320,9 +320,9 @@ export default {
             }
           } else {
             if (row.status_sso == 1) {
-              window.open(url, '_blank')
-            } else {
               window.open(url + str, '_blank')
+            } else {
+              window.open(url, '_blank')
             }
           }
         }

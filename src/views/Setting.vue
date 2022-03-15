@@ -90,7 +90,7 @@ export default {
       activeTab: {},
       defaultEditRow: {
         status: 1,
-        status_sso: 1,
+        status_sso: 0,
         type_login: 1,
         image: '',
         mode: 'add',
