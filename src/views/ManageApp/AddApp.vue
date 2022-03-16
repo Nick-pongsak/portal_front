@@ -835,7 +835,7 @@ export default {
             if (res.status == 213) {
               this.btnClick = 'error'
               this.dialog = true
-              this.errorDialog = this.$t('popup.text2')
+              this.errorDialog = this.$t('popup.text2') + ' (Error Code ' + res.status + ')'
               this.error = true
             } else {
               this.dialog = false
