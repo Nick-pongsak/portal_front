@@ -843,6 +843,7 @@ export default {
         this.clear()
       } else if (this.btnClick == 'confirm-type') {
         this.dialog = false
+         this.error = false
         this.detailDialog = null
         this.getTypeList()
       } else if (this.btnClick == 'save-type' || this.btnClick == 'edit-type') {
