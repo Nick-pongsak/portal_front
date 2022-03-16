@@ -365,6 +365,7 @@
                   type="password"
                   v-model="cfNewPassword"
                   @keypress="IsNumber"
+                  @keyup="InCondition"
                   :placeholder="$t('input_selected')"
                 />
               </div>
