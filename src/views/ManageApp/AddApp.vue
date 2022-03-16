@@ -841,6 +841,10 @@ export default {
         })
       } else if (this.btnClick == 'clear' || this.btnClick == 'confirm-clear') {
         this.clear()
+      } else if (this.btnClick == 'confirm-type') {
+        this.dialog = false
+        this.detailDialog = null
+        this.getTypeList()
       } else if (this.btnClick == 'save-type' || this.btnClick == 'edit-type') {
         let result = {
           name_th: this.NameThInput,
@@ -879,9 +883,25 @@ export default {
         })
       } else if (this.btnClick == 'del-type') {
         this.$store.dispatch('deleteType', this.detailDialog).then(res => {
-          this.dialog = false
-          this.detailDialog = null
-          this.getTypeList()
+          if (res.data.success == undefined) {
+            if (res.status == 228) {
+              this.btnClick = 'confirm-type'
+              this.dialog = true
+              this.error = true
+              this.errorDialog = this.$t('popup.text7')
+              this.rightBtn = this.$t('btn_confirm')
+            } else {
+              this.btnClick = 'error'
+              this.dialog = true
+              this.error = true
+              this.errorDialog =
+                this.$t('popup.text2') + ' (Error Code ' + res.status + ')'
+            }
+          } else {
+            this.dialog = false
+            this.detailDialog = null
+            this.getTypeList()
+          }
         })
       } else if (this.btnClick == 'cancel') {
         this.dialog = false
