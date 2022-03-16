@@ -168,7 +168,7 @@ const locales = {
 
     'lang.list_1': 'ภาษาไทย (TH)',
     'lang.list_2': 'ภาษาอังกฤษ (EN)',
-    'profile.menu_1': 'ข้อมุลส่วนตัว',
+    'profile.menu_1': 'ข้อมูลส่วนตัว',
     'profile.menu_2': 'จัดการรายการแอปพลิเคชัน',
     'profile.menu_3': 'เปลี่ยนรหัสผ่าน',
     'profile.menu_4': 'ออกจากระบบ',

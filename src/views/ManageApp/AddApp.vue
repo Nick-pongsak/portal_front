@@ -90,29 +90,6 @@
             </v-btn>
           </div>
         </div>
-        <div class="rows" v-show="editRow.status_sso == 1">
-          <div style="width:30%" class="rows-name">{{ $t('app.text7') }}</div>
-          <div style="width:70%" class="rows-input">
-            <div
-              class="input-with-icon"
-              style="width: 365px;"
-              v-show="editRow.status_sso == 1"
-            >
-              <input
-                type="text"
-                v-model="editRow.key_app"
-                :placeholder="$t('input_selected')"
-                :disabled="editRow.status_sso == 1 ? false : true"
-                maxlength="50"
-                @keypress="IsNumber"
-                @keyup="IsNumberUp"
-              />
-              <!-- :style="{
-                  background: editRow.status_sso == 1 ? '' : '#D1D1D1'
-                }" -->
-            </div>
-          </div>
-        </div>
         <div class="rows">
           <div style="width:30%" class="rows-name">
             {{ $t('app.text21') }}
@@ -152,6 +129,7 @@
             <v-radio-group v-model="editRow.status_sso" style="display:flex">
               <div class="radio" style="width:95px">
                 <v-radio
+                  @click="selectedSSo(1)"
                   :color="'#CE1212'"
                   :value="1"
                   :ripple="false"
@@ -164,6 +142,7 @@
               </div>
               <div class="radio">
                 <v-radio
+                  @click="selectedSSo(0)"
                   :color="'#CE1212'"
                   :value="0"
                   :ripple="false"
@@ -175,6 +154,29 @@
                 </div>
               </div>
             </v-radio-group>
+          </div>
+        </div>
+        <div class="rows" v-show="editRow.status_sso == 1">
+          <div style="width:30%" class="rows-name">{{ $t('app.text7') }}</div>
+          <div style="width:70%" class="rows-input">
+            <div
+              class="input-with-icon"
+              style="width: 365px;"
+              v-show="editRow.status_sso == 1"
+            >
+              <input
+                type="text"
+                v-model="editRow.key_app"
+                :placeholder="$t('input_selected')"
+                :disabled="editRow.status_sso == 1 ? false : true"
+                maxlength="50"
+                @keypress="IsNumber"
+                @keyup="IsNumberUp"
+              />
+              <!-- :style="{
+                  background: editRow.status_sso == 1 ? '' : '#D1D1D1'
+                }" -->
+            </div>
           </div>
         </div>
         <div class="rows">
@@ -772,6 +774,9 @@ export default {
         console.log('Valid...', item)
       }
     },
+    selectedSSo (mode) {
+      this.enableBtnSave()
+    },
     enableBtnSave () {
       let item = this.editRow
       let name_th = item.name_th.trim()
@@ -792,6 +797,8 @@ export default {
         url.length > 0
       ) {
         if (key_app.length > 0 && item.status_sso == 1) {
+          this.enableBtn = false
+        } else if (item.status_sso == 0) {
           this.enableBtn = false
         } else {
           this.enableBtn = true
@@ -828,7 +835,7 @@ export default {
             if (res.status == 213) {
               this.btnClick = 'error'
               this.dialog = true
-              this.errorDialog = this.$t('popup.text2')
+              this.errorDialog = this.$t('popup.text2') + ' (Error Code ' + res.status + ')'
               this.error = true
             } else {
               this.dialog = false
@@ -843,7 +850,7 @@ export default {
         this.clear()
       } else if (this.btnClick == 'confirm-type') {
         this.dialog = false
-         this.error = false
+        this.error = false
         this.detailDialog = null
         this.getTypeList()
       } else if (this.btnClick == 'save-type' || this.btnClick == 'edit-type') {

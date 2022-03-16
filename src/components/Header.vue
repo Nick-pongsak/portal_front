@@ -1256,7 +1256,7 @@ export default {
       ) {
         let strKeyEn = keyapp.substring(0, 16)
         obj.url = '/api/auth/verify'
-        obj.host = 'dev-corp-plan.dhas.com'
+        obj.host = 'dep-corp-plan.dhas.com'
         obj.password = aesEcb.encrypt(strKeyEn, data)
         obj.api = 'check-authen-corp'
       } else if (this.viewListData.key_app == 'mktopskey') {
