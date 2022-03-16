@@ -289,20 +289,32 @@
             </div>
             <div style="width:60%" class="rows-input">
               <div class="input-with-icon">
-                <input
+                <!-- <input
                   type="text"
                   v-model="editRow.email"
+                  :disabled="enableInput"
                   :placeholder="
                     editRow.type_login == 0
                       ? $t('input_not_selected')
                       : $t('input_selected')
                   "
+                  :style="{ background: enableInput ? '#D1D1D1' : '' }"
+                  :rules="emailRules"
+                /> -->
+                <v-text-field
+                  v-model="editRow.email"
+                  :rules="emailRules"
+                  validate-on-blur
                   :disabled="enableInput"
+                  :placeholder="
+                    editRow.type_login == 0
+                      ? $t('input_not_selected')
+                      : $t('input_selected')
+                  "
+                  :style="{ background: enableInput ? '#D1D1D1' : '' }"
                   @keypress="IsEmail"
                   @keyup="IsNumberUpEmail"
-                  :style="{ background: enableInput ? '#D1D1D1' : '' }"
-                />
-                <!-- @keyup="enableBtnSave" -->
+                ></v-text-field>
               </div>
             </div>
           </div>
@@ -312,15 +324,23 @@
             </div>
             <div style="width:60%;padding-right:25px" class="rows-input">
               <div class="input-with-icon">
-                <input
+                <v-text-field
+                  v-model="editRow.cx"
+                  :rules="numberRules"
+                  :disabled="enableInput"
+                  :placeholder="$t('input_not_selected')"
+                  :style="{ background: enableInput ? '#D1D1D1' : '' }"
+                  @keypress="isNumber"
+                  @keyup="IsNumberUpCx"
+                ></v-text-field>
+                <!-- <input
                   type="text"
                   v-model="editRow.cx"
                   :placeholder="$t('input_not_selected')"
                   :disabled="enableInput"
-                  @keypress="isNumber"
                   @keyup="IsNumberUpCx"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
-                />
+                /> -->
               </div>
             </div>
           </div>
@@ -332,15 +352,23 @@
             </div>
             <div style="width:60%" class="rows-input">
               <div class="input-with-icon">
-                <input
+                <v-text-field
+                  v-model="editRow.phone"
+                  :rules="numberRules"
+                  :disabled="enableInput"
+                  :placeholder="$t('input_not_selected')"
+                  :style="{ background: enableInput ? '#D1D1D1' : '' }"
+                  @keypress="isNumber"
+                  @keyup="IsNumberUpTel"
+                ></v-text-field>
+                <!-- <input
                   type="text"
                   v-model="editRow.phone"
                   :placeholder="$t('input_not_selected')"
                   :disabled="enableInput"
                   @keypress="isNumber"
-                  @keyup="IsNumberUpTel"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
-                />
+                /> -->
               </div>
               <div style="color:#CE1212;font-size:8px;padding-top:5px">
                 {{ $t('profile.account_15') }}
@@ -397,15 +425,22 @@
             </div>
             <div style="width:60%;display:flex" class="rows-input">
               <div class="input-with-icon" style="margin-right:10px">
-                <input
+                <!-- <input
                   type="text"
                   v-model="editRow.username"
                   :placeholder="$t('input_selected')"
                   :disabled="enableInput"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
+                /> -->
+                <v-text-field
+                  v-model="editRow.username"
+                  :rules="usernameRules"
+                  :placeholder="$t('input_selected')"
+                  :disabled="enableInput"
+                  :style="{ background: enableInput ? '#D1D1D1' : '' }"
                   @keyup="IsUsername"
                   @keypress="enableBtnSave"
-                />
+                ></v-text-field>
               </div>
               <v-tooltip bottom color="red">
                 <template v-slot:activator="{ on, attrs }">
@@ -829,7 +864,29 @@ export default {
       oldPassword: this.data.origin_password,
       defaultPassword: '99999999',
       typeLogin: 1,
-      masterEdit: {}
+      masterEdit: {},
+      emailRules: [
+        value => !!value || '',
+        value => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          return pattern.test(value) || ''
+        }
+      ],
+      numberRules: [
+        value => !!value || '',
+        value => {
+          const pattern = /[0-9]$/
+          return pattern.test(value) || '.'
+        }
+      ],
+      usernameRules: [
+        value => !!value || '',
+        value => {
+          const pattern = /[a-zA-Z0-9]$/
+          return pattern.test(value) || ''
+        },
+        value => (value || '').length > 5 || ''
+      ]
     }
   },
   computed: {
@@ -1166,7 +1223,7 @@ export default {
       }
     },
     enableBtnSave () {
-      let item = this.editRow
+      let item = JSON.parse(JSON.stringify(this.editRow))
       let group_id = item.group_id.toString()
       let name_th = item.name_th.trim()
       let name_en = item.name_en.trim()
@@ -1186,18 +1243,14 @@ export default {
         postname_th.length > 0 &&
         postname_en.length > 0 &&
         emp_code.trim().length > 0 &&
-        // email.length > 0 &&
         this.applist.length > 0
       ) {
-        console.log(item)
         if (item.type_login == 0) {
           let username = item.username.trim()
           if (username.length > 5 && password == this.defaultPassword) {
             this.enableBtn = false
-            console.log('=====>')
           } else {
             let password = item.password.trim()
-            console.log('--->')
             if (
               username.length > 5 &&
               password.length > 5 &&
@@ -1415,7 +1468,6 @@ export default {
       let thai = /[ก-ฮ]/g
       let numThai = /[๑-๙]/g
       let charac = /[=%฿~`:;'"!><#^&{}/|+()[\]*\\$]/g
-      // let charac = /[=%฿.-_$~`:;'"!><@#^&{}/|+()[\]*\\]/g
       let rsChar = value.search(thai)
       let rsNum = value.search(numThai)
       let rsCharac = value.search(charac)
