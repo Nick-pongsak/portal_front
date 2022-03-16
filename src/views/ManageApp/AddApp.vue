@@ -90,7 +90,7 @@
             </v-btn>
           </div>
         </div>
-        <div class="rows">
+        <div class="rows" v-show="editRow.status_sso == 1">
           <div style="width:30%" class="rows-name">{{ $t('app.text7') }}</div>
           <div style="width:70%" class="rows-input">
             <div
