@@ -1551,8 +1551,16 @@ export default {
           this.errorCfNewPassword = false
         } else {
           let password = JSON.stringify(this.password)
+          let valueStr = JSON.stringify(value)
+          let condChar = /[a-zA-Z]/g
+          let condNum = /[0-9]/g
+          let rsChar = valueStr.search(condChar)
+          let rsNum = valueStr.search(condNum)
+
           if (
-            cfNewPassword == JSON.stringify(value) &&
+            rsChar >= 0 &&
+            rsNum >= 0 &&
+            cfNewPassword == valueStr &&
             cfNewPassword !== password
           ) {
             this.disPwdBtn = false
@@ -1586,8 +1594,16 @@ export default {
           this.errorCfNewPassword = false
         } else {
           let password = JSON.stringify(this.password)
+          let valueStr = JSON.stringify(value)
+          let condChar = /[a-zA-Z]/g
+          let condNum = /[0-9]/g
+          let rsChar = valueStr.search(condChar)
+          let rsNum = valueStr.search(condNum)
+
           if (
-            newPassword == JSON.stringify(value) &&
+            rsChar >= 0 &&
+            rsNum >= 0 &&
+            newPassword == valueStr &&
             newPassword !== password
           ) {
             this.disPwdBtn = false
@@ -1595,6 +1611,7 @@ export default {
             this.errorNewPassword = false
           } else {
             this.disPwdBtn = true
+            this.errorNewPassword = true
             this.errorCfNewPassword = true
           }
         }
