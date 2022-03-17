@@ -1263,7 +1263,7 @@ export default {
         // username:nattaphat
         // password:Dh@sP@ssw0rd
         obj.url = '/api/login'
-        obj.host = '10.7.200.134'
+        obj.host = 'dep-ppmweb.dhas.com'
         obj.password = CryptoJS.AES.encrypt(data, keyapp).toString()
         obj.api = 'check-authen-mktops'
       }

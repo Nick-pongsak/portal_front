@@ -311,7 +311,6 @@ export default {
           // console.log(keyapp)
           // console.log(password.toString())
           // console.log(decrypted)
-          // console.log(row)
           if (row.type_login == 0) {
             if (row.status_sso == 1 && row.verify == 1) {
               window.open(url + str, '_blank')
