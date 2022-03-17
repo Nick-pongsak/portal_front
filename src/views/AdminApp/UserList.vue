@@ -1495,8 +1495,8 @@ export default {
       let value = evt.target.value
       let thai = /[ก-ฮ]/g
       let numThai = /[๑-๙]/g
-      // let charac = /[=-_@%฿~`:;'"!><#^&{}/|+()[\]*\\$]/g
-      let charac = /[=%฿.-_$~`:;'"!><@#^&{}/|+()[\]*\\]/g
+      let charac = /[=-_@%฿~`:;'"!><#^&{}/|+()[\]*\\$]/g
+      // let charac = /[=%฿.-_$~`:;'"!><@#^&{}/|+()[\]*\\]/g
       let rsChar = value.search(thai)
       let rsNum = value.search(numThai)
       let rsCharac = value.search(charac)
