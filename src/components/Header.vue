@@ -345,7 +345,7 @@
                   v-model="newPassword"
                   :placeholder="$t('input_selected')"
                   @keypress="IsNumber"
-                  @keyup="InCondition"
+                  @keyup="InCondition1"
                 />
               </div>
             </div>
@@ -365,7 +365,7 @@
                   type="password"
                   v-model="cfNewPassword"
                   @keypress="IsNumber"
-                  @keyup="InCondition"
+                  @keyup="InCondition2"
                   :placeholder="$t('input_selected')"
                 />
               </div>
@@ -1529,28 +1529,90 @@ export default {
         evt.preventDefault()
       }
     },
-    InCondition (evt) {
-      let newPassword = JSON.stringify(this.newPassword)
-      let cfNewPassword = JSON.stringify(this.cfNewPassword)
-      let password = JSON.stringify(this.password)
-      if (newPassword == password || password == cfNewPassword) {
+    InCondition1 (evt) {
+      let value = evt.target.value
+      let charac = /[-_=.%฿~`:;'"!><@#^&{}/|+()[\]*\\$]/g
+      let rsCharac = value.search(charac)
+      if (rsCharac >= 0) {
+        this.errorNewPassword = true
         this.disPwdBtn = true
+        this.newPassword = ''
       } else {
-        if (this.newPassword.length >= 6) {
+        let cfNewPassword = JSON.stringify(this.cfNewPassword)
+
+        if (cfNewPassword == '""' && JSON.stringify(value) != '""') {
+          this.disPwdBtn = true
+        } else if (
+          cfNewPassword == JSON.stringify(value) &&
+          cfNewPassword == '""'
+        ) {
+          this.disPwdBtn = true
+          this.errorNewPassword = false
+          this.errorCfNewPassword = false
+        } else {
+          let password = JSON.stringify(this.password)
+          let valueStr = JSON.stringify(value)
           let condChar = /[a-zA-Z]/g
           let condNum = /[0-9]/g
-          let rsChar = newPassword.search(condChar)
-          let rsNum = newPassword.search(condNum)
-          if (rsChar >= 0 && rsNum >= 0) {
+          let rsChar = valueStr.search(condChar)
+          let rsNum = valueStr.search(condNum)
+
+          if (
+            rsChar >= 0 &&
+            rsNum >= 0 &&
+            cfNewPassword == valueStr &&
+            cfNewPassword !== password
+          ) {
+            this.disPwdBtn = false
             this.errorNewPassword = false
-            if (this.cfNewPassword.length >= 6) {
-              this.disPwdBtn = false
-            }
+            this.errorCfNewPassword = false
           } else {
+            this.disPwdBtn = true
             this.errorNewPassword = true
-            if (this.cfNewPassword.length >= 6) {
-              this.disPwdBtn = true
-            }
+          }
+        }
+      }
+    },
+    InCondition2 (evt) {
+      let value = evt.target.value
+      let charac = /[-_=.%฿~`:;'"!><@#^&{}/|+()[\]*\\$]/g
+      let rsCharac = value.search(charac)
+      if (rsCharac >= 0) {
+        this.errorCfNewPassword = true
+        this.disPwdBtn = true
+        this.cfNewPassword = ''
+      } else {
+        let newPassword = JSON.stringify(this.newPassword)
+        if (newPassword == '""' && JSON.stringify(value) != '""') {
+          this.disPwdBtn = true
+        } else if (
+          newPassword == JSON.stringify(value) &&
+          newPassword == '""'
+        ) {
+          this.disPwdBtn = true
+          this.errorNewPassword = false
+          this.errorCfNewPassword = false
+        } else {
+          let password = JSON.stringify(this.password)
+          let valueStr = JSON.stringify(value)
+          let condChar = /[a-zA-Z]/g
+          let condNum = /[0-9]/g
+          let rsChar = valueStr.search(condChar)
+          let rsNum = valueStr.search(condNum)
+
+          if (
+            rsChar >= 0 &&
+            rsNum >= 0 &&
+            newPassword == valueStr &&
+            newPassword !== password
+          ) {
+            this.disPwdBtn = false
+            this.errorCfNewPassword = false
+            this.errorNewPassword = false
+          } else {
+            this.disPwdBtn = true
+            this.errorNewPassword = true
+            this.errorCfNewPassword = true
           }
         }
       }

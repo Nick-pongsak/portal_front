@@ -129,6 +129,7 @@
                 type="text"
                 @keypress="IsEmail"
                 v-model="editRow.emp_code"
+                 @keyup="IsEmpcode"
                 :placeholder="$t('input_selected')"
                 :disabled="editRow.type_login == 1 ? true : false"
                 :style="{
@@ -1487,6 +1488,20 @@ export default {
       let rsCharac = value.search(charac)
       if (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0) {
         this.editRow.username = ''
+        this.enableBtnSave()
+      }
+    },
+    IsEmpcode (evt) {
+      let value = evt.target.value
+      let thai = /[ก-ฮ]/g
+      let numThai = /[๑-๙]/g
+      let charac = /[=%฿~`:;'"!><#^&{}/|+()[\]*\\$]/g
+      // let charac = /[=%฿.-_$~`:;'"!><@#^&{}/|+()[\]*\\]/g
+      let rsChar = value.search(thai)
+      let rsNum = value.search(numThai)
+      let rsCharac = value.search(charac)
+      if (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0) {
+        this.editRow.emp_code = ''
         this.enableBtnSave()
       }
     }
