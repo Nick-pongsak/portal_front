@@ -1249,7 +1249,7 @@ export default {
       }
       if (this.viewListData.key_app == 'SalesOpsKEY') {
         obj.url = '/auth/access-app?'
-        obj.host = '10.7.200.178:82'
+        obj.host = '10.7.200.158:82'
         obj.api = 'check-authen-app'
       } else if (
         this.viewListData.key_app == 'CorporateAndRollingSecretKeysAES'
