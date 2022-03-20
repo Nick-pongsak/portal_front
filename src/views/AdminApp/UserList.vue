@@ -2,6 +2,7 @@
   <div id="user-list" style="height:calc(100% - 50px);">
     <v-card style="padding:20px 5px 20px 20px;height: calc(100% - 10px);">
       <div class="detail-add">
+        {{ enableBtn }}
         <div class="rows">
           <div style="width:20%" class="rows-name">
             {{ $t('profile.account_2') }}
@@ -128,8 +129,7 @@
               <input
                 type="text"
                 @keypress="IsEmail"
-                v-model="editRow.emp_code"
-                 @keyup="IsEmpcode"
+                v-model="empCode"
                 :placeholder="$t('input_selected')"
                 :disabled="editRow.type_login == 1 ? true : false"
                 :style="{
@@ -148,12 +148,10 @@
               <div class="input-with-icon">
                 <input
                   type="text"
-                  v-model="editRow.name_th"
+                  v-model="nameTh"
                   :placeholder="$t('input_selected')"
                   :disabled="enableInput"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
-                  @keyup="enableBtnSave"
-                  @keypress="enableBtnSave"
                 />
               </div>
             </div>
@@ -166,12 +164,10 @@
               <div class="input-with-icon">
                 <input
                   type="text"
-                  v-model="editRow.name_en"
+                  v-model="nameEn"
                   :placeholder="$t('input_selected')"
                   :disabled="enableInput"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
-                  @keyup="enableBtnSave"
-                  @keypress="enableBtnSave"
                 />
               </div>
             </div>
@@ -186,7 +182,7 @@
               <div class="input-with-icon">
                 <input
                   type="text"
-                  v-model="editRow.nickname1_th"
+                  v-model="nickname1Th"
                   :placeholder="$t('input_not_selected')"
                   :disabled="enableInput"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
@@ -202,7 +198,7 @@
               <div class="input-with-icon">
                 <input
                   type="text"
-                  v-model="editRow.nickname1_en"
+                  v-model="nickname1En"
                   :placeholder="$t('input_not_selected')"
                   :disabled="enableInput"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
@@ -220,7 +216,7 @@
               <div class="input-with-icon">
                 <input
                   type="text"
-                  v-model="editRow.nickname2_th"
+                  v-model="nickname2Th"
                   :placeholder="$t('input_not_selected')"
                   :disabled="enableInput"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
@@ -236,7 +232,7 @@
               <div class="input-with-icon">
                 <input
                   type="text"
-                  v-model="editRow.nickname2_en"
+                  v-model="nickname2En"
                   :placeholder="$t('input_not_selected')"
                   :disabled="enableInput"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
@@ -254,11 +250,9 @@
               <div class="input-with-icon">
                 <input
                   type="text"
-                  v-model="editRow.postname_th"
+                  v-model="postnameTh"
                   :placeholder="$t('input_selected')"
                   :disabled="enableInput"
-                  @keyup="enableBtnSave"
-                  @keypress="enableBtnSave"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
                 />
               </div>
@@ -272,9 +266,7 @@
               <div class="input-with-icon">
                 <input
                   type="text"
-                  @keyup="enableBtnSave"
-                  @keypress="enableBtnSave"
-                  v-model="editRow.postname_en"
+                  v-model="postnameEn"
                   :placeholder="$t('input_selected')"
                   :disabled="enableInput"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
@@ -290,9 +282,9 @@
             </div>
             <div style="width:60%" class="rows-input">
               <div class="input-with-icon">
-                <!-- <input
+                <input
                   type="text"
-                  v-model="editRow.email"
+                  v-model="emailInput"
                   :disabled="enableInput"
                   :placeholder="
                     editRow.type_login == 0
@@ -300,22 +292,7 @@
                       : $t('input_selected')
                   "
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
-                  :rules="emailRules"
-                /> -->
-                <v-text-field
-                  v-model="editRow.email"
-                  :rules="emailRules"
-                  validate-on-blur
-                  :disabled="enableInput"
-                  :placeholder="
-                    editRow.type_login == 0
-                      ? $t('input_not_selected')
-                      : $t('input_selected')
-                  "
-                  :style="{ background: enableInput ? '#D1D1D1' : '' }"
-                  @keypress="IsEmail"
-                  @keyup="IsNumberUpEmail"
-                ></v-text-field>
+                />
               </div>
             </div>
           </div>
@@ -325,23 +302,14 @@
             </div>
             <div style="width:60%;padding-right:25px" class="rows-input">
               <div class="input-with-icon">
-                <v-text-field
-                  v-model="editRow.cx"
-                  :rules="numberRules"
-                  :disabled="enableInput"
-                  :placeholder="$t('input_not_selected')"
-                  :style="{ background: enableInput ? '#D1D1D1' : '' }"
-                  @keypress="isNumber"
-                  @keyup="IsNumberUpCx"
-                ></v-text-field>
-                <!-- <input
+                <input
                   type="text"
-                  v-model="editRow.cx"
+                  @keypress="isNumber"
+                  v-model="cxInput"
                   :placeholder="$t('input_not_selected')"
                   :disabled="enableInput"
-                  @keyup="IsNumberUpCx"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
-                /> -->
+                />
               </div>
             </div>
           </div>
@@ -353,23 +321,14 @@
             </div>
             <div style="width:60%" class="rows-input">
               <div class="input-with-icon">
-                <v-text-field
-                  v-model="editRow.phone"
-                  :rules="numberRules"
-                  :disabled="enableInput"
-                  :placeholder="$t('input_not_selected')"
-                  :style="{ background: enableInput ? '#D1D1D1' : '' }"
-                  @keypress="isNumber"
-                  @keyup="IsNumberUpTel"
-                ></v-text-field>
-                <!-- <input
+                <input
                   type="text"
-                  v-model="editRow.phone"
+                  @keypress="isNumber"
+                  v-model="phone"
                   :placeholder="$t('input_not_selected')"
                   :disabled="enableInput"
-                  @keypress="isNumber"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
-                /> -->
+                />
               </div>
               <div style="color:#CE1212;font-size:8px;padding-top:5px">
                 {{ $t('profile.account_15') }}
@@ -426,22 +385,13 @@
             </div>
             <div style="width:60%;display:flex" class="rows-input">
               <div class="input-with-icon" style="margin-right:10px">
-                <!-- <input
+                <input
                   type="text"
-                  v-model="editRow.username"
+                  v-model="username"
                   :placeholder="$t('input_selected')"
                   :disabled="enableInput"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
-                /> -->
-                <v-text-field
-                  v-model="editRow.username"
-                  :rules="usernameRules"
-                  :placeholder="$t('input_selected')"
-                  :disabled="enableInput"
-                  :style="{ background: enableInput ? '#D1D1D1' : '' }"
-                  @keyup="IsUsername"
-                  @keypress="enableBtnSave"
-                ></v-text-field>
+                />
               </div>
               <v-tooltip bottom color="red">
                 <template v-slot:activator="{ on, attrs }">
@@ -471,11 +421,10 @@
               <div class="input-with-icon" style="margin-right:10px">
                 <input
                   type="password"
-                  v-model="editRow.password"
+                  v-model="password"
                   :placeholder="$t('input_selected')"
                   :disabled="enableInput"
                   @keypress="IsPassword"
-                  @keyup="enableBtnSave"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
                 />
               </div>
@@ -887,7 +836,21 @@ export default {
           return pattern.test(value) || ''
         },
         value => (value || '').length > 5 || ''
-      ]
+      ],
+      empCode: this.data.emp_code,
+      nameTh: this.data.name_th,
+      nameEn: this.data.name_en,
+      nickname1Th: this.data.nickname1_th,
+      nickname1En: this.data.nickname1_en,
+      nickname2Th: this.data.nickname2_th,
+      nickname2En: this.data.nickname2_en,
+      postnameTh: this.data.postname_th,
+      postnameEn: this.data.postname_en,
+      emailInput: this.data.email,
+      cxInput: this.data.cx,
+      phone: this.data.phone,
+      username: this.data.username,
+      password: this.data.password
     }
   },
   computed: {
@@ -932,9 +895,415 @@ export default {
             })
         }
       }
+    },
+    empCode: {
+      handler: function (value) {
+        if (value > 0) {
+          let thai = /[ก-ฮ]/g
+          let numThai = /[๑-๙]/g
+          let charac = /[=%฿~`:;@'"!-_><#^&{}/|+()[\]*\\$]/g
+          let rsChar = value.search(thai)
+          let rsNum = value.search(numThai)
+          let rsCharac = value.search(charac)
+          if (value.length == 0) {
+            this.enableBtn = true
+          } else {
+            if (
+              this.editRow.type_login == 0 &&
+              (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0)
+            ) {
+              this.empCode = ''
+            } else {
+              this.checkBtn()
+            }
+          }
+        }
+      }
+    },
+    nameTh: {
+      handler: function (value) {
+        if (value.length == 0) {
+          this.enableBtn = true
+        } else {
+          let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
+          let rsCharac = value.search(charac)
+          let thai = /[ก-ฮ]/g
+          let condChar = /[a-zA-Z]/g
+          let condNum = /[0-9]/g
+          let rsChar = value.search(thai)
+          let conRsChar = value.search(condChar)
+          let conRsNum = value.search(condNum)
+          if (rsCharac >= 0) {
+            this.nameTh = ''
+          } else if (
+            conRsChar < 0 &&
+            conRsNum < 0 &&
+            rsChar < 0 &&
+            value.length > 1
+          ) {
+            this.nameTh = ''
+          } else {
+            this.checkBtn()
+          }
+        }
+      }
+    },
+    nameEn: {
+      handler: function (value) {
+        if (value.length == 0) {
+          this.enableBtn = true
+        } else {
+          let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
+          let rsCharac = value.search(charac)
+          let thai = /[ก-ฮ]/g
+          let condChar = /[a-zA-Z]/g
+          let condNum = /[0-9]/g
+          let rsChar = value.search(thai)
+          let conRsChar = value.search(condChar)
+          let conRsNum = value.search(condNum)
+          if (rsCharac >= 0) {
+            this.nameEn = ''
+          } else if (
+            conRsChar < 0 &&
+            conRsNum < 0 &&
+            rsChar < 0 &&
+            value.length > 1
+          ) {
+            this.nameEn = ''
+          } else {
+            this.checkBtn()
+          }
+        }
+      }
+    },
+    nickname1Th: {
+      handler: function (value) {
+        let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
+        let rsCharac = value.search(charac)
+        let thai = /[ก-ฮ]/g
+        let condChar = /[a-zA-Z]/g
+        let condNum = /[0-9]/g
+        let rsChar = value.search(thai)
+        let conRsChar = value.search(condChar)
+        let conRsNum = value.search(condNum)
+        if (rsCharac >= 0) {
+          this.nickname1Th = ''
+        } else if (
+          conRsChar < 0 &&
+          conRsNum < 0 &&
+          rsChar < 0 &&
+          value.length > 1
+        ) {
+          this.nickname1Th = ''
+        } else {
+          this.checkBtn()
+        }
+      }
+    },
+    nickname1En: {
+      handler: function (value) {
+        let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
+        let rsCharac = value.search(charac)
+        let thai = /[ก-ฮ]/g
+        let condChar = /[a-zA-Z]/g
+        let condNum = /[0-9]/g
+        let rsChar = value.search(thai)
+        let conRsChar = value.search(condChar)
+        let conRsNum = value.search(condNum)
+        if (rsCharac >= 0) {
+          this.nickname1En = ''
+        } else if (
+          conRsChar < 0 &&
+          conRsNum < 0 &&
+          rsChar < 0 &&
+          value.length > 1
+        ) {
+          this.nickname1En = ''
+        } else {
+          this.checkBtn()
+        }
+      }
+    },
+    nickname2Th: {
+      handler: function (value) {
+        let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
+        let rsCharac = value.search(charac)
+
+        let thai = /[ก-ฮ]/g
+        let condChar = /[a-zA-Z]/g
+        let condNum = /[0-9]/g
+        let rsChar = value.search(thai)
+        let conRsChar = value.search(condChar)
+        let conRsNum = value.search(condNum)
+        if (rsCharac >= 0) {
+          this.nickname2Th = ''
+        } else if (
+          conRsChar < 0 &&
+          conRsNum < 0 &&
+          rsChar < 0 &&
+          value.length > 1
+        ) {
+          this.nickname2Th = ''
+        } else {
+          this.checkBtn()
+        }
+      }
+    },
+    nickname2En: {
+      handler: function (value) {
+        let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
+        let rsCharac = value.search(charac)
+
+        let thai = /[ก-ฮ]/g
+        let condChar = /[a-zA-Z]/g
+        let condNum = /[0-9]/g
+        let rsChar = value.search(thai)
+        let conRsChar = value.search(condChar)
+        let conRsNum = value.search(condNum)
+
+        if (rsCharac >= 0) {
+          this.nickname2En = ''
+        } else if (
+          conRsChar < 0 &&
+          conRsNum < 0 &&
+          rsChar < 0 &&
+          value.length > 1
+        ) {
+          this.nickname2En = ''
+        } else {
+          this.checkBtn()
+        }
+      }
+    },
+    postnameTh: {
+      handler: function (value) {
+        if (value.length == 0) {
+          this.enableBtn = true
+        } else {
+          let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
+          let rsCharac = value.search(charac)
+
+          let thai = /[ก-ฮ]/g
+          let condChar = /[a-zA-Z]/g
+          let condNum = /[0-9]/g
+          let rsChar = value.search(thai)
+          let conRsChar = value.search(condChar)
+          let conRsNum = value.search(condNum)
+          if (rsCharac >= 0) {
+            this.postnameTh = ''
+          } else if (
+            conRsChar < 0 &&
+            conRsNum < 0 &&
+            rsChar < 0 &&
+            value.length > 1
+          ) {
+            this.postnameTh = ''
+          } else {
+            this.checkBtn()
+          }
+        }
+      }
+    },
+    postnameEn: {
+      handler: function (value) {
+        if (value.length == 0) {
+          this.enableBtn = true
+        } else {
+          let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
+          let rsCharac = value.search(charac)
+
+          let thai = /[ก-ฮ]/g
+          let condChar = /[a-zA-Z]/g
+          let condNum = /[0-9]/g
+          let rsChar = value.search(thai)
+          let conRsChar = value.search(condChar)
+          let conRsNum = value.search(condNum)
+
+          if (rsCharac >= 0) {
+            this.postnameEn = ''
+          } else if (
+            conRsChar < 0 &&
+            conRsNum < 0 &&
+            rsChar < 0 &&
+            value.length > 1
+          ) {
+            this.postnameEn = ''
+          } else {
+            this.checkBtn()
+          }
+        }
+      }
+    },
+    emailInput: {
+      handler: function (value) {
+        if (value.length == 0 && this.editRow.type_login == 1) {
+          this.enableBtn = true
+        } else {
+          let thai = /[ก-ฮ]/g
+          let numThai = /[๑-๙]/g
+          let charac = /[=%฿~`:;'"!><#^&{}/|+()[\]*\\$]/g
+          let rsChar = value.search(thai)
+          let rsNum = value.search(numThai)
+          let rsCharac = value.search(charac)
+
+          let condChar = /[a-zA-Z]/g
+          let condNum = /[0-9]/g
+          let conRsChar = value.search(condChar)
+          let conRsNum = value.search(condNum)
+
+          if (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0) {
+            this.emailInput = ''
+          } else if (conRsChar < 0 && conRsNum < 0 && value.length > 1) {
+            this.emailInput = ''
+          } else {
+            this.checkBtn()
+          }
+        }
+      }
+    },
+    cxInput: {
+      handler: function (value) {
+        let thai = /[ก-ฮ]/g
+        let numThai = /[๑-๙]/g
+        let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
+        let rsChar = value.search(thai)
+        let rsNum = value.search(numThai)
+        let rsCharac = value.search(charac)
+
+        let condChar = /[a-zA-Z]/g
+        let condNum = /[0-9]/g
+        let conRsChar = value.search(condChar)
+        let conRsNum = value.search(condNum)
+
+        if (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0 || conRsChar >= 0) {
+          this.cxInput = ''
+        } else if (conRsNum < 0 && value.length > 1) {
+          this.cxInput = ''
+        } else {
+          this.checkBtn()
+        }
+      }
+    },
+    phone: {
+      handler: function (value) {
+        let thai = /[ก-ฮ]/g
+        let numThai = /[๑-๙]/g
+        let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
+        let rsChar = value.search(thai)
+        let rsNum = value.search(numThai)
+        let rsCharac = value.search(charac)
+
+        let condChar = /[a-zA-Z]/g
+        let condNum = /[0-9]/g
+        let conRsChar = value.search(condChar)
+        let conRsNum = value.search(condNum)
+
+        if (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0 || conRsChar >= 0) {
+          this.phone = ''
+        } else if (conRsNum < 0 && value.length > 1) {
+          this.phone = ''
+        } else {
+          this.checkBtn()
+        }
+      }
+    },
+    username: {
+      handler: function (value) {
+        if (value.length < 6 && this.editRow.type_login == 0) {
+          this.enableBtn = true
+        } else {
+          let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
+          let rsCharac = value.search(charac)
+
+          let condChar = /[a-zA-Z]/g
+          let condNum = /[0-9]/g
+          let conRsChar = value.search(condChar)
+          let conRsNum = value.search(condNum)
+          if (rsCharac >= 0) {
+            this.username = ''
+          } else if (conRsChar < 0 && conRsNum < 0 && value.length > 1) {
+            this.username = ''
+          } else if (conRsChar >= 0 && conRsNum >= 0) {
+            this.checkBtn()
+          }
+        }
+      }
+    },
+    password: {
+      handler: function (value) {
+        if (value.length < 6 && this.editRow.type_login == 0) {
+          this.enableBtn = true
+        } else {
+          let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
+          let rsCharac = value.search(charac)
+
+          let condChar = /[a-zA-Z]/g
+          let condNum = /[0-9]/g
+          let conRsChar = value.search(condChar)
+          let conRsNum = value.search(condNum)
+          if (rsCharac >= 0) {
+            this.password = ''
+          } else if (conRsChar < 0 && conRsNum < 0 && value.length > 1) {
+            this.password = ''
+          } else if (conRsChar >= 0 && conRsNum >= 0) {
+            this.checkBtn()
+          }
+        }
+      }
     }
   },
   methods: {
+    checkBtn () {
+      // console.log('checkBtn => ')
+      let item = JSON.parse(JSON.stringify(this.editRow))
+      let group_id = item.group_id.toString()
+      let name_th = this.nameTh.trim()
+      let name_en = this.nameEn.trim()
+      let postname_th = this.postnameTh.trim()
+      let postname_en = this.postnameEn.trim()
+      let emp_code = this.empCode.toString()
+      let email = this.emailInput.trim()
+      let password = ''
+      if (this.password !== undefined) {
+        password = this.password.trim()
+      }
+
+      if (
+        group_id.length > 0 &&
+        name_th.length > 0 &&
+        name_en.length > 0 &&
+        postname_th.length > 0 &&
+        postname_en.length > 0 &&
+        emp_code.trim().length > 0 &&
+        this.applist.length > 0
+      ) {
+        if (item.type_login == 0) {
+          let username = this.username.trim()
+          if (username.length > 5 && password == this.defaultPassword) {
+            this.enableBtn = false
+          } else {
+            let password = this.password.trim()
+            if (
+              username.length > 5 &&
+              password.length > 5 &&
+              this.InCondition(password)
+            ) {
+              this.enableBtn = false
+            } else {
+              this.enableBtn = true
+            }
+          }
+        } else {
+          if (email.length > 0) {
+            this.enableBtn = false
+          } else {
+            this.enableBtn = true
+          }
+        }
+      } else {
+        this.enableBtn = true
+      }
+    },
     renderAcess (item) {
       if (item.status_sso == 1) {
         return item.type_login
@@ -946,19 +1315,32 @@ export default {
     },
     selectedPermission (evt) {
       this.statusPermission = this.editRow.status_permission
-      this.enableBtnSave()
+      this.checkBtn()
     },
     selectedType (value) {
       if (this.typeLogin !== value && this.editRow.mode == 'add') {
         this.searchEmpCode = ''
         this.typeLogin = value
         this.editRow = JSON.parse(JSON.stringify(this.master))
+        this.empCode = ''
+        this.nameTh = ''
+        this.nameEn = ''
+        this.nickname1Th = ''
+        this.nickname1En = ''
+        this.nickname2Th = ''
+        this.nickname2En = ''
+        this.postnameTh = ''
+        this.postnameEn = ''
+        this.emailInput = ''
+        this.cxInput = ''
+        this.phone = ''
+        this.username = ''
         this.editRow.emp_code = ''
         this.applist = []
         this.statusPermission = false
       }
       this.editRow.type_login = value
-      this.enableBtnSave()
+      this.checkBtn()
       if (this.editRow.mode == 'add') {
         if (value == 1 && this.editRow.emp_code == '') {
           this.enableInput = true
@@ -970,7 +1352,7 @@ export default {
     },
     selectedStatus (value) {
       this.editRow.status = value
-      this.enableBtnSave()
+      this.checkBtn()
     },
     selectedUser (value) {
       this.empeDialog = false
@@ -979,8 +1361,22 @@ export default {
       this.editRow.mode = mode
       this.editRow.password = ''
       this.editRow.status = 1
+      this.password = ''
+      this.empCode = value.emp_code
+      this.nameTh = value.name_th
+      this.nameEn = value.name_en
+      this.nickname1Th = value.nickname1_th
+      this.nickname1En = value.nickname1_en
+      this.nickname2Th = value.nickname2_th
+      this.nickname2En = value.nickname2_en
+      this.postnameTh = value.postname_th
+      this.postnameEn = value.postname_en
+      this.emailInput = value.email
+      this.cxInput = value.cx
+      this.phone = value.phone
+      this.username = value.username
       this.enableInput = false
-      this.enableBtnSave()
+      this.checkBtn()
     },
     selectedGroup (value) {
       if (this.editRow.user_id !== null) {
@@ -1008,7 +1404,7 @@ export default {
             temp.push(sortData[i])
           }
           this.applist = temp
-          this.enableBtnSave()
+          this.checkBtn()
         })
       }
     },
@@ -1101,6 +1497,20 @@ export default {
               this.editRow.mode = mode
               this.editRow.status = 1
               this.editRow.password = ''
+              this.password = ''
+              this.empCode = res.data[0].emp_code
+              this.nameTh = res.data[0].name_th
+              this.nameEn = res.data[0].name_en
+              this.nickname1Th = res.data[0].nickname1_th
+              this.nickname1En = res.data[0].nickname1_en
+              this.nickname2Th = res.data[0].nickname2_th
+              this.nickname2En = res.data[0].nickname2_en
+              this.postnameTh = res.data[0].postname_th
+              this.postnameEn = res.data[0].postname_en
+              this.emailInput = res.data[0].email
+              this.cxInput = res.data[0].cx
+              this.phone = res.data[0].phone
+              this.username = res.data[0].username
             } else if (res.data.length > 1) {
               this.empeDialog = true
               this.list = res.data
@@ -1180,6 +1590,7 @@ export default {
       if (str1 == str2) {
         this.cancel()
       } else {
+        this.error = false
         this.btnClick = 'cancel'
         this.dialog = true
         this.errorDialog = this.$t('popup.text6')
@@ -1190,6 +1601,7 @@ export default {
       if (!this.dialog) {
         this.$emit('cancel', null)
       }
+      this.error = false
       this.dialog = false
       this.rightBtn = this.$t('btn_save')
     },
@@ -1223,56 +1635,6 @@ export default {
         console.log('Valid...', item)
       }
     },
-    enableBtnSave () {
-      let item = JSON.parse(JSON.stringify(this.editRow))
-      let group_id = item.group_id.toString()
-      let name_th = item.name_th.trim()
-      let name_en = item.name_en.trim()
-      let postname_th = item.postname_th.trim()
-      let postname_en = item.postname_en.trim()
-      let emp_code = item.emp_code.toString()
-      let email = item.email.trim()
-      let password = ''
-      if (item.password !== undefined) {
-        password = item.password.trim()
-      }
-
-      if (
-        group_id.length > 0 &&
-        name_th.length > 0 &&
-        name_en.length > 0 &&
-        postname_th.length > 0 &&
-        postname_en.length > 0 &&
-        emp_code.trim().length > 0 &&
-        this.applist.length > 0
-      ) {
-        if (item.type_login == 0) {
-          let username = item.username.trim()
-          if (username.length > 5 && password == this.defaultPassword) {
-            this.enableBtn = false
-          } else {
-            let password = item.password.trim()
-            if (
-              username.length > 5 &&
-              password.length > 5 &&
-              this.InCondition(password)
-            ) {
-              this.enableBtn = false
-            } else {
-              this.enableBtn = true
-            }
-          }
-        } else {
-          if (email.length > 0) {
-            this.enableBtn = false
-          } else {
-            this.enableBtn = true
-          }
-        }
-      } else {
-        this.enableBtn = true
-      }
-    },
     save () {
       if (this.btnClick == 'save') {
         let result = JSON.parse(JSON.stringify(this.editRow))
@@ -1301,6 +1663,20 @@ export default {
         }
         result.app = JSON.stringify(arr)
         let url = this.editRow.mode == 'add' ? 'registerUser' : 'updateUser'
+
+        result.emp_code = this.empCode
+        result.name_th = this.nameTh
+        result.name_en = this.nameEn
+        result.nickname1_th = this.nickname1Th
+        result.nickname1_en = this.nickname1En
+        result.nickname2_th = this.nickname2Th
+        result.nickname2_en = this.nickname2En
+        result.postname_th = this.postnameTh
+        result.postname_en = this.postnameEn
+        result.email = this.emailInput
+        result.cx = this.cxInput
+        result.phone = this.phone
+        result.username = this.username
 
         if (this.editRow.type_login == 1) {
           this.$store.dispatch(url, result).then(res => {
@@ -1392,7 +1768,7 @@ export default {
       }
     },
     isNumber (evt) {
-      this.enableBtnSave()
+      this.checkBtn()
       evt = evt ? evt : window.event
       var charCode = evt.which ? evt.which : evt.keyCode
       if (charCode > 31 && (charCode < 48 || charCode > 57 || charCode == 46)) {
@@ -1412,14 +1788,14 @@ export default {
         (keyCode >= 97 && keyCode <= 122) ||
         (keyCode >= 64 && keyCode <= 91)
       ) {
-        this.enableBtnSave()
+        this.checkBtn()
         return true
       } else {
         evt.preventDefault()
       }
     },
     IsPassword (evt) {
-      this.enableBtnSave()
+      this.checkBtn()
       evt = evt ? evt : window.event
       var keyCode = evt.which ? evt.which : evt.keyCode
       if (
@@ -1461,48 +1837,7 @@ export default {
         rsEngSmall >= 0
       ) {
         this.editRow[input] = ''
-        this.enableBtnSave()
-      }
-    },
-    IsNumberUpEmail (evt) {
-      let value = evt.target.value
-      let thai = /[ก-ฮ]/g
-      let numThai = /[๑-๙]/g
-      let charac = /[=%฿~`:;'"!><#^&{}/|+()[\]*\\$]/g
-      let rsChar = value.search(thai)
-      let rsNum = value.search(numThai)
-      let rsCharac = value.search(charac)
-      if (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0) {
-        this.editRow.email = ''
-        this.enableBtnSave()
-      }
-    },
-    IsUsername (evt) {
-      let value = evt.target.value
-      let thai = /[ก-ฮ]/g
-      let numThai = /[๑-๙]/g
-      let charac = /[=%฿~`:;'"!><#^&{}/|+()[\]*\\$]/g
-      // let charac = /[=%฿.-_$~`:;'"!><@#^&{}/|+()[\]*\\]/g
-      let rsChar = value.search(thai)
-      let rsNum = value.search(numThai)
-      let rsCharac = value.search(charac)
-      if (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0) {
-        this.editRow.username = ''
-        this.enableBtnSave()
-      }
-    },
-    IsEmpcode (evt) {
-      let value = evt.target.value
-      let thai = /[ก-ฮ]/g
-      let numThai = /[๑-๙]/g
-      let charac = /[=%฿~`:;'"!><#^&{}/|+()[\]*\\$]/g
-      // let charac = /[=%฿.-_$~`:;'"!><@#^&{}/|+()[\]*\\]/g
-      let rsChar = value.search(thai)
-      let rsNum = value.search(numThai)
-      let rsCharac = value.search(charac)
-      if (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0) {
-        this.editRow.emp_code = ''
-        this.enableBtnSave()
+        this.checkBtn()
       }
     }
   },
@@ -1551,7 +1886,7 @@ export default {
           }
           this.applist = temp
           // this.editRow.password = this.defaultPassword
-          this.enableBtnSave()
+          this.checkBtn()
         })
       })
     }

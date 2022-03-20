@@ -574,6 +574,7 @@ export default {
       this.searchApp = ''
     },
     saveBtn () {
+      this.error = false
       this.btnClick = 'save'
       let item = this.editRow
       if (this.enableBtn == false) {
@@ -618,6 +619,7 @@ export default {
                 this.$t('popup.text2') + ' (Error Code ' + res.status + ')'
             }
           } else {
+            this.error = false
             this.dialog = false
             this.$emit('clear', null)
           }
@@ -627,8 +629,8 @@ export default {
     cancelBtn () {
       let str1 = this.masterEdit
       let str2 = JSON.stringify(this.editRow)
-      console.log(str1)
-      console.log(str2)
+      // console.log(str1)
+      // console.log(str2)
       if (str1 == str2) {
         this.cancel()
       } else {
@@ -643,6 +645,7 @@ export default {
         this.$emit('cancel', null)
       }
       this.dialog = false
+      this.error = false
       this.rightBtn = this.$t('btn_save')
     },
     clearBtn () {
@@ -666,16 +669,28 @@ export default {
           result.group_id = this.editRow.group_id
         }
         this.$store.dispatch(url, result).then(res => {
-          this.$emit('save', null)
-          this.dialog = false
+          if (res.data.success == undefined) {
+            this.btnClick = 'error'
+            this.dialog = true
+            this.error = true
+            this.errorDialog =
+              this.$t('popup.text2') + ' (Error Code ' + res.status + ')'
+            this.rightBtn = this.$t('btn_close')
+          } else {
+            this.error = false
+            this.$emit('save', null)
+            this.dialog = false
+          }
         })
       } else if (this.btnClick == 'clear') {
         this.clear()
       } else if (this.btnClick == 'cancel') {
+        this.error = false
         this.dialog = false
         this.rightBtn = this.$t('btn_save')
         this.$emit('cancel', null)
       } else {
+        this.error = false
         this.dialog = false
       }
     }
