@@ -128,7 +128,7 @@
             <div class="input-with-icon" style="width: 200px;">
               <input
                 type="text"
-                @keypress="IsEmail"
+                @keypress="isNumberChar"
                 v-model="empCode"
                 :placeholder="$t('input_selected')"
                 :disabled="editRow.type_login == 1 ? true : false"
@@ -901,13 +901,18 @@ export default {
         if (value > 0) {
           let thai = /[ก-ฮ]/g
           let numThai = /[๑-๙]/g
-          let charac = /[=%฿~`:;@'"!-_><#^&{}/|+()[\]*\\$]/g
+          let charac = /[=%฿~`:;@'"!.-_><#^&{}/|+()[\]*\\$]/g
           let rsChar = value.search(thai)
           let rsNum = value.search(numThai)
           let rsCharac = value.search(charac)
           if (value.length == 0) {
             this.enableBtn = true
           } else {
+            // console.log(this.editRow.type_login)
+            // console.log('rsChar => ', rsChar)
+            // console.log('rsNum => ', rsNum)
+            // console.log('rsCharac => ', rsCharac)
+            // console.log(this.editRow.type_login)
             if (
               this.editRow.type_login == 0 &&
               (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0)
@@ -1767,6 +1772,21 @@ export default {
         } else {
           return false
         }
+      }
+    },
+    isNumberChar (evt) {
+      evt = evt ? evt : window.event
+      var keyCode = evt.which ? evt.which : evt.keyCode
+      console.log(keyCode)
+      if (
+        (keyCode >= 48 && keyCode <= 57) ||
+        (keyCode >= 97 && keyCode <= 122) ||
+        (keyCode > 64 && keyCode <= 91)
+      ) {
+        this.checkBtn()
+        return true
+      } else {
+        evt.preventDefault()
       }
     },
     isNumber (evt) {
