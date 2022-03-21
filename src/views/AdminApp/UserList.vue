@@ -2,7 +2,7 @@
   <div id="user-list" style="height:calc(100% - 50px);">
     <v-card style="padding:20px 5px 20px 20px;height: calc(100% - 10px);">
       <div class="detail-add">
-        {{ enableBtn }}
+        <!-- {{ enableBtn }} -->
         <div class="rows">
           <div style="width:20%" class="rows-name">
             {{ $t('profile.account_2') }}
@@ -305,7 +305,7 @@
               <div class="input-with-icon">
                 <input
                   type="text"
-                  @keypress="isNumber"
+                  @keypress="isNumberChar"
                   v-model="cxInput"
                   :placeholder="$t('input_not_selected')"
                   :disabled="enableInput"
@@ -324,7 +324,7 @@
               <div class="input-with-icon">
                 <input
                   type="text"
-                  @keypress="isNumber"
+                  @keypress="isNumberPhone"
                   v-model="phone"
                   :placeholder="$t('input_not_selected')"
                   :disabled="enableInput"
@@ -884,11 +884,11 @@ export default {
           if (value.length == 0) {
             this.enableBtn = true
           } else {
-            let temp1 = value.replace(/[ก-๙]/g, '')
-            let temp = temp1.replace(/[-@:;[/\]{}()_*+?.,\\^$|#\s]/g, '')
+            let temp = value.replace(/[^0-9a-zA-Z]/g, '')
             if (temp.length > 0) {
               this.empCode = temp
             } else {
+              this.empCode = ''
               this.checkBtn()
             }
           }
@@ -900,10 +900,11 @@ export default {
         if (value.length == 0) {
           this.enableBtn = true
         } else {
-          let temp = value.replace(/[-@:;/\*+?.,\\^$|#\s]/g, '')
+          let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_]/g, '')
           if (temp.length > 0) {
             this.nameTh = temp
           } else {
+            this.nameTh = ''
             this.checkBtn()
           }
         }
@@ -914,10 +915,11 @@ export default {
         if (value.length == 0) {
           this.enableBtn = true
         } else {
-          let temp = value.replace(/[-@:;/\*+?.,\\^$|#\s]/g, '')
+          let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_]/g, '')
           if (temp.length > 0) {
             this.nameEn = temp
           } else {
+            this.nameEn = ''
             this.checkBtn()
           }
         }
@@ -925,40 +927,44 @@ export default {
     },
     nickname1Th: {
       handler: function (value) {
-        let temp = value.replace(/[-@:;/\*+?.,\\^$|#\s]/g, '')
+        let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_]/g, '')
         if (temp.length > 0) {
           this.nickname1Th = temp
         } else {
+          this.nickname1Th = ''
           this.checkBtn()
         }
       }
     },
     nickname1En: {
       handler: function (value) {
-        let temp = value.replace(/[-@:;/\*+?.,\\^$|#\s]/g, '')
+        let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_]/g, '')
         if (temp.length > 0) {
           this.nickname1En = temp
         } else {
+          this.nickname1En = ''
           this.checkBtn()
         }
       }
     },
     nickname2Th: {
       handler: function (value) {
-        let temp = value.replace(/[-@:;/\*+?.,\\^$|#\s]/g, '')
+        let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_]/g, '')
         if (temp.length > 0) {
           this.nickname2Th = temp
         } else {
+          this.nickname2Th = ''
           this.checkBtn()
         }
       }
     },
     nickname2En: {
       handler: function (value) {
-        let temp = value.replace(/[-@:;/\*+?.,\\^$|#\s]/g, '')
+        let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_]/g, '')
         if (temp.length > 0) {
           this.nickname2En = temp
         } else {
+          this.nickname2En = ''
           this.checkBtn()
         }
       }
@@ -968,10 +974,11 @@ export default {
         if (value.length == 0) {
           this.enableBtn = true
         } else {
-          let temp = value.replace(/[-@:;/\*+?.,\\^$|#\s]/g, '')
+          let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_]/g, '')
           if (temp.length > 0) {
             this.postnameTh = temp
           } else {
+            this.postnameTh = ''
             this.checkBtn()
           }
         }
@@ -982,10 +989,11 @@ export default {
         if (value.length == 0) {
           this.enableBtn = true
         } else {
-          let temp = value.replace(/[-@:;/\*+?.,\\^$|#\s]/g, '')
+          let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_]/g, '')
           if (temp.length > 0) {
             this.postnameEn = temp
           } else {
+            this.postnameEn = ''
             this.checkBtn()
           }
         }
@@ -1001,6 +1009,7 @@ export default {
           if (temp.length > 0) {
             this.emailInput = temp
           } else {
+            this.emailInput = ''
             this.checkBtn()
           }
         }
@@ -1008,24 +1017,22 @@ export default {
     },
     cxInput: {
       handler: function (value) {
-        let temp0 = value.replace(/[a-zA-Z]/g, '')
-        let temp1 = temp0.replace(/[ก-๙]/g, '')
-        let temp = temp1.replace(/[-@:;[/\]{}()_*+?.,\\^$|#\s]/g, '')
+        let temp = value.replace(/[^0-9a-zA-Z]/g, '')
         if (temp.length > 0) {
           this.cxInput = temp
         } else {
+          this.cxInput = ''
           this.checkBtn()
         }
       }
     },
     phone: {
       handler: function (value) {
-        let temp0 = value.replace(/[a-zA-Z]/g, '')
-        let temp1 = temp0.replace(/[ก-๙]/g, '')
-        let temp = temp1.replace(/[-@:;[/\]{}()_*+?.,\\^$|#\s]/g, '')
+        let temp = value.replace(/[^0-9 \-]/g, '')
         if (temp.length > 0) {
           this.phone = temp
         } else {
+          this.phone = ''
           this.checkBtn()
         }
       }
@@ -1048,9 +1055,11 @@ export default {
             if (conRsChar <= 0 || conRsNum <= 0) {
               this.enableBtn = true
             } else if (conRsChar >= 0 && conRsNum >= 0) {
+              // this.username = ''
               this.checkBtn()
             }
           } else {
+            // this.username = ''
             this.checkBtn()
           }
         }
@@ -1617,6 +1626,16 @@ export default {
         this.checkBtn()
       }
     },
+    isNumberPhone (evt) {
+      var regex = new RegExp('^[0-9-]+$')
+      var key = String.fromCharCode(!evt.charCode ? evt.which : evt.charCode)
+      if (!regex.test(key)) {
+        evt.preventDefault()
+        return false
+      } else {
+        this.checkBtn()
+      }
+    },
     IsEmail (evt) {
       var regex = new RegExp('^[a-zA-Z0-9@_.-]+$')
       var key = String.fromCharCode(!evt.charCode ? evt.which : evt.charCode)
@@ -1642,35 +1661,6 @@ export default {
         return true
       } else {
         evt.preventDefault()
-      }
-    },
-    IsNumberUpTel (evt) {
-      this.keyUpText('phone', evt)
-    },
-    IsNumberUpCx (evt) {
-      this.keyUpText('cx', evt)
-    },
-    keyUpText (input, evt) {
-      let value = evt.target.value
-      let thai = /[ก-ฮ]/g
-      let eng = /[A-Z]/g
-      let engsmall = /[a-z]/g
-      let numThai = /[๑-๙]/g
-      let charac = /[-_=.%฿~`:;'"!><@#^&{}/|+()[\]*\\$]/g
-      let rsChar = value.search(thai)
-      let rsNum = value.search(numThai)
-      let rsCharac = value.search(charac)
-      let rsEng = value.search(eng)
-      let rsEngSmall = value.search(engsmall)
-      if (
-        rsChar >= 0 ||
-        rsNum >= 0 ||
-        rsCharac >= 0 ||
-        rsEng >= 0 ||
-        rsEngSmall >= 0
-      ) {
-        this.editRow[input] = ''
-        this.checkBtn()
       }
     }
   },
