@@ -925,7 +925,8 @@ export default {
         if (value.length == 0) {
           this.enableBtn = true
         } else {
-          let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
+          let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
+          // let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
           let rsCharac = value.search(charac)
           let thai = /[ก-ฮ]/g
           let condChar = /[a-zA-Z]/g
@@ -953,7 +954,7 @@ export default {
         if (value.length == 0) {
           this.enableBtn = true
         } else {
-          let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
+          let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
           let rsCharac = value.search(charac)
           let thai = /[ก-ฮ]/g
           let condChar = /[a-zA-Z]/g
@@ -978,7 +979,7 @@ export default {
     },
     nickname1Th: {
       handler: function (value) {
-        let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
+        let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
         let rsCharac = value.search(charac)
         let thai = /[ก-ฮ]/g
         let condChar = /[a-zA-Z]/g
@@ -1002,7 +1003,7 @@ export default {
     },
     nickname1En: {
       handler: function (value) {
-        let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
+        let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
         let rsCharac = value.search(charac)
         let thai = /[ก-ฮ]/g
         let condChar = /[a-zA-Z]/g
@@ -1026,7 +1027,7 @@ export default {
     },
     nickname2Th: {
       handler: function (value) {
-        let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
+        let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
         let rsCharac = value.search(charac)
 
         let thai = /[ก-ฮ]/g
@@ -1051,7 +1052,7 @@ export default {
     },
     nickname2En: {
       handler: function (value) {
-        let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
+        let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
         let rsCharac = value.search(charac)
 
         let thai = /[ก-ฮ]/g
@@ -1080,7 +1081,7 @@ export default {
         if (value.length == 0) {
           this.enableBtn = true
         } else {
-          let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
+          let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
           let rsCharac = value.search(charac)
 
           let thai = /[ก-ฮ]/g
@@ -1109,7 +1110,7 @@ export default {
         if (value.length == 0) {
           this.enableBtn = true
         } else {
-          let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
+          let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
           let rsCharac = value.search(charac)
 
           let thai = /[ก-ฮ]/g
@@ -1212,7 +1213,8 @@ export default {
         if (value.length < 6 && this.editRow.type_login == 0) {
           this.enableBtn = true
         } else {
-          let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
+          let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
+          // let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
           let rsCharac = value.search(charac)
 
           let condChar = /[a-zA-Z]/g
