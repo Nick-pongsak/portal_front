@@ -1619,9 +1619,16 @@ export default {
     },
     ConfirmDialogs () {
       if (this.stepChangePwd == 0) {
+        var data = this.password
+        var iv = CryptoJS.lib.WordArray.random(16)
+        let keyapp = 'WebPortalKey'
+        var encrypted = CryptoJS.AES.encrypt(data, keyapp, {
+          iv: iv
+        }).toString()
+
         let req = {
           user_id: this.info.user_id,
-          old_password: this.password
+          old_password: encodeURI(encrypted)
         }
         this.$store
           .dispatch('changePassword', req)
