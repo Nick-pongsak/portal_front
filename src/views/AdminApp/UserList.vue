@@ -2,7 +2,7 @@
   <div id="user-list" style="height:calc(100% - 50px);">
     <v-card style="padding:20px 5px 20px 20px;height: calc(100% - 10px);">
       <div class="detail-add">
-        {{ enableBtn }}
+        <!-- {{ enableBtn }} -->
         <div class="rows">
           <div style="width:20%" class="rows-name">
             {{ $t('profile.account_2') }}
@@ -898,24 +898,26 @@ export default {
     },
     empCode: {
       handler: function (value) {
-        if (value > 0) {
-          let thai = /[ก-ฮ]/g
-          let numThai = /[๑-๙]/g
+        if (
+          (typeof value === 'number' && value > 0) ||
+          typeof value !== 'number'
+        ) {
+          let thai = /[ก-๙]/g
           let charac = /[=%฿~`:;@'"!.-_><#^&{}/|+()[\]*\\$]/g
           let rsChar = value.search(thai)
-          let rsNum = value.search(numThai)
           let rsCharac = value.search(charac)
           if (value.length == 0) {
             this.enableBtn = true
           } else {
             // console.log(this.editRow.type_login)
             // console.log('rsChar => ', rsChar)
-            // console.log('rsNum => ', rsNum)
-            // console.log('rsCharac => ', rsCharac)
+            console.log('rsCharac => ', rsCharac)
+            console.log('-----------------')
             // console.log(this.editRow.type_login)
             if (
               this.editRow.type_login == 0 &&
-              (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0)
+              rsChar >= 0
+              // (rsChar >= 0 || rsCharac >= 0)
             ) {
               this.empCode = ''
             } else {
@@ -933,20 +935,13 @@ export default {
           let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
           // let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
           let rsCharac = value.search(charac)
-          let thai = /[ก-ฮ]/g
-          let condChar = /[a-zA-Z]/g
-          let condNum = /[0-9]/g
+          let thai = /[ก-๙]/g
+          let condChar = /[A-Za-z0-9]/g
           let rsChar = value.search(thai)
           let conRsChar = value.search(condChar)
-          let conRsNum = value.search(condNum)
           if (rsCharac >= 0) {
             this.nameTh = ''
-          } else if (
-            conRsChar < 0 &&
-            conRsNum < 0 &&
-            rsChar < 0 &&
-            value.length > 1
-          ) {
+          } else if (conRsChar < 0 && rsChar < 0 && value.length > 1) {
             this.nameTh = ''
           } else {
             this.checkBtn()
@@ -961,20 +956,13 @@ export default {
         } else {
           let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
           let rsCharac = value.search(charac)
-          let thai = /[ก-ฮ]/g
-          let condChar = /[a-zA-Z]/g
-          let condNum = /[0-9]/g
+          let thai = /[ก-๙]/g
+          let condChar = /[A-Za-z0-9]/g
           let rsChar = value.search(thai)
           let conRsChar = value.search(condChar)
-          let conRsNum = value.search(condNum)
           if (rsCharac >= 0) {
             this.nameEn = ''
-          } else if (
-            conRsChar < 0 &&
-            conRsNum < 0 &&
-            rsChar < 0 &&
-            value.length > 1
-          ) {
+          } else if (conRsChar < 0 && rsChar < 0 && value.length > 1) {
             this.nameEn = ''
           } else {
             this.checkBtn()
@@ -986,17 +974,14 @@ export default {
       handler: function (value) {
         let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
         let rsCharac = value.search(charac)
-        let thai = /[ก-ฮ]/g
-        let condChar = /[a-zA-Z]/g
-        let condNum = /[0-9]/g
+        let thai = /[ก-๙]/g
+        let condChar = /[A-Za-z0-9]/g
         let rsChar = value.search(thai)
         let conRsChar = value.search(condChar)
-        let conRsNum = value.search(condNum)
         if (rsCharac >= 0) {
           this.nickname1Th = ''
         } else if (
           conRsChar < 0 &&
-          conRsNum < 0 &&
           rsChar < 0 &&
           value.length > 1
         ) {
@@ -1010,17 +995,14 @@ export default {
       handler: function (value) {
         let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
         let rsCharac = value.search(charac)
-        let thai = /[ก-ฮ]/g
-        let condChar = /[a-zA-Z]/g
-        let condNum = /[0-9]/g
+        let thai = /[ก-๙]/g
+        let condChar = /[A-Za-z0-9]/g
         let rsChar = value.search(thai)
         let conRsChar = value.search(condChar)
-        let conRsNum = value.search(condNum)
         if (rsCharac >= 0) {
           this.nickname1En = ''
         } else if (
           conRsChar < 0 &&
-          conRsNum < 0 &&
           rsChar < 0 &&
           value.length > 1
         ) {
@@ -1035,17 +1017,14 @@ export default {
         let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
         let rsCharac = value.search(charac)
 
-        let thai = /[ก-ฮ]/g
-        let condChar = /[a-zA-Z]/g
-        let condNum = /[0-9]/g
+        let thai = /[ก-๙]/g
+        let condChar = /[A-Za-z0-9]/g
         let rsChar = value.search(thai)
         let conRsChar = value.search(condChar)
-        let conRsNum = value.search(condNum)
         if (rsCharac >= 0) {
           this.nickname2Th = ''
         } else if (
           conRsChar < 0 &&
-          conRsNum < 0 &&
           rsChar < 0 &&
           value.length > 1
         ) {
@@ -1060,18 +1039,15 @@ export default {
         let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
         let rsCharac = value.search(charac)
 
-        let thai = /[ก-ฮ]/g
-        let condChar = /[a-zA-Z]/g
-        let condNum = /[0-9]/g
+        let thai = /[ก-๙]/g
+        let condChar = /[A-Za-z0-9]/g
         let rsChar = value.search(thai)
         let conRsChar = value.search(condChar)
-        let conRsNum = value.search(condNum)
 
         if (rsCharac >= 0) {
           this.nickname2En = ''
         } else if (
           conRsChar < 0 &&
-          conRsNum < 0 &&
           rsChar < 0 &&
           value.length > 1
         ) {
@@ -1089,17 +1065,14 @@ export default {
           let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
           let rsCharac = value.search(charac)
 
-          let thai = /[ก-ฮ]/g
-          let condChar = /[a-zA-Z]/g
-          let condNum = /[0-9]/g
+          let thai = /[ก-๙]/g
+          let condChar = /[A-Za-z0-9]/g
           let rsChar = value.search(thai)
           let conRsChar = value.search(condChar)
-          let conRsNum = value.search(condNum)
           if (rsCharac >= 0) {
             this.postnameTh = ''
           } else if (
             conRsChar < 0 &&
-            conRsNum < 0 &&
             rsChar < 0 &&
             value.length > 1
           ) {
@@ -1118,18 +1091,15 @@ export default {
           let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
           let rsCharac = value.search(charac)
 
-          let thai = /[ก-ฮ]/g
-          let condChar = /[a-zA-Z]/g
-          let condNum = /[0-9]/g
+          let thai = /[ก-๙]/g
+          let condChar = /[A-Za-z0-9]/g
           let rsChar = value.search(thai)
           let conRsChar = value.search(condChar)
-          let conRsNum = value.search(condNum)
 
           if (rsCharac >= 0) {
             this.postnameEn = ''
           } else if (
             conRsChar < 0 &&
-            conRsNum < 0 &&
             rsChar < 0 &&
             value.length > 1
           ) {
@@ -1145,21 +1115,17 @@ export default {
         if (value.length == 0 && this.editRow.type_login == 1) {
           this.enableBtn = true
         } else {
-          let thai = /[ก-ฮ]/g
-          let numThai = /[๑-๙]/g
+          let thai = /[ก-๙]/g
           let charac = /[=%฿~`:;'"!><#^&{}/|+()[\]*\\$]/g
           let rsChar = value.search(thai)
-          let rsNum = value.search(numThai)
           let rsCharac = value.search(charac)
 
-          let condChar = /[a-zA-Z]/g
-          let condNum = /[0-9]/g
+          let condChar = /[A-Za-z0-9]/g
           let conRsChar = value.search(condChar)
-          let conRsNum = value.search(condNum)
 
-          if (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0) {
+          if (rsChar >= 0 || rsCharac >= 0) {
             this.emailInput = ''
-          } else if (conRsChar < 0 && conRsNum < 0 && value.length > 1) {
+          } else if (conRsChar < 0 && value.length > 1) {
             this.emailInput = ''
           } else {
             this.checkBtn()
@@ -1169,11 +1135,9 @@ export default {
     },
     cxInput: {
       handler: function (value) {
-        let thai = /[ก-ฮ]/g
-        let numThai = /[๑-๙]/g
+        let thai = /[ก-๙]/g
         let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
         let rsChar = value.search(thai)
-        let rsNum = value.search(numThai)
         let rsCharac = value.search(charac)
 
         let condChar = /[a-zA-Z]/g
@@ -1181,7 +1145,7 @@ export default {
         let conRsChar = value.search(condChar)
         let conRsNum = value.search(condNum)
 
-        if (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0 || conRsChar >= 0) {
+        if (rsChar >= 0 || rsCharac >= 0 || conRsChar >= 0) {
           this.cxInput = ''
         } else if (conRsNum < 0 && value.length > 1) {
           this.cxInput = ''
@@ -1192,11 +1156,9 @@ export default {
     },
     phone: {
       handler: function (value) {
-        let thai = /[ก-ฮ]/g
-        let numThai = /[๑-๙]/g
+        let thai = /[ก-๙]/g
         let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
         let rsChar = value.search(thai)
-        let rsNum = value.search(numThai)
         let rsCharac = value.search(charac)
 
         let condChar = /[a-zA-Z]/g
@@ -1204,7 +1166,7 @@ export default {
         let conRsChar = value.search(condChar)
         let conRsNum = value.search(condNum)
 
-        if (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0 || conRsChar >= 0) {
+        if (rsChar >= 0 || rsCharac >= 0 || conRsChar >= 0) {
           this.phone = ''
         } else if (conRsNum < 0 && value.length > 1) {
           this.phone = ''
@@ -1646,12 +1608,12 @@ export default {
       if (this.btnClick == 'save') {
         let result = JSON.parse(JSON.stringify(this.editRow))
         let arr = []
-        var pwdCrypt = result.password
-        if (result.password == this.defaultPassword) {
+        var pwdCrypt = this.password
+        if (this.password == this.defaultPassword) {
           pwdCrypt = this.oldPassword
         } else {
-          if (result.password !== this.oldPassword) {
-            pwdCrypt = bcrypt.hashSync(result.password, 10)
+          if (this.password !== this.oldPassword) {
+            pwdCrypt = bcrypt.hashSync(this.password, 10)
           }
         }
         result.password = result.type_login == 1 ? 'LDAP' : pwdCrypt
@@ -1707,7 +1669,7 @@ export default {
             }
           })
         } else {
-          if (this.InCondition(this.editRow.password)) {
+          if (this.InCondition(this.password)) {
             this.$store.dispatch(url, result).then(res => {
               if (res.data.success == undefined) {
                 this.btnClick = 'error'
@@ -1841,23 +1803,16 @@ export default {
     },
     keyUpText (input, evt) {
       let value = evt.target.value
-      let thai = /[ก-ฮ]/g
+      let thai = /[ก-๙]/g
       let eng = /[A-Z]/g
-      let engsmall = /[a-z]/g
-      let numThai = /[๑-๙]/g
+      let engsmall = /[ก-๙]/g
       let charac = /[-_=.%฿~`:;'"!><@#^&{}/|+()[\]*\\$]/g
       let rsChar = value.search(thai)
-      let rsNum = value.search(numThai)
+      // let rsNum = value.search(numThai)
       let rsCharac = value.search(charac)
       let rsEng = value.search(eng)
       let rsEngSmall = value.search(engsmall)
-      if (
-        rsChar >= 0 ||
-        rsNum >= 0 ||
-        rsCharac >= 0 ||
-        rsEng >= 0 ||
-        rsEngSmall >= 0
-      ) {
+      if (rsChar >= 0 || rsCharac >= 0 || rsEng >= 0 || rsEngSmall >= 0) {
         this.editRow[input] = ''
         this.checkBtn()
       }
