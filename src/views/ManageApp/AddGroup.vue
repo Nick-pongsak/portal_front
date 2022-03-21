@@ -674,7 +674,7 @@ export default {
             this.dialog = true
             this.error = true
             this.errorDialog =
-              this.$t('popup.text2') + ' (Error Code ' + res.status + ')'
+              this.$t('popup.text10')
             this.rightBtn = this.$t('btn_close')
           } else {
             this.error = false

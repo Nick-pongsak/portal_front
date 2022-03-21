@@ -136,6 +136,7 @@ const locales = {
     'popup.text7': "Can't delete data because the use of such information was found please check again.",
     'popup.text8': "Can't save data. Because of this employee code or username has been used.",
     'popup.text9': '-- Item not found --',
+    'popup.text10': "Can't add this group because the group name is duplicate."
   },
   'th': {
     'btn_add': 'เพิ่ม',
@@ -274,6 +275,7 @@ const locales = {
     'popup.text7': 'ไม่สามารถลบข้อมูลได้ เนื่องจากพบการใช้งานข้อมูลดังกล่าวอยู่ กรุณาตรวจสอบอีกครั้ง',
     'popup.text8': 'ไม่สามารถบันทึกข้อมูลได้ เนื่องจากรหัสพนักงานหรือชื่อผู้ใช้งานนี้ ถูกใช้งานแล้ว',
     'popup.text9': '-- ไม่พบรายการ --',
+    'popup.text10': 'ไม่สามารถเพิ่มกลุ่มผู้ใช้งานแอปพลิเคชันนี้ได้ เนื่องจากชื่อกลุ่มซ้ำ'
   }
 }
 export default locales
