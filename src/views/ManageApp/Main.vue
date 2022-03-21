@@ -166,7 +166,7 @@
           </div>
           <div
             class="head"
-            style="width:40%;padding-left:8px"
+            style="width:30%;padding-left:8px"
             @click="sort(headCol2[1], 1)"
           >
             <div class="column-name">{{ $t('group.text5') }}</div>
@@ -176,7 +176,15 @@
               size="22"
             ></v-icon>
           </div>
-          <div class="head" style="width:20%" @click="sort(headCol2[2], 2)">
+          <div class="head" style="width:10%;" @click="sort(headCol2[2], 2)">
+            <div class="column-name">{{ $t('group.text11') }}</div>
+            <v-icon
+              v-text="sortNo == 1 ? 'mdi-menu-up' : 'mdi-menu-down'"
+              style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
+              size="22"
+            ></v-icon>
+          </div>
+          <div class="head" style="width:20%" @click="sort(headCol2[3], 3)">
             <div class="column-name">
               {{ $t('group.text6') }}
             </div>
@@ -186,7 +194,7 @@
               size="22"
             ></v-icon>
           </div>
-          <div class="head" style="width:20%" @click="sort(headCol2[3], 3)">
+          <div class="head" style="width:20%" @click="sort(headCol2[4], 4)">
             <div class="column-name">
               {{ $t('group.text7') }}
             </div>
@@ -219,9 +227,12 @@
             </div>
             <div
               class="body"
-              style="width:40%;padding-left:5px;padding-top:5px"
+              style="width:30%;padding-left:5px;padding-top:5px"
             >
               {{ item['name_' + $i18n.locale] }}
+            </div>
+            <div class="body" style="width:10%;padding-top:5px">
+              {{ item.group_id }}
             </div>
             <div class="body" style="width:20%;padding-top:5px">
               {{ item.total_app }}
@@ -345,7 +356,7 @@ export default {
       searchApp: '',
       sortNo: null,
       headCol: ['index', 'name_th', 'category_name_th', 'type_login', 'status'],
-      headCol2: ['index', 'name_th', 'total_app', 'total_user'],
+      headCol2: ['index', 'name_th', 'group_id', 'total_app', 'total_user'],
       mainSort: {
         feild: 'name_th',
         orderby: true
