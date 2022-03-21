@@ -1539,7 +1539,7 @@ export default {
             }
           })
         } else {
-          if (this.InCondition(this.editRow.password)) {
+          if (this.InCondition(this.password)) {
             this.$store.dispatch(url, result).then(res => {
               if (res.data.success == undefined) {
                 this.btnClick = 'error'
