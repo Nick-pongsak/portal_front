@@ -816,28 +816,6 @@ export default {
       defaultPassword: '99999999',
       typeLogin: 1,
       masterEdit: {},
-      emailRules: [
-        value => !!value || '',
-        value => {
-          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          return pattern.test(value) || ''
-        }
-      ],
-      numberRules: [
-        value => !!value || '',
-        value => {
-          const pattern = /[0-9]$/
-          return pattern.test(value) || '.'
-        }
-      ],
-      usernameRules: [
-        value => !!value || '',
-        value => {
-          const pattern = /[a-zA-Z0-9]$/
-          return pattern.test(value) || ''
-        },
-        value => (value || '').length > 5 || ''
-      ],
       empCode: this.data.emp_code,
       nameTh: this.data.name_th,
       nameEn: this.data.name_en,
@@ -899,26 +877,17 @@ export default {
     },
     empCode: {
       handler: function (value) {
-        if (value > 0) {
-          let thai = /[ก-ฮ]/g
-          let numThai = /[๑-๙]/g
-          let charac = /[=%฿~`:;@'"!.-_><#^&{}/|+()[\]*\\$]/g
-          let rsChar = value.search(thai)
-          let rsNum = value.search(numThai)
-          let rsCharac = value.search(charac)
+        if (
+          (typeof value === 'number' && value > 0) ||
+          typeof value === 'string'
+        ) {
           if (value.length == 0) {
             this.enableBtn = true
           } else {
-            // console.log(this.editRow.type_login)
-            // console.log('rsChar => ', rsChar)
-            // console.log('rsNum => ', rsNum)
-            // console.log('rsCharac => ', rsCharac)
-            // console.log(this.editRow.type_login)
-            if (
-              this.editRow.type_login == 0 &&
-              (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0)
-            ) {
-              this.empCode = ''
+            let temp1 = value.replace(/[ก-๙]/g, '')
+            let temp = temp1.replace(/[-@:;[/\]{}()_*+?.,\\^$|#\s]/g, '')
+            if (temp.length > 0) {
+              this.empCode = temp
             } else {
               this.checkBtn()
             }
@@ -931,24 +900,9 @@ export default {
         if (value.length == 0) {
           this.enableBtn = true
         } else {
-          let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
-          // let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
-          let rsCharac = value.search(charac)
-          let thai = /[ก-ฮ]/g
-          let condChar = /[a-zA-Z]/g
-          let condNum = /[0-9]/g
-          let rsChar = value.search(thai)
-          let conRsChar = value.search(condChar)
-          let conRsNum = value.search(condNum)
-          if (rsCharac >= 0) {
-            this.nameTh = ''
-          } else if (
-            conRsChar < 0 &&
-            conRsNum < 0 &&
-            rsChar < 0 &&
-            value.length > 1
-          ) {
-            this.nameTh = ''
+          let temp = value.replace(/[-@:;/\*+?.,\\^$|#\s]/g, '')
+          if (temp.length > 0) {
+            this.nameTh = temp
           } else {
             this.checkBtn()
           }
@@ -960,23 +914,9 @@ export default {
         if (value.length == 0) {
           this.enableBtn = true
         } else {
-          let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
-          let rsCharac = value.search(charac)
-          let thai = /[ก-ฮ]/g
-          let condChar = /[a-zA-Z]/g
-          let condNum = /[0-9]/g
-          let rsChar = value.search(thai)
-          let conRsChar = value.search(condChar)
-          let conRsNum = value.search(condNum)
-          if (rsCharac >= 0) {
-            this.nameEn = ''
-          } else if (
-            conRsChar < 0 &&
-            conRsNum < 0 &&
-            rsChar < 0 &&
-            value.length > 1
-          ) {
-            this.nameEn = ''
+          let temp = value.replace(/[-@:;/\*+?.,\\^$|#\s]/g, '')
+          if (temp.length > 0) {
+            this.nameEn = temp
           } else {
             this.checkBtn()
           }
@@ -985,23 +925,9 @@ export default {
     },
     nickname1Th: {
       handler: function (value) {
-        let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
-        let rsCharac = value.search(charac)
-        let thai = /[ก-ฮ]/g
-        let condChar = /[a-zA-Z]/g
-        let condNum = /[0-9]/g
-        let rsChar = value.search(thai)
-        let conRsChar = value.search(condChar)
-        let conRsNum = value.search(condNum)
-        if (rsCharac >= 0) {
-          this.nickname1Th = ''
-        } else if (
-          conRsChar < 0 &&
-          conRsNum < 0 &&
-          rsChar < 0 &&
-          value.length > 1
-        ) {
-          this.nickname1Th = ''
+        let temp = value.replace(/[-@:;/\*+?.,\\^$|#\s]/g, '')
+        if (temp.length > 0) {
+          this.nickname1Th = temp
         } else {
           this.checkBtn()
         }
@@ -1009,23 +935,9 @@ export default {
     },
     nickname1En: {
       handler: function (value) {
-        let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
-        let rsCharac = value.search(charac)
-        let thai = /[ก-ฮ]/g
-        let condChar = /[a-zA-Z]/g
-        let condNum = /[0-9]/g
-        let rsChar = value.search(thai)
-        let conRsChar = value.search(condChar)
-        let conRsNum = value.search(condNum)
-        if (rsCharac >= 0) {
-          this.nickname1En = ''
-        } else if (
-          conRsChar < 0 &&
-          conRsNum < 0 &&
-          rsChar < 0 &&
-          value.length > 1
-        ) {
-          this.nickname1En = ''
+        let temp = value.replace(/[-@:;/\*+?.,\\^$|#\s]/g, '')
+        if (temp.length > 0) {
+          this.nickname1En = temp
         } else {
           this.checkBtn()
         }
@@ -1033,24 +945,9 @@ export default {
     },
     nickname2Th: {
       handler: function (value) {
-        let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
-        let rsCharac = value.search(charac)
-
-        let thai = /[ก-ฮ]/g
-        let condChar = /[a-zA-Z]/g
-        let condNum = /[0-9]/g
-        let rsChar = value.search(thai)
-        let conRsChar = value.search(condChar)
-        let conRsNum = value.search(condNum)
-        if (rsCharac >= 0) {
-          this.nickname2Th = ''
-        } else if (
-          conRsChar < 0 &&
-          conRsNum < 0 &&
-          rsChar < 0 &&
-          value.length > 1
-        ) {
-          this.nickname2Th = ''
+        let temp = value.replace(/[-@:;/\*+?.,\\^$|#\s]/g, '')
+        if (temp.length > 0) {
+          this.nickname2Th = temp
         } else {
           this.checkBtn()
         }
@@ -1058,25 +955,9 @@ export default {
     },
     nickname2En: {
       handler: function (value) {
-        let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
-        let rsCharac = value.search(charac)
-
-        let thai = /[ก-ฮ]/g
-        let condChar = /[a-zA-Z]/g
-        let condNum = /[0-9]/g
-        let rsChar = value.search(thai)
-        let conRsChar = value.search(condChar)
-        let conRsNum = value.search(condNum)
-
-        if (rsCharac >= 0) {
-          this.nickname2En = ''
-        } else if (
-          conRsChar < 0 &&
-          conRsNum < 0 &&
-          rsChar < 0 &&
-          value.length > 1
-        ) {
-          this.nickname2En = ''
+        let temp = value.replace(/[-@:;/\*+?.,\\^$|#\s]/g, '')
+        if (temp.length > 0) {
+          this.nickname2En = temp
         } else {
           this.checkBtn()
         }
@@ -1087,24 +968,9 @@ export default {
         if (value.length == 0) {
           this.enableBtn = true
         } else {
-          let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
-          let rsCharac = value.search(charac)
-
-          let thai = /[ก-ฮ]/g
-          let condChar = /[a-zA-Z]/g
-          let condNum = /[0-9]/g
-          let rsChar = value.search(thai)
-          let conRsChar = value.search(condChar)
-          let conRsNum = value.search(condNum)
-          if (rsCharac >= 0) {
-            this.postnameTh = ''
-          } else if (
-            conRsChar < 0 &&
-            conRsNum < 0 &&
-            rsChar < 0 &&
-            value.length > 1
-          ) {
-            this.postnameTh = ''
+          let temp = value.replace(/[-@:;/\*+?.,\\^$|#\s]/g, '')
+          if (temp.length > 0) {
+            this.postnameTh = temp
           } else {
             this.checkBtn()
           }
@@ -1116,25 +982,9 @@ export default {
         if (value.length == 0) {
           this.enableBtn = true
         } else {
-          let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
-          let rsCharac = value.search(charac)
-
-          let thai = /[ก-ฮ]/g
-          let condChar = /[a-zA-Z]/g
-          let condNum = /[0-9]/g
-          let rsChar = value.search(thai)
-          let conRsChar = value.search(condChar)
-          let conRsNum = value.search(condNum)
-
-          if (rsCharac >= 0) {
-            this.postnameEn = ''
-          } else if (
-            conRsChar < 0 &&
-            conRsNum < 0 &&
-            rsChar < 0 &&
-            value.length > 1
-          ) {
-            this.postnameEn = ''
+          let temp = value.replace(/[-@:;/\*+?.,\\^$|#\s]/g, '')
+          if (temp.length > 0) {
+            this.postnameEn = temp
           } else {
             this.checkBtn()
           }
@@ -1146,22 +996,10 @@ export default {
         if (value.length == 0 && this.editRow.type_login == 1) {
           this.enableBtn = true
         } else {
-          let thai = /[ก-ฮ]/g
-          let numThai = /[๑-๙]/g
-          let charac = /[=%฿~`:;'"!><#^&{}/|+()[\]*\\$]/g
-          let rsChar = value.search(thai)
-          let rsNum = value.search(numThai)
-          let rsCharac = value.search(charac)
-
-          let condChar = /[a-zA-Z]/g
-          let condNum = /[0-9]/g
-          let conRsChar = value.search(condChar)
-          let conRsNum = value.search(condNum)
-
-          if (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0) {
-            this.emailInput = ''
-          } else if (conRsChar < 0 && conRsNum < 0 && value.length > 1) {
-            this.emailInput = ''
+          let temp1 = value.replace(/[ก-๙]/g, '')
+          let temp = temp1.replace(/[:;[/\]{}()*+?,\\^$|#\s]/g, '')
+          if (temp.length > 0) {
+            this.emailInput = temp
           } else {
             this.checkBtn()
           }
@@ -1170,22 +1008,11 @@ export default {
     },
     cxInput: {
       handler: function (value) {
-        let thai = /[ก-ฮ]/g
-        let numThai = /[๑-๙]/g
-        let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
-        let rsChar = value.search(thai)
-        let rsNum = value.search(numThai)
-        let rsCharac = value.search(charac)
-
-        let condChar = /[a-zA-Z]/g
-        let condNum = /[0-9]/g
-        let conRsChar = value.search(condChar)
-        let conRsNum = value.search(condNum)
-
-        if (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0 || conRsChar >= 0) {
-          this.cxInput = ''
-        } else if (conRsNum < 0 && value.length > 1) {
-          this.cxInput = ''
+        let temp0 = value.replace(/[a-zA-Z]/g, '')
+        let temp1 = temp0.replace(/[ก-๙]/g, '')
+        let temp = temp1.replace(/[-@:;[/\]{}()_*+?.,\\^$|#\s]/g, '')
+        if (temp.length > 0) {
+          this.cxInput = temp
         } else {
           this.checkBtn()
         }
@@ -1193,22 +1020,11 @@ export default {
     },
     phone: {
       handler: function (value) {
-        let thai = /[ก-ฮ]/g
-        let numThai = /[๑-๙]/g
-        let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
-        let rsChar = value.search(thai)
-        let rsNum = value.search(numThai)
-        let rsCharac = value.search(charac)
-
-        let condChar = /[a-zA-Z]/g
-        let condNum = /[0-9]/g
-        let conRsChar = value.search(condChar)
-        let conRsNum = value.search(condNum)
-
-        if (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0 || conRsChar >= 0) {
-          this.phone = ''
-        } else if (conRsNum < 0 && value.length > 1) {
-          this.phone = ''
+        let temp0 = value.replace(/[a-zA-Z]/g, '')
+        let temp1 = temp0.replace(/[ก-๙]/g, '')
+        let temp = temp1.replace(/[-@:;[/\]{}()_*+?.,\\^$|#\s]/g, '')
+        if (temp.length > 0) {
+          this.phone = temp
         } else {
           this.checkBtn()
         }
@@ -1219,19 +1035,22 @@ export default {
         if (value.length < 6 && this.editRow.type_login == 0) {
           this.enableBtn = true
         } else {
-          let charac = /[=%฿~`:;@'"!><#^&/|+\*\\$]/g
-          // let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
-          let rsCharac = value.search(charac)
+          let temp1 = value.replace(/[ก-๙]/g, '')
+          let temp = temp1.replace(/[-@:;[/\]{}()_*+?.,\\^$|#\s]/g, '')
 
-          let condChar = /[a-zA-Z]/g
-          let condNum = /[0-9]/g
-          let conRsChar = value.search(condChar)
-          let conRsNum = value.search(condNum)
-          if (rsCharac >= 0) {
-            this.username = ''
-          } else if (conRsChar < 0 && conRsNum < 0 && value.length > 1) {
-            this.username = ''
-          } else if (conRsChar >= 0 && conRsNum >= 0) {
+          let condChar = /[a-zA-Z]*$/
+          let condNum = /[0-9]*$/
+          let conRsChar = temp.search(condChar)
+          let conRsNum = temp.search(condNum)
+
+          if (temp.length > 0) {
+            this.username = temp
+            if (conRsChar <= 0 || conRsNum <= 0) {
+              this.enableBtn = true
+            } else if (conRsChar >= 0 && conRsNum >= 0) {
+              this.checkBtn()
+            }
+          } else {
             this.checkBtn()
           }
         }
@@ -1242,18 +1061,22 @@ export default {
         if (value.length < 6 && this.editRow.type_login == 0) {
           this.enableBtn = true
         } else {
-          let charac = /[=%฿~`:;@'"!><#^&{}/|+()[\]*\\$]/g
-          let rsCharac = value.search(charac)
+          let temp1 = value.replace(/[ก-๙]/g, '')
+          let temp = temp1.replace(/[-@:;[/\]{}()_*+?.,\\^$|#\s]/g, '')
 
-          let condChar = /[a-zA-Z]/g
-          let condNum = /[0-9]/g
-          let conRsChar = value.search(condChar)
-          let conRsNum = value.search(condNum)
-          if (rsCharac >= 0) {
-            this.password = ''
-          } else if (conRsChar < 0 && conRsNum < 0 && value.length > 1) {
-            this.password = ''
-          } else if (conRsChar >= 0 && conRsNum >= 0) {
+          let condChar = /[a-zA-Z]*$/
+          let condNum = /[0-9]*$/
+          let conRsChar = temp.search(condChar)
+          let conRsNum = temp.search(condNum)
+
+          if (temp.length > 0) {
+            this.password = temp
+            if (conRsChar <= 0 || conRsNum <= 0) {
+              this.enableBtn = true
+            } else if (conRsChar >= 0 && conRsNum >= 0) {
+              this.checkBtn()
+            }
+          } else {
             this.checkBtn()
           }
         }
@@ -1262,7 +1085,6 @@ export default {
   },
   methods: {
     checkBtn () {
-      // console.log('checkBtn => ')
       let item = JSON.parse(JSON.stringify(this.editRow))
       let group_id = item.group_id.toString()
       let name_th = this.nameTh.trim()
