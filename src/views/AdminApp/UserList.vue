@@ -1777,7 +1777,7 @@ export default {
     isNumberChar (evt) {
       evt = evt ? evt : window.event
       var keyCode = evt.which ? evt.which : evt.keyCode
-      console.log(keyCode)
+      // console.log(keyCode)
       if (
         (keyCode >= 48 && keyCode <= 57) ||
         (keyCode >= 97 && keyCode <= 122) ||
