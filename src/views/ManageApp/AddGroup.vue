@@ -38,6 +38,21 @@
         </div>
         <div class="rows">
           <div style="width:30%" class="rows-name">
+            {{ $t('group.text11') }}
+          </div>
+          <div style="width:70%" class="rows-input">
+            <div class="input-with-icon" style="width: 365px;">
+              <input
+                type="text"
+                v-model="editRow.group_id"
+                :disabled="true"
+                :style="{ background: '#D1D1D1' }"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="rows">
+          <div style="width:30%" class="rows-name">
             {{ $t('group.text3') }}
           </div>
           <div style="width:70%" class="rows-input">
@@ -673,8 +688,7 @@ export default {
             this.btnClick = 'error'
             this.dialog = true
             this.error = true
-            this.errorDialog =
-              this.$t('popup.text10')
+            this.errorDialog = this.$t('popup.text10')
             this.rightBtn = this.$t('btn_close')
           } else {
             this.error = false
