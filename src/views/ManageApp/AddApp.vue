@@ -664,6 +664,7 @@ export default {
     CloseNewType () {
       if (this.dialog) {
         this.dialog = false
+        this.error = false
       }
       this.modeAdd = null
       this.editMode = false
@@ -757,6 +758,7 @@ export default {
             }
           } else {
             this.dialog = false
+            this.error = false
             this.$emit('clear', null)
           }
         })
@@ -835,10 +837,12 @@ export default {
             if (res.status == 213) {
               this.btnClick = 'error'
               this.dialog = true
-              this.errorDialog = this.$t('popup.text2') + ' (Error Code ' + res.status + ')'
+              this.errorDialog =
+                this.$t('popup.text2') + ' (Error Code ' + res.status + ')'
               this.error = true
             } else {
               this.dialog = false
+              this.error = false
             }
           } else {
             this.dialog = false
@@ -878,6 +882,7 @@ export default {
               this.modeAdd = null
               this.editMode = false
               this.dialog = false
+              this.error = false
               this.detailDialog = null
               this.getTypeList()
             }
@@ -885,6 +890,7 @@ export default {
             this.modeAdd = null
             this.editMode = false
             this.dialog = false
+            this.error = false
             this.detailDialog = null
             this.getTypeList()
           }
@@ -907,12 +913,14 @@ export default {
             }
           } else {
             this.dialog = false
+            this.error = false
             this.detailDialog = null
             this.getTypeList()
           }
         })
       } else if (this.btnClick == 'cancel') {
         this.dialog = false
+        this.error = false
         this.rightBtn = this.$t('btn_save')
         this.selectedFile = null
         this.detailDialog = null
