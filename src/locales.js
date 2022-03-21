@@ -123,6 +123,7 @@ const locales = {
     'group.text8': 'Applications Accessed',
     'group.text9': 'Edit Application Group',
     'group.text10': 'Add Application Group',
+    'group.text11': 'Group ID',
 
     'master.type_login_0': 'DHAS PORTAL USER',
     'master.type_login_1': 'LDAP (AD)',
@@ -262,6 +263,7 @@ const locales = {
     'group.text8': 'แอปพลิเคชันที่สามารถเข้าใช้งานได้',
     'group.text9': 'แก้ไขกลุ่มผู้ใช้งานแอปพลิเคชัน',
     'group.text10': 'เพิ่มกลุ่มผู้ใช้งานแอปพลิเคชัน',
+    'group.text11': 'รหัสกลุ่ม',
 
     'master.type_login_0': 'ผู้ใช้งานบนแอปพลิเคชัน',
     'master.type_login_1': 'LDAP (AD)',
