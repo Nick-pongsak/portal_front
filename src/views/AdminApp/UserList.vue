@@ -1478,12 +1478,12 @@ export default {
       if (this.btnClick == 'save') {
         let result = JSON.parse(JSON.stringify(this.editRow))
         let arr = []
-        var pwdCrypt = result.password
-        if (result.password == this.defaultPassword) {
+        var pwdCrypt = this.password
+        if (this.password == this.defaultPassword) {
           pwdCrypt = this.oldPassword
         } else {
-          if (result.password !== this.oldPassword) {
-            pwdCrypt = bcrypt.hashSync(result.password, 10)
+          if (this.password !== this.oldPassword) {
+            pwdCrypt = bcrypt.hashSync(this.password, 10)
           }
         }
         result.password = result.type_login == 1 ? 'LDAP' : pwdCrypt
@@ -1539,7 +1539,7 @@ export default {
             }
           })
         } else {
-          if (this.InCondition(this.editRow.password)) {
+          if (this.InCondition(this.password)) {
             this.$store.dispatch(url, result).then(res => {
               if (res.data.success == undefined) {
                 this.btnClick = 'error'
