@@ -389,6 +389,7 @@
                 <input
                   type="text"
                   v-model="username"
+                  @keypress="IsPassword"
                   :placeholder="$t('input_selected')"
                   :disabled="enableInput"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
@@ -1042,9 +1043,9 @@ export default {
         if (value.length < 6 && this.editRow.type_login == 0) {
           this.enableBtn = true
         } else {
-          let temp1 = value.replace(/[ก-๙]/g, '')
-          let temp = temp1.replace(/[-@:;[/\]{}()_*+?.,\\^$|#\s]/g, '')
-
+          // let temp1 = value.replace(/[ก-๙]/g, '')
+          // let temp = temp1.replace(/[-@:;[/\]{}()_*+?.,\\^$|#\s]/g, '')
+          let temp = value.replace(/[^0-9a-zA-Z]/g, '')
           let condChar = /[a-zA-Z]*$/
           let condNum = /[0-9]*$/
           let conRsChar = temp.search(condChar)
@@ -1055,11 +1056,10 @@ export default {
             if (conRsChar <= 0 || conRsNum <= 0) {
               this.enableBtn = true
             } else if (conRsChar >= 0 && conRsNum >= 0) {
-              // this.username = ''
               this.checkBtn()
             }
           } else {
-            // this.username = ''
+            this.username = ''
             this.checkBtn()
           }
         }
@@ -1070,8 +1070,7 @@ export default {
         if (value.length < 6 && this.editRow.type_login == 0) {
           this.enableBtn = true
         } else {
-          let temp1 = value.replace(/[ก-๙]/g, '')
-          let temp = temp1.replace(/[-@:;[/\]{}()_*+?.,\\^$|#\s]/g, '')
+          let temp = value.replace(/[^0-9a-zA-Z]/g, '')
 
           let condChar = /[a-zA-Z]*$/
           let condNum = /[0-9]*$/
@@ -1086,6 +1085,7 @@ export default {
               this.checkBtn()
             }
           } else {
+            this.password = ''
             this.checkBtn()
           }
         }
@@ -1455,10 +1455,10 @@ export default {
       let item = this.editRow
       if (this.enableBtn == false) {
         if (
-          (item.password !== this.oldPassword ||
+          (this.password !== this.oldPassword ||
             item.username !== this.oldUsername) &&
           this.editRow.mode == 'edit' &&
-          item.password != this.defaultPassword
+          this.password != this.defaultPassword
         ) {
           this.dialog = true
           this.errorDialog =
@@ -1647,20 +1647,13 @@ export default {
       }
     },
     IsPassword (evt) {
-      this.checkBtn()
-      evt = evt ? evt : window.event
-      var keyCode = evt.which ? evt.which : evt.keyCode
-      if (
-        keyCode == 33 ||
-        keyCode == 35 ||
-        keyCode == 36 ||
-        (keyCode >= 48 && keyCode <= 57) ||
-        (keyCode >= 97 && keyCode <= 122) ||
-        (keyCode >= 64 && keyCode <= 91)
-      ) {
-        return true
-      } else {
+      var regex = new RegExp('^[a-zA-Z0-9]+$')
+      var key = String.fromCharCode(!evt.charCode ? evt.which : evt.charCode)
+      if (!regex.test(key)) {
         evt.preventDefault()
+        return false
+      } else {
+        this.checkBtn()
       }
     }
   },
