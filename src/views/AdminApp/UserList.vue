@@ -2,7 +2,7 @@
   <div id="user-list" style="height:calc(100% - 50px);">
     <v-card style="padding:20px 5px 20px 20px;height: calc(100% - 10px);">
       <div class="detail-add">
-        {{ enableBtn }}
+        <!-- {{ enableBtn }} -->
         <div class="rows">
           <div style="width:20%" class="rows-name">
             {{ $t('profile.account_2') }}
@@ -912,10 +912,11 @@ export default {
             // console.log('rsChar => ', rsChar)
             // console.log('rsNum => ', rsNum)
             // console.log('rsCharac => ', rsCharac)
+            // console.log('-----------------')
             // console.log(this.editRow.type_login)
             if (
               this.editRow.type_login == 0 &&
-              (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0)
+              (rsChar >= 0 || rsNum >= 0 || rsCharac > 0)
             ) {
               this.empCode = ''
             } else {
