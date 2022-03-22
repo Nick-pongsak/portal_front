@@ -1425,7 +1425,23 @@ export default {
         this.editRow.mode == 'add'
           ? JSON.stringify(this.master)
           : this.masterEdit
-      let str2 = JSON.stringify(this.editRow)
+      let result = JSON.parse(JSON.stringify(this.editRow))
+      result.emp_code = this.empCode
+      result.name_th = this.nameTh
+      result.name_en = this.nameEn
+      result.nickname1_th = this.nickname1Th
+      result.nickname1_en = this.nickname1En
+      result.nickname2_th = this.nickname2Th
+      result.nickname2_en = this.nickname2En
+      result.postname_th = this.postnameTh
+      result.postname_en = this.postnameEn
+      result.email = this.emailInput
+      result.cx = this.cxInput
+      result.phone = this.phone
+      result.username = this.username
+      result.password = this.password
+      let str2 = JSON.stringify(result)
+
       if (str1 == str2) {
         this.cancel()
       } else {
