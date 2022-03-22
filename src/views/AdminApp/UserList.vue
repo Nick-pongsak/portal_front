@@ -1496,7 +1496,7 @@ export default {
             username:
               this.applist[i].type_login == 0
                 ? this.applist[i].username
-                : this.username,
+                : result.username,
             password: 'LDAP'
           })
         }
@@ -1515,7 +1515,6 @@ export default {
         result.email = this.emailInput
         result.cx = this.cxInput
         result.phone = this.phone
-        result.username = this.username
 
         if (this.editRow.type_login == 1) {
           this.$store.dispatch(url, result).then(res => {
@@ -1540,6 +1539,7 @@ export default {
           })
         } else {
           if (this.InCondition(this.password)) {
+            result.username = this.username
             this.$store.dispatch(url, result).then(res => {
               if (res.data.success == undefined) {
                 this.btnClick = 'error'
