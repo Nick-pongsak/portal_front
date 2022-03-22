@@ -16,11 +16,18 @@
       </div>
     </div>
     <div class="right">
-      <div class="header">{{ $t(currentView.text) }}</div>
+      <div class="header">
+        {{
+          currentView.code == '1.2'
+            ? $t(currentView.text) + ' (' + editRow.total + ')'
+            : $t(currentView.text)
+        }}
+      </div>
       <main-admin-app
         v-if="currentView.code == '1'"
         @add="addUser"
         @edit="editUser"
+        @upload="uploadCSV"
       />
       <user-list
         v-else-if="currentView.code == '1.1'"
@@ -30,6 +37,11 @@
         @save="saveUser"
         @clear="clearUser"
       />
+      <upload-csv v-else-if="currentView.code == '1.2'" :data="editRow" />
+      <!-- 
+        :master="masterUser"
+        @cancel="cancelUser"
+        @clear="clearUser" -->
       <main-list-app
         v-else-if="currentView.code == '2'"
         :menu="rightMenu"
@@ -59,6 +71,7 @@
 </template>
 
 <script>
+import UploadCsv from './AdminApp/UploadCsv'
 import UserList from './AdminApp/UserList'
 import MainAdminApp from './AdminApp/Main'
 import MainListApp from './ManageApp/Main'
@@ -146,6 +159,13 @@ export default {
   },
   watch: {},
   methods: {
+    uploadCSV (value) {
+      this.currentView = {
+        code: '1.2',
+        text: 'upload.text1'
+      }
+      this.editRow = value
+    },
     addUser (value) {
       this.currentView = {
         code: '1.1',
@@ -291,7 +311,8 @@ export default {
     AddApp,
     AddGroup,
     UserList,
-    MainAdminApp
+    MainAdminApp,
+    UploadCsv
   },
   mounted () {}
 }

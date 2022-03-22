@@ -703,11 +703,9 @@
                 >
                   <input
                     type="text"
-                    v-model="profile.name_th"
+                    v-model="nameTh"
                     :placeholder="$t('input_selected')"
                     :readonly="enableInput"
-                    @keyup="enableBtnSave"
-                    @keypress="enableBtnSave"
                   />
                 </div>
               </div>
@@ -726,11 +724,9 @@
                 >
                   <input
                     type="text"
-                    v-model="profile.name_en"
+                    v-model="nameEn"
                     :placeholder="$t('input_selected')"
                     :readonly="enableInput"
-                    @keyup="enableBtnSave"
-                    @keypress="enableBtnSave"
                   />
                 </div>
               </div>
@@ -795,7 +791,7 @@
                 >
                   <input
                     type="text"
-                    v-model="profile.nickname2_th"
+                    v-model="nickname2Th"
                     :placeholder="enableInput ? '-' : $t('input_not_selected')"
                     :readonly="enableInput"
                   />
@@ -816,7 +812,7 @@
                 >
                   <input
                     type="text"
-                    v-model="profile.nickname2_en"
+                    v-model="nickname2En"
                     :placeholder="enableInput ? '-' : $t('input_not_selected')"
                     :readonly="enableInput"
                   />
@@ -839,11 +835,9 @@
                 >
                   <input
                     type="text"
-                    v-model="profile.postname_th"
+                    v-model="postnameTh"
                     :placeholder="$t('input_selected')"
                     :readonly="enableInput"
-                    @keyup="enableBtnSave"
-                    @keypress="enableBtnSave"
                   />
                 </div>
               </div>
@@ -862,9 +856,7 @@
                 >
                   <input
                     type="text"
-                    @keyup="enableBtnSave"
-                    @keypress="enableBtnSave"
-                    v-model="profile.postname_en"
+                    v-model="postnameEn"
                     :placeholder="$t('input_selected')"
                     :readonly="enableInput"
                   />
@@ -887,7 +879,8 @@
                 >
                   <input
                     type="text"
-                    v-model="profile.email"
+                    @keypress="IsEmail"
+                    v-model="emailInput"
                     :placeholder="
                       profile.type_login == 0
                         ? $t('input_not_selected')
@@ -912,10 +905,10 @@
                 >
                   <input
                     type="text"
-                    v-model="profile.cx"
+                    v-model="cxInput"
                     :placeholder="enableInput ? '-' : $t('input_not_selected')"
                     :readonly="enableInput"
-                    @keypress="isNumber"
+                    @keypress="isNumberChar"
                   />
                 </div>
               </div>
@@ -936,10 +929,10 @@
                 >
                   <input
                     type="text"
-                    v-model="profile.phone"
+                    v-model="phone"
                     :placeholder="enableInput ? '-' : $t('input_not_selected')"
                     :readonly="enableInput"
-                    @keypress="isNumber"
+                    @keypress="isNumberPhone"
                   />
                 </div>
                 <div style="color:#CE1212;font-size:8px;padding-top:5px">
@@ -1100,7 +1093,18 @@ export default {
         orderby: true
       },
       headCol: ['index', 'name_th', 'type_login'],
-      errorList: false
+      errorList: false,
+      nameTh: '',
+      nameEn: '',
+      nickname1Th: '',
+      nickname1En: '',
+      nickname2Th: '',
+      nickname2En: '',
+      postnameTh: '',
+      postnameEn: '',
+      emailInput: '',
+      cxInput: '',
+      phone: ''
     }
   },
   watch: {
@@ -1183,6 +1187,148 @@ export default {
     },
     picDialog (newValue) {
       this.$store.commit('SetDialogProfile', newValue)
+    },
+    nameTh: {
+      handler: function (value) {
+        if (value.length == 0) {
+          this.enableBtn = true
+        } else {
+          let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_]/g, '')
+          if (temp.length > 0) {
+            this.nameTh = temp
+          } else {
+            this.nameTh = ''
+            this.checkBtn()
+          }
+        }
+      }
+    },
+    nameEn: {
+      handler: function (value) {
+        if (value.length == 0) {
+          this.enableBtn = true
+        } else {
+          let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_]/g, '')
+          if (temp.length > 0) {
+            this.nameEn = temp
+          } else {
+            this.nameEn = ''
+            this.checkBtn()
+          }
+        }
+      }
+    },
+    nickname1Th: {
+      handler: function (value) {
+        let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_]/g, '')
+        if (temp.length > 0) {
+          this.nickname1Th = temp
+        } else {
+          this.nickname1Th = ''
+          this.checkBtn()
+        }
+      }
+    },
+    nickname1En: {
+      handler: function (value) {
+        let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_]/g, '')
+        if (temp.length > 0) {
+          this.nickname1En = temp
+        } else {
+          this.nickname1En = ''
+          this.checkBtn()
+        }
+      }
+    },
+    nickname2Th: {
+      handler: function (value) {
+        let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_]/g, '')
+        if (temp.length > 0) {
+          this.nickname2Th = temp
+        } else {
+          this.nickname2Th = ''
+          this.checkBtn()
+        }
+      }
+    },
+    nickname2En: {
+      handler: function (value) {
+        let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_]/g, '')
+        if (temp.length > 0) {
+          this.nickname2En = temp
+        } else {
+          this.nickname2En = ''
+          this.checkBtn()
+        }
+      }
+    },
+    postnameTh: {
+      handler: function (value) {
+        if (value.length == 0) {
+          this.enableBtn = true
+        } else {
+          let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_]/g, '')
+          if (temp.length > 0) {
+            this.postnameTh = temp
+          } else {
+            this.postnameTh = ''
+            this.checkBtn()
+          }
+        }
+      }
+    },
+    postnameEn: {
+      handler: function (value) {
+        if (value.length == 0) {
+          this.enableBtn = true
+        } else {
+          let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_]/g, '')
+          if (temp.length > 0) {
+            this.postnameEn = temp
+          } else {
+            this.postnameEn = ''
+            this.checkBtn()
+          }
+        }
+      }
+    },
+    emailInput: {
+      handler: function (value) {
+        if (value.length == 0) {
+          this.enableBtn = true
+        } else {
+          let temp1 = value.replace(/[ก-๙]/g, '')
+          let temp = temp1.replace(/[:;[/\]{}()*+?,\\^$|#\s]/g, '')
+          if (temp.length > 0) {
+            this.emailInput = temp
+          } else {
+            this.emailInput = ''
+            this.checkBtn()
+          }
+        }
+      }
+    },
+    cxInput: {
+      handler: function (value) {
+        let temp = value.replace(/[^0-9a-zA-Z]/g, '')
+        if (temp.length > 0) {
+          this.cxInput = temp
+        } else {
+          this.cxInput = ''
+          this.checkBtn()
+        }
+      }
+    },
+    phone: {
+      handler: function (value) {
+        let temp = value.replace(/[^0-9 \-]/g, '')
+        if (temp.length > 0) {
+          this.phone = temp
+        } else {
+          this.phone = ''
+          this.checkBtn()
+        }
+      }
     }
   },
   computed: {
@@ -1208,6 +1354,52 @@ export default {
     }
   },
   methods: {
+    checkBtn () {
+      let name_th = this.nameTh.trim()
+      let name_en = this.nameEn.trim()
+      let postname_th = this.postnameTh.trim()
+      let postname_en = this.postnameEn.trim()
+      if (
+        name_th.length > 0 &&
+        name_en.length > 0 &&
+        postname_th.length > 0 &&
+        postname_en.length > 0
+      ) {
+        this.enableBtn = false
+      } else {
+        this.enableBtn = true
+      }
+    },
+    isNumberPhone (evt) {
+      var regex = new RegExp('^[0-9-]+$')
+      var key = String.fromCharCode(!evt.charCode ? evt.which : evt.charCode)
+      if (!regex.test(key)) {
+        evt.preventDefault()
+        return false
+      } else {
+        this.checkBtn()
+      }
+    },
+    IsEmail (evt) {
+      var regex = new RegExp('^[a-zA-Z0-9@_.-]+$')
+      var key = String.fromCharCode(!evt.charCode ? evt.which : evt.charCode)
+      if (!regex.test(key)) {
+        evt.preventDefault()
+        return false
+      } else {
+        this.checkBtn()
+      }
+    },
+    isNumberChar (evt) {
+      var regex = new RegExp('^[a-zA-Z0-9]+$')
+      var key = String.fromCharCode(!evt.charCode ? evt.which : evt.charCode)
+      if (!regex.test(key)) {
+        evt.preventDefault()
+        return false
+      } else {
+        this.checkBtn()
+      }
+    },
     renderEmail (mode) {
       if (mode == 'shadow') {
         if (this.profile.type_login == 0) {
@@ -1314,7 +1506,20 @@ export default {
       })
     },
     profileViewfile () {
-      this.$store.dispatch('updateProfile', this.profile).then(res => {
+      let profile = JSON.parse(JSON.stringify(this.profile))
+      profile.name_th = this.nameTh
+      profile.name_en = this.nameEn
+      profile.nickname1_th = this.nickname1Th
+      profile.nickname1_en = this.nickname1En
+      profile.nickname2_th = this.nickname2Th
+      profile.nickname2_en = this.nickname2En
+      profile.postname_th = this.postnameTh
+      profile.postname_en = this.postnameEn
+      profile.email = this.emailInput
+      profile.cx = this.cxInput
+      profile.phone = this.phone
+
+      this.$store.dispatch('updateProfile', profile).then(res => {
         this.$store.dispatch('getUserProfile', {}).then(res => {
           let data = JSON.parse(JSON.stringify(this.info))
           data.cx = res.data.success.data.cx
@@ -1342,31 +1547,36 @@ export default {
       this.profile = JSON.parse(JSON.stringify(this.info))
       this.enableInput = true
     },
-    enableBtnSave () {
-      let item = this.profile
-      let name_th = item.name_th.trim()
-      let name_en = item.name_en.trim()
-      let postname_th = item.postname_th.trim()
-      let postname_en = item.postname_en.trim()
-      if (
-        name_th.length > 0 &&
-        name_en.length > 0 &&
-        postname_th.length > 0 &&
-        postname_en.length > 0
-      ) {
-        this.enableBtn = false
-      } else {
-        this.enableBtn = true
-      }
-    },
     openProfile () {
       this.profileDialog = true
       this.profileView = false
       this.profile = JSON.parse(JSON.stringify(this.info))
+      this.nameTh = this.profile.name_th
+      this.nameEn = this.profile.name_en
+      this.nickname1Th = this.profile.nickname1_th
+      this.nickname1En = this.profile.nickname1_en
+      this.nickname2Th = this.profile.nickname2_th
+      this.nickname2En = this.profile.nickname2_en
+      this.postnameTh = this.profile.postname_th
+      this.postnameEn = this.profile.postname_en
+      this.emailInput = this.profile.email
+      this.cxInput = this.profile.cx
+      this.phone = this.profile.phone
     },
     CloseProfileDialog () {
       this.profileDialog = false
       this.profile = {}
+      this.nameTh = ''
+      this.nameEn = ''
+      this.nickname1Th = ''
+      this.nickname1En = ''
+      this.nickname2Th = ''
+      this.nickname2En = ''
+      this.postnameTh = ''
+      this.postnameEn = ''
+      this.emailInput = ''
+      this.cxInput = ''
+      this.phone = ''
       this.profileView = false
     },
     onResize () {
@@ -1734,7 +1944,7 @@ export default {
       this.stepChangePic = 0
     },
     isNumber (evt) {
-      this.enableBtnSave()
+      this.checkBtn()
       evt = evt ? evt : window.event
       var charCode = evt.which ? evt.which : evt.keyCode
       if (charCode > 31 && (charCode < 48 || charCode > 57 || charCode == 46)) {

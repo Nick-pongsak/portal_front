@@ -1043,21 +1043,10 @@ export default {
         if (value.length < 6 && this.editRow.type_login == 0) {
           this.enableBtn = true
         } else {
-          // let temp1 = value.replace(/[ก-๙]/g, '')
-          // let temp = temp1.replace(/[-@:;[/\]{}()_*+?.,\\^$|#\s]/g, '')
           let temp = value.replace(/[^0-9a-zA-Z]/g, '')
-          let condChar = /[a-zA-Z]*$/
-          let condNum = /[0-9]*$/
-          let conRsChar = temp.search(condChar)
-          let conRsNum = temp.search(condNum)
-
           if (temp.length > 0) {
             this.username = temp
-            // if (conRsChar <= 0 || conRsNum <= 0) {
-            //   this.enableBtn = true
-            // } else if (conRsChar >= 0 && conRsNum >= 0) {
-              this.checkBtn()
-            // }
+            this.checkBtn()
           } else {
             this.username = ''
             this.checkBtn()

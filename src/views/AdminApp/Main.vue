@@ -21,6 +21,13 @@
           class="justify-end"
           style="width:20%;display:flex;padding-right:30px"
         >
+          <!-- <v-btn
+            @click="upload()"
+            class="ok-btn"
+            style="margin-right:25px;width:126px"
+          >
+            {{ $t('upload.btn') }}
+          </v-btn> -->
           <v-btn @click="add()" class="cancel-btn">
             <v-icon
               v-text="'mdi-plus'"
@@ -46,7 +53,7 @@
             style="width:12%;padding-left:8px"
             @click="sort(headCol[1], 1)"
           >
-            <div class="column-name">{{ $t('profile.account_3')}}</div>
+            <div class="column-name">{{ $t('profile.account_3') }}</div>
             <v-icon
               v-text="sortNo == 1 ? 'mdi-menu-up' : 'mdi-menu-down'"
               style="color:#000000;opacity:0.5;margin-right:8px;padding-left:5px"
@@ -111,7 +118,7 @@
         </div>
         <div class="body-table">
           <div v-if="list.length == 0" class="no-data">
-            {{$t('popup.text9')}}
+            {{ $t('popup.text9') }}
           </div>
           <div
             class="body-row"
@@ -152,7 +159,7 @@
                 color: item.status ? '#66BB6A' : '#FBC02D'
               }"
             >
-              {{ item.status ? $t('user.text7') :  $t('user.text8') }}
+              {{ item.status ? $t('user.text7') : $t('user.text8') }}
             </div>
             <div class="body" style="width:6%;display:flex;padding-left:12px">
               <v-icon
@@ -204,6 +211,16 @@ export default {
     }
   },
   methods: {
+    upload () {
+      let data = {
+        new: this.list,
+        update: this.list,
+        mistake: this.list,
+        total: 0
+      }
+      data.total = data.new.length + data.update.length + data.mistake.length
+      this.$emit('upload', data)
+    },
     add () {
       // this.fetchData()
       this.$emit('add', this.active)
