@@ -1053,11 +1053,11 @@ export default {
 
           if (temp.length > 0) {
             this.username = temp
-            if (conRsChar <= 0 || conRsNum <= 0) {
-              this.enableBtn = true
-            } else if (conRsChar >= 0 && conRsNum >= 0) {
+            // if (conRsChar <= 0 || conRsNum <= 0) {
+            //   this.enableBtn = true
+            // } else if (conRsChar >= 0 && conRsNum >= 0) {
               this.checkBtn()
-            }
+            // }
           } else {
             this.username = ''
             this.checkBtn()
