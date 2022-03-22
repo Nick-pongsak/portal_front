@@ -1496,7 +1496,7 @@ export default {
             username:
               this.applist[i].type_login == 0
                 ? this.applist[i].username
-                : result.username,
+                : this.username,
             password: 'LDAP'
           })
         }
