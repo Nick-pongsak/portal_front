@@ -1298,7 +1298,7 @@ export default {
           this.enableBtn = true
         } else {
           let temp1 = value.replace(/[ก-๙]/g, '')
-          let temp = temp1.replace(/[:;[/\]{}()*+?,\\^$|#\s]/g, '')
+          let temp = temp1.replace(/[:;[/\]{}()<>="'%*+?,\\^$|#\s]/g, '')
           if (temp.length > 0) {
             this.emailInput = temp
           } else {
@@ -1952,7 +1952,7 @@ export default {
       } else {
         return true
       }
-    }
+    },
   },
   created () {
     if (
