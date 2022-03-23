@@ -890,8 +890,8 @@ export default {
               this.empCode = temp
             } else {
               this.empCode = ''
-              this.checkBtn()
             }
+            this.checkBtn()
           }
         }
       }
@@ -906,8 +906,8 @@ export default {
             this.nameTh = temp
           } else {
             this.nameTh = ''
-            this.checkBtn()
           }
+          this.checkBtn()
         }
       }
     },
@@ -921,8 +921,8 @@ export default {
             this.nameEn = temp
           } else {
             this.nameEn = ''
-            this.checkBtn()
           }
+          this.checkBtn()
         }
       }
     },
@@ -933,8 +933,8 @@ export default {
           this.nickname1Th = temp
         } else {
           this.nickname1Th = ''
-          this.checkBtn()
         }
+        this.checkBtn()
       }
     },
     nickname1En: {
@@ -944,8 +944,8 @@ export default {
           this.nickname1En = temp
         } else {
           this.nickname1En = ''
-          this.checkBtn()
         }
+        this.checkBtn()
       }
     },
     nickname2Th: {
@@ -955,8 +955,8 @@ export default {
           this.nickname2Th = temp
         } else {
           this.nickname2Th = ''
-          this.checkBtn()
         }
+        this.checkBtn()
       }
     },
     nickname2En: {
@@ -966,8 +966,8 @@ export default {
           this.nickname2En = temp
         } else {
           this.nickname2En = ''
-          this.checkBtn()
         }
+        this.checkBtn()
       }
     },
     postnameTh: {
@@ -980,8 +980,8 @@ export default {
             this.postnameTh = temp
           } else {
             this.postnameTh = ''
-            this.checkBtn()
           }
+          this.checkBtn()
         }
       }
     },
@@ -995,8 +995,8 @@ export default {
             this.postnameEn = temp
           } else {
             this.postnameEn = ''
-            this.checkBtn()
           }
+          this.checkBtn()
         }
       }
     },
@@ -1011,8 +1011,8 @@ export default {
             this.emailInput = temp
           } else {
             this.emailInput = ''
-            this.checkBtn()
           }
+          this.checkBtn()
         }
       }
     },
@@ -1023,8 +1023,8 @@ export default {
           this.cxInput = temp
         } else {
           this.cxInput = ''
-          this.checkBtn()
         }
+        this.checkBtn()
       }
     },
     phone: {
@@ -1046,11 +1046,10 @@ export default {
           let temp = value.replace(/[^0-9a-zA-Z]/g, '')
           if (temp.length > 0) {
             this.username = temp
-            this.checkBtn()
           } else {
             this.username = ''
-            this.checkBtn()
           }
+          this.checkBtn()
         }
       }
     },
