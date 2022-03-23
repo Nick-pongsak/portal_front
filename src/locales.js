@@ -128,6 +128,12 @@ const locales = {
     'master.type_login_0': 'DHAS PORTAL USER',
     'master.type_login_1': 'LDAP (AD)',
 
+    'upload.btn': 'อัปโหลด .csv',
+    'upload.text1': 'ข้อมูลผู้ใช้งานระบบที่ทำการอัปโหลดfffff',
+    'upload.text2': 'ผู้ใช้งานใหม่',
+    'upload.text3': 'ผู้ใช้งานที่มีการอัปเดต',
+    'upload.text4': 'ข้อมูลผิดพลาด',
+
     'popup.text1': 'Do you want to save data?',
     'popup.text2': "Can't save data. Please contact the administrator",
     'popup.text3': 'Do you want to delete data?',
@@ -267,6 +273,12 @@ const locales = {
 
     'master.type_login_0': 'ผู้ใช้งานบนแอปพลิเคชัน',
     'master.type_login_1': 'LDAP (AD)',
+
+    'upload.btn': 'อัปโหลด .csv',
+    'upload.text1': 'ข้อมูลผู้ใช้งานระบบที่ทำการอัปโหลด',
+    'upload.text2': 'ผู้ใช้งานใหม่',
+    'upload.text3': 'ผู้ใช้งานที่มีการอัปเดต',
+    'upload.text4': 'ข้อมูลผิดพลาด',
 
     'popup.text1': 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?',
     'popup.text2': 'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ',

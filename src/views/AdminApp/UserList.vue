@@ -890,8 +890,8 @@ export default {
               this.empCode = temp
             } else {
               this.empCode = ''
-              this.checkBtn()
             }
+            this.checkBtn()
           }
         }
       }
@@ -906,8 +906,8 @@ export default {
             this.nameTh = temp
           } else {
             this.nameTh = ''
-            this.checkBtn()
           }
+          this.checkBtn()
         }
       }
     },
@@ -921,8 +921,8 @@ export default {
             this.nameEn = temp
           } else {
             this.nameEn = ''
-            this.checkBtn()
           }
+          this.checkBtn()
         }
       }
     },
@@ -933,8 +933,8 @@ export default {
           this.nickname1Th = temp
         } else {
           this.nickname1Th = ''
-          this.checkBtn()
         }
+        this.checkBtn()
       }
     },
     nickname1En: {
@@ -944,8 +944,8 @@ export default {
           this.nickname1En = temp
         } else {
           this.nickname1En = ''
-          this.checkBtn()
         }
+        this.checkBtn()
       }
     },
     nickname2Th: {
@@ -955,8 +955,8 @@ export default {
           this.nickname2Th = temp
         } else {
           this.nickname2Th = ''
-          this.checkBtn()
         }
+        this.checkBtn()
       }
     },
     nickname2En: {
@@ -966,8 +966,8 @@ export default {
           this.nickname2En = temp
         } else {
           this.nickname2En = ''
-          this.checkBtn()
         }
+        this.checkBtn()
       }
     },
     postnameTh: {
@@ -980,8 +980,8 @@ export default {
             this.postnameTh = temp
           } else {
             this.postnameTh = ''
-            this.checkBtn()
           }
+          this.checkBtn()
         }
       }
     },
@@ -995,8 +995,8 @@ export default {
             this.postnameEn = temp
           } else {
             this.postnameEn = ''
-            this.checkBtn()
           }
+          this.checkBtn()
         }
       }
     },
@@ -1006,13 +1006,13 @@ export default {
           this.enableBtn = true
         } else {
           let temp1 = value.replace(/[ก-๙]/g, '')
-          let temp = temp1.replace(/[:;[/\]{}()*+?,\\^$|#\s]/g, '')
+          let temp = temp1.replace(/[:;[/\]{}()<>="'%*+?,\\^$|#\s]/g, '')
           if (temp.length > 0) {
             this.emailInput = temp
           } else {
             this.emailInput = ''
-            this.checkBtn()
           }
+          this.checkBtn()
         }
       }
     },
@@ -1023,8 +1023,8 @@ export default {
           this.cxInput = temp
         } else {
           this.cxInput = ''
-          this.checkBtn()
         }
+        this.checkBtn()
       }
     },
     phone: {
@@ -1043,25 +1043,13 @@ export default {
         if (value.length < 6 && this.editRow.type_login == 0) {
           this.enableBtn = true
         } else {
-          // let temp1 = value.replace(/[ก-๙]/g, '')
-          // let temp = temp1.replace(/[-@:;[/\]{}()_*+?.,\\^$|#\s]/g, '')
           let temp = value.replace(/[^0-9a-zA-Z]/g, '')
-          let condChar = /[a-zA-Z]*$/
-          let condNum = /[0-9]*$/
-          let conRsChar = temp.search(condChar)
-          let conRsNum = temp.search(condNum)
-
           if (temp.length > 0) {
             this.username = temp
-            if (conRsChar <= 0 || conRsNum <= 0) {
-              this.enableBtn = true
-            } else if (conRsChar >= 0 && conRsNum >= 0) {
-              this.checkBtn()
-            }
           } else {
             this.username = ''
-            this.checkBtn()
           }
+          this.checkBtn()
         }
       }
     },
@@ -1425,7 +1413,23 @@ export default {
         this.editRow.mode == 'add'
           ? JSON.stringify(this.master)
           : this.masterEdit
-      let str2 = JSON.stringify(this.editRow)
+      let result = JSON.parse(JSON.stringify(this.editRow))
+      result.emp_code = this.empCode
+      result.name_th = this.nameTh
+      result.name_en = this.nameEn
+      result.nickname1_th = this.nickname1Th
+      result.nickname1_en = this.nickname1En
+      result.nickname2_th = this.nickname2Th
+      result.nickname2_en = this.nickname2En
+      result.postname_th = this.postnameTh
+      result.postname_en = this.postnameEn
+      result.email = this.emailInput
+      result.cx = this.cxInput
+      result.phone = this.phone
+      result.username = this.username
+      result.password = this.password
+      let str2 = JSON.stringify(result)
+
       if (str1 == str2) {
         this.cancel()
       } else {

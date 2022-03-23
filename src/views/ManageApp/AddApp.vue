@@ -8,11 +8,9 @@
             <div class="input-with-icon" style="width: 365px;">
               <input
                 type="text"
-                v-model="editRow.name_th"
+                v-model="nameTh"
                 :placeholder="$t('input_selected')"
                 maxlength="250"
-                @keyup="enableBtnSave"
-                @keypress="enableBtnSave"
               />
             </div>
           </div>
@@ -23,11 +21,9 @@
             <div class="input-with-icon" style="width: 365px;">
               <input
                 type="text"
-                v-model="editRow.name_en"
+                v-model="nameEn"
                 :placeholder="$t('input_selected')"
                 maxlength="250"
-                @keyup="enableBtnSave"
-                @keypress="enableBtnSave"
               />
             </div>
           </div>
@@ -39,9 +35,7 @@
           <div style="width:70%;padding-right:25px" class="rows-input">
             <div class="input-with-icon" style="width: 100%">
               <textarea
-                @keyup="enableBtnSave"
-                @keypress="enableBtnSave"
-                v-model="editRow.description_th"
+                v-model="descriptionTh"
                 :placeholder="$t('input_selected')"
               ></textarea>
             </div>
@@ -54,10 +48,8 @@
           <div style="width:70%;padding-right:25px" class="rows-input">
             <div class="input-with-icon" style="width: 100%">
               <textarea
-                v-model="editRow.description_en"
+                v-model="descriptionEn"
                 :placeholder="$t('input_selected')"
-                @keyup="enableBtnSave"
-                @keypress="enableBtnSave"
               ></textarea>
             </div>
           </div>
@@ -67,7 +59,7 @@
           <div style="width:70%;display:flex" class="rows-input">
             <div class="input-with-icon" style="width: 365px;">
               <v-select
-                v-model="editRow.category_id"
+                v-model="categoryId"
                 :items="items"
                 :placeholder="$t('input_selected')"
                 :item-text="'name_' + $i18n.locale"
@@ -166,11 +158,10 @@
             >
               <input
                 type="text"
-                v-model="editRow.key_app"
+                v-model="keyApp"
                 :placeholder="$t('input_selected')"
                 :disabled="editRow.status_sso == 1 ? false : true"
                 maxlength="50"
-                @keypress="IsNumber"
                 @keyup="IsNumberUp"
               />
               <!-- :style="{
@@ -216,11 +207,9 @@
             <div class="input-with-icon" style="width: 544px;">
               <input
                 type="text"
-                v-model="editRow.url"
+                v-model="url"
                 :placeholder="$t('input_selected')"
                 maxlength="250"
-                @keyup="enableBtnSave"
-                @keypress="enableBtnSave"
               />
             </div>
           </div>
@@ -559,7 +548,14 @@ export default {
       detailDialog: null,
       enableBtn: true,
       file: '',
-      masterEdit: {}
+      masterEdit: {},
+      nameTh: this.data.name_th,
+      nameEn: this.data.name_en,
+      descriptionTh: this.data.description_th,
+      descriptionEn: this.data.description_en,
+      categoryId: this.data.category_id,
+      keyApp: this.data.key_app,
+      url: this.data.url
     }
   },
   computed: {
@@ -587,6 +583,51 @@ export default {
         this.enableType = false
       } else {
         this.enableType = true
+      }
+    },
+    nameTh: {
+      handler: function (value) {
+        this.enableBtnSave()
+      }
+    },
+    nameEn: {
+      handler: function (value) {
+        this.enableBtnSave()
+      }
+    },
+    descriptionTh: {
+      handler: function (value) {
+        this.enableBtnSave()
+      }
+    },
+    descriptionEn: {
+      handler: function (value) {
+        this.enableBtnSave()
+      }
+    },
+    categoryId: {
+      handler: function (value) {
+        this.enableBtnSave()
+      }
+    },
+    keyApp: {
+      handler: function (value) {
+        if (value.length < 6 && this.editRow.type_login == 0) {
+          this.enableBtn = true
+        } else {
+          let temp = value.replace(/[^0-9a-zA-Z]/g, '')
+          if (temp.length > 0) {
+            this.keyApp = temp
+          } else {
+            this.keyApp = ''
+          }
+          this.enableBtnSave()
+        }
+      }
+    },
+    url: {
+      handler: function (value) {
+        this.enableBtnSave()
       }
     }
   },
@@ -707,7 +748,16 @@ export default {
     },
     cancelBtn () {
       let str1 = this.masterEdit
-      let str2 = JSON.stringify(this.editRow)
+      let result = JSON.parse(JSON.stringify(this.editRow))
+      result.name_th = this.nameTh
+      result.name_en = this.nameEn
+      result.description_th = this.descriptionTh
+      result.description_en = this.descriptionEn
+      result.category_id = this.categoryId
+      result.key_app = this.keyApp
+      result.url = this.url
+      let str2 = JSON.stringify(result)
+
       if (str1 == str2) {
         this.cancel()
       } else {
@@ -736,8 +786,8 @@ export default {
     clear () {
       let result = {
         app_id: this.editRow.app_id,
-        name_th: this.editRow.name_th,
-        name_en: this.editRow.name_en,
+        name_th: this.nameTh,
+        name_en: this.nameEn,
         confirm: this.btnClick == 'clear' ? 0 : 1
       }
       this.$store
@@ -781,20 +831,21 @@ export default {
     },
     enableBtnSave () {
       let item = this.editRow
-      let name_th = item.name_th.trim()
-      let name_en = item.name_en.trim()
-      let description_th = item.description_th.trim()
-      let description_en = item.description_en.trim()
-      let category_id = item.category_id.toString()
-      let key_app = item.key_app.trim()
+      let name_th = this.nameTh.trim()
+      let name_en = this.nameEn.trim()
+      let description_th = this.descriptionTh.trim()
+      let description_en = this.descriptionEn.trim()
+      let category_id = this.categoryId
+      let key_app = this.keyApp.trim()
       let image = item.image.trim()
-      let url = item.url.trim()
+      let url = this.url.trim()
+
       if (
         name_th.length > 0 &&
         name_en.length > 0 &&
         description_th.length > 0 &&
         description_en.length > 0 &&
-        category_id.length > 0 &&
+        category_id > 0 &&
         image.length > 0 &&
         url.length > 0
       ) {
@@ -821,16 +872,16 @@ export default {
         } else {
           formData.append('image', '')
         }
-        formData.append('category_id', this.editRow.category_id)
-        formData.append('description_en', this.editRow.description_en)
-        formData.append('description_th', this.editRow.description_th)
-        formData.append('key_app', this.editRow.key_app)
-        formData.append('name_en', this.editRow.name_en)
-        formData.append('name_th', this.editRow.name_th)
+        formData.append('category_id', this.categoryId)
+        formData.append('description_en', this.descriptionEn)
+        formData.append('description_th', this.descriptionTh)
+        formData.append('key_app', this.keyApp)
+        formData.append('name_en', this.nameEn)
+        formData.append('name_th', this.nameTh)
         formData.append('status', this.editRow.status)
         formData.append('status_sso', this.editRow.status_sso)
         formData.append('type_login', this.editRow.type_login)
-        formData.append('url', this.editRow.url)
+        formData.append('url', this.url)
 
         this.$store.dispatch(url, formData).then(res => {
           if (res.data.success == undefined) {
@@ -945,31 +996,13 @@ export default {
         this.items = res.data
       })
     },
-    IsNumber (evt) {
-      this.enableBtnSave()
-      evt = evt ? evt : window.event
-      var keyCode = evt.which ? evt.which : evt.keyCode
-      if (
-        (keyCode >= 48 && keyCode <= 57) ||
-        (keyCode >= 97 && keyCode <= 122) ||
-        (keyCode >= 65 && keyCode <= 91)
-      ) {
-        return true
-      } else {
-        evt.preventDefault()
-      }
-    },
     IsNumberUp (evt) {
-      let value = evt.target.value
-      let thai = /[ก-ฮ]/g
-      let numThai = /[๑-๙]/g
-      let charac = /[-_=.%฿~`:;'"!><@#^&{}/|+()[\]*\\$]/g
-      // let charac = /[=%฿.-_$~`:;'"!><@#^&{}/|+()[\]*\\]/g
-      let rsChar = value.search(thai)
-      let rsNum = value.search(numThai)
-      let rsCharac = value.search(charac)
-      if (rsChar >= 0 || rsNum >= 0 || rsCharac >= 0) {
-        this.editRow.key_app = ''
+      var regex = new RegExp('^[a-zA-Z0-9]+$')
+      var key = String.fromCharCode(!evt.charCode ? evt.which : evt.charCode)
+      if (!regex.test(key)) {
+        evt.preventDefault()
+        return false
+      } else {
         this.enableBtnSave()
       }
     }
