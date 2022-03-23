@@ -10,7 +10,7 @@
             <div class="input-with-icon" style="width: 365px;">
               <input
                 type="text"
-                v-model="editRow.name_th"
+                v-model="nameTh"
                 :placeholder="$t('input_selected')"
                 maxlength="250"
                 @keyup="enableBtnSave"
@@ -27,7 +27,7 @@
             <div class="input-with-icon" style="width: 365px;">
               <input
                 type="text"
-                v-model="editRow.name_en"
+                v-model="nameEn"
                 :placeholder="$t('input_selected')"
                 maxlength="250"
                 @keyup="enableBtnSave"
@@ -433,7 +433,9 @@ export default {
       },
       enableBtn: true,
       masterList: [],
-      masterEdit: {}
+      masterEdit: {},
+      nameTh: this.data.name_th,
+      nameEn: this.data.name_en
     }
   },
   computed: {},
@@ -470,6 +472,16 @@ export default {
         } else if (todos.trim().length == 0) {
           this.list = tempData
         }
+      }
+    },
+    nameTh: {
+      handler: function (todos) {
+        this.enableBtnSave()
+      }
+    },
+    nameEn: {
+      handler: function (todos) {
+        this.enableBtnSave()
       }
     }
   },
@@ -602,8 +614,8 @@ export default {
     },
     enableBtnSave () {
       let item = this.editRow
-      let name_th = item.name_th.trim()
-      let name_en = item.name_en.trim()
+      let name_th = this.nameTh.trim()
+      let name_en = this.nameEn.trim()
       let list = item.app
       if (name_th.length > 0 && name_en.length > 0 && list.length > 0) {
         this.enableBtn = false
@@ -614,8 +626,8 @@ export default {
     clear () {
       let result = {
         group_id: this.editRow.group_id,
-        name_th: this.editRow.name_th,
-        name_en: this.editRow.name_en
+        name_th: this.nameTh,
+        name_en: this.nameEn
       }
       this.$store
         .dispatch('deleteGroupList', result)
@@ -643,9 +655,11 @@ export default {
     },
     cancelBtn () {
       let str1 = this.masterEdit
-      let str2 = JSON.stringify(this.editRow)
-      // console.log(str1)
-      // console.log(str2)
+      let result = JSON.parse(JSON.stringify(this.editRow))
+      result.name_th = this.nameTh
+      result.name_en = this.nameEn
+      let str2 = JSON.stringify(result)
+      
       if (str1 == str2) {
         this.cancel()
       } else {
@@ -676,8 +690,8 @@ export default {
           this.editRow.mode == 'add' ? 'AddGroupList' : 'updateGroupList'
 
         let result = {
-          name_th: this.editRow.name_th,
-          name_en: this.editRow.name_en,
+          name_th: this.nameTh,
+          name_en: this.nameEn,
           app_id: this.editRow.app.map(a => a.app_id)
         }
         if (this.editRow.mode == 'edit') {
