@@ -1,6 +1,6 @@
 <template>
   <div style="height:calc(100% - 0px);">
-    <v-card style="padding-top:30px">
+    <v-card style="padding-top:5px">
       <div :class="'tab'">
         <div
           :class="'tab-row'"
@@ -125,8 +125,8 @@ export default {
       ],
       defaultColDef: {
         resizable: true,
-        sortable: true,
-        filter: true
+        sortable: true
+        // filter: true
       },
       rowData: this.data.new
     }
