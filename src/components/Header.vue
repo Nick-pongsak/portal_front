@@ -752,7 +752,7 @@
                   >
                     <input
                       type="text"
-                      v-model="profile.nickname1_th"
+                      v-model="nickname1Th"
                       :placeholder="
                         enableInput ? '-' : $t('input_not_selected')
                       "
@@ -775,7 +775,7 @@
                   >
                     <input
                       type="text"
-                      v-model="profile.nickname1_en"
+                      v-model="nickname1En"
                       :placeholder="
                         enableInput ? '-' : $t('input_not_selected')
                       "
