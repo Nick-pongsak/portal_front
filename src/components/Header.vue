@@ -1571,7 +1571,7 @@ export default {
     openProfile () {
       this.profileDialog = true
       this.profileView = false
-       this.enableInput = true
+      this.enableInput = true
       this.profile = JSON.parse(JSON.stringify(this.info))
       this.nameTh = this.profile.name_th
       this.nameEn = this.profile.name_en
@@ -1747,24 +1747,30 @@ export default {
       }
     },
     IsNumber (evt) {
-      evt = evt ? evt : window.event
-      var keyCode = evt.which ? evt.which : evt.keyCode
-      if (
-        keyCode == 33 ||
-        keyCode == 35 ||
-        keyCode == 36 ||
-        (keyCode >= 48 && keyCode <= 57) ||
-        (keyCode >= 97 && keyCode <= 122) ||
-        (keyCode >= 64 && keyCode <= 91)
-      ) {
-        return true
-      } else {
+      // evt = evt ? evt : window.event
+      // var keyCode = evt.which ? evt.which : evt.keyCode
+      // if (
+      //   keyCode == 33 ||
+      //   keyCode == 35 ||
+      //   keyCode == 36 ||
+      //   (keyCode >= 48 && keyCode <= 57) ||
+      //   (keyCode >= 97 && keyCode <= 122) ||
+      //   (keyCode >= 64 && keyCode <= 91)
+      // ) {
+      //   return true
+      // } else {
+      //   evt.preventDefault()
+      // }
+      var regex = new RegExp('^[a-zA-Z0-9!@#$]+$')
+      var key = String.fromCharCode(!evt.charCode ? evt.which : evt.charCode)
+      if (!regex.test(key)) {
         evt.preventDefault()
+        return false
       }
     },
     InCondition1 (evt) {
       let value = evt.target.value
-      let charac = /[-_=.%฿~`:;'"!><@#^&{}/|+()[\]*\\$]/g
+      let charac = /[-_=.%฿~`:;'"><^&{}/|+()[\]*\\]/g
       let rsCharac = value.search(charac)
       if (rsCharac >= 0) {
         this.errorNewPassword = true
@@ -1808,7 +1814,7 @@ export default {
     },
     InCondition2 (evt) {
       let value = evt.target.value
-      let charac = /[-_=.%฿~`:;'"!><@#^&{}/|+()[\]*\\$]/g
+      let charac = /[-_=.%฿~`:;'"><^&{}/|+()[\]*\\]/g
       let rsCharac = value.search(charac)
       if (rsCharac >= 0) {
         this.errorCfNewPassword = true
