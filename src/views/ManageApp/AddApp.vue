@@ -573,35 +573,73 @@ export default {
     },
     NameThInput (todos) {
       if (todos.trim().length > 0 && this.NameEnInput.trim().length > 0) {
-        this.enableType = false
+        let temp = todos.replace(/[`"']/g, '')
+        if (temp.length > 0) {
+          this.NameThInput = temp
+          this.enableType = false
+        } else {
+          this.NameThInput = ''
+          this.enableType = true
+        }
       } else {
         this.enableType = true
       }
     },
     NameEnInput (todos) {
       if (todos.trim().length > 0 && this.NameThInput.trim().length > 0) {
-        this.enableType = false
+        let temp = todos.replace(/[`"']/g, '')
+        if (temp.length > 0) {
+          this.NameEnInput = temp
+          this.enableType = false
+        } else {
+          this.nameTh = ''
+          this.enableType = true
+        }
       } else {
         this.enableType = true
       }
     },
     nameTh: {
       handler: function (value) {
+        let temp = value.replace(/[`"']/g, '')
+        if (temp.length > 0) {
+          this.nameTh = temp
+        } else {
+          this.nameTh = ''
+        }
         this.enableBtnSave()
       }
     },
     nameEn: {
       handler: function (value) {
+        let temp = value.replace(/[`"']/g, '')
+        if (temp.length > 0) {
+          this.nameEn = temp
+        } else {
+          this.nameEn = ''
+        }
         this.enableBtnSave()
       }
     },
     descriptionTh: {
       handler: function (value) {
+        let temp = value.replace(/[`"']/g, '')
+        if (temp.length > 0) {
+          this.descriptionTh = temp
+        } else {
+          this.descriptionTh = ''
+        }
         this.enableBtnSave()
       }
     },
     descriptionEn: {
       handler: function (value) {
+        let temp = value.replace(/[`"']/g, '')
+        if (temp.length > 0) {
+          this.descriptionEn = temp
+        } else {
+          this.descriptionEn = ''
+        }
         this.enableBtnSave()
       }
     },
@@ -627,6 +665,12 @@ export default {
     },
     url: {
       handler: function (value) {
+        let temp = value.replace(/[`"']/g, '')
+        if (temp.length > 0) {
+          this.url = temp
+        } else {
+          this.url = ''
+        }
         this.enableBtnSave()
       }
     }
