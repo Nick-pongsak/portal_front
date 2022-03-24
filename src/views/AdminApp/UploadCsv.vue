@@ -1,7 +1,7 @@
 <template>
   <div style="height:calc(100% - 0px);">
     <v-card style="padding-top:5px">
-      <div :class="'tab'">
+      <div :class="'tab'" style="padding-bottom:10px">
         <div
           :class="'tab-row'"
           v-for="(item, index) in menu"
@@ -13,7 +13,7 @@
           <div v-show="active == item.code" class="line-active"></div>
         </div>
       </div>
-      <div style="padding-left:30px;display:flex;width:100%">
+      <div style="padding-left:15px;display:flex;width:100%">
         <div style="width:80%">
           <div class="input-with-icon" style="display: flex;width: 300px">
             <v-icon
@@ -37,12 +37,13 @@
       <div style="height: 100%">
         <div class="example-wrapper">
           <ag-grid-vue
-            style="width: 100%; height:calc(100% - 100px);"
+            style="width: 100%; height:calc(100% - 90px);"
             class="ag-theme-alpine"
             :columnDefs="columnDefs"
             :defaultColDef="defaultColDef"
             :rowData="rowData"
           ></ag-grid-vue>
+          <!-- :tooltipShowDelay="tooltipShowDelay" -->
         </div>
       </div>
     </v-card>
@@ -82,51 +83,59 @@ export default {
         }
       ],
       active: 1,
+      tooltipShowDelay: null,
       columnDefs: [
         {
           headerName: 'ลำดับ',
           // headerName: this.$t('set.list_col1'),
-          colId: 'rowNum',
-          valueGetter: 'node.id',
+          field: 'index',
           width: 70,
-          pinned: 'left'
+          pinned: 'left',
+          valueFormatter: formatterCol1
         },
         {
           field: 'type_login',
           headerName: 'ประเภทการเข้าใช้งานระบบ',
-          width: 200,
-          pinned: 'left'
+          // headerTooltip: 'ประเภทการเข้าใช้งานระบบ',
+          width: 130,
+          pinned: 'left',
+          valueFormatter: formatterCol2
         },
         {
           field: 'emp_code',
           headerName: 'รหัสพนักงาน',
-          width: 115,
+          width: 100,
           pinned: 'left'
         },
         {
           field: 'name_th',
           headerName: 'ชื่อ-สกุล (TH)',
-          width: 200,
+          width: 150,
           pinned: 'left'
         },
-        { field: 'name_en', headerName: 'ชื่อ-สกุล (EN)', width: 230 },
-        { field: 'postname_th', headerName: 'ตำแหน่ง (TH)', width: 230 },
-        { field: 'postname_en', headerName: 'ตำแหน่ง (EN)', width: 230 },
-        { field: 'email', headerName: 'อีเมล', width: 230 },
-        { field: 'cx', headerName: '3CX', width: 150 },
+        { field: 'name_en', headerName: 'ชื่อ-สกุล (EN)', width: 150 },
+        { field: 'postname_th', headerName: 'ตำแหน่ง (TH)', width: 150 },
+        { field: 'postname_en', headerName: 'ตำแหน่ง (EN)', width: 150 },
+        { field: 'email', headerName: 'อีเมล', width: 160 },
+        { field: 'cx', headerName: '3CX', width: 110 },
         {
           field: 'group_name_th',
           headerName: 'กลุ่มผู้ใช้งานแอปพลิเคชัน',
-          width: 230
+          width: 160
         },
-        { field: 'username', headerName: 'ชื่อผู้ใช้งาน', width: 180 },
+        { field: 'username', headerName: 'ชื่อผู้ใช้งาน', width: 150 },
         { field: 'password', headerName: 'รหัสผ่าน', width: 180 },
-        { field: 'status', headerName: 'สถานะ', width: 180 }
+        {
+          field: 'status',
+          headerName: 'สถานะ',
+          width: 180,
+          valueFormatter: formatterCol13
+        }
       ],
       defaultColDef: {
         resizable: true,
-        sortable: true
-        // filter: true
+        sortable: true,
+        lockPosition: true
       },
       rowData: this.data.new
     }
@@ -174,5 +183,14 @@ export default {
       )
     }
   }
+}
+window.formatterCol1 = function formatterCol2 (params) {
+  return params.value + 1
+}
+window.formatterCol2 = function formatterCol2 (params) {
+  return params.value == 0 ? 'ผู้ใช้งานบนแอปพลิเคชัน ' : 'LDAP'
+}
+window.formatterCol13 = function formatterCol2 (params) {
+  return params.value == 0 ? 'ปิดการใช้งาน' : 'เปิดใช้งาน'
 }
 </script>

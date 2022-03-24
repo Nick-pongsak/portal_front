@@ -1058,7 +1058,7 @@ export default {
         if (value.length < 6 && this.editRow.type_login == 0) {
           this.enableBtn = true
         } else {
-          let temp = value.replace(/[^0-9a-zA-Z]/g, '')
+          let temp = value.replace(/[^0-9a-zA-Z\!\@\#\$]/g, '')
 
           let condChar = /[a-zA-Z]*$/
           let condNum = /[0-9]*$/
@@ -1651,7 +1651,7 @@ export default {
       }
     },
     IsPassword (evt) {
-      var regex = new RegExp('^[a-zA-Z0-9]+$')
+      var regex = new RegExp('^[a-zA-Z0-9!@#$]+$')
       var key = String.fromCharCode(!evt.charCode ? evt.which : evt.charCode)
       if (!regex.test(key)) {
         evt.preventDefault()

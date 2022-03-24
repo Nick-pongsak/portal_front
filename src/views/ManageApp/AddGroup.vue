@@ -476,11 +476,23 @@ export default {
     },
     nameTh: {
       handler: function (todos) {
+       let temp = todos.replace(/[`"']/g, '')
+        if (temp.length > 0) {
+          this.nameTh = temp
+        } else {
+          this.nameTh = ''
+        }
         this.enableBtnSave()
       }
     },
     nameEn: {
       handler: function (todos) {
+        let temp = todos.replace(/[`"']/g, '')
+        if (temp.length > 0) {
+          this.nameEn = temp
+        } else {
+          this.nameEn = ''
+        }
         this.enableBtnSave()
       }
     }

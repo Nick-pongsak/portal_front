@@ -649,304 +649,322 @@
               size="20"
             ></v-icon>
           </div>
-          <div>
-            <div class="head-menu5">
-              {{ $t('profile.account_1') }}
+          <div class="scroll-auto">
+            <div>
+              <div class="head-menu5">
+                {{ $t('profile.account_1') }}
+              </div>
+              <div class="line-page" style="margin-top:8px;"></div>
             </div>
-            <div class="line-page" style="margin-top:8px;"></div>
-          </div>
-          <div class="rows" style="margin-top:18px">
-            <div style="width:20%" class="rows-name">
-              {{ $t('profile.account_2') }}
-            </div>
-            <div
-              :style="{ width: '80%', 'padding-left': '8px', color: '#414141' }"
-              class="rows-name"
-            >
-              {{
-                profile.type_login == 0
-                  ? $t('master.type_login_0')
-                  : $t('master.type_login_1')
-              }}
-            </div>
-          </div>
-          <div class="rows">
-            <div style="width:20%" class="rows-name">
-              {{ $t('profile.account_3') }}
-            </div>
-            <div style="width:80%" class="rows-input">
+            <div class="rows" style="margin-top:18px">
+              <div style="width:20%" class="rows-name">
+                {{ $t('profile.account_2') }}
+              </div>
               <div
-                class="input-with-icon"
-                :style="{ 'box-shadow': 'unset', width: ' 250px' }"
+                :style="{
+                  width: '80%',
+                  'padding-left': '8px',
+                  color: '#414141'
+                }"
+                class="rows-name"
               >
-                <input
-                  type="text"
-                  v-model="profile.emp_code"
-                  :placeholder="$t('input_selected')"
-                  :readonly="true"
-                />
+                {{
+                  profile.type_login == 0
+                    ? $t('master.type_login_0')
+                    : $t('master.type_login_1')
+                }}
               </div>
             </div>
-          </div>
-          <div class="rows">
-            <div style="width:50%;display: flex;">
-              <div style="width:40%" class="rows-name">
-                {{ $t('profile.account_4') }}
+            <div class="rows">
+              <div style="width:20%" class="rows-name">
+                {{ $t('profile.account_3') }}
               </div>
-              <div style="width:60%" class="rows-input">
+              <div style="width:80%" class="rows-input">
                 <div
                   class="input-with-icon"
-                  :style="{
-                    'box-shadow': enableInput ? 'unset' : colInput,
-                    width: ' 250px'
-                  }"
+                  :style="{ 'box-shadow': 'unset', width: ' 250px' }"
                 >
                   <input
                     type="text"
-                    v-model="nameTh"
+                    v-model="profile.emp_code"
                     :placeholder="$t('input_selected')"
-                    :readonly="enableInput"
+                    :readonly="true"
                   />
                 </div>
               </div>
             </div>
-            <div style="width:50%;;display: flex;">
-              <div style="width:40%" class="rows-name">
-                {{ $t('profile.account_5') }}
+            <div class="rows">
+              <div style="width:50%;display: flex;">
+                <div style="width:40%" class="rows-name">
+                  {{ $t('profile.account_4') }}
+                </div>
+                <div style="width:60%" class="rows-input">
+                  <div
+                    class="input-with-icon"
+                    :style="{
+                      'box-shadow': enableInput ? 'unset' : colInput,
+                      width: ' 250px'
+                    }"
+                  >
+                    <input
+                      type="text"
+                      v-model="nameTh"
+                      :placeholder="$t('input_selected')"
+                      :readonly="enableInput"
+                    />
+                  </div>
+                </div>
               </div>
-              <div style="width:60%;padding-right:25px" class="rows-input">
-                <div
-                  class="input-with-icon"
-                  :style="{
-                    'box-shadow': enableInput ? 'unset' : colInput,
-                    width: ' 250px'
-                  }"
-                >
-                  <input
-                    type="text"
-                    v-model="nameEn"
-                    :placeholder="$t('input_selected')"
-                    :readonly="enableInput"
-                  />
+              <div style="width:50%;;display: flex;">
+                <div style="width:40%" class="rows-name">
+                  {{ $t('profile.account_5') }}
+                </div>
+                <div style="width:60%;padding-right:25px" class="rows-input">
+                  <div
+                    class="input-with-icon"
+                    :style="{
+                      'box-shadow': enableInput ? 'unset' : colInput,
+                      width: ' 250px'
+                    }"
+                  >
+                    <input
+                      type="text"
+                      v-model="nameEn"
+                      :placeholder="$t('input_selected')"
+                      :readonly="enableInput"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="rows">
-            <div style="width:50%;display: flex;">
-              <div style="width:40%" class="rows-name">
-                {{ $t('profile.account_6') }}
+            <div class="rows">
+              <div style="width:50%;display: flex;">
+                <div style="width:40%" class="rows-name">
+                  {{ $t('profile.account_6') }}
+                </div>
+                <div style="width:60%" class="rows-input">
+                  <div
+                    class="input-with-icon"
+                    :style="{
+                      'box-shadow': enableInput ? 'unset' : colInput,
+                      width: ' 250px'
+                    }"
+                  >
+                    <input
+                      type="text"
+                      v-model="profile.nickname1_th"
+                      :placeholder="
+                        enableInput ? '-' : $t('input_not_selected')
+                      "
+                      :readonly="enableInput"
+                    />
+                  </div>
+                </div>
               </div>
-              <div style="width:60%" class="rows-input">
-                <div
-                  class="input-with-icon"
-                  :style="{
-                    'box-shadow': enableInput ? 'unset' : colInput,
-                    width: ' 250px'
-                  }"
-                >
-                  <input
-                    type="text"
-                    v-model="profile.nickname1_th"
-                    :placeholder="enableInput ? '-' : $t('input_not_selected')"
-                    :readonly="enableInput"
-                  />
+              <div style="width:50%;;display: flex;">
+                <div style="width:40%" class="rows-name">
+                  {{ $t('profile.account_7') }}
+                </div>
+                <div style="width:60%;padding-right:25px" class="rows-input">
+                  <div
+                    class="input-with-icon"
+                    :style="{
+                      'box-shadow': enableInput ? 'unset' : colInput,
+                      width: ' 250px'
+                    }"
+                  >
+                    <input
+                      type="text"
+                      v-model="profile.nickname1_en"
+                      :placeholder="
+                        enableInput ? '-' : $t('input_not_selected')
+                      "
+                      :readonly="enableInput"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-            <div style="width:50%;;display: flex;">
-              <div style="width:40%" class="rows-name">
-                {{ $t('profile.account_7') }}
+            <div class="rows">
+              <div style="width:50%;display: flex;">
+                <div style="width:40%" class="rows-name">
+                  {{ $t('profile.account_8') }}
+                </div>
+                <div style="width:60%" class="rows-input">
+                  <div
+                    class="input-with-icon"
+                    :style="{
+                      'box-shadow': enableInput ? 'unset' : colInput,
+                      width: ' 250px'
+                    }"
+                  >
+                    <input
+                      type="text"
+                      v-model="nickname2Th"
+                      :placeholder="
+                        enableInput ? '-' : $t('input_not_selected')
+                      "
+                      :readonly="enableInput"
+                    />
+                  </div>
+                </div>
               </div>
-              <div style="width:60%;padding-right:25px" class="rows-input">
-                <div
-                  class="input-with-icon"
-                  :style="{
-                    'box-shadow': enableInput ? 'unset' : colInput,
-                    width: ' 250px'
-                  }"
-                >
-                  <input
-                    type="text"
-                    v-model="profile.nickname1_en"
-                    :placeholder="enableInput ? '-' : $t('input_not_selected')"
-                    :readonly="enableInput"
-                  />
+              <div style="width:50%;;display: flex;">
+                <div style="width:40%" class="rows-name">
+                  {{ $t('profile.account_9') }}
+                </div>
+                <div style="width:60%;padding-right:25px" class="rows-input">
+                  <div
+                    class="input-with-icon"
+                    :style="{
+                      'box-shadow': enableInput ? 'unset' : colInput,
+                      width: ' 250px'
+                    }"
+                  >
+                    <input
+                      type="text"
+                      v-model="nickname2En"
+                      :placeholder="
+                        enableInput ? '-' : $t('input_not_selected')
+                      "
+                      :readonly="enableInput"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="rows">
-            <div style="width:50%;display: flex;">
-              <div style="width:40%" class="rows-name">
-                {{ $t('profile.account_8') }}
+            <div class="rows">
+              <div style="width:50%;display: flex;">
+                <div style="width:40%" class="rows-name">
+                  {{ $t('profile.account_10') }}
+                </div>
+                <div style="width:60%" class="rows-input">
+                  <div
+                    class="input-with-icon"
+                    :style="{
+                      'box-shadow': enableInput ? 'unset' : colInput,
+                      width: ' 250px'
+                    }"
+                  >
+                    <input
+                      type="text"
+                      v-model="postnameTh"
+                      :placeholder="$t('input_selected')"
+                      :readonly="enableInput"
+                    />
+                  </div>
+                </div>
               </div>
-              <div style="width:60%" class="rows-input">
-                <div
-                  class="input-with-icon"
-                  :style="{
-                    'box-shadow': enableInput ? 'unset' : colInput,
-                    width: ' 250px'
-                  }"
-                >
-                  <input
-                    type="text"
-                    v-model="nickname2Th"
-                    :placeholder="enableInput ? '-' : $t('input_not_selected')"
-                    :readonly="enableInput"
-                  />
+              <div style="width:50%;;display: flex;">
+                <div style="width:40%" class="rows-name">
+                  {{ $t('profile.account_11') }}
+                </div>
+                <div style="width:60%;padding-right:25px" class="rows-input">
+                  <div
+                    class="input-with-icon"
+                    :style="{
+                      'box-shadow': enableInput ? 'unset' : colInput,
+                      width: ' 250px'
+                    }"
+                  >
+                    <input
+                      type="text"
+                      v-model="postnameEn"
+                      :placeholder="$t('input_selected')"
+                      :readonly="enableInput"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-            <div style="width:50%;;display: flex;">
-              <div style="width:40%" class="rows-name">
-                {{ $t('profile.account_9') }}
+            <div class="rows">
+              <div style="width:50%;display: flex;">
+                <div style="width:40%" class="rows-name">
+                  {{ $t('profile.account_12') }}
+                </div>
+                <div style="width:60%" class="rows-input">
+                  <div
+                    class="input-with-icon"
+                    :style="{
+                      'box-shadow': renderEmail('shadow'),
+                      width: ' 250px'
+                    }"
+                  >
+                    <input
+                      type="text"
+                      @keypress="IsEmail"
+                      v-model="emailInput"
+                      :placeholder="
+                        profile.type_login == 0
+                          ? $t('input_not_selected')
+                          : $t('input_selected')
+                      "
+                      :readonly="renderEmail('readonly')"
+                    />
+                  </div>
+                </div>
               </div>
-              <div style="width:60%;padding-right:25px" class="rows-input">
-                <div
-                  class="input-with-icon"
-                  :style="{
-                    'box-shadow': enableInput ? 'unset' : colInput,
-                    width: ' 250px'
-                  }"
-                >
-                  <input
-                    type="text"
-                    v-model="nickname2En"
-                    :placeholder="enableInput ? '-' : $t('input_not_selected')"
-                    :readonly="enableInput"
-                  />
+              <div style="width:50%;;display: flex;">
+                <div style="width:40%" class="rows-name">
+                  {{ $t('profile.account_13') }}
+                </div>
+                <div style="width:60%;padding-right:25px" class="rows-input">
+                  <div
+                    class="input-with-icon"
+                    :style="{
+                      'box-shadow': enableInput ? 'unset' : colInput,
+                      width: ' 250px'
+                    }"
+                  >
+                    <input
+                      type="text"
+                      v-model="cxInput"
+                      :placeholder="
+                        enableInput ? '-' : $t('input_not_selected')
+                      "
+                      :readonly="enableInput"
+                      @keypress="isNumberChar"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="rows">
-            <div style="width:50%;display: flex;">
-              <div style="width:40%" class="rows-name">
-                {{ $t('profile.account_10') }}
-              </div>
-              <div style="width:60%" class="rows-input">
-                <div
-                  class="input-with-icon"
-                  :style="{
-                    'box-shadow': enableInput ? 'unset' : colInput,
-                    width: ' 250px'
-                  }"
-                >
-                  <input
-                    type="text"
-                    v-model="postnameTh"
-                    :placeholder="$t('input_selected')"
-                    :readonly="enableInput"
-                  />
+            <div class="rows" style="padding-bottom:3px">
+              <div style="width:50%;display: flex;">
+                <div style="width:40%;height:28px" class="rows-name">
+                  {{ $t('profile.account_14') }}
+                </div>
+                <div style="width:60%" class="rows-input">
+                  <div
+                    class="input-with-icon"
+                    :style="{
+                      'box-shadow': enableInput ? 'unset' : colInput,
+                      width: ' 250px'
+                    }"
+                  >
+                    <input
+                      type="text"
+                      v-model="phone"
+                      :placeholder="
+                        enableInput ? '-' : $t('input_not_selected')
+                      "
+                      :readonly="enableInput"
+                      @keypress="isNumberPhone"
+                    />
+                  </div>
+                  <div style="color:#CE1212;font-size:8px;padding-top:5px">
+                    {{ $t('profile.account_15') }}
+                  </div>
                 </div>
               </div>
+              <div style="width:50%;;display: flex;"></div>
             </div>
-            <div style="width:50%;;display: flex;">
-              <div style="width:40%" class="rows-name">
-                {{ $t('profile.account_11') }}
-              </div>
-              <div style="width:60%;padding-right:25px" class="rows-input">
-                <div
-                  class="input-with-icon"
-                  :style="{
-                    'box-shadow': enableInput ? 'unset' : colInput,
-                    width: ' 250px'
-                  }"
-                >
-                  <input
-                    type="text"
-                    v-model="postnameEn"
-                    :placeholder="$t('input_selected')"
-                    :readonly="enableInput"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="rows">
-            <div style="width:50%;display: flex;">
-              <div style="width:40%" class="rows-name">
-                {{ $t('profile.account_12') }}
-              </div>
-              <div style="width:60%" class="rows-input">
-                <div
-                  class="input-with-icon"
-                  :style="{
-                    'box-shadow': renderEmail('shadow'),
-                    width: ' 250px'
-                  }"
-                >
-                  <input
-                    type="text"
-                    @keypress="IsEmail"
-                    v-model="emailInput"
-                    :placeholder="
-                      profile.type_login == 0
-                        ? $t('input_not_selected')
-                        : $t('input_selected')
-                    "
-                    :readonly="renderEmail('readonly')"
-                  />
-                </div>
-              </div>
-            </div>
-            <div style="width:50%;;display: flex;">
-              <div style="width:40%" class="rows-name">
-                {{ $t('profile.account_13') }}
-              </div>
-              <div style="width:60%;padding-right:25px" class="rows-input">
-                <div
-                  class="input-with-icon"
-                  :style="{
-                    'box-shadow': enableInput ? 'unset' : colInput,
-                    width: ' 250px'
-                  }"
-                >
-                  <input
-                    type="text"
-                    v-model="cxInput"
-                    :placeholder="enableInput ? '-' : $t('input_not_selected')"
-                    :readonly="enableInput"
-                    @keypress="isNumberChar"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="rows" style="padding-bottom:3px">
-            <div style="width:50%;display: flex;">
-              <div style="width:40%;height:28px" class="rows-name">
-                {{ $t('profile.account_14') }}
-              </div>
-              <div style="width:60%" class="rows-input">
-                <div
-                  class="input-with-icon"
-                  :style="{
-                    'box-shadow': enableInput ? 'unset' : colInput,
-                    width: ' 250px'
-                  }"
-                >
-                  <input
-                    type="text"
-                    v-model="phone"
-                    :placeholder="enableInput ? '-' : $t('input_not_selected')"
-                    :readonly="enableInput"
-                    @keypress="isNumberPhone"
-                  />
-                </div>
-                <div style="color:#CE1212;font-size:8px;padding-top:5px">
-                  {{ $t('profile.account_15') }}
-                </div>
-              </div>
-            </div>
-            <div style="width:50%;;display: flex;"></div>
           </div>
         </v-card-text>
         <v-card-actions
           v-if="profileView"
           class="justify-center"
-          style="margin-top:40px;margin-bottom:20px"
+          style="margin-top:30px;margin-bottom:20px"
         >
           <v-btn
             text
@@ -1499,6 +1517,10 @@ export default {
       this.$store.dispatch('deletePicProfile', req).then(res => {
         this.showDefaultAccount = true
         this.stepChangePic = 3
+
+        this.hasImage = false
+        this.file = ''
+
         let data = JSON.parse(JSON.stringify(this.info))
         data.image = ''
         this.$store.commit('SetUser', data)
@@ -1518,7 +1540,6 @@ export default {
       profile.email = this.emailInput
       profile.cx = this.cxInput
       profile.phone = this.phone
-
       this.$store.dispatch('updateProfile', profile).then(res => {
         this.$store.dispatch('getUserProfile', {}).then(res => {
           let data = JSON.parse(JSON.stringify(this.info))
@@ -1550,6 +1571,7 @@ export default {
     openProfile () {
       this.profileDialog = true
       this.profileView = false
+      this.enableInput = true
       this.profile = JSON.parse(JSON.stringify(this.info))
       this.nameTh = this.profile.name_th
       this.nameEn = this.profile.name_en
@@ -1562,6 +1584,7 @@ export default {
       this.emailInput = this.profile.email
       this.cxInput = this.profile.cx
       this.phone = this.profile.phone
+      this.checkBtn()
     },
     CloseProfileDialog () {
       this.profileDialog = false
@@ -1724,24 +1747,30 @@ export default {
       }
     },
     IsNumber (evt) {
-      evt = evt ? evt : window.event
-      var keyCode = evt.which ? evt.which : evt.keyCode
-      if (
-        keyCode == 33 ||
-        keyCode == 35 ||
-        keyCode == 36 ||
-        (keyCode >= 48 && keyCode <= 57) ||
-        (keyCode >= 97 && keyCode <= 122) ||
-        (keyCode >= 64 && keyCode <= 91)
-      ) {
-        return true
-      } else {
+      // evt = evt ? evt : window.event
+      // var keyCode = evt.which ? evt.which : evt.keyCode
+      // if (
+      //   keyCode == 33 ||
+      //   keyCode == 35 ||
+      //   keyCode == 36 ||
+      //   (keyCode >= 48 && keyCode <= 57) ||
+      //   (keyCode >= 97 && keyCode <= 122) ||
+      //   (keyCode >= 64 && keyCode <= 91)
+      // ) {
+      //   return true
+      // } else {
+      //   evt.preventDefault()
+      // }
+      var regex = new RegExp('^[a-zA-Z0-9!@#$]+$')
+      var key = String.fromCharCode(!evt.charCode ? evt.which : evt.charCode)
+      if (!regex.test(key)) {
         evt.preventDefault()
+        return false
       }
     },
     InCondition1 (evt) {
       let value = evt.target.value
-      let charac = /[-_=.%฿~`:;'"!><@#^&{}/|+()[\]*\\$]/g
+      let charac = /[-_=.%฿~`:;'"><^&{}/|+()[\]*\\]/g
       let rsCharac = value.search(charac)
       if (rsCharac >= 0) {
         this.errorNewPassword = true
@@ -1785,7 +1814,7 @@ export default {
     },
     InCondition2 (evt) {
       let value = evt.target.value
-      let charac = /[-_=.%฿~`:;'"!><@#^&{}/|+()[\]*\\$]/g
+      let charac = /[-_=.%฿~`:;'"><^&{}/|+()[\]*\\]/g
       let rsCharac = value.search(charac)
       if (rsCharac >= 0) {
         this.errorCfNewPassword = true
@@ -1915,9 +1944,11 @@ export default {
       }
     },
     onButtonClick () {
+      // console.log(this.file)
       this.$refs.uploader2.click()
     },
     setImage: function (output) {
+      // console.log(output)
       this.hasImage = true
       this.file = output
       let formData = new FormData()
@@ -1952,7 +1983,7 @@ export default {
       } else {
         return true
       }
-    },
+    }
   },
   created () {
     if (
