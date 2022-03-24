@@ -524,8 +524,8 @@
       height: 150px;
     }
     textarea:focus-visible {
-      border: 0 none #FFF;
-      outline:none;
+      border: 0 none #fff;
+      outline: none;
     }
 
     &::-webkit-scrollbar {
@@ -573,21 +573,25 @@
 #profile-dialogs {
   overflow-x: hidden;
   overflow-y: auto;
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-  &::-webkit-scrollbar:horizontal {
-    height: 8px;
-  }
-  &::-webkit-scrollbar-track {
-    background: #efefef;
-  }
-  &::-webkit-scrollbar-thumb {
-    border-radius: 8px;
-    background: #a8a8a8;
-  }
-  &::-webkit-scrollbar-thumb:hover {
-    background: rgb(145, 145, 145);
+  .scroll-auto {
+    height: 390px;
+    overflow-x: hidden;
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar:horizontal {
+      height: 8px;
+    }
+    &::-webkit-scrollbar-track {
+      background: #efefef;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      background: #a8a8a8;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background: rgb(145, 145, 145);
+    }
   }
   .rows {
     display: flex;
@@ -631,4 +635,7 @@
       }
     }
   }
+}
+.v-dialog {
+  overflow-y: hidden !important;
 }
