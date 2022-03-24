@@ -572,11 +572,16 @@ export default {
       }
     },
     NameThInput (todos) {
-      if (todos.trim().length > 0 && this.NameEnInput.trim().length > 0) {
+      if (todos.trim().length > 0) {
         let temp = todos.replace(/[`"']/g, '')
+        console.log(temp)
         if (temp.length > 0) {
           this.NameThInput = temp
-          this.enableType = false
+          if (todos.trim().length > 0 && this.NameEnInput.trim().length > 0) {
+            this.enableType = false
+          } else {
+            this.enableType = true
+          }
         } else {
           this.NameThInput = ''
           this.enableType = true
@@ -586,11 +591,15 @@ export default {
       }
     },
     NameEnInput (todos) {
-      if (todos.trim().length > 0 && this.NameThInput.trim().length > 0) {
+      if (todos.trim().length > 0) {
         let temp = todos.replace(/[`"']/g, '')
         if (temp.length > 0) {
           this.NameEnInput = temp
-          this.enableType = false
+          if (todos.trim().length > 0 && this.NameThInput.trim().length > 0) {
+            this.enableType = false
+          } else {
+            this.enableType = true
+          }
         } else {
           this.nameTh = ''
           this.enableType = true
