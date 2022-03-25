@@ -28,6 +28,7 @@
           >
             {{ $t('upload.btn') }}
           </v-btn> -->
+
           <v-btn @click="add()" class="cancel-btn">
             <v-icon
               v-text="'mdi-plus'"
@@ -172,11 +173,35 @@
           </div>
         </div>
       </div>
+      <div class="upload-block" v-if="!dialog_profile">
+        <image-uploader
+          v-model="file"
+          :preview="true"
+          :maxHeight="768"
+          :className="['fileinput', { 'fileinput--loaded': hasImage }]"
+          capture="environment"
+          :debug="1"
+          accept=".csv"
+          :autoRotate="true"
+          outputFormat="blob"
+          @input="setImage"
+        >
+          <label
+            for="fileInput"
+            slot="upload-label"
+            ref="uploaderCsv"
+            style="visibility: hidden;"
+          >
+            {{ hasImage ? 'Replace' : 'Click to upload' }}
+          </label>
+        </image-uploader>
+      </div>
     </v-card>
   </div>
 </template>
 
 <script>
+import ImageUploader from 'vue-image-upload-resize'
 export default {
   name: 'main-admin-app',
   props: {},
@@ -197,10 +222,16 @@ export default {
       mainSort: {
         feild: 'emp_code',
         orderby: true
-      }
+      },
+      hasImage: false,
+      file: ''
     }
   },
-  computed: {},
+  computed: {
+    dialog_profile () {
+      return this.$store.getters.dialog_profile
+    }
+  },
   watch: {
     searchApp: {
       handler: function (todos) {
@@ -211,6 +242,9 @@ export default {
     }
   },
   methods: {
+    upload2 () {
+      this.$refs.uploaderCsv.click()
+    },
     upload () {
       let data = {
         new: this.list,
@@ -220,6 +254,34 @@ export default {
       }
       data.total = data.new.length + data.update.length + data.mistake.length
       this.$emit('upload', data)
+    },
+    setImage: function (output) {
+      console.log(output.size)
+      if (output.size > 5242880) {
+        console.log('no succes ===> ')
+        this.file = ''
+        this.hasImage = false
+      } else {
+        console.log('succes ===> ')
+        this.file = output
+        this.hasImage = true
+        let formData = new FormData()
+        formData.append('csv', output)
+        this.$store.dispatch('uploadCsv', formData).then(res => {
+          console.log(res)
+
+          /*
+        let req = {
+          param: this.info.user_id,
+          sort: '',
+          field: ''
+        }
+        this.$store.dispatch('fetchCsv', formData).then(res => {
+          console.log(res)
+        })
+        */
+        })
+      }
     },
     add () {
       // this.fetchData()
@@ -318,6 +380,9 @@ export default {
     }
     this.items = []
     this.fetchData()
+  },
+  components: {
+    ImageUploader
   }
 }
 </script>

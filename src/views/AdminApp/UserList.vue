@@ -443,8 +443,9 @@
                 <span style="font-size:13px"
                   >{{ $t('pwd.text9') }}<br />
                   {{ $t('pwd.text7') }}<br />
-                  {{ $t('pwd.text8') }}</span
-                >
+                  {{ $t('pwd.text8') }}<br />
+                  {{ $t('pwd.text10') }}
+                </span>
               </v-tooltip>
             </div>
           </div>

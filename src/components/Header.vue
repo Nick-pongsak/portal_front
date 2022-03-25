@@ -167,7 +167,11 @@
           </div>
           <div class="center-vh">
             <v-avatar v-show="!showDefaultAccount" size="230">
-              <div v-show="file !== ''" class="upload-block">
+              <div
+                v-show="file !== ''"
+                class="upload-block"
+                id="image-uploader-profile"
+              >
                 <image-uploader
                   v-model="file"
                   :preview="true"
@@ -190,7 +194,11 @@
                   </label>
                 </image-uploader>
               </div>
-              <v-img v-if="file == '' && info.image !== ''" :src="info.image">
+              <v-img
+                v-if="file == '' && info.image !== ''"
+                :src="info.image"
+                id="image-uploader-show-profile"
+              >
               </v-img>
             </v-avatar>
             <div v-show="showDefaultAccount" class="deafult-name">
@@ -376,9 +384,10 @@
             class="details"
             style="padding-top:30px"
           >
-            {{ $t('pwd.text6') }}<br />
+            {{ $t('pwd.text9') }}<br />
             {{ $t('pwd.text7') }} <br />
-            {{ $t('pwd.text8') }}
+            {{ $t('pwd.text8') }} <br />
+            {{ $t('pwd.text10') }}
           </div>
           <div v-show="stepChangePwd == 2">
             <div class="center-vh">
@@ -1514,6 +1523,20 @@ export default {
       let req = {
         user_id: this.info.user_id
       }
+      let id = document.getElementById('image-uploader-profile')
+      if (id !== null) {
+        /*
+        let image = id.getElementsByTagName('img')
+        if (image[0].getAttribute('src') !== '') {
+          image.src = ''
+        }
+        let id2 = document.getElementById('image-uploader-show-profile')
+        if (id2 !== null) {
+          let elements = id2.getElementsByClassName('v-image__image')
+          elements[0].style.backgroundImage = ''
+        }
+        */
+      }
       this.$store.dispatch('deletePicProfile', req).then(res => {
         this.showDefaultAccount = true
         this.stepChangePic = 3
@@ -1525,6 +1548,7 @@ export default {
         data.image = ''
         this.$store.commit('SetUser', data)
         sessionStorage.setItem('info', JSON.stringify(data))
+        // location.reload()
       })
     },
     profileViewfile () {
@@ -1747,20 +1771,6 @@ export default {
       }
     },
     IsNumber (evt) {
-      // evt = evt ? evt : window.event
-      // var keyCode = evt.which ? evt.which : evt.keyCode
-      // if (
-      //   keyCode == 33 ||
-      //   keyCode == 35 ||
-      //   keyCode == 36 ||
-      //   (keyCode >= 48 && keyCode <= 57) ||
-      //   (keyCode >= 97 && keyCode <= 122) ||
-      //   (keyCode >= 64 && keyCode <= 91)
-      // ) {
-      //   return true
-      // } else {
-      //   evt.preventDefault()
-      // }
       var regex = new RegExp('^[a-zA-Z0-9!@#$]+$')
       var key = String.fromCharCode(!evt.charCode ? evt.which : evt.charCode)
       if (!regex.test(key)) {
@@ -1944,7 +1954,6 @@ export default {
       }
     },
     onButtonClick () {
-      // console.log(this.file)
       this.$refs.uploader2.click()
     },
     setImage: function (output) {

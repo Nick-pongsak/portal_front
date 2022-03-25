@@ -129,7 +129,20 @@ export default {
           field: 'status',
           headerName: 'สถานะ',
           width: 180,
-          valueFormatter: formatterCol13
+          valueFormatter: formatterCol13,
+          cellRendererSelector: params => {
+            // const moodDetails = { component: 'moodCellRenderer' }
+            // const genderDetails = {
+            //   component: 'genderCellRenderer',
+            //   params: {
+            //     values: ['Male', 'Female']
+            //   }
+            // }
+            // if (params.status === 1)
+            //   return '<span style="color:red">' + params.status + '</span>'
+            // else if (params.data.type === 'mood') return moodDetails
+            // else return undefined
+          }
         }
       ],
       defaultColDef: {
