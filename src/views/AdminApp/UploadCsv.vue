@@ -9,7 +9,10 @@
           @click="tabs(item, index)"
           :id="'upload-tab-row-' + item.code"
         >
-          {{ $t(item.text) + ' (' + data[item.feild].length + ')' }}
+          {{ $t(item.text)
+          }}<span style="color:#F0AC11">{{
+            ' (' + data[item.feild].length + ')'
+          }}</span>
           <div v-show="active == item.code" class="line-active"></div>
         </div>
       </div>
@@ -130,94 +133,122 @@ export default {
         {
           headerName: this.$t('upload.text5'),
           field: 'index',
-          width: 70,
+          width: 60,
+          minWidth: 60,
           pinned: 'left',
           valueFormatter: formatterCol1,
           icons: {
-            sortAscending: '<i class="fa fa-caret-down"/>',
-            sortDescending: '<i class="fa fa-caret-up"/>'
+            sortAscending: 'small-down',
+            sortDescending: 'small-up'
           }
         },
         {
           field: 'type_login',
           headerName: this.$t('upload.text6'),
-          width: 130,
+          width: 120,
           pinned: 'left',
-          valueFormatter: formatterCol2
+          headerTooltip: this.$t('upload.text6'),
+          valueFormatter: formatterCol2,
+          tooltipComponent: 'type_login',
+          tooltipValueGetter: formatterCol2
         },
         {
           field: 'emp_code',
           headerName: this.$t('upload.text7'),
           width: 100,
           pinned: 'left',
-          valueFormatter: formatterNull
+          headerTooltip: this.$t('upload.text7'),
+          valueFormatter: formatterNull,
+          tooltipComponent: 'emp_code',
+          tooltipValueGetter: formatterNull
         },
         {
           field: 'name_th',
           headerName: this.$t('upload.text8'),
           width: 150,
           pinned: 'left',
-          valueFormatter: formatterNull
+          valueFormatter: formatterNull,
+          tooltipComponent: 'name_th',
+          tooltipValueGetter: formatterNull
         },
         {
           field: 'name_en',
           headerName: this.$t('upload.text9'),
           width: 150,
-          valueFormatter: formatterNull
+          valueFormatter: formatterNull,
+          tooltipComponent: 'name_en',
+          tooltipValueGetter: formatterNull
         },
         {
           field: 'postname_th',
           headerName: this.$t('upload.text10'),
           width: 150,
-          valueFormatter: formatterNull
+          valueFormatter: formatterNull,
+          tooltipComponent: 'postname_th',
+          tooltipValueGetter: formatterNull
         },
         {
           field: 'postname_en',
           headerName: this.$t('upload.text11'),
           width: 150,
-          valueFormatter: formatterNull
+          valueFormatter: formatterNull,
+          tooltipComponent: 'postname_en',
+          tooltipValueGetter: formatterNull
         },
         {
           field: 'email',
           headerName: this.$t('upload.text12'),
           width: 160,
-          valueFormatter: formatterNull
+          valueFormatter: formatterNull,
+          tooltipComponent: 'email',
+          tooltipValueGetter: formatterNull
         },
         {
           field: 'cx',
           headerName: this.$t('upload.text13'),
           width: 110,
-          valueFormatter: formatterNull
+          valueFormatter: formatterNull,
+          tooltipComponent: 'cx',
+          tooltipValueGetter: formatterNull
         },
         {
           field: 'group_name_th',
           headerName: this.$t('upload.text14'),
           width: 160,
-          valueFormatter: formatterNull
+          valueFormatter: formatterNull,
+          tooltipComponent: 'group_name_th',
+          tooltipValueGetter: formatterNull
         },
         {
           field: 'username',
           headerName: this.$t('upload.text15'),
           width: 150,
-          valueFormatter: formatterNull
+          valueFormatter: formatterNull,
+          tooltipComponent: 'username',
+          tooltipValueGetter: formatterNull
         },
         {
           field: 'password',
           headerName: this.$t('upload.text16'),
           width: 180,
-          valueFormatter: formatterNull
+          valueFormatter: formatterNull,
+          tooltipComponent: 'password',
+          tooltipValueGetter: formatterNull
         },
         {
           field: 'status',
           headerName: this.$t('upload.text17'),
           width: 100,
           valueFormatter: formatterCol13,
+          tooltipComponent: 'status',
+          tooltipValueGetter: formatterCol13,
           cellStyle: params =>
             params.value == 1 ? { color: '#66BB6A' } : { color: '#FBC02D' }
         }
       ],
       defaultColDef: {
         resizable: true,
+        minWidth: 80,
         sortable: true,
         lockPosition: true
       },
@@ -312,11 +343,11 @@ export default {
         this.$store
           .dispatch('saveCsv', null)
           .then(res => {
-            if (res.data.success == undefined) {
+            if (res.emp_update.length == 0) {
               this.btnClick = 'success'
               this.dialog = true
               this.error = true
-              this.errorDialog = this.$t('popup.text20')
+              this.errorDialog = this.$t('upload.text20')
               this.rightBtn = this.$t('btn_close')
             } else {
               this.btnClick = 'error'
@@ -327,15 +358,15 @@ export default {
             }
           })
           .catch(error => {
-            this.btnClick = 'error'
-            this.dialog = true
-            this.error = true
-            this.errorDialog =
-              this.$t('popup.text2') +
-              ' (Error Code ' +
-              error.response.status +
-              ')'
-            this.list = []
+            // this.btnClick = 'error'
+            // this.dialog = true
+            // this.error = true
+            // this.errorDialog =
+            //   this.$t('popup.text2') +
+            //   ' (Error Code ' +
+            //   error.response.status +
+            //   ')'
+            // this.list = []
           })
       } else if (this.btnClick == 'success') {
         this.cancel()

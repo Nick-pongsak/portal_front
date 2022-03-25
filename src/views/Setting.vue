@@ -16,13 +16,11 @@
       </div>
     </div>
     <div class="right">
-      <div class="header">
-        {{
-          currentView.code == '1.2'
-            ? $t(currentView.text) + ' (' + editRow.total + ')'
-            : $t(currentView.text)
-        }}
+      <div class="header" v-if="currentView.code == '1.2'">
+        {{ $t(currentView.text)
+        }}<span style="color:#F0AC11">{{ ' (' + editRow.total + ')' }}</span>
       </div>
+      <div class="header" v-else>{{ $t(currentView.text) }}</div>
       <main-admin-app
         v-if="currentView.code == '1'"
         @add="addUser"
