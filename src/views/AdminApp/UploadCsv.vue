@@ -1,7 +1,7 @@
 <template>
-  <div style="height:calc(100% - 0px);">
-    <v-card style="padding-top:5px">
-      <div :class="'tab'" style="padding-bottom:10px">
+  <div style="height:calc(100% - 30px);" id="uploadCsvPage">
+    <v-card>
+      <div :class="'tab'" style="padding-bottom:5px">
         <div
           :class="'tab-row'"
           v-for="(item, index) in menu"
@@ -42,11 +42,54 @@
             :columnDefs="columnDefs"
             :defaultColDef="defaultColDef"
             :rowData="rowData"
+            @grid-ready="onGridReady"
           ></ag-grid-vue>
+          <!-- :gridOptions="gridOptions" -->
           <!-- :tooltipShowDelay="tooltipShowDelay" -->
         </div>
       </div>
+      <div style="display:none">{{ isLanguage }}</div>
     </v-card>
+    <div style="display:flex;padding-top:10px">
+      <div style="width:100%;display:flex" class="justify-end">
+        <v-btn
+          @click="cancelBtn()"
+          class="ok-btn"
+          style="margin-right:6px;height: 22px;"
+        >
+          {{ $t('btn_cancel') }}
+        </v-btn>
+        <v-btn @click="saveBtn()" :class="'cancel-btn'" style="height: 22px">
+          {{ $t('btn_save') }}
+        </v-btn>
+      </div>
+    </div>
+
+    <v-dialog v-model="dialog" max-width="350">
+      <v-card class="confirm-dialog">
+        <v-card-title
+          v-text="errorDialog"
+          :style="{ 'font-weight': error ? '400' : '500' }"
+        >
+        </v-card-title>
+        <div
+          v-if="rightBtn == $t('btn_save')"
+          style="font-size:11px"
+          class="sub_title"
+        >
+          {{ $t('popup.text12') }}
+        </div>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn class="cancel" text @click="cancel()" v-show="!error">
+            {{ $t('btn_cancel') }}
+          </v-btn>
+          <v-btn text @click="save()" class="save">
+            {{ error ? $t('btn_close') : rightBtn }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -83,66 +126,94 @@ export default {
         }
       ],
       active: 1,
-      tooltipShowDelay: null,
       columnDefs: [
         {
-          headerName: 'ลำดับ',
-          // headerName: this.$t('set.list_col1'),
+          headerName: this.$t('upload.text5'),
           field: 'index',
           width: 70,
           pinned: 'left',
-          valueFormatter: formatterCol1
+          valueFormatter: formatterCol1,
+          icons: {
+            sortAscending: '<i class="fa fa-caret-down"/>',
+            sortDescending: '<i class="fa fa-caret-up"/>'
+          }
         },
         {
           field: 'type_login',
-          headerName: 'ประเภทการเข้าใช้งานระบบ',
-          // headerTooltip: 'ประเภทการเข้าใช้งานระบบ',
+          headerName: this.$t('upload.text6'),
           width: 130,
           pinned: 'left',
           valueFormatter: formatterCol2
         },
         {
           field: 'emp_code',
-          headerName: 'รหัสพนักงาน',
+          headerName: this.$t('upload.text7'),
           width: 100,
-          pinned: 'left'
+          pinned: 'left',
+          valueFormatter: formatterNull
         },
         {
           field: 'name_th',
-          headerName: 'ชื่อ-สกุล (TH)',
+          headerName: this.$t('upload.text8'),
           width: 150,
-          pinned: 'left'
+          pinned: 'left',
+          valueFormatter: formatterNull
         },
-        { field: 'name_en', headerName: 'ชื่อ-สกุล (EN)', width: 150 },
-        { field: 'postname_th', headerName: 'ตำแหน่ง (TH)', width: 150 },
-        { field: 'postname_en', headerName: 'ตำแหน่ง (EN)', width: 150 },
-        { field: 'email', headerName: 'อีเมล', width: 160 },
-        { field: 'cx', headerName: '3CX', width: 110 },
+        {
+          field: 'name_en',
+          headerName: this.$t('upload.text9'),
+          width: 150,
+          valueFormatter: formatterNull
+        },
+        {
+          field: 'postname_th',
+          headerName: this.$t('upload.text10'),
+          width: 150,
+          valueFormatter: formatterNull
+        },
+        {
+          field: 'postname_en',
+          headerName: this.$t('upload.text11'),
+          width: 150,
+          valueFormatter: formatterNull
+        },
+        {
+          field: 'email',
+          headerName: this.$t('upload.text12'),
+          width: 160,
+          valueFormatter: formatterNull
+        },
+        {
+          field: 'cx',
+          headerName: this.$t('upload.text13'),
+          width: 110,
+          valueFormatter: formatterNull
+        },
         {
           field: 'group_name_th',
-          headerName: 'กลุ่มผู้ใช้งานแอปพลิเคชัน',
-          width: 160
+          headerName: this.$t('upload.text14'),
+          width: 160,
+          valueFormatter: formatterNull
         },
-        { field: 'username', headerName: 'ชื่อผู้ใช้งาน', width: 150 },
-        { field: 'password', headerName: 'รหัสผ่าน', width: 180 },
+        {
+          field: 'username',
+          headerName: this.$t('upload.text15'),
+          width: 150,
+          valueFormatter: formatterNull
+        },
+        {
+          field: 'password',
+          headerName: this.$t('upload.text16'),
+          width: 180,
+          valueFormatter: formatterNull
+        },
         {
           field: 'status',
-          headerName: 'สถานะ',
-          width: 180,
+          headerName: this.$t('upload.text17'),
+          width: 100,
           valueFormatter: formatterCol13,
-          cellRendererSelector: params => {
-            // const moodDetails = { component: 'moodCellRenderer' }
-            // const genderDetails = {
-            //   component: 'genderCellRenderer',
-            //   params: {
-            //     values: ['Male', 'Female']
-            //   }
-            // }
-            // if (params.status === 1)
-            //   return '<span style="color:red">' + params.status + '</span>'
-            // else if (params.data.type === 'mood') return moodDetails
-            // else return undefined
-          }
+          cellStyle: params =>
+            params.value == 1 ? { color: '#66BB6A' } : { color: '#FBC02D' }
         }
       ],
       defaultColDef: {
@@ -150,10 +221,26 @@ export default {
         sortable: true,
         lockPosition: true
       },
-      rowData: this.data.new
+      rowData: this.data.new,
+      // gridOptions: null,
+      // gridApi: null,
+      // columnApi: null,
+      dialog: false,
+      errorDialog: this.$t('popup.text1'),
+      error: false,
+      rightBtn: this.$t('btn_save')
     }
   },
-  computed: {},
+  computed: {
+    isLanguage () {
+      // console.log('computed => ', this.gridApi)
+      // this.onGridReady()
+      // this.gridApi.setColumnDefs(this.columnDefs)
+
+      this.rowData = this.data['new']
+      return this.$store.getters.isLanguage
+    }
+  },
   watch: {
     searchApp: {
       handler: function (todos) {
@@ -163,19 +250,114 @@ export default {
       }
     }
   },
+  // beforeMount () {
+  //   this.gridOptions = {}
+  // },
+  // mounted () {
+  //   this.gridApi = this.gridOptions.api
+  //   this.gridColumnApi = this.gridOptions.columnApi
+  // },
   methods: {
+    onGridReady (params) {
+      // console.log('onGridReady =>', params)
+      // this.gridApi = params.gridApi
+    },
     tabs (item, index) {
-      // if (this.active.code !== item.code) {
-      //   this.$emit('tabs', item)
-      //   this.sortNo = null
-      //   this.mainSort = {
-      //     feild: 'name_th',
-      //     orderby: true
-      //   }
-      //   this.fetchData(item)
-      // } else {
-      //   this.$emit('tabs', item)
-      // }
+      if (this.active.code !== item.code) {
+        this.active = item.code
+        this.rowData = this.data[item.feild]
+        if (item.feild == 'mistake') {
+          let fieldFind = this.columnDefs.filter(a => a.field == 'note')
+          if (fieldFind.length == 0) {
+            this.columnDefs.push({
+              field: 'note',
+              headerName: this.$t('upload.text18'),
+              width: 180,
+              cellStyle: { color: '#CE1212' }
+            })
+          }
+        } else {
+          this.columnDefs = this.columnDefs.filter(a => a.field !== 'note')
+        }
+        this.$emit('tabs', item)
+      }
+    },
+    fetchData () {
+      let req = {
+        keyword: this.searchApp.trim(),
+        sort: 'acs',
+        field: ''
+      }
+      this.$store.dispatch('fetchCsv', req).then(res => {
+        let data = {
+          new: res.data.new,
+          update: res.data.update,
+          mistake: res.data.mistake,
+          total: 0
+        }
+        data.total =
+          res.data.count_new + res.data.count_update + res.data.count_mistake
+        this.$emit('upload', data)
+      })
+    },
+    saveBtn () {
+      this.btnClick = 'save'
+      this.error = false
+      this.dialog = true
+      this.errorDialog = this.$t('popup.text11')
+      this.rightBtn = this.$t('btn_save')
+    },
+    save () {
+      if (this.btnClick == 'save') {
+        this.$store
+          .dispatch('saveCsv', null)
+          .then(res => {
+            if (res.data.success == undefined) {
+              this.btnClick = 'success'
+              this.dialog = true
+              this.error = true
+              this.errorDialog = this.$t('popup.text20')
+              this.rightBtn = this.$t('btn_close')
+            } else {
+              this.btnClick = 'error'
+              this.dialog = true
+              this.error = true
+              this.errorDialog = this.$t('popup.text13')
+              this.rightBtn = this.$t('btn_close')
+            }
+          })
+          .catch(error => {
+            this.btnClick = 'error'
+            this.dialog = true
+            this.error = true
+            this.errorDialog =
+              this.$t('popup.text2') +
+              ' (Error Code ' +
+              error.response.status +
+              ')'
+            this.list = []
+          })
+      } else if (this.btnClick == 'success') {
+        this.cancel()
+      } else if (this.btnClick == 'cancel') {
+        this.cancel()
+      } else if (this.btnClick == 'error') {
+        this.dialog = false
+        this.error = false
+      }
+    },
+    cancelBtn () {
+      this.error = false
+      this.btnClick = 'cancel'
+      this.dialog = true
+      this.errorDialog = this.$t('popup.text6')
+      this.rightBtn = this.$t('btn_ok')
+    },
+    cancel () {
+      this.$emit('cancel', null)
+      this.error = false
+      this.dialog = false
+      this.rightBtn = this.$t('btn_save')
     }
   },
   components: {
@@ -197,13 +379,25 @@ export default {
     }
   }
 }
+
+window.formatterNull = function formatterCol2 (params) {
+  return params.value == '' ? '-' : params.value
+}
 window.formatterCol1 = function formatterCol2 (params) {
   return params.value + 1
 }
 window.formatterCol2 = function formatterCol2 (params) {
-  return params.value == 0 ? 'ผู้ใช้งานบนแอปพลิเคชัน ' : 'LDAP'
+  if (params.value == '') {
+    return '-'
+  } else {
+    return params.value == 0 ? 'ผู้ใช้งานบนแอปพลิเคชัน ' : 'LDAP'
+  }
 }
 window.formatterCol13 = function formatterCol2 (params) {
-  return params.value == 0 ? 'ปิดการใช้งาน' : 'เปิดใช้งาน'
+  if (params.value == '') {
+    return '-'
+  } else {
+    return params.value == 0 ? 'ปิดการใช้งาน' : 'เปิดใช้งาน'
+  }
 }
 </script>

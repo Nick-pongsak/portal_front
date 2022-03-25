@@ -37,11 +37,11 @@
         @save="saveUser"
         @clear="clearUser"
       />
-      <upload-csv v-else-if="currentView.code == '1.2'" :data="editRow" />
-      <!-- 
-        :master="masterUser"
-        @cancel="cancelUser"
-        @clear="clearUser" -->
+      <upload-csv
+        v-else-if="currentView.code == '1.2'"
+        :data="editRow"
+        @cancel="cancelCsv"
+      />
       <main-list-app
         v-else-if="currentView.code == '2'"
         :menu="rightMenu"
@@ -67,6 +67,7 @@
         :data="editRow2"
       />
     </div>
+    <div style="display:none">{{ isLanguage }}</div>
   </div>
 </template>
 
@@ -155,6 +156,20 @@ export default {
   computed: {
     info () {
       return this.$store.getters.user
+    },
+    isLanguage () {
+      // console.log('--->', this.currentView)
+      if (this.currentView.code == '1.2') {
+        let uploadCsvPage = document.getElementById('uploadCsvPage')
+        // uploadCsvPage.remove()
+        // console.log(uploadCsvPage)
+        // this.currentView = {
+        //   code: '1.2',
+        //   text: 'upload.text1'
+        // }
+        // this.editRow = JSON.parse(JSON.stringify(this.editRow))
+      }
+      return this.$store.getters.isLanguage
     }
   },
   watch: {},
@@ -165,6 +180,9 @@ export default {
         text: 'upload.text1'
       }
       this.editRow = value
+    },
+    cancelCsv () {
+      this.currentView = this.menu[0]
     },
     addUser (value) {
       this.currentView = {

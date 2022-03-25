@@ -1743,6 +1743,7 @@ export default {
         emp_code: this.info.emp_code,
         language: value
       }
+      this.$store.commit('SetLanguage', value)
       this.$store.dispatch('UpdateLanguage', req).then(res => {
         let data = JSON.parse(JSON.stringify(this.info))
         data.language = value
