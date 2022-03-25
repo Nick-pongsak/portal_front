@@ -20,7 +20,7 @@ const store = {
     }
   },
   actions: {
-    getHomeData({ state, commit, dispatch }, data) {
+    getHomeData({ commit }, data) {
       commit('SetLoading', true)
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/application-user`, data, {
@@ -42,7 +42,7 @@ const store = {
         })
       })
     },
-    saveHome({ state, commit, dispatch }, data) {
+    saveHome({ commit }, data) {
       commit('SetLoading', true)
       if (debug == 'debug') {
         console.log("save-order ==>", JSON.stringify(data))
@@ -67,7 +67,7 @@ const store = {
         })
       })
     },
-    updateProfile({ state, commit, dispatch }, data) {
+    updateProfile({ commit }, data) {
       commit('SetLoading', true)
       if (debug == 'debug') {
         console.log("update-profile ==>", JSON.stringify(data))
@@ -92,7 +92,7 @@ const store = {
         })
       })
     },
-    deletePicProfile({ state, commit, dispatch }, data) {
+    deletePicProfile({ commit }, data) {
       commit('SetLoading', true)
       if (debug == 'debug') {
         console.log("delete-image ==>", JSON.stringify(data))
@@ -117,7 +117,7 @@ const store = {
         })
       })
     },
-    uploadPicProfile({ state, commit, dispatch }, data) {
+    uploadPicProfile({ commit }, data) {
       commit('SetLoading', true)
       if (debug == 'debug') {
         console.log("upload-image ==>", JSON.stringify(data))
@@ -143,7 +143,7 @@ const store = {
         })
       })
     },
-    changePassword({ state, commit, dispatch }, data) {
+    changePassword({ commit }, data) {
       commit('SetLoading', true)
       if (debug == 'debug') {
         console.log("change-password ==>", JSON.stringify(data))
@@ -168,7 +168,7 @@ const store = {
         })
       })
     },
-    changePasswordNew({ state, commit, dispatch }, data) {
+    changePasswordNew({ commit }, data) {
       commit('SetLoading', true)
       if (debug == 'debug') {
         console.log("change-password-new ==>", JSON.stringify(data))
@@ -193,7 +193,7 @@ const store = {
         })
       })
     },
-    CheckUserAccess({ state, commit, dispatch }, data) {
+    CheckUserAccess({ commit }, data) {
       commit('SetLoading', true)
       if (debug == 'debug') {
         console.log("check-authen-app ==>", JSON.stringify(data))
@@ -218,7 +218,7 @@ const store = {
         })
       })
     },
-    UpdateUsernameSSO({ state, commit, dispatch }, data) {
+    UpdateUsernameSSO({ commit }, data) {
       commit('SetLoading', true)
       if (debug == 'debug') {
         console.log("update-username-sso ==>", JSON.stringify(data))
@@ -243,13 +243,64 @@ const store = {
         })
       })
     },
-    UpdateLanguage({ state, commit, dispatch }, data) {
+    UpdateLanguage({ commit }, data) {
       commit('SetLoading', true)
       if (debug == 'debug') {
         console.log("update-language ==>", JSON.stringify(data))
       }
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/update-language`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          commit('SetLoading', false)
+          resolve(res.data.success)
+        }).catch(error => {
+          commit('SetLoading', false)
+          if (error && error.response && error.response.status === 500) {
+            if (error.response.data.message == "Token has expired") {
+              router.push('/');
+            }
+          }
+          reject(error)
+        })
+      })
+    },
+    uploadCsv({ commit }, data) {
+      commit('SetLoading', true)
+      if (debug == 'debug') {
+        console.log("import-user ==>", JSON.stringify(data))
+      }
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/import-user`, data, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          commit('SetLoading', false)
+          resolve(res.data.success)
+        }).catch(error => {
+          commit('SetLoading', false)
+          if (error && error.response && error.response.status === 500) {
+            if (error.response.data.message == "Token has expired") {
+              router.push('/');
+            }
+          }
+          reject(error)
+        })
+      })
+    },
+    fetchCsv({ commit }, data) {
+      commit('SetLoading', true)
+      if (debug == 'debug') {
+        console.log("get-temporary ==>", JSON.stringify(data))
+      }
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/get-temporary`, data, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${this.getters.access_token}`

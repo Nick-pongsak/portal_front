@@ -166,8 +166,6 @@
             ></v-icon>
           </div>
           <div class="center-vh">
-            <!-- <v-avatar size="230">
-              <div class="upload-block" id="image-uploader-profile"> -->
             <v-avatar v-show="!showDefaultAccount" size="230">
               <div
                 v-show="file !== ''"
@@ -386,9 +384,10 @@
             class="details"
             style="padding-top:30px"
           >
-            {{ $t('pwd.text6') }}<br />
+            {{ $t('pwd.text9') }}<br />
             {{ $t('pwd.text7') }} <br />
-            {{ $t('pwd.text8') }}
+            {{ $t('pwd.text8') }} <br />
+            {{ $t('pwd.text10') }}
           </div>
           <div v-show="stepChangePwd == 2">
             <div class="center-vh">
@@ -1526,6 +1525,7 @@ export default {
       }
       let id = document.getElementById('image-uploader-profile')
       if (id !== null) {
+        /*
         let image = id.getElementsByTagName('img')
         if (image[0].getAttribute('src') !== '') {
           image.src = ''
@@ -1535,6 +1535,7 @@ export default {
           let elements = id2.getElementsByClassName('v-image__image')
           elements[0].style.backgroundImage = ''
         }
+        */
       }
       this.$store.dispatch('deletePicProfile', req).then(res => {
         this.showDefaultAccount = true
