@@ -412,6 +412,7 @@
                 }
               }
               .ag-row-even {
+                background-color: #ffffff;
                 .ag-cell {
                   padding-left: 10px;
                   padding-right: 10px;
@@ -439,7 +440,7 @@
                   background-color: #ffffff;
                 }
                 .ag-row-even {
-                  // background-color: rgb(205, 232, 241);
+                  background-color: #ffffff;
                 }
                 .ag-cell-value {
                   padding-left: 10px;
@@ -450,7 +451,6 @@
               }
             }
             &::-webkit-scrollbar {
-              // width: 18px;
               width: 6px;
             }
             &::-webkit-scrollbar:horizontal {
@@ -490,7 +490,6 @@
             }
             .ag-body-horizontal-scroll-viewport {
               &::-webkit-scrollbar {
-                // width: 6px;
                 width: 6px;
               }
               &::-webkit-scrollbar:horizontal {
