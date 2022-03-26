@@ -107,7 +107,7 @@
           }
           overflow-x: hidden;
           overflow-y: auto;
-          height: calc(100% - 160px);
+          height: calc(100% - 100px);
           &::-webkit-scrollbar {
             width: 6px;
           }
@@ -340,7 +340,7 @@
     flex-direction: column;
     height: 100%;
     padding-left: 15px;
-    padding-right: 5px;
+    padding-right: 15px;
     padding-top: 10px;
     .ag-theme-alpine {
       color: #797979;
@@ -350,9 +350,17 @@
         border-color: #ffff;
         .ag-root-wrapper-body {
           .ag-root {
+            .ag-body-viewport {
+              padding-right: 12px !important;
+            }
             .ag-header {
+              height: 30px !important;
+              min-height: 30px !important;
               .ag-header-container {
-                // transform: translateX(-821px) !important;
+                height: 30px !important;
+                .ag-header-row {
+                  height: 30px !important;
+                }
               }
               border-bottom-color: #ffff;
               .ag-header-cell {
@@ -360,8 +368,8 @@
                 padding-right: 10px;
               }
               .ag-header-cell-text {
-                white-space: break-spaces;
-                text-align: center;
+                // white-space: break-spaces;
+                // text-align: center;
               }
               .ag-cell-label-container {
                 font-weight: 500;
@@ -372,6 +380,10 @@
                 border-bottom: none;
                 border-bottom-color: #ffff;
                 background-color: #d1d1d133;
+                height: 30px !important;
+                .ag-header-row {
+                  height: 30px !important;
+                }
               }
               .ag-header-viewport {
                 border-bottom: none;
@@ -382,7 +394,7 @@
                 border-right-color: #d1d1d1;
               }
               .ag-header-cell-resize {
-                display: none;
+                // display: none;
               }
             }
           }
@@ -393,17 +405,26 @@
                 border-bottom-style: none;
               }
               .ag-row-odd {
-                background-color: #ffff;
+                background-color: #ffffff;
+                .ag-cell {
+                  padding-left: 10px;
+                  padding-right: 10px;
+                }
+              }
+              .ag-row-even {
+                background-color: #ffffff;
+                .ag-cell {
+                  padding-left: 10px;
+                  padding-right: 10px;
+                }
               }
               .ag-row-no-focus {
                 .ag-cell {
                   padding-left: 10px;
                   padding-right: 10px;
-                  // line-height: inherit;
                 }
                 .ag-cell-value {
                   color: #797979;
-                  // white-space: break-spaces;
                 }
                 .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell) {
                   border-right-color: #d1d1d1;
@@ -416,20 +437,21 @@
                   border-bottom-style: none;
                 }
                 .ag-row-odd {
-                  background-color: #ffff;
+                  background-color: #ffffff;
+                }
+                .ag-row-even {
+                  background-color: #ffffff;
                 }
                 .ag-cell-value {
                   padding-left: 10px;
                   padding-right: 10px;
                   color: #797979;
-                  // line-height: inherit;
-                  // white-space: break-spaces;
                   font-size: nth($font-sizes, 2);
                 }
               }
             }
             &::-webkit-scrollbar {
-              // width: 6px;
+              width: 6px;
             }
             &::-webkit-scrollbar:horizontal {
               height: 6px;
@@ -468,7 +490,7 @@
             }
             .ag-body-horizontal-scroll-viewport {
               &::-webkit-scrollbar {
-                // width: 6px;
+                width: 6px;
               }
               &::-webkit-scrollbar:horizontal {
                 height: 6px;

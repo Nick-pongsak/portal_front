@@ -1,7 +1,7 @@
 <template>
-  <div style="height:calc(100% - 0px);">
-    <v-card style="padding-top:5px">
-      <div :class="'tab'" style="padding-bottom:10px">
+  <div style="height:calc(100% - 30px);" id="uploadCsvPage">
+    <v-card>
+      <div :class="'tab'" style="padding-bottom:8px;padding-top:10px">
         <div
           :class="'tab-row'"
           v-for="(item, index) in menu"
@@ -9,9 +9,20 @@
           @click="tabs(item, index)"
           :id="'upload-tab-row-' + item.code"
         >
-          {{ $t(item.text) + ' (' + data[item.feild].length + ')' }}
+          {{ $t(item.text)
+          }}<span style="color:#F0AC11">{{
+            ' (' + data[item.feild].length + ')'
+          }}</span>
           <div v-show="active == item.code" class="line-active"></div>
         </div>
+      </div>
+      <div
+        @click="setHeadetCol"
+        id="hideBtnLang"
+        style="display: none;"
+        ref="hideBtnLang"
+      >
+        hideBtnLang
       </div>
       <div style="padding-left:15px;display:flex;width:100%">
         <div style="width:80%">
@@ -37,16 +48,60 @@
       <div style="height: 100%">
         <div class="example-wrapper">
           <ag-grid-vue
-            style="width: 100%; height:calc(100% - 90px);"
+            style="width: 100%; height:calc(100% - 83px);"
             class="ag-theme-alpine"
             :columnDefs="columnDefs"
             :defaultColDef="defaultColDef"
             :rowData="rowData"
+            @grid-ready="onGridReady"
+            :tooltipShowDelay="0"
+            :getRowHeight="getRowHeight"
           ></ag-grid-vue>
-          <!-- :tooltipShowDelay="tooltipShowDelay" -->
+          <!-- :icons="icons" -->
         </div>
       </div>
+      <div style="display:none">{{ isLanguage }}</div>
     </v-card>
+    <div style="display:flex;padding-top:10px">
+      <div style="width:100%;display:flex" class="justify-end">
+        <v-btn
+          @click="cancelBtn()"
+          class="ok-btn"
+          style="margin-right:6px;height: 22px;"
+        >
+          {{ $t('btn_cancel') }}
+        </v-btn>
+        <v-btn @click="saveBtn()" :class="'cancel-btn'" style="height: 22px">
+          {{ $t('btn_save') }}
+        </v-btn>
+      </div>
+    </div>
+
+    <v-dialog v-model="dialog" max-width="350">
+      <v-card class="confirm-dialog">
+        <v-card-title
+          v-text="errorDialog"
+          :style="{ 'font-weight': error ? '400' : '500' }"
+        >
+        </v-card-title>
+        <div
+          v-if="rightBtn == $t('btn_save')"
+          style="font-size:11px"
+          class="sub_title"
+        >
+          {{ $t('popup.text12') }}
+        </div>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn class="cancel" text @click="cancel()" v-show="!error">
+            {{ $t('btn_cancel') }}
+          </v-btn>
+          <v-btn text @click="save()" class="save">
+            {{ error ? $t('btn_close') : rightBtn }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -83,99 +138,348 @@ export default {
         }
       ],
       active: 1,
-      tooltipShowDelay: null,
+      icons: null,
       columnDefs: [
         {
-          headerName: 'ลำดับ',
-          // headerName: this.$t('set.list_col1'),
+          headerName: this.$t('upload.text5'),
           field: 'index',
-          width: 70,
+          width: 60,
+          minWidth: 60,
           pinned: 'left',
-          valueFormatter: formatterCol1
+          valueFormatter: params => {
+            return params.value + 1
+          },
+          // unSortIcon: true,
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          }
+          // icons: {
+          //   sortAscending: '<i class="fa fa-sort-alpha-up"/>',
+          //   sortDescending: '<i class="fa fa-sort-alpha-down"/>'
+          // }
         },
         {
           field: 'type_login',
-          headerName: 'ประเภทการเข้าใช้งานระบบ',
-          // headerTooltip: 'ประเภทการเข้าใช้งานระบบ',
-          width: 130,
+          headerName: this.$t('upload.text6'),
+          width: 120,
           pinned: 'left',
-          valueFormatter: formatterCol2
+          headerTooltip: this.$t('upload.text6'),
+          valueFormatter: params => {
+            return params.value == 0 ? this.$t('master.type_login_0') : 'LDAP'
+          },
+          tooltipComponent: 'type_login',
+          tooltipValueGetter: params => {
+            return params.value == 0 ? this.$t('master.type_login_0') : 'LDAP'
+          },
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          }
         },
         {
           field: 'emp_code',
-          headerName: 'รหัสพนักงาน',
-          width: 100,
-          pinned: 'left'
+          headerName: this.$t('upload.text7'),
+          width: 110,
+          pinned: 'left',
+          headerTooltip: this.$t('upload.text7'),
+          valueFormatter: formatterNull,
+          tooltipComponent: 'emp_code',
+          tooltipValueGetter: formatterNull,
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          }
         },
         {
           field: 'name_th',
-          headerName: 'ชื่อ-สกุล (TH)',
+          headerName: this.$t('upload.text8'),
           width: 150,
-          pinned: 'left'
+          pinned: 'left',
+          valueFormatter: formatterNull,
+          tooltipComponent: 'name_th',
+          tooltipValueGetter: formatterNull,
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          }
         },
-        { field: 'name_en', headerName: 'ชื่อ-สกุล (EN)', width: 150 },
-        { field: 'postname_th', headerName: 'ตำแหน่ง (TH)', width: 150 },
-        { field: 'postname_en', headerName: 'ตำแหน่ง (EN)', width: 150 },
-        { field: 'email', headerName: 'อีเมล', width: 160 },
-        { field: 'cx', headerName: '3CX', width: 110 },
+        {
+          field: 'name_en',
+          headerName: this.$t('upload.text9'),
+          width: 150,
+          valueFormatter: formatterNull,
+          tooltipComponent: 'name_en',
+          tooltipValueGetter: formatterNull,
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          }
+        },
+        {
+          field: 'postname_th',
+          headerName: this.$t('upload.text10'),
+          width: 150,
+          valueFormatter: formatterNull,
+          tooltipComponent: 'postname_th',
+          tooltipValueGetter: formatterNull,
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          }
+        },
+        {
+          field: 'postname_en',
+          headerName: this.$t('upload.text11'),
+          width: 150,
+          valueFormatter: formatterNull,
+          tooltipComponent: 'postname_en',
+          tooltipValueGetter: formatterNull,
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          }
+        },
+        {
+          field: 'email',
+          headerName: this.$t('upload.text12'),
+          width: 160,
+          valueFormatter: formatterNull,
+          tooltipComponent: 'email',
+          tooltipValueGetter: formatterNull,
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          }
+        },
+        {
+          field: 'cx',
+          headerName: this.$t('upload.text13'),
+          width: 110,
+          valueFormatter: formatterNull,
+          tooltipComponent: 'cx',
+          tooltipValueGetter: formatterNull,
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          }
+        },
         {
           field: 'group_name_th',
-          headerName: 'กลุ่มผู้ใช้งานแอปพลิเคชัน',
-          width: 160
+          headerName: this.$t('upload.text14'),
+          width: 160,
+          valueFormatter: formatterNull,
+          tooltipComponent: 'group_name_th',
+          tooltipValueGetter: formatterNull,
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          }
         },
-        { field: 'username', headerName: 'ชื่อผู้ใช้งาน', width: 150 },
-        { field: 'password', headerName: 'รหัสผ่าน', width: 180 },
+        {
+          field: 'username',
+          headerName: this.$t('upload.text15'),
+          width: 150,
+          valueFormatter: formatterNull,
+          tooltipComponent: 'username',
+          tooltipValueGetter: formatterNull,
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          }
+        },
+        {
+          field: 'password',
+          headerName: this.$t('upload.text16'),
+          width: 180,
+          valueFormatter: formatterNull,
+          tooltipComponent: 'password',
+          tooltipValueGetter: formatterNull,
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          }
+        },
         {
           field: 'status',
-          headerName: 'สถานะ',
-          width: 180,
-          valueFormatter: formatterCol13,
-          cellRendererSelector: params => {
-            // const moodDetails = { component: 'moodCellRenderer' }
-            // const genderDetails = {
-            //   component: 'genderCellRenderer',
-            //   params: {
-            //     values: ['Male', 'Female']
-            //   }
-            // }
-            // if (params.status === 1)
-            //   return '<span style="color:red">' + params.status + '</span>'
-            // else if (params.data.type === 'mood') return moodDetails
-            // else return undefined
-          }
+          headerName: this.$t('upload.text17'),
+          width: 100,
+          valueFormatter: params => {
+            return params.value == 0
+              ? this.$t('user.text8')
+              : this.$t('user.text7')
+          },
+          tooltipComponent: 'status',
+          tooltipValueGetter: params => {
+            return params.value == 0
+              ? this.$t('user.text8')
+              : this.$t('user.text7')
+          },
+          cellStyle: params =>
+            params.value == 1
+              ? {
+                  color: '#66BB6A'
+                  // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+                }
+              : {
+                  color: '#FBC02D'
+                  // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+                }
         }
       ],
       defaultColDef: {
         resizable: true,
+        minWidth: 80,
+        maxWidth: 300,
         sortable: true,
         lockPosition: true
       },
-      rowData: this.data.new
+      rowData: [],
+      gridApi: null,
+      dialog: false,
+      errorDialog: this.$t('popup.text1'),
+      error: false,
+      rightBtn: this.$t('btn_save')
     }
   },
-  computed: {},
+  computed: {
+    isLanguage () {
+      if (this.gridApi !== null) {
+        if (this.columnDefs[0].headerName !== this.$t('upload.text5')) {
+          this.$refs.hideBtnLang.click()
+        }
+      }
+      return this.$store.getters.isLanguage
+    }
+  },
   watch: {
     searchApp: {
       handler: function (todos) {
         if (todos.trim().length > 1 || todos.trim().length == 0) {
-          // this.onFilterTextBoxChanged(todos)
+          this.fetchData()
         }
       }
     }
   },
   methods: {
-    tabs (item, index) {
-      // if (this.active.code !== item.code) {
-      //   this.$emit('tabs', item)
-      //   this.sortNo = null
-      //   this.mainSort = {
-      //     feild: 'name_th',
-      //     orderby: true
-      //   }
-      //   this.fetchData(item)
-      // } else {
-      //   this.$emit('tabs', item)
-      // }
+    onGridReady (params) {
+      this.gridApi = params.api
+      let data = this.data['new']
+      let font = this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+      data.forEach(function (dataItem) {
+        dataItem.rowHeight = 32
+        // dataItem.cellStyle = 'font-family:' + font
+        // console.log(dataItem)
+      })
+      this.rowData = data
+
+      // ag-overlay
+      //ag-overlay-no-rows-center
+
+
+    },
+    setHeadetCol () {
+      var columnDefs = this.gridApi.getColumnDefs()
+      let _this = this
+      columnDefs.forEach(function (colDef, index) {
+        let txt = index + 5
+        colDef.headerName = _this.$t('upload.text' + txt)
+      })
+      this.columnDefs = columnDefs
+    },
+    getRowHeight (params) {
+      return params.data.rowHeight
+    },
+    tabs (item) {
+      if (this.active.code !== item.code) {
+        this.active = item.code
+        this.rowData = this.data[item.feild]
+        if (item.feild == 'mistake') {
+          let fieldFind = this.columnDefs.filter(a => a.field == 'note')
+          if (fieldFind.length == 0) {
+            this.columnDefs.push({
+              field: 'note',
+              headerName: this.$t('upload.text18'),
+              width: 180,
+              cellStyle: { color: '#CE1212' }
+            })
+          }
+        } else {
+          this.columnDefs = this.columnDefs.filter(a => a.field !== 'note')
+        }
+        this.$emit('tabs', item)
+      }
+    },
+    fetchData () {
+      let req = {
+        keyword: this.searchApp.trim(),
+        sort: 'acs',
+        field: ''
+      }
+      this.$store.dispatch('fetchCsv', req).then(res => {
+        let data = {
+          new: res.data.new,
+          update: res.data.update,
+          mistake: res.data.mistake,
+          total: 0
+        }
+        data.total =
+          res.data.count_new + res.data.count_update + res.data.count_mistake
+
+        let fieldFind = this.menu.filter(a => a.code == this.active)
+        if (fieldFind.length > 0) {
+          this.rowData = data[fieldFind[0].feild]
+        }
+
+        this.$emit('upload', data)
+      })
+    },
+    saveBtn () {
+      this.btnClick = 'save'
+      this.error = false
+      this.dialog = true
+      this.errorDialog = this.$t('popup.text11')
+      this.rightBtn = this.$t('btn_save')
+    },
+    save () {
+      if (this.btnClick == 'save') {
+        this.$store
+          .dispatch('saveCsv', null)
+          .then(res => {
+            if (res.emp_update.length == 0) {
+              this.btnClick = 'success'
+              this.dialog = true
+              this.error = true
+              this.errorDialog = this.$t('upload.text20')
+              this.rightBtn = this.$t('btn_close')
+            } else {
+              this.btnClick = 'error'
+              this.dialog = true
+              this.error = true
+              this.errorDialog = this.$t('popup.text13')
+              this.rightBtn = this.$t('btn_close')
+            }
+          })
+          .catch(error => {
+            // this.btnClick = 'error'
+            // this.dialog = true
+            // this.error = true
+            // this.errorDialog =
+            //   this.$t('popup.text2') +
+            //   ' (Error Code ' +
+            //   error.response.status +
+            //   ')'
+            // this.list = []
+          })
+      } else if (this.btnClick == 'success') {
+        this.cancel()
+      } else if (this.btnClick == 'cancel') {
+        this.cancel()
+      } else if (this.btnClick == 'error') {
+        this.dialog = false
+        this.error = false
+      }
+    },
+    cancelBtn () {
+      this.error = false
+      this.btnClick = 'cancel'
+      this.dialog = true
+      this.errorDialog = this.$t('popup.text6')
+      this.rightBtn = this.$t('btn_ok')
+    },
+    cancel () {
+      this.$emit('cancel', null)
+      this.error = false
+      this.dialog = false
+      this.rightBtn = this.$t('btn_save')
     }
   },
   components: {
@@ -194,16 +498,41 @@ export default {
         'SetAccessToken',
         sessionStorage.getItem('token_seesion')
       )
+      // this.icons = {
+      //   // use font awesome for menu icons
+      //   menu: '<i class="fa fa-bath" style="width: 10px"/>',
+      //   filter: '<i class="fa fa-long-arrow-alt-down"/>',
+      //   columns: '<i class="fa fa-handshake"/>',
+      //   sortAscending: '<i class="fa fa-long-arrow-alt-down"/>',
+      //   sortDescending: '<i class="fa fa-long-arrow-alt-up"/>',
+      //   // use some strings from group
+      //   groupExpanded:
+      //     '<img src="https://www.ag-grid.com/example-assets/group/contract.png" style="height: 12px; width: 12px;padding-right: 2px"/>',
+      //   groupContracted:
+      //     '<img src="https://www.ag-grid.com/example-assets/group/expand.png" style="height: 12px; width: 12px;padding-right: 2px"/>',
+      //   columnMovePin: '<i class="far fa-hand-rock"/>',
+      //   columnMoveAdd: '<i class="fa fa-plus-square"/>',
+      //   columnMoveHide: '<i class="fa fa-times"/>',
+      //   columnMoveMove: '<i class="fa fa-link"/>',
+      //   columnMoveLeft: '<i class="fa fa-arrow-left"/>',
+      //   columnMoveRight: '<i class="fa fa-arrow-right"/>',
+      //   columnMoveGroup: '<i class="fa fa-users"/>',
+      //   rowGroupPanel: '<i class="fa fa-university"/>',
+      //   pivotPanel: '<i class="fa fa-magic"/>',
+      //   valuePanel: '<i class="fa fa-magnet"/>',
+      //   menuPin: 'P',
+      //   menuValue: 'V',
+      //   menuAddRowGroup: 'A',
+      //   menuRemoveRowGroup: 'R',
+      //   clipboardCopy: '>>',
+      //   clipboardPaste: '>>',
+      //   rowDrag: '<i class="fa fa-circle"/>'
+      // }
     }
   }
 }
-window.formatterCol1 = function formatterCol2 (params) {
-  return params.value + 1
-}
-window.formatterCol2 = function formatterCol2 (params) {
-  return params.value == 0 ? 'ผู้ใช้งานบนแอปพลิเคชัน ' : 'LDAP'
-}
-window.formatterCol13 = function formatterCol2 (params) {
-  return params.value == 0 ? 'ปิดการใช้งาน' : 'เปิดใช้งาน'
+
+window.formatterNull = function formatterCol2 (params) {
+  return params.value == '' ? '-' : params.value
 }
 </script>

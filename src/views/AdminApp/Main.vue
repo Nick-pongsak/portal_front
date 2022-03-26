@@ -21,13 +21,13 @@
           class="justify-end"
           style="width:20%;display:flex;padding-right:30px"
         >
-          <!-- <v-btn
+          <v-btn
             @click="upload()"
             class="ok-btn"
             style="margin-right:25px;width:126px"
           >
             {{ $t('upload.btn') }}
-          </v-btn> -->
+          </v-btn>
 
           <v-btn @click="add()" class="cancel-btn">
             <v-icon
@@ -173,7 +173,11 @@
           </div>
         </div>
       </div>
-      <div class="upload-block" v-if="!dialog_profile">
+      <div
+        class="upload-block-csv"
+        v-if="!dialog_profile"
+        id="image-uploader-csv"
+      >
         <image-uploader
           v-model="file"
           :preview="true"
@@ -242,10 +246,7 @@ export default {
     }
   },
   methods: {
-    upload2 () {
-      this.$refs.uploaderCsv.click()
-    },
-    upload () {
+    upload_test () {
       let data = {
         new: this.list,
         update: this.list,
@@ -255,36 +256,47 @@ export default {
       data.total = data.new.length + data.update.length + data.mistake.length
       this.$emit('upload', data)
     },
+    upload () {
+      this.$refs.uploaderCsv.click()
+    },
     setImage: function (output) {
-      console.log(output.size)
       if (output.size > 5242880) {
-        console.log('no succes ===> ')
         this.file = ''
         this.hasImage = false
       } else {
-        console.log('succes ===> ')
         this.file = output
         this.hasImage = true
         let formData = new FormData()
         formData.append('csv', output)
         this.$store.dispatch('uploadCsv', formData).then(res => {
-          console.log(res)
+          let req = {
+            keyword: '',
+            sort: 'acs',
+            field: ''
+          }
+          this.$store.dispatch('fetchCsv', req).then(res => {
+            let id = document.getElementById('image-uploader-csv')
+            if (id !== null) {
+              let inputCur = id.getElementsByTagName('input')
+              inputCur[0].value = ''
+            }
 
-          /*
-        let req = {
-          param: this.info.user_id,
-          sort: '',
-          field: ''
-        }
-        this.$store.dispatch('fetchCsv', formData).then(res => {
-          console.log(res)
-        })
-        */
+            let data = {
+              new: res.data.new,
+              update: res.data.update,
+              mistake: res.data.mistake,
+              total: 0
+            }
+            data.total =
+              res.data.count_new +
+              res.data.count_update +
+              res.data.count_mistake
+            this.$emit('upload', data)
+          })
         })
       }
     },
     add () {
-      // this.fetchData()
       this.$emit('add', this.active)
     },
     edit (item) {

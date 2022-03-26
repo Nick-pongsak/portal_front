@@ -172,6 +172,7 @@
                 class="upload-block"
                 id="image-uploader-profile"
               >
+                <!-- :id="'idUploader2'" -->
                 <image-uploader
                   v-model="file"
                   :preview="true"
@@ -968,9 +969,66 @@
               </div>
               <div style="width:50%;;display: flex;"></div>
             </div>
+            <div
+              class="rows justify-center"
+              v-if="profileView"
+              style="margin-top:30px;margin-bottom:20px"
+            >
+              <v-btn
+                text
+                @click="CloseProfileDialog()"
+                class="ok-btn"
+                style="width:200px"
+              >
+                {{ $t('btn_close') }}
+              </v-btn>
+            </div>
+            <div
+              class="rows justify-center"
+              v-if="!profileView"
+              style="margin-top:30px;margin-bottom:20px"
+            >
+              <v-btn
+                v-show="enableInput"
+                text
+                @click="editProfile()"
+                class="cancel-btn"
+                style="width:200px"
+              >
+                <v-icon
+                  v-text="'mdi-pencil'"
+                  style="color:#ffffff;margin-right:8px;"
+                  size="18"
+                ></v-icon>
+                {{ $t('profile.account_16') }}
+              </v-btn>
+              <v-btn
+                v-show="!enableInput"
+                text
+                @click="closeProfile()"
+                class="ok-btn"
+                style="width:200px;margin-right: 15px"
+              >
+                {{ $t('btn_cancel') }}
+              </v-btn>
+              <v-btn
+                v-show="!enableInput"
+                text
+                @click="profileViewfile()"
+                class="cancel-btn"
+                :style="{
+                  width: '200px',
+                  background: enableBtn ? '#CE1212' : '',
+                  opacity: enableBtn ? '0.51' : ''
+                }"
+                :disabled="enableBtn"
+              >
+                {{ $t('btn_save') }}
+              </v-btn>
+            </div>
           </div>
         </v-card-text>
-        <v-card-actions
+        <!-- <v-card-actions
           v-if="profileView"
           class="justify-center"
           style="margin-top:30px;margin-bottom:20px"
@@ -983,8 +1041,8 @@
           >
             {{ $t('btn_close') }}
           </v-btn>
-        </v-card-actions>
-        <v-card-actions
+        </v-card-actions> -->
+        <!-- <v-card-actions
           v-else
           class="justify-center"
           style="margin-top:35px;margin-bottom:20px"
@@ -1026,14 +1084,13 @@
           >
             {{ $t('btn_save') }}
           </v-btn>
-        </v-card-actions>
+        </v-card-actions> -->
       </v-card>
     </v-dialog>
   </div>
 </template>
 
 <script>
-import Vue from 'vue'
 import ImageUploader from 'vue-image-upload-resize'
 var bcrypt = require('bcryptjs')
 var CryptoJS = require('crypto-js')
@@ -1525,17 +1582,8 @@ export default {
       }
       let id = document.getElementById('image-uploader-profile')
       if (id !== null) {
-        /*
-        let image = id.getElementsByTagName('img')
-        if (image[0].getAttribute('src') !== '') {
-          image.src = ''
-        }
-        let id2 = document.getElementById('image-uploader-show-profile')
-        if (id2 !== null) {
-          let elements = id2.getElementsByClassName('v-image__image')
-          elements[0].style.backgroundImage = ''
-        }
-        */
+        let inputCur = id.getElementsByTagName('input')
+        inputCur[0].value = ''
       }
       this.$store.dispatch('deletePicProfile', req).then(res => {
         this.showDefaultAccount = true
@@ -1743,6 +1791,7 @@ export default {
         emp_code: this.info.emp_code,
         language: value
       }
+      this.$store.commit('SetLanguage', value)
       this.$store.dispatch('UpdateLanguage', req).then(res => {
         let data = JSON.parse(JSON.stringify(this.info))
         data.language = value

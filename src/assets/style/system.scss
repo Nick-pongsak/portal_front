@@ -338,6 +338,10 @@
         font-weight: 500;
         padding: 0px;
       }
+      .sub_title {
+        padding-top: 20px;
+        color: #797979;
+      }
       .v-card__actions {
         padding-right: 0px;
       }
@@ -546,7 +550,8 @@
     }
   }
 }
-.upload-block {
+.upload-block,
+.upload-block-csv {
   .img-preview {
     width: 240px;
     // height: 180px;

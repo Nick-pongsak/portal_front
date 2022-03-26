@@ -16,13 +16,11 @@
       </div>
     </div>
     <div class="right">
-      <div class="header">
-        {{
-          currentView.code == '1.2'
-            ? $t(currentView.text) + ' (' + editRow.total + ')'
-            : $t(currentView.text)
-        }}
+      <div class="header" v-if="currentView.code == '1.2'">
+        {{ $t(currentView.text)
+        }}<span style="color:#F0AC11">{{ ' (' + editRow.total + ')' }}</span>
       </div>
+      <div class="header" v-else>{{ $t(currentView.text) }}</div>
       <main-admin-app
         v-if="currentView.code == '1'"
         @add="addUser"
@@ -37,11 +35,11 @@
         @save="saveUser"
         @clear="clearUser"
       />
-      <upload-csv v-else-if="currentView.code == '1.2'" :data="editRow" />
-      <!-- 
-        :master="masterUser"
-        @cancel="cancelUser"
-        @clear="clearUser" -->
+      <upload-csv
+        v-else-if="currentView.code == '1.2'"
+        :data="editRow"
+        @cancel="cancelCsv"
+      />
       <main-list-app
         v-else-if="currentView.code == '2'"
         :menu="rightMenu"
@@ -165,6 +163,9 @@ export default {
         text: 'upload.text1'
       }
       this.editRow = value
+    },
+    cancelCsv () {
+      this.currentView = this.menu[0]
     },
     addUser (value) {
       this.currentView = {
