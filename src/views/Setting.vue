@@ -65,7 +65,6 @@
         :data="editRow2"
       />
     </div>
-    <div style="display:none">{{ isLanguage }}</div>
   </div>
 </template>
 
@@ -154,20 +153,6 @@ export default {
   computed: {
     info () {
       return this.$store.getters.user
-    },
-    isLanguage () {
-      // console.log('--->', this.currentView)
-      if (this.currentView.code == '1.2') {
-        let uploadCsvPage = document.getElementById('uploadCsvPage')
-        // uploadCsvPage.remove()
-        // console.log(uploadCsvPage)
-        // this.currentView = {
-        //   code: '1.2',
-        //   text: 'upload.text1'
-        // }
-        // this.editRow = JSON.parse(JSON.stringify(this.editRow))
-      }
-      return this.$store.getters.isLanguage
     }
   },
   watch: {},

@@ -173,7 +173,11 @@
           </div>
         </div>
       </div>
-      <div class="upload-block" v-if="!dialog_profile">
+      <div
+        class="upload-block-csv"
+        v-if="!dialog_profile"
+        id="image-uploader-csv"
+      >
         <image-uploader
           v-model="file"
           :preview="true"
@@ -271,6 +275,12 @@ export default {
             field: ''
           }
           this.$store.dispatch('fetchCsv', req).then(res => {
+            let id = document.getElementById('image-uploader-csv')
+            if (id !== null) {
+              let inputCur = id.getElementsByTagName('input')
+              inputCur[0].value = ''
+            }
+
             let data = {
               new: res.data.new,
               update: res.data.update,

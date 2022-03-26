@@ -57,7 +57,7 @@
             :tooltipShowDelay="0"
             :getRowHeight="getRowHeight"
           ></ag-grid-vue>
-            <!-- :icons="icons" -->
+          <!-- :icons="icons" -->
         </div>
       </div>
       <div style="display:none">{{ isLanguage }}</div>
@@ -138,6 +138,7 @@ export default {
         }
       ],
       active: 1,
+      icons: null,
       columnDefs: [
         {
           headerName: this.$t('upload.text5'),
@@ -145,10 +146,13 @@ export default {
           width: 60,
           minWidth: 60,
           pinned: 'left',
-          valueFormatter: formatterCol1,
+          valueFormatter: params => {
+            return params.value + 1
+          },
+          // unSortIcon: true,
           cellStyle: {
             // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
-          },
+          }
           // icons: {
           //   sortAscending: '<i class="fa fa-sort-alpha-up"/>',
           //   sortDescending: '<i class="fa fa-sort-alpha-down"/>'
@@ -160,9 +164,13 @@ export default {
           width: 120,
           pinned: 'left',
           headerTooltip: this.$t('upload.text6'),
-          valueFormatter: formatterCol2,
+          valueFormatter: params => {
+            return params.value == 0 ? this.$t('master.type_login_0') : 'LDAP'
+          },
           tooltipComponent: 'type_login',
-          tooltipValueGetter: formatterCol2,
+          tooltipValueGetter: params => {
+            return params.value == 0 ? this.$t('master.type_login_0') : 'LDAP'
+          },
           cellStyle: {
             // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
           }
@@ -284,9 +292,17 @@ export default {
           field: 'status',
           headerName: this.$t('upload.text17'),
           width: 100,
-          valueFormatter: formatterCol13,
+          valueFormatter: params => {
+            return params.value == 0
+              ? this.$t('user.text8')
+              : this.$t('user.text7')
+          },
           tooltipComponent: 'status',
-          tooltipValueGetter: formatterCol13,
+          tooltipValueGetter: params => {
+            return params.value == 0
+              ? this.$t('user.text8')
+              : this.$t('user.text7')
+          },
           cellStyle: params =>
             params.value == 1
               ? {
@@ -302,6 +318,7 @@ export default {
       defaultColDef: {
         resizable: true,
         minWidth: 80,
+        maxWidth: 300,
         sortable: true,
         lockPosition: true
       },
@@ -343,6 +360,11 @@ export default {
         // console.log(dataItem)
       })
       this.rowData = data
+
+      // ag-overlay
+      //ag-overlay-no-rows-center
+
+
     },
     setHeadetCol () {
       var columnDefs = this.gridApi.getColumnDefs()
@@ -476,33 +498,41 @@ export default {
         'SetAccessToken',
         sessionStorage.getItem('token_seesion')
       )
+      // this.icons = {
+      //   // use font awesome for menu icons
+      //   menu: '<i class="fa fa-bath" style="width: 10px"/>',
+      //   filter: '<i class="fa fa-long-arrow-alt-down"/>',
+      //   columns: '<i class="fa fa-handshake"/>',
+      //   sortAscending: '<i class="fa fa-long-arrow-alt-down"/>',
+      //   sortDescending: '<i class="fa fa-long-arrow-alt-up"/>',
+      //   // use some strings from group
+      //   groupExpanded:
+      //     '<img src="https://www.ag-grid.com/example-assets/group/contract.png" style="height: 12px; width: 12px;padding-right: 2px"/>',
+      //   groupContracted:
+      //     '<img src="https://www.ag-grid.com/example-assets/group/expand.png" style="height: 12px; width: 12px;padding-right: 2px"/>',
+      //   columnMovePin: '<i class="far fa-hand-rock"/>',
+      //   columnMoveAdd: '<i class="fa fa-plus-square"/>',
+      //   columnMoveHide: '<i class="fa fa-times"/>',
+      //   columnMoveMove: '<i class="fa fa-link"/>',
+      //   columnMoveLeft: '<i class="fa fa-arrow-left"/>',
+      //   columnMoveRight: '<i class="fa fa-arrow-right"/>',
+      //   columnMoveGroup: '<i class="fa fa-users"/>',
+      //   rowGroupPanel: '<i class="fa fa-university"/>',
+      //   pivotPanel: '<i class="fa fa-magic"/>',
+      //   valuePanel: '<i class="fa fa-magnet"/>',
+      //   menuPin: 'P',
+      //   menuValue: 'V',
+      //   menuAddRowGroup: 'A',
+      //   menuRemoveRowGroup: 'R',
+      //   clipboardCopy: '>>',
+      //   clipboardPaste: '>>',
+      //   rowDrag: '<i class="fa fa-circle"/>'
+      // }
     }
   }
 }
 
-// let type_login_0 = this.$t('master.type_login_0')
-// let activeTxt = this.$t('user.text7')
-// let inActiveTxt = this.$t('user.text8')
-// console.log(Vue)
-
 window.formatterNull = function formatterCol2 (params) {
   return params.value == '' ? '-' : params.value
-}
-window.formatterCol1 = function formatterCol2 (params) {
-  return params.value + 1
-}
-window.formatterCol2 = function formatterCol2 (params) {
-  if (typeof params.value === 'number') {
-    return params.value == 0 ? 'ผู้ใช้งานบนแอปพลิเคชัน ' : 'LDAP'
-  } else {
-    return '-'
-  }
-}
-window.formatterCol13 = function formatterCol2 (params) {
-  if (typeof params.value === 'number') {
-    return params.value == 0 ? 'ปิดการใช้งาน' : 'เปิดใช้งาน'
-  } else {
-    return '-'
-  }
 }
 </script>
