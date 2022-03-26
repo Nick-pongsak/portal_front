@@ -13,6 +13,18 @@
       <router-view />
     </div>
     <footers />
+    <v-dialog v-model="dialog_expire" max-width="350">
+      <v-card class="confirm-dialog">
+        <v-card-title v-text="errorDialog" :style="{ 'font-weight': '500' }">
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn text @click="signOut()" class="save">
+            {{ $t('btn_ok') }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -21,7 +33,12 @@ import Headers from '@/components/Header'
 import Footers from '@/components/Footer'
 export default {
   name: 'defaults-page',
-  data: () => ({ valueLoading: 0 }),
+  data () {
+    return {
+      valueLoading: 0,
+      errorDialog: this.$t('popup.text14')
+    }
+  },
   components: {
     Headers,
     Footers
@@ -29,6 +46,9 @@ export default {
   computed: {
     loading () {
       return this.$store.getters.isLoading
+    },
+    dialog_expire () {
+      return this.$store.getters.dialog_expire
     }
   },
   methods: {
@@ -40,6 +60,12 @@ export default {
     },
     home () {
       this.$router.push({ path: '/' })
+    },
+    signOut () {
+      this.$store.commit('SetDialogExpire', false)
+      this.$store.dispatch('LogOut').then(() => {
+        this.$router.push('/')
+      })
     }
   },
   mounted () {

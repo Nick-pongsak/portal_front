@@ -366,7 +366,7 @@
               }
               .ag-header-cell-text {
                 // white-space: break-spaces;
-                text-align: center;
+                // text-align: center;
               }
               .ag-cell-label-container {
                 font-weight: 500;
@@ -397,32 +397,24 @@
           }
           .ag-body-viewport {
             .ag-pinned-left-cols-container {
-              height: 30px !important;
               .ag-row {
                 font-size: nth($font-sizes, 2);
                 border-bottom-style: none;
-                // height: 30px !important;
               }
               .ag-row-odd {
-                height: 30px !important;
-                background-color: #ffff;
-                // background-color: red;
+                // background-color: rgb(250, 224, 177);
+                background-color: #ffffff;
               }
               .ag-row-even {
-                height: 30px !important;
-                // background-color: yellow;
+                // background-color: rgb(206, 253, 250);
               }
               .ag-row-no-focus {
                 .ag-cell {
                   padding-left: 10px;
                   padding-right: 10px;
-                  // line-height: inherit;
                 }
                 .ag-cell-value {
                   color: #797979;
-                  line-height: 30px;
-                  height: 30px !important;
-                  // white-space: break-spaces;
                 }
                 .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell) {
                   border-right-color: #d1d1d1;
@@ -435,21 +427,16 @@
                   border-bottom-style: none;
                 }
                 .ag-row-odd {
-                  height: 30px !important;
-                  // background-color: red;
-                  background-color: #ffff;
+                  // background-color: rgb(255, 206, 214);
+                  background-color: #ffffff;
                 }
                 .ag-row-even {
-                  height: 30px !important;
-                  // background-color: yellow;
+                  // background-color: rgb(205, 232, 241);
                 }
                 .ag-cell-value {
                   padding-left: 10px;
                   padding-right: 10px;
                   color: #797979;
-                  // line-height: inherit;
-                  // white-space: break-spaces;
-                  line-height: 30px;
                   font-size: nth($font-sizes, 2);
                 }
               }

@@ -242,16 +242,24 @@ export default {
     }
   },
   methods: {
+    upload_test () {
+      let data = {
+        new: this.list,
+        update: this.list,
+        mistake: this.list,
+        total: 0
+      }
+      data.total = data.new.length + data.update.length + data.mistake.length
+      this.$emit('upload', data)
+    },
     upload () {
       this.$refs.uploaderCsv.click()
     },
     setImage: function (output) {
       if (output.size > 5242880) {
-        console.log('no succes ===> ')
         this.file = ''
         this.hasImage = false
       } else {
-        console.log('succes ===> ')
         this.file = output
         this.hasImage = true
         let formData = new FormData()

@@ -6,10 +6,14 @@ import router from '../../router'
 const store = {
   state: {
     dialog_profile: false,
+    dialog_expire: false,
   },
   mutations: {
     SetDialogProfile(state, data) {
       state.dialog_profile = data;
+    },
+    SetDialogExpire(state, data) {
+      state.dialog_expire = data;
     },
   },
   actions: {
@@ -33,7 +37,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 500) {
             if (error.response.data.message == "Token has expired") {
-              router.push('/');
+              // router.push('/');
+              commit('SetDialogExpire', true)
             }
           }
           reject(error)
@@ -58,7 +63,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 500) {
             if (error.response.data.message == "Token has expired") {
-              router.push('/');
+              // router.push('/');
+              commit('SetDialogExpire', true)
             }
           }
           reject(error)
@@ -83,7 +89,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 500) {
             if (error.response.data.message == "Token has expired") {
-              router.push('/');
+              // router.push('/');
+              commit('SetDialogExpire', true)
             }
           }
           reject(error)
@@ -108,7 +115,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 500) {
             if (error.response.data.message == "Token has expired") {
-              router.push('/');
+              // router.push('/');
+              commit('SetDialogExpire', true)
             }
           }
           reject(error)
@@ -133,7 +141,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 500) {
             if (error.response.data.message == "Token has expired") {
-              router.push('/');
+              // router.push('/');
+              commit('SetDialogExpire', true)
             }
           }
           reject(error)
@@ -158,7 +167,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 500) {
             if (error.response.data.message == "Token has expired") {
-              router.push('/');
+              // router.push('/');
+              commit('SetDialogExpire', true)
             }
           }
           reject(error)
@@ -183,7 +193,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 500) {
             if (error.response.data.message == "Token has expired") {
-              router.push('/');
+              // router.push('/');
+              commit('SetDialogExpire', true)
             }
           }
           reject(error)
@@ -208,7 +219,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 500) {
             if (error.response.data.message == "Token has expired") {
-              router.push('/');
+              // router.push('/');
+              commit('SetDialogExpire', true)
             }
           }
           reject(error)
@@ -233,7 +245,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 500) {
             if (error.response.data.message == "Token has expired") {
-              router.push('/');
+              // router.push('/');
+              commit('SetDialogExpire', true)
             }
           }
           reject(error)
@@ -258,7 +271,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 500) {
             if (error.response.data.message == "Token has expired") {
-              router.push('/');
+              // router.push('/');
+              commit('SetDialogExpire', true)
             }
           }
           reject(error)
@@ -283,7 +297,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 500) {
             if (error.response.data.message == "Token has expired") {
-              router.push('/');
+              // router.push('/');
+              commit('SetDialogExpire', true)
             }
           }
           reject(error)
@@ -308,7 +323,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 500) {
             if (error.response.data.message == "Token has expired") {
-              router.push('/');
+              // router.push('/');
+              commit('SetDialogExpire', true)
             }
           }
           reject(error)
@@ -333,7 +349,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 500) {
             if (error.response.data.message == "Token has expired") {
-              router.push('/');
+              // router.push('/');
+              commit('SetDialogExpire', true)
             }
           }
           reject(error)
@@ -358,7 +375,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 500) {
             if (error.response.data.message == "Token has expired") {
-              router.push('/');
+              // router.push('/');
+              commit('SetDialogExpire', true)
             }
           }
           reject(error)
@@ -383,7 +401,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 500) {
             if (error.response.data.message == "Token has expired") {
-              router.push('/');
+              commit('SetDialogExpire', true)
+              // router.push('/');
             }
           }
           reject(error)
@@ -408,7 +427,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 500) {
             if (error.response.data.message == "Token has expired") {
-              router.push('/');
+              // router.push('/');
+              commit('SetDialogExpire', true)
             }
           }
           reject(error)
@@ -433,7 +453,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 500) {
             if (error.response.data.message == "Token has expired") {
-              router.push('/');
+              // router.push('/');
+              commit('SetDialogExpire', true)
             }
           }
           reject(error)
@@ -458,7 +479,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 500) {
             if (error.response.data.message == "Token has expired") {
-              router.push('/');
+              // router.push('/');
+              commit('SetDialogExpire', true)
             }
           }
           reject(error)
@@ -483,7 +505,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 500) {
             if (error.response.data.message == "Token has expired") {
-              router.push('/');
+              // router.push('/');
+              commit('SetDialogExpire', true)
             }
           }
           reject(error)
@@ -508,7 +531,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 500) {
             if (error.response.data.message == "Token has expired") {
-              router.push('/');
+              // router.push('/');
+              commit('SetDialogExpire', true)
             }
           }
           reject(error)
@@ -518,11 +542,11 @@ const store = {
 
   },
   getters: {
-    // user(state) {
-    //   return state.user;
-    // },
     dialog_profile(state) {
       return state.dialog_profile;
+    },
+    dialog_expire(state) {
+      return state.dialog_expire;
     },
   }
 }

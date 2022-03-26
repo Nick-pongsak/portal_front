@@ -1,7 +1,7 @@
 <template>
   <div style="height:calc(100% - 30px);" id="uploadCsvPage">
     <v-card>
-      <div :class="'tab'" style="padding-bottom:5px">
+      <div :class="'tab'" style="padding-bottom:8px;padding-top:10px">
         <div
           :class="'tab-row'"
           v-for="(item, index) in menu"
@@ -15,6 +15,14 @@
           }}</span>
           <div v-show="active == item.code" class="line-active"></div>
         </div>
+      </div>
+      <div
+        @click="setHeadetCol"
+        id="hideBtnLang"
+        style="display: none;"
+        ref="hideBtnLang"
+      >
+        hideBtnLang
       </div>
       <div style="padding-left:15px;display:flex;width:100%">
         <div style="width:80%">
@@ -40,15 +48,16 @@
       <div style="height: 100%">
         <div class="example-wrapper">
           <ag-grid-vue
-            style="width: 100%; height:calc(100% - 90px);"
+            style="width: 100%; height:calc(100% - 83px);"
             class="ag-theme-alpine"
             :columnDefs="columnDefs"
             :defaultColDef="defaultColDef"
             :rowData="rowData"
             @grid-ready="onGridReady"
+            :tooltipShowDelay="0"
+            :getRowHeight="getRowHeight"
+            :icons="icons"
           ></ag-grid-vue>
-          <!-- :gridOptions="gridOptions" -->
-          <!-- :tooltipShowDelay="tooltipShowDelay" -->
         </div>
       </div>
       <div style="display:none">{{ isLanguage }}</div>
@@ -137,10 +146,13 @@ export default {
           minWidth: 60,
           pinned: 'left',
           valueFormatter: formatterCol1,
-          icons: {
-            sortAscending: 'small-down',
-            sortDescending: 'small-up'
-          }
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          },
+          // icons: {
+          //   sortAscending: '<i class="fa fa-sort-alpha-up"/>',
+          //   sortDescending: '<i class="fa fa-sort-alpha-down"/>'
+          // }
         },
         {
           field: 'type_login',
@@ -150,17 +162,23 @@ export default {
           headerTooltip: this.$t('upload.text6'),
           valueFormatter: formatterCol2,
           tooltipComponent: 'type_login',
-          tooltipValueGetter: formatterCol2
+          tooltipValueGetter: formatterCol2,
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          }
         },
         {
           field: 'emp_code',
           headerName: this.$t('upload.text7'),
-          width: 100,
+          width: 110,
           pinned: 'left',
           headerTooltip: this.$t('upload.text7'),
           valueFormatter: formatterNull,
           tooltipComponent: 'emp_code',
-          tooltipValueGetter: formatterNull
+          tooltipValueGetter: formatterNull,
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          }
         },
         {
           field: 'name_th',
@@ -169,7 +187,10 @@ export default {
           pinned: 'left',
           valueFormatter: formatterNull,
           tooltipComponent: 'name_th',
-          tooltipValueGetter: formatterNull
+          tooltipValueGetter: formatterNull,
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          }
         },
         {
           field: 'name_en',
@@ -177,7 +198,10 @@ export default {
           width: 150,
           valueFormatter: formatterNull,
           tooltipComponent: 'name_en',
-          tooltipValueGetter: formatterNull
+          tooltipValueGetter: formatterNull,
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          }
         },
         {
           field: 'postname_th',
@@ -185,7 +209,10 @@ export default {
           width: 150,
           valueFormatter: formatterNull,
           tooltipComponent: 'postname_th',
-          tooltipValueGetter: formatterNull
+          tooltipValueGetter: formatterNull,
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          }
         },
         {
           field: 'postname_en',
@@ -193,7 +220,10 @@ export default {
           width: 150,
           valueFormatter: formatterNull,
           tooltipComponent: 'postname_en',
-          tooltipValueGetter: formatterNull
+          tooltipValueGetter: formatterNull,
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          }
         },
         {
           field: 'email',
@@ -201,7 +231,10 @@ export default {
           width: 160,
           valueFormatter: formatterNull,
           tooltipComponent: 'email',
-          tooltipValueGetter: formatterNull
+          tooltipValueGetter: formatterNull,
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          }
         },
         {
           field: 'cx',
@@ -209,7 +242,10 @@ export default {
           width: 110,
           valueFormatter: formatterNull,
           tooltipComponent: 'cx',
-          tooltipValueGetter: formatterNull
+          tooltipValueGetter: formatterNull,
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          }
         },
         {
           field: 'group_name_th',
@@ -217,7 +253,10 @@ export default {
           width: 160,
           valueFormatter: formatterNull,
           tooltipComponent: 'group_name_th',
-          tooltipValueGetter: formatterNull
+          tooltipValueGetter: formatterNull,
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          }
         },
         {
           field: 'username',
@@ -225,7 +264,10 @@ export default {
           width: 150,
           valueFormatter: formatterNull,
           tooltipComponent: 'username',
-          tooltipValueGetter: formatterNull
+          tooltipValueGetter: formatterNull,
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          }
         },
         {
           field: 'password',
@@ -233,7 +275,10 @@ export default {
           width: 180,
           valueFormatter: formatterNull,
           tooltipComponent: 'password',
-          tooltipValueGetter: formatterNull
+          tooltipValueGetter: formatterNull,
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          }
         },
         {
           field: 'status',
@@ -243,7 +288,15 @@ export default {
           tooltipComponent: 'status',
           tooltipValueGetter: formatterCol13,
           cellStyle: params =>
-            params.value == 1 ? { color: '#66BB6A' } : { color: '#FBC02D' }
+            params.value == 1
+              ? {
+                  color: '#66BB6A'
+                  // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+                }
+              : {
+                  color: '#FBC02D'
+                  // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+                }
         }
       ],
       defaultColDef: {
@@ -252,10 +305,8 @@ export default {
         sortable: true,
         lockPosition: true
       },
-      rowData: this.data.new,
-      // gridOptions: null,
-      // gridApi: null,
-      // columnApi: null,
+      rowData: [],
+      gridApi: null,
       dialog: false,
       errorDialog: this.$t('popup.text1'),
       error: false,
@@ -264,11 +315,11 @@ export default {
   },
   computed: {
     isLanguage () {
-      // console.log('computed => ', this.gridApi)
-      // this.onGridReady()
-      // this.gridApi.setColumnDefs(this.columnDefs)
-
-      this.rowData = this.data['new']
+      if (this.gridApi !== null) {
+        if (this.columnDefs[0].headerName !== this.$t('upload.text5')) {
+          this.$refs.hideBtnLang.click()
+        }
+      }
       return this.$store.getters.isLanguage
     }
   },
@@ -276,24 +327,36 @@ export default {
     searchApp: {
       handler: function (todos) {
         if (todos.trim().length > 1 || todos.trim().length == 0) {
-          // this.onFilterTextBoxChanged(todos)
+          this.fetchData()
         }
       }
     }
   },
-  // beforeMount () {
-  //   this.gridOptions = {}
-  // },
-  // mounted () {
-  //   this.gridApi = this.gridOptions.api
-  //   this.gridColumnApi = this.gridOptions.columnApi
-  // },
   methods: {
     onGridReady (params) {
-      // console.log('onGridReady =>', params)
-      // this.gridApi = params.gridApi
+      this.gridApi = params.api
+      let data = this.data['new']
+      let font = this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+      data.forEach(function (dataItem) {
+        dataItem.rowHeight = 32
+        // dataItem.cellStyle = 'font-family:' + font
+        // console.log(dataItem)
+      })
+      this.rowData = data
     },
-    tabs (item, index) {
+    setHeadetCol () {
+      var columnDefs = this.gridApi.getColumnDefs()
+      let _this = this
+      columnDefs.forEach(function (colDef, index) {
+        let txt = index + 5
+        colDef.headerName = _this.$t('upload.text' + txt)
+      })
+      this.columnDefs = columnDefs
+    },
+    getRowHeight (params) {
+      return params.data.rowHeight
+    },
+    tabs (item) {
       if (this.active.code !== item.code) {
         this.active = item.code
         this.rowData = this.data[item.feild]
@@ -328,6 +391,12 @@ export default {
         }
         data.total =
           res.data.count_new + res.data.count_update + res.data.count_mistake
+
+        let fieldFind = this.menu.filter(a => a.code == this.active)
+        if (fieldFind.length > 0) {
+          this.rowData = data[fieldFind[0].feild]
+        }
+
         this.$emit('upload', data)
       })
     },
@@ -411,6 +480,11 @@ export default {
   }
 }
 
+// let type_login_0 = this.$t('master.type_login_0')
+// let activeTxt = this.$t('user.text7')
+// let inActiveTxt = this.$t('user.text8')
+// console.log(Vue)
+
 window.formatterNull = function formatterCol2 (params) {
   return params.value == '' ? '-' : params.value
 }
@@ -418,17 +492,17 @@ window.formatterCol1 = function formatterCol2 (params) {
   return params.value + 1
 }
 window.formatterCol2 = function formatterCol2 (params) {
-  if (params.value == '') {
-    return '-'
-  } else {
+  if (typeof params.value === 'number') {
     return params.value == 0 ? 'ผู้ใช้งานบนแอปพลิเคชัน ' : 'LDAP'
+  } else {
+    return '-'
   }
 }
 window.formatterCol13 = function formatterCol2 (params) {
-  if (params.value == '') {
-    return '-'
-  } else {
+  if (typeof params.value === 'number') {
     return params.value == 0 ? 'ปิดการใช้งาน' : 'เปิดใช้งาน'
+  } else {
+    return '-'
   }
 }
 </script>
