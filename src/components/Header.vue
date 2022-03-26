@@ -172,6 +172,7 @@
                 class="upload-block"
                 id="image-uploader-profile"
               >
+                <!-- :id="'idUploader2'" -->
                 <image-uploader
                   v-model="file"
                   :preview="true"
@@ -1525,17 +1526,8 @@ export default {
       }
       let id = document.getElementById('image-uploader-profile')
       if (id !== null) {
-        /*
-        let image = id.getElementsByTagName('img')
-        if (image[0].getAttribute('src') !== '') {
-          image.src = ''
-        }
-        let id2 = document.getElementById('image-uploader-show-profile')
-        if (id2 !== null) {
-          let elements = id2.getElementsByClassName('v-image__image')
-          elements[0].style.backgroundImage = ''
-        }
-        */
+        let inputCur = id.getElementsByTagName('input')
+        inputCur[0].value = ''
       }
       this.$store.dispatch('deletePicProfile', req).then(res => {
         this.showDefaultAccount = true

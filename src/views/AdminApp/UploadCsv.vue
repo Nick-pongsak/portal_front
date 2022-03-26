@@ -56,8 +56,8 @@
             @grid-ready="onGridReady"
             :tooltipShowDelay="0"
             :getRowHeight="getRowHeight"
-            :icons="icons"
           ></ag-grid-vue>
+            <!-- :icons="icons" -->
         </div>
       </div>
       <div style="display:none">{{ isLanguage }}</div>
