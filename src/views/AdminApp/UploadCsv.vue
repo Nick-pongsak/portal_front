@@ -4,9 +4,9 @@
       <div :class="'tab'" style="padding-bottom:8px;padding-top:10px">
         <div
           :class="'tab-row'"
-          v-for="(item, index) in menu"
+          v-for="item in menu"
           :key="'upload-tab-row-' + item.code"
-          @click="tabs(item, index)"
+          @click="tabs(item)"
           :id="'upload-tab-row-' + item.code"
         >
           {{ $t(item.text)
@@ -153,6 +153,7 @@ export default {
           width: 60,
           minWidth: 60,
           pinned: 'left',
+          sortingOrder: ['desc', 'asc'],
           valueFormatter: params => {
             return params.value + 1
           },
@@ -169,6 +170,7 @@ export default {
           width: 120,
           pinned: 'left',
           field: 'type_login',
+          sortingOrder: ['desc', 'asc'],
           headerName: this.$t('upload.text6'),
           headerTooltip: this.$t('upload.text6'),
           valueFormatter: params => {
@@ -186,6 +188,7 @@ export default {
           width: 110,
           pinned: 'left',
           field: 'emp_code',
+          sortingOrder: ['desc', 'asc'],
           valueFormatter: formatterNull,
           tooltipComponent: 'emp_code',
           headerTooltip: this.$t('upload.text7'),
@@ -199,6 +202,7 @@ export default {
           width: 150,
           pinned: 'left',
           field: 'name_th',
+          sortingOrder: ['desc', 'asc'],
           tooltipComponent: 'name_th',
           valueFormatter: formatterNull,
           headerName: this.$t('upload.text8'),
@@ -210,6 +214,7 @@ export default {
         {
           width: 150,
           field: 'name_en',
+          sortingOrder: ['desc', 'asc'],
           tooltipComponent: 'name_en',
           valueFormatter: formatterNull,
           headerName: this.$t('upload.text9'),
@@ -221,6 +226,7 @@ export default {
         {
           width: 150,
           field: 'postname_th',
+          sortingOrder: ['desc', 'asc'],
           valueFormatter: formatterNull,
           tooltipComponent: 'postname_th',
           tooltipValueGetter: formatterNull,
@@ -232,6 +238,7 @@ export default {
         {
           width: 150,
           field: 'postname_en',
+          sortingOrder: ['desc', 'asc'],
           valueFormatter: formatterNull,
           tooltipComponent: 'postname_en',
           tooltipValueGetter: formatterNull,
@@ -243,6 +250,7 @@ export default {
         {
           width: 160,
           field: 'email',
+          sortingOrder: ['desc', 'asc'],
           tooltipComponent: 'email',
           valueFormatter: formatterNull,
           headerName: this.$t('upload.text12'),
@@ -254,6 +262,7 @@ export default {
         {
           field: 'cx',
           width: 110,
+          sortingOrder: ['desc', 'asc'],
           tooltipComponent: 'cx',
           valueFormatter: formatterNull,
           headerName: this.$t('upload.text13'),
@@ -264,6 +273,7 @@ export default {
         },
         {
           width: 160,
+          sortingOrder: ['desc', 'asc'],
           field: 'group_name_th',
           valueFormatter: formatterNull,
           tooltipComponent: 'group_name_th',
@@ -276,6 +286,7 @@ export default {
         {
           width: 150,
           field: 'username',
+          sortingOrder: ['desc', 'asc'],
           valueFormatter: formatterNull,
           tooltipComponent: 'username',
           tooltipValueGetter: formatterNull,
@@ -287,6 +298,7 @@ export default {
         {
           width: 180,
           field: 'password',
+          sortingOrder: ['desc', 'asc'],
           valueFormatter: formatterNull,
           tooltipComponent: 'password',
           tooltipValueGetter: formatterNull,
@@ -298,6 +310,7 @@ export default {
         {
           width: 100,
           field: 'status',
+          sortingOrder: ['desc', 'asc'],
           headerName: this.$t('upload.text17'),
           valueFormatter: params => {
             return params.value == 0
@@ -351,6 +364,7 @@ export default {
   methods: {
     onGridReady (params) {
       this.gridApi = params.api
+      // this.setNoData()
     },
     setHeadetCol () {
       var columnDefs = this.gridApi.getColumnDefs()
@@ -364,6 +378,11 @@ export default {
     getRowHeight (params) {
       return 30
     },
+    setNoData () {
+      document.getElementsByClassName(
+        'ag-overlay-no-rows-center'
+      )[0].innerHTML = this.$t('upload.text19')
+    },
     tabs (item) {
       if (this.active.code !== item.code) {
         this.active = item.code
@@ -374,6 +393,7 @@ export default {
             this.columnDefs.push({
               width: 180,
               field: 'note',
+              sortingOrder: ['desc', 'asc'],
               cellStyle: { color: '#CE1212' },
               headerName: this.$t('upload.text18'),
               valueFormatter: params => {
@@ -392,6 +412,9 @@ export default {
         } else {
           this.columnDefs = this.columnDefs.filter(a => a.field !== 'note')
         }
+        // let id = document.getElementById('upload-tab-row-' + item.code)
+        // id.click()
+        // this.setNoData()
         this.$emit('tabs', item)
       }
     },
@@ -499,36 +522,6 @@ export default {
         'SetAccessToken',
         sessionStorage.getItem('token_seesion')
       )
-      // this.icons = {
-      //   // use font awesome for menu icons
-      //   menu: '<i class="fa fa-bath" style="width: 10px"/>',
-      //   filter: '<i class="fa fa-long-arrow-alt-down"/>',
-      //   columns: '<i class="fa fa-handshake"/>',
-      //   sortAscending: '<i class="fa fa-long-arrow-alt-down"/>',
-      //   sortDescending: '<i class="fa fa-long-arrow-alt-up"/>',
-      //   // use some strings from group
-      //   groupExpanded:
-      //     '<img src="https://www.ag-grid.com/example-assets/group/contract.png" style="height: 12px; width: 12px;padding-right: 2px"/>',
-      //   groupContracted:
-      //     '<img src="https://www.ag-grid.com/example-assets/group/expand.png" style="height: 12px; width: 12px;padding-right: 2px"/>',
-      //   columnMovePin: '<i class="far fa-hand-rock"/>',
-      //   columnMoveAdd: '<i class="fa fa-plus-square"/>',
-      //   columnMoveHide: '<i class="fa fa-times"/>',
-      //   columnMoveMove: '<i class="fa fa-link"/>',
-      //   columnMoveLeft: '<i class="fa fa-arrow-left"/>',
-      //   columnMoveRight: '<i class="fa fa-arrow-right"/>',
-      //   columnMoveGroup: '<i class="fa fa-users"/>',
-      //   rowGroupPanel: '<i class="fa fa-university"/>',
-      //   pivotPanel: '<i class="fa fa-magic"/>',
-      //   valuePanel: '<i class="fa fa-magnet"/>',
-      //   menuPin: 'P',
-      //   menuValue: 'V',
-      //   menuAddRowGroup: 'A',
-      //   menuRemoveRowGroup: 'R',
-      //   clipboardCopy: '>>',
-      //   clipboardPaste: '>>',
-      //   rowDrag: '<i class="fa fa-circle"/>'
-      // }
     }
   }
 }
