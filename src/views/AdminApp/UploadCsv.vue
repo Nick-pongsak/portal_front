@@ -71,7 +71,14 @@
         >
           {{ $t('btn_cancel') }}
         </v-btn>
-        <v-btn @click="saveBtn()" :class="'cancel-btn'" style="height: 22px">
+        <v-btn
+          @click="saveBtn()"
+          :class="'cancel-btn'"
+          style="height: 22px"
+          :disabled="
+            data['new'].length > 0 || data['update'].length > 0 ? false : true
+          "
+        >
           {{ $t('btn_save') }}
         </v-btn>
       </div>
@@ -413,11 +420,13 @@ export default {
       })
     },
     saveBtn () {
-      this.btnClick = 'save'
-      this.error = false
-      this.dialog = true
-      this.errorDialog = this.$t('popup.text11')
-      this.rightBtn = this.$t('btn_save')
+      if (this.data['new'].length > 0 || this.data['update'].length > 0) {
+        this.btnClick = 'save'
+        this.error = false
+        this.dialog = true
+        this.errorDialog = this.$t('popup.text11')
+        this.rightBtn = this.$t('btn_save')
+      }
     },
     save () {
       console.log(this.btnClick)
