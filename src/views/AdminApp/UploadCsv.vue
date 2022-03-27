@@ -304,15 +304,7 @@ export default {
               : this.$t('user.text7')
           },
           cellStyle: params =>
-            params.value == 1
-              ? {
-                  color: '#66BB6A'
-                  // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
-                }
-              : {
-                  color: '#FBC02D'
-                  // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
-                }
+            params.value == 1 ? { color: '#66BB6A' } : { color: '#FBC02D' }
         }
       ],
       defaultColDef: {
@@ -322,7 +314,7 @@ export default {
         sortable: true,
         lockPosition: true
       },
-      rowData: [],
+      rowData: this.data['new'],
       gridApi: null,
       dialog: false,
       errorDialog: this.$t('popup.text1'),
@@ -352,17 +344,6 @@ export default {
   methods: {
     onGridReady (params) {
       this.gridApi = params.api
-      let data = this.data['new']
-      // let font = this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
-      data.forEach(function (dataItem) {
-        dataItem.rowHeight = 32
-        // dataItem.cellStyle = 'font-family:' + font
-        // console.log(dataItem)
-      })
-      this.rowData = data
-
-      // ag-overlay
-      //ag-overlay-no-rows-center
     },
     setHeadetCol () {
       var columnDefs = this.gridApi.getColumnDefs()
@@ -374,7 +355,7 @@ export default {
       this.columnDefs = columnDefs
     },
     getRowHeight (params) {
-      return params.data.rowHeight
+      return 30
     },
     tabs (item) {
       if (this.active.code !== item.code) {
