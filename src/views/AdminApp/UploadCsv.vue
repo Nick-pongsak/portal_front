@@ -420,6 +420,7 @@ export default {
       this.rightBtn = this.$t('btn_save')
     },
     save () {
+      console.log(this.btnClick)
       if (this.btnClick == 'save') {
         this.$store
           .dispatch('saveCsv', null)
@@ -450,8 +451,10 @@ export default {
             // this.list = []
           })
       } else if (this.btnClick == 'success') {
+        this.$emit('cancel', null)
         this.cancel()
       } else if (this.btnClick == 'cancel') {
+        this.$emit('cancel', null)
         this.cancel()
       } else if (this.btnClick == 'error') {
         this.dialog = false
@@ -466,7 +469,6 @@ export default {
       this.rightBtn = this.$t('btn_ok')
     },
     cancel () {
-      this.$emit('cancel', null)
       this.error = false
       this.dialog = false
       this.rightBtn = this.$t('btn_save')
