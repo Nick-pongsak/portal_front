@@ -159,10 +159,10 @@ export default {
           // }
         },
         {
-          field: 'type_login',
-          headerName: this.$t('upload.text6'),
           width: 120,
           pinned: 'left',
+          field: 'type_login',
+          headerName: this.$t('upload.text6'),
           headerTooltip: this.$t('upload.text6'),
           valueFormatter: params => {
             return params.value == 0 ? this.$t('master.type_login_0') : 'LDAP'
@@ -176,69 +176,69 @@ export default {
           }
         },
         {
-          field: 'emp_code',
-          headerName: this.$t('upload.text7'),
           width: 110,
           pinned: 'left',
-          headerTooltip: this.$t('upload.text7'),
+          field: 'emp_code',
           valueFormatter: formatterNull,
           tooltipComponent: 'emp_code',
+          headerTooltip: this.$t('upload.text7'),
+          headerName: this.$t('upload.text7'),
           tooltipValueGetter: formatterNull,
           cellStyle: {
             // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
           }
         },
         {
-          field: 'name_th',
-          headerName: this.$t('upload.text8'),
           width: 150,
           pinned: 'left',
-          valueFormatter: formatterNull,
+          field: 'name_th',
           tooltipComponent: 'name_th',
-          tooltipValueGetter: formatterNull,
-          cellStyle: {
-            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
-          }
-        },
-        {
-          field: 'name_en',
-          headerName: this.$t('upload.text9'),
-          width: 150,
           valueFormatter: formatterNull,
-          tooltipComponent: 'name_en',
+          headerName: this.$t('upload.text8'),
           tooltipValueGetter: formatterNull,
           cellStyle: {
             // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
           }
         },
         {
-          field: 'postname_th',
-          headerName: this.$t('upload.text10'),
           width: 150,
+          field: 'name_en',
+          tooltipComponent: 'name_en',
+          valueFormatter: formatterNull,
+          headerName: this.$t('upload.text9'),
+          tooltipValueGetter: formatterNull,
+          cellStyle: {
+            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
+          }
+        },
+        {
+          width: 150,
+          field: 'postname_th',
           valueFormatter: formatterNull,
           tooltipComponent: 'postname_th',
           tooltipValueGetter: formatterNull,
+          headerName: this.$t('upload.text10'),
           cellStyle: {
             // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
           }
         },
         {
-          field: 'postname_en',
-          headerName: this.$t('upload.text11'),
           width: 150,
+          field: 'postname_en',
           valueFormatter: formatterNull,
           tooltipComponent: 'postname_en',
           tooltipValueGetter: formatterNull,
+          headerName: this.$t('upload.text11'),
           cellStyle: {
             // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
           }
         },
         {
-          field: 'email',
-          headerName: this.$t('upload.text12'),
           width: 160,
-          valueFormatter: formatterNull,
+          field: 'email',
           tooltipComponent: 'email',
+          valueFormatter: formatterNull,
+          headerName: this.$t('upload.text12'),
           tooltipValueGetter: formatterNull,
           cellStyle: {
             // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
@@ -246,52 +246,52 @@ export default {
         },
         {
           field: 'cx',
-          headerName: this.$t('upload.text13'),
           width: 110,
-          valueFormatter: formatterNull,
           tooltipComponent: 'cx',
+          valueFormatter: formatterNull,
+          headerName: this.$t('upload.text13'),
           tooltipValueGetter: formatterNull,
           cellStyle: {
             // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
           }
         },
         {
-          field: 'group_name_th',
-          headerName: this.$t('upload.text14'),
           width: 160,
+          field: 'group_name_th',
           valueFormatter: formatterNull,
           tooltipComponent: 'group_name_th',
+          headerName: this.$t('upload.text14'),
           tooltipValueGetter: formatterNull,
           cellStyle: {
             // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
           }
         },
         {
-          field: 'username',
-          headerName: this.$t('upload.text15'),
           width: 150,
+          field: 'username',
           valueFormatter: formatterNull,
           tooltipComponent: 'username',
           tooltipValueGetter: formatterNull,
+          headerName: this.$t('upload.text15'),
           cellStyle: {
             // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
           }
         },
         {
-          field: 'password',
-          headerName: this.$t('upload.text16'),
           width: 180,
+          field: 'password',
           valueFormatter: formatterNull,
           tooltipComponent: 'password',
           tooltipValueGetter: formatterNull,
+          headerName: this.$t('upload.text16'),
           cellStyle: {
             // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
           }
         },
         {
+          width: 100,
           field: 'status',
           headerName: this.$t('upload.text17'),
-          width: 100,
           valueFormatter: params => {
             return params.value == 0
               ? this.$t('user.text8')
@@ -304,15 +304,7 @@ export default {
               : this.$t('user.text7')
           },
           cellStyle: params =>
-            params.value == 1
-              ? {
-                  color: '#66BB6A'
-                  // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
-                }
-              : {
-                  color: '#FBC02D'
-                  // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
-                }
+            params.value == 1 ? { color: '#66BB6A' } : { color: '#FBC02D' }
         }
       ],
       defaultColDef: {
@@ -322,7 +314,7 @@ export default {
         sortable: true,
         lockPosition: true
       },
-      rowData: [],
+      rowData: this.data['new'],
       gridApi: null,
       dialog: false,
       errorDialog: this.$t('popup.text1'),
@@ -352,19 +344,6 @@ export default {
   methods: {
     onGridReady (params) {
       this.gridApi = params.api
-      let data = this.data['new']
-      let font = this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
-      data.forEach(function (dataItem) {
-        dataItem.rowHeight = 32
-        // dataItem.cellStyle = 'font-family:' + font
-        // console.log(dataItem)
-      })
-      this.rowData = data
-
-      // ag-overlay
-      //ag-overlay-no-rows-center
-
-
     },
     setHeadetCol () {
       var columnDefs = this.gridApi.getColumnDefs()
@@ -376,7 +355,7 @@ export default {
       this.columnDefs = columnDefs
     },
     getRowHeight (params) {
-      return params.data.rowHeight
+      return 30
     },
     tabs (item) {
       if (this.active.code !== item.code) {
@@ -386,10 +365,21 @@ export default {
           let fieldFind = this.columnDefs.filter(a => a.field == 'note')
           if (fieldFind.length == 0) {
             this.columnDefs.push({
-              field: 'note',
-              headerName: this.$t('upload.text18'),
               width: 180,
-              cellStyle: { color: '#CE1212' }
+              field: 'note',
+              cellStyle: { color: '#CE1212' },
+              headerName: this.$t('upload.text18'),
+              valueFormatter: params => {
+                return typeof params.value === 'number' && params.value > 0
+                  ? this.$t('upload.text2' + params.value)
+                  : '-'
+              },
+              tooltipComponent: 'note',
+              tooltipValueGetter: params => {
+                return typeof params.value === 'number' && params.value > 0
+                  ? this.$t('upload.text2' + params.value)
+                  : '-'
+              }
             })
           }
         } else {
@@ -430,6 +420,7 @@ export default {
       this.rightBtn = this.$t('btn_save')
     },
     save () {
+      console.log(this.btnClick)
       if (this.btnClick == 'save') {
         this.$store
           .dispatch('saveCsv', null)
@@ -460,8 +451,10 @@ export default {
             // this.list = []
           })
       } else if (this.btnClick == 'success') {
+        this.$emit('cancel', null)
         this.cancel()
       } else if (this.btnClick == 'cancel') {
+        this.$emit('cancel', null)
         this.cancel()
       } else if (this.btnClick == 'error') {
         this.dialog = false
@@ -476,7 +469,6 @@ export default {
       this.rightBtn = this.$t('btn_ok')
     },
     cancel () {
-      this.$emit('cancel', null)
       this.error = false
       this.dialog = false
       this.rightBtn = this.$t('btn_save')

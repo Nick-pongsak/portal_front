@@ -149,6 +149,11 @@ const locales = {
     'upload.text18': 'Remark',
     'upload.text19': '-- Item not found --',
     'upload.text20': 'Save data successfully.',
+    'upload.text21': 'ข้อมูลไม่ถูกต้อง',
+    'upload.text22': 'ข้อมูลผู้ใช้งานใหม่ไม่ถูกต้อง',
+    'upload.text23': 'ไม่สามารถอัปเดตข้อมูลได้',
+    'upload.text24': 'ไม่พบข้อมูลที่ต้องการอัปเดต',
+    'upload.text25': 'ไม่สามารถอัปเดตข้อมูล Username&Password',
 
     'popup.text1': 'Do you want to save data?',
     'popup.text2': "Can't save data. Please contact the administrator",
@@ -317,6 +322,11 @@ const locales = {
     'upload.text18': 'หมายเหตุ',
     'upload.text19': '-- ไม่พบรายการ --',
     'upload.text20': 'บันทึกข้อมูลสำเร็จ',
+    'upload.text21': 'ข้อมูลไม่ถูกต้อง',
+    'upload.text22': 'ข้อมูลผู้ใช้งานใหม่ไม่ถูกต้อง',
+    'upload.text23': 'ไม่สามารถอัปเดตข้อมูลได้',
+    'upload.text24': 'ไม่พบข้อมูลที่ต้องการอัปเดต',
+    'upload.text25': 'ไม่สามารถอัปเดตข้อมูล Username&Password',
 
     'popup.text1': 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?',
     'popup.text2': 'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ',
