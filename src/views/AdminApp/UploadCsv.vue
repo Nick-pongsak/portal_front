@@ -195,6 +195,11 @@ export default {
           headerTooltip: this.$t('upload.text7'),
           headerName: this.$t('upload.text7'),
           tooltipValueGetter: formatterNull,
+          // icons: myIcons
+          // icons: {
+          //   sortAscending: 'ag-icon ag-icon-desc',
+          //   sortDescending: 'ag-icon ag-icon-asc'
+          // },
           cellStyle: {
             // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
           }
@@ -527,6 +532,14 @@ export default {
   }
 }
 
+var myIcons = {
+  sortAscending: function () {
+    return 'ASC'
+  },
+  sortDescending: function () {
+    return 'DESC'
+  }
+}
 window.formatterNull = function formatterCol2 (params) {
   return params.value == '' ? '-' : params.value
 }
