@@ -40,6 +40,8 @@ const store = {
           if (error && error.response && error.response.status === 401) {
             // router.push('/');
             commit('SetDialogExpire', true)
+          } else if (error && error.response && error.response.status === 500) {
+            commit('SetDialogExpire', true)
           }
           reject(error)
         })
@@ -63,6 +65,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 401) {
             // router.push('/');
+            commit('SetDialogExpire', true)
+          } else if (error && error.response && error.response.status === 500) {
             commit('SetDialogExpire', true)
           }
           reject(error)
@@ -88,6 +92,8 @@ const store = {
           if (error && error.response && error.response.status === 401) {
             // router.push('/');
             commit('SetDialogExpire', true)
+          } else if (error && error.response && error.response.status === 500) {
+            commit('SetDialogExpire', true)
           }
           reject(error)
         })
@@ -111,6 +117,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 401) {
             // router.push('/');
+            commit('SetDialogExpire', true)
+          } else if (error && error.response && error.response.status === 500) {
             commit('SetDialogExpire', true)
           }
           reject(error)
@@ -137,6 +145,8 @@ const store = {
           if (error && error.response && error.response.status === 401) {
             // router.push('/');
             commit('SetDialogExpire', true)
+          } else if (error && error.response && error.response.status === 500) {
+            commit('SetDialogExpire', true)
           }
           reject(error)
         })
@@ -160,6 +170,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 401) {
             // router.push('/');
+            commit('SetDialogExpire', true)
+          } else if (error && error.response && error.response.status === 500) {
             commit('SetDialogExpire', true)
           }
           reject(error)
@@ -185,6 +197,8 @@ const store = {
           if (error && error.response && error.response.status === 401) {
             // router.push('/');
             commit('SetDialogExpire', true)
+          } else if (error && error.response && error.response.status === 500) {
+            commit('SetDialogExpire', true)
           }
           reject(error)
         })
@@ -208,6 +222,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 401) {
             // router.push('/');
+            commit('SetDialogExpire', true)
+          } else if (error && error.response && error.response.status === 500) {
             commit('SetDialogExpire', true)
           }
           reject(error)
@@ -233,6 +249,8 @@ const store = {
           if (error && error.response && error.response.status === 401) {
             // router.push('/');
             commit('SetDialogExpire', true)
+          } else if (error && error.response && error.response.status === 500) {
+            commit('SetDialogExpire', true)
           }
           reject(error)
         })
@@ -256,6 +274,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 401) {
             // router.push('/');
+            commit('SetDialogExpire', true)
+          } else if (error && error.response && error.response.status === 500) {
             commit('SetDialogExpire', true)
           }
           reject(error)
@@ -282,6 +302,8 @@ const store = {
           if (error && error.response && error.response.status === 401) {
             // router.push('/');
             commit('SetDialogExpire', true)
+          } else if (error && error.response && error.response.status === 500) {
+            commit('SetDialogExpire', true)
           }
           reject(error)
         })
@@ -306,6 +328,8 @@ const store = {
           if (error && error.response && error.response.status === 401) {
             // router.push('/');
             commit('SetDialogExpire', true)
+          } else if (error && error.response && error.response.status === 500) {
+            commit('SetDialogExpire', true)
           }
           reject(error)
         })
@@ -329,6 +353,8 @@ const store = {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 401) {
             // router.push('/');
+            commit('SetDialogExpire', true)
+          } else if (error && error.response && error.response.status === 500) {
             commit('SetDialogExpire', true)
           }
           reject(error)
