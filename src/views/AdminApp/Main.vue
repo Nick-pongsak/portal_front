@@ -248,9 +248,9 @@ export default {
   methods: {
     upload_test () {
       let data = {
-        new: this.list,
+        new: [],
         update: this.list,
-        mistake: this.list,
+        mistake: [],
         total: 0
       }
       data.total = data.new.length + data.update.length + data.mistake.length

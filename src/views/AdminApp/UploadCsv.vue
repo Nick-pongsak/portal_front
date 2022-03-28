@@ -198,10 +198,6 @@ export default {
           headerName: this.$t('upload.text7'),
           tooltipValueGetter: formatterNull,
           // icons: myIcons,
-          // icons: {
-          //   sortAscending: '<i class="fa fa-sort-up"/>',
-          //   sortDescending: '<i class="fa fa-sort-down"/>'
-          // },
           cellStyle: {
             // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
           }
@@ -363,6 +359,7 @@ export default {
       if (this.gridApi !== null) {
         if (this.columnDefs[0].headerName !== this.$t('upload.text5')) {
           this.$refs.hideBtnLang.click()
+          this.setNoData()
         }
       }
       return this.$store.getters.isLanguage
@@ -380,7 +377,7 @@ export default {
   methods: {
     onGridReady (params) {
       this.gridApi = params.api
-      // this.setNoData()
+      this.setNoData()
     },
     setHeadetCol () {
       var columnDefs = this.gridApi.getColumnDefs()
@@ -395,9 +392,10 @@ export default {
       return 30
     },
     setNoData () {
-      document.getElementsByClassName(
-        'ag-overlay-no-rows-center'
-      )[0].innerHTML = this.$t('upload.text19')
+      let temp = document.getElementsByClassName('ag-overlay-no-rows-center')[0]
+      if (temp !== undefined) {
+        temp.innerHTML = this.$t('upload.text19')
+      }
     },
     tabs (item) {
       if (this.active.code !== item.code) {
@@ -428,10 +426,10 @@ export default {
         } else {
           this.columnDefs = this.columnDefs.filter(a => a.field !== 'note')
         }
-        // let id = document.getElementById('upload-tab-row-' + item.code)
-        // id.click()
-        // this.setNoData()
         this.$emit('tabs', item)
+        setTimeout(() => {
+          this.setNoData()
+        }, 5)
       }
     },
     fetchData () {
@@ -542,14 +540,6 @@ export default {
   }
 }
 
-var myIcons = {
-  sortAscending: function () {
-    return '˅'
-  },
-  sortDescending: function () {
-    return '˄'
-  }
-}
 window.formatterNull = function formatterCol2 (params) {
   return params.value == '' ? '-' : params.value
 }
