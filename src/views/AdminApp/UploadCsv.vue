@@ -153,7 +153,7 @@ export default {
           width: 60,
           minWidth: 60,
           pinned: 'left',
-          sortingOrder: ['desc', 'asc'],
+          sortingOrder: ['asc', 'desc'],
           valueFormatter: params => {
             return params.value + 1
           },
@@ -170,7 +170,7 @@ export default {
           width: 120,
           pinned: 'left',
           field: 'type_login',
-          sortingOrder: ['desc', 'asc'],
+          sortingOrder: ['asc', 'desc'],
           headerName: this.$t('upload.text6'),
           headerTooltip: this.$t('upload.text6'),
           valueFormatter: params => {
@@ -188,7 +188,8 @@ export default {
           width: 110,
           pinned: 'left',
           field: 'emp_code',
-          sortingOrder: ['desc', 'asc'],
+          // sort: 'asc',
+          sortingOrder: ['asc', 'desc'],
           valueFormatter: formatterNull,
           tooltipComponent: 'emp_code',
           headerTooltip: this.$t('upload.text7'),
@@ -202,7 +203,7 @@ export default {
           width: 150,
           pinned: 'left',
           field: 'name_th',
-          sortingOrder: ['desc', 'asc'],
+          sortingOrder: ['asc', 'desc'],
           tooltipComponent: 'name_th',
           valueFormatter: formatterNull,
           headerName: this.$t('upload.text8'),
@@ -214,7 +215,7 @@ export default {
         {
           width: 150,
           field: 'name_en',
-          sortingOrder: ['desc', 'asc'],
+          sortingOrder: ['asc', 'desc'],
           tooltipComponent: 'name_en',
           valueFormatter: formatterNull,
           headerName: this.$t('upload.text9'),
@@ -226,7 +227,7 @@ export default {
         {
           width: 150,
           field: 'postname_th',
-          sortingOrder: ['desc', 'asc'],
+          sortingOrder: ['asc', 'desc'],
           valueFormatter: formatterNull,
           tooltipComponent: 'postname_th',
           tooltipValueGetter: formatterNull,
@@ -238,7 +239,7 @@ export default {
         {
           width: 150,
           field: 'postname_en',
-          sortingOrder: ['desc', 'asc'],
+          sortingOrder: ['asc', 'desc'],
           valueFormatter: formatterNull,
           tooltipComponent: 'postname_en',
           tooltipValueGetter: formatterNull,
@@ -250,7 +251,7 @@ export default {
         {
           width: 160,
           field: 'email',
-          sortingOrder: ['desc', 'asc'],
+          sortingOrder: ['asc', 'desc'],
           tooltipComponent: 'email',
           valueFormatter: formatterNull,
           headerName: this.$t('upload.text12'),
@@ -262,7 +263,7 @@ export default {
         {
           field: 'cx',
           width: 110,
-          sortingOrder: ['desc', 'asc'],
+          sortingOrder: ['asc', 'desc'],
           tooltipComponent: 'cx',
           valueFormatter: formatterNull,
           headerName: this.$t('upload.text13'),
@@ -273,7 +274,7 @@ export default {
         },
         {
           width: 160,
-          sortingOrder: ['desc', 'asc'],
+          sortingOrder: ['asc', 'desc'],
           field: 'group_name_th',
           valueFormatter: formatterNull,
           tooltipComponent: 'group_name_th',
@@ -286,7 +287,7 @@ export default {
         {
           width: 150,
           field: 'username',
-          sortingOrder: ['desc', 'asc'],
+          sortingOrder: ['asc', 'desc'],
           valueFormatter: formatterNull,
           tooltipComponent: 'username',
           tooltipValueGetter: formatterNull,
@@ -298,7 +299,7 @@ export default {
         {
           width: 180,
           field: 'password',
-          sortingOrder: ['desc', 'asc'],
+          sortingOrder: ['asc', 'desc'],
           valueFormatter: formatterNull,
           tooltipComponent: 'password',
           tooltipValueGetter: formatterNull,
@@ -310,7 +311,7 @@ export default {
         {
           width: 100,
           field: 'status',
-          sortingOrder: ['desc', 'asc'],
+          sortingOrder: ['asc', 'desc'],
           headerName: this.$t('upload.text17'),
           valueFormatter: params => {
             return params.value == 0
@@ -393,7 +394,7 @@ export default {
             this.columnDefs.push({
               width: 180,
               field: 'note',
-              sortingOrder: ['desc', 'asc'],
+              sortingOrder: ['asc', 'desc'],
               cellStyle: { color: '#CE1212' },
               headerName: this.$t('upload.text18'),
               valueFormatter: params => {
