@@ -246,7 +246,7 @@ export default {
     }
   },
   methods: {
-    upload () {
+    upload_test () {
       let data = {
         new: [],
         update: this.list,
@@ -256,7 +256,7 @@ export default {
       data.total = data.new.length + data.update.length + data.mistake.length
       this.$emit('upload', data)
     },
-    upload_test () {
+    upload () {
       this.$refs.uploaderCsv.click()
     },
     setImage: function (output) {
