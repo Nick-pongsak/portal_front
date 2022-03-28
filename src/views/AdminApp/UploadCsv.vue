@@ -150,19 +150,18 @@ export default {
           headerName: this.$t('upload.text5'),
           field: 'index',
           width: 60,
+          // sort: 'asc',
           minWidth: 60,
           pinned: 'left',
           sortingOrder: ['asc', 'desc'],
           valueFormatter: params => {
             return params.value + 1
           },
-          cellStyle: {
-            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
-          }
         },
         {
           width: 120,
           pinned: 'left',
+          // sort: 'asc',
           field: 'type_login',
           sortingOrder: ['asc', 'desc'],
           headerName: this.$t('upload.text6'),
@@ -182,9 +181,6 @@ export default {
                 : 'LDAP'
               : '-'
           },
-          cellStyle: {
-            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
-          }
         },
         {
           width: 110,
@@ -196,123 +192,103 @@ export default {
           tooltipComponent: 'emp_code',
           headerTooltip: this.$t('upload.text7'),
           headerName: this.$t('upload.text7'),
-          tooltipValueGetter: formatterNull,
+          tooltipValueGetter: formatterNull
           // icons: myIcons,
-          cellStyle: {
-            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
-          }
         },
         {
           width: 150,
+          // sort: 'asc',
           pinned: 'left',
           field: 'name_th',
           sortingOrder: ['asc', 'desc'],
           tooltipComponent: 'name_th',
           valueFormatter: formatterNull,
           headerName: this.$t('upload.text8'),
-          tooltipValueGetter: formatterNull,
-          cellStyle: {
-            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
-          }
+          tooltipValueGetter: formatterNull
         },
         {
           width: 150,
+          // sort: 'asc',
           field: 'name_en',
           sortingOrder: ['asc', 'desc'],
           tooltipComponent: 'name_en',
           valueFormatter: formatterNull,
           headerName: this.$t('upload.text9'),
-          tooltipValueGetter: formatterNull,
-          cellStyle: {
-            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
-          }
+          tooltipValueGetter: formatterNull
         },
         {
           width: 150,
+          // sort: 'asc',
           field: 'postname_th',
           sortingOrder: ['asc', 'desc'],
           valueFormatter: formatterNull,
           tooltipComponent: 'postname_th',
           tooltipValueGetter: formatterNull,
-          headerName: this.$t('upload.text10'),
-          cellStyle: {
-            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
-          }
+          headerName: this.$t('upload.text10')
         },
         {
           width: 150,
+          // sort: 'asc',
           field: 'postname_en',
           sortingOrder: ['asc', 'desc'],
           valueFormatter: formatterNull,
           tooltipComponent: 'postname_en',
           tooltipValueGetter: formatterNull,
-          headerName: this.$t('upload.text11'),
-          cellStyle: {
-            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
-          }
+          headerName: this.$t('upload.text11')
         },
         {
           width: 160,
+          // sort: 'asc',
           field: 'email',
           sortingOrder: ['asc', 'desc'],
           tooltipComponent: 'email',
           valueFormatter: formatterNull,
           headerName: this.$t('upload.text12'),
-          tooltipValueGetter: formatterNull,
-          cellStyle: {
-            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
-          }
+          tooltipValueGetter: formatterNull
         },
         {
           field: 'cx',
+          // sort: 'asc',
           width: 110,
           sortingOrder: ['asc', 'desc'],
           tooltipComponent: 'cx',
           valueFormatter: formatterNull,
           headerName: this.$t('upload.text13'),
-          tooltipValueGetter: formatterNull,
-          cellStyle: {
-            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
-          }
+          tooltipValueGetter: formatterNull
         },
         {
           width: 160,
+          // sort: 'asc',
           sortingOrder: ['asc', 'desc'],
           field: 'group_name_th',
           valueFormatter: formatterNull,
           tooltipComponent: 'group_name_th',
           headerName: this.$t('upload.text14'),
-          tooltipValueGetter: formatterNull,
-          cellStyle: {
-            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
-          }
+          tooltipValueGetter: formatterNull
         },
         {
           width: 150,
+          // sort: 'asc',
           field: 'username',
           sortingOrder: ['asc', 'desc'],
           valueFormatter: formatterNull,
           tooltipComponent: 'username',
           tooltipValueGetter: formatterNull,
-          headerName: this.$t('upload.text15'),
-          cellStyle: {
-            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
-          }
+          headerName: this.$t('upload.text15')
         },
         {
           width: 180,
+          // sort: 'asc',
           field: 'password',
           sortingOrder: ['asc', 'desc'],
           valueFormatter: formatterNull,
           tooltipComponent: 'password',
           tooltipValueGetter: formatterNull,
-          headerName: this.$t('upload.text16'),
-          cellStyle: {
-            // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
-          }
+          headerName: this.$t('upload.text16')
         },
         {
           width: 100,
+          // sort: 'asc',
           field: 'status',
           sortingOrder: ['asc', 'desc'],
           headerName: this.$t('upload.text17'),
@@ -406,6 +382,7 @@ export default {
           if (fieldFind.length == 0) {
             this.columnDefs.push({
               width: 180,
+              // sort: 'asc',
               field: 'note',
               sortingOrder: ['asc', 'desc'],
               cellStyle: { color: '#CE1212' },
