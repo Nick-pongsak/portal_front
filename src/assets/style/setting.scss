@@ -340,7 +340,6 @@
   }
 
   .ag-theme-alpine .ag-icon-desc::before {
-    // content: "\F103";
     content: "\F12D";
     font-size: 12px;
     font-weight: 600;
@@ -350,9 +349,22 @@
   .ag-theme-alpine .ag-icon-asc::before {
     font-size: 12px;
     content: "\F12A";
-    // content: "\F10F";
     font-weight: 600;
     color: #797979;
+  }
+
+  .ag-theme-alpine {
+    .ag-ltr {
+      .ag-has-focus {
+        .ag-cell-focus:not(.ag-cell-range-selected) {
+          border-color: white;
+        }
+      }
+    }
+    .ag-cell {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
   }
 
   .example-wrapper {
@@ -397,12 +409,8 @@
               }
               border-bottom-color: #ffff;
               .ag-header-cell {
-                padding-left: 10px;
-                padding-right: 10px;
-              }
-              .ag-header-cell-text {
-                // white-space: break-spaces;
-                // text-align: center;
+                // padding-left: 10px;
+                // padding-right: 10px;
               }
               .ag-cell-label-container {
                 font-weight: 500;
