@@ -335,6 +335,20 @@
     }
   }
 
+  .ag-theme-alpine .ag-root-wrapper-body .ag-checkbox-input-wrapper {
+    background: none;
+  }
+
+  .ag-theme-alpine .ag-icon-desc::before {
+    content: "\F103";
+    // color: pink;
+  }
+
+  .ag-theme-alpine .ag-icon-asc::before {
+    content: "\F10F";
+    // color: red;
+  }
+
   .example-wrapper {
     display: flex;
     flex-direction: column;

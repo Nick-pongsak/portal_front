@@ -57,7 +57,6 @@
             :tooltipShowDelay="0"
             :getRowHeight="getRowHeight"
           ></ag-grid-vue>
-          <!-- :icons="icons" -->
         </div>
       </div>
       <div style="display:none">{{ isLanguage }}</div>
@@ -157,14 +156,9 @@ export default {
           valueFormatter: params => {
             return params.value + 1
           },
-          // unSortIcon: true,
           cellStyle: {
             // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
           }
-          // icons: {
-          //   sortAscending: '<i class="fa fa-sort-alpha-up"/>',
-          //   sortDescending: '<i class="fa fa-sort-alpha-down"/>'
-          // }
         },
         {
           width: 120,
@@ -174,11 +168,19 @@ export default {
           headerName: this.$t('upload.text6'),
           headerTooltip: this.$t('upload.text6'),
           valueFormatter: params => {
-            return params.value == 0 ? this.$t('master.type_login_0') : 'LDAP'
+            return params.value !== ''
+              ? params.value == 0
+                ? this.$t('master.type_login_0')
+                : 'LDAP'
+              : '-'
           },
           tooltipComponent: 'type_login',
           tooltipValueGetter: params => {
-            return params.value == 0 ? this.$t('master.type_login_0') : 'LDAP'
+            return params.value !== ''
+              ? params.value == 0
+                ? this.$t('master.type_login_0')
+                : 'LDAP'
+              : '-'
           },
           cellStyle: {
             // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
@@ -188,21 +190,17 @@ export default {
           width: 110,
           pinned: 'left',
           field: 'emp_code',
-          // sort: 'asc',
+          sort: 'asc',
           sortingOrder: ['asc', 'desc'],
           valueFormatter: formatterNull,
           tooltipComponent: 'emp_code',
           headerTooltip: this.$t('upload.text7'),
           headerName: this.$t('upload.text7'),
           tooltipValueGetter: formatterNull,
-          // icons: {
-          //   sortAscending: '<i class="fa fa-sort-alpha-up"></i>',
-          //   sortDescending: '<svg class="svg-inline--fa fa-coffee fa-w-20" aria-hidden="true" data-fa-i2svg="" data-prefix="fas" data-icon="coffee" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M192 384h192c53 0 96-43 96-96h32c70.6 0 128-57.4 128-128S582.6 32 512 32H120c-13.3 0-24 10.7-24 24v232c0 53 43 96 96 96zM512 96c35.3 0 64 28.7 64 64s-28.7 64-64 64h-32V96h32zm47.7 384H48.3c-47.6 0-61-64-36-64h583.3c25 0 11.8 64-35.9 64z"></path></svg>',
-          // },
           // icons: myIcons,
           // icons: {
-          //   sortAscending: 'ag-icon ag-icon-desc',
-          //   sortDescending: 'ag-icon ag-icon-asc'
+          //   sortAscending: '<i class="fa fa-sort-up"/>',
+          //   sortDescending: '<i class="fa fa-sort-down"/>'
           // },
           cellStyle: {
             // 'font-family': this.$i18n.locale == 'th' ? 'Kanit' : 'Roboto'
@@ -323,18 +321,26 @@ export default {
           sortingOrder: ['asc', 'desc'],
           headerName: this.$t('upload.text17'),
           valueFormatter: params => {
-            return params.value == 0
-              ? this.$t('user.text8')
-              : this.$t('user.text7')
+            return params.value !== ''
+              ? params.value == 0
+                ? this.$t('user.text8')
+                : this.$t('user.text7')
+              : '-'
           },
           tooltipComponent: 'status',
           tooltipValueGetter: params => {
-            return params.value == 0
-              ? this.$t('user.text8')
-              : this.$t('user.text7')
+            return params.value !== ''
+              ? params.value == 0
+                ? this.$t('user.text8')
+                : this.$t('user.text7')
+              : '-'
           },
           cellStyle: params =>
-            params.value == 1 ? { color: '#66BB6A' } : { color: '#FBC02D' }
+            params.value !== ''
+              ? params.value == 1
+                ? { color: '#66BB6A' }
+                : { color: '#FBC02D' }
+              : { color: '#797979' }
         }
       ],
       defaultColDef: {
@@ -538,13 +544,16 @@ export default {
 
 var myIcons = {
   sortAscending: function () {
-    return '+'
+    return '˅'
   },
   sortDescending: function () {
-    return '^'
+    return '˄'
   }
 }
 window.formatterNull = function formatterCol2 (params) {
+  return params.value == '' ? '-' : params.value
+}
+window.formatterType = function formatterCol2 (params) {
   return params.value == '' ? '-' : params.value
 }
 </script>
