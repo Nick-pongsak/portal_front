@@ -56,6 +56,7 @@
             @grid-ready="onGridReady"
             :tooltipShowDelay="0"
             :getRowHeight="getRowHeight"
+            :enableCellTextSelection="true"
           ></ag-grid-vue>
         </div>
       </div>
