@@ -195,7 +195,11 @@ export default {
           headerTooltip: this.$t('upload.text7'),
           headerName: this.$t('upload.text7'),
           tooltipValueGetter: formatterNull,
-          // icons: myIcons
+          // icons: {
+          //   sortAscending: '<i class="fa fa-sort-alpha-up"></i>',
+          //   sortDescending: '<svg class="svg-inline--fa fa-coffee fa-w-20" aria-hidden="true" data-fa-i2svg="" data-prefix="fas" data-icon="coffee" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M192 384h192c53 0 96-43 96-96h32c70.6 0 128-57.4 128-128S582.6 32 512 32H120c-13.3 0-24 10.7-24 24v232c0 53 43 96 96 96zM512 96c35.3 0 64 28.7 64 64s-28.7 64-64 64h-32V96h32zm47.7 384H48.3c-47.6 0-61-64-36-64h583.3c25 0 11.8 64-35.9 64z"></path></svg>',
+          // },
+          // icons: myIcons,
           // icons: {
           //   sortAscending: 'ag-icon ag-icon-desc',
           //   sortDescending: 'ag-icon ag-icon-asc'
@@ -534,10 +538,10 @@ export default {
 
 var myIcons = {
   sortAscending: function () {
-    return 'ASC'
+    return '+'
   },
   sortDescending: function () {
-    return 'DESC'
+    return '^'
   }
 }
 window.formatterNull = function formatterCol2 (params) {
