@@ -39,6 +39,7 @@
         v-else-if="currentView.code == '1.2'"
         :data="editRow"
         @cancel="cancelCsv"
+        @upload="uploadCsv"
       />
       <main-list-app
         v-else-if="currentView.code == '2'"
@@ -163,6 +164,9 @@ export default {
         text: 'upload.text1'
       }
       this.editRow = value
+    },
+    uploadCsv (data) {
+      this.editRow = data
     },
     cancelCsv () {
       this.currentView = this.menu[0]
