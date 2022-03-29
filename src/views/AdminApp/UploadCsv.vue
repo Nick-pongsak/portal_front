@@ -104,7 +104,13 @@
             {{ $t('btn_cancel') }}
           </v-btn>
           <v-btn text @click="save()" class="save">
-            {{ error ? $t('btn_close') : rightBtn }}
+            {{
+              error
+                ? btnClick == 'error'
+                  ? $t('btn_ok')
+                  : $t('btn_close')
+                : rightBtn
+            }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -157,7 +163,7 @@ export default {
           sortingOrder: ['asc', 'desc'],
           valueFormatter: params => {
             return params.value + 1
-          },
+          }
         },
         {
           width: 120,
@@ -181,7 +187,7 @@ export default {
                 ? this.$t('master.type_login_0')
                 : 'LDAP'
               : '-'
-          },
+          }
         },
         {
           width: 110,
@@ -426,6 +432,7 @@ export default {
         data.total =
           res.data.count_new + res.data.count_update + res.data.count_mistake
 
+        // this.rowData = data
         let fieldFind = this.menu.filter(a => a.code == this.active)
         if (fieldFind.length > 0) {
           this.rowData = data[fieldFind[0].feild]
@@ -444,7 +451,6 @@ export default {
       }
     },
     save () {
-      console.log(this.btnClick)
       if (this.btnClick == 'save') {
         this.$store
           .dispatch('saveCsv', null)
@@ -481,6 +487,7 @@ export default {
         this.$emit('cancel', null)
         this.cancel()
       } else if (this.btnClick == 'error') {
+        this.fetchData()
         this.dialog = false
         this.error = false
       }
