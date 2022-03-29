@@ -201,6 +201,24 @@
         </image-uploader>
       </div>
     </v-card>
+    <v-dialog v-model="dialog" max-width="350">
+      <v-card class="confirm-dialog">
+        <v-card-title
+          v-text="errorDialog"
+          :style="{ 'font-weight': error ? '400' : '500' }"
+        >
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn class="cancel" text @click="cancel()" v-show="!error">
+            {{ $t('btn_cancel') }}
+          </v-btn>
+          <v-btn text @click="save()" class="save">
+            {{ $t('btn_ok') }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -228,7 +246,10 @@ export default {
         orderby: true
       },
       hasImage: false,
-      file: ''
+      file: '',
+      dialog: false,
+      errorDialog: '',
+      error: false
     }
   },
   computed: {
@@ -268,33 +289,65 @@ export default {
         this.hasImage = true
         let formData = new FormData()
         formData.append('csv', output)
-        this.$store.dispatch('uploadCsv', formData).then(res => {
-          let req = {
-            keyword: '',
-            sort: 'acs',
-            field: ''
-          }
-          this.$store.dispatch('fetchCsv', req).then(res => {
-            let id = document.getElementById('image-uploader-csv')
-            if (id !== null) {
-              let inputCur = id.getElementsByTagName('input')
-              inputCur[0].value = ''
+        this.$store
+          .dispatch('uploadCsv', formData)
+          .then(res => {
+            let req = {
+              keyword: '',
+              sort: 'acs',
+              field: ''
             }
+            this.$store.dispatch('fetchCsv', req).then(res => {
+              let id = document.getElementById('image-uploader-csv')
+              if (id !== null) {
+                let inputCur = id.getElementsByTagName('input')
+                inputCur[0].value = ''
+              }
 
-            let data = {
-              new: res.data.new,
-              update: res.data.update,
-              mistake: res.data.mistake,
-              total: 0
-            }
-            data.total =
-              res.data.count_new +
-              res.data.count_update +
-              res.data.count_mistake
-            this.$emit('upload', data)
+              let data = {
+                new: res.data.new,
+                update: res.data.update,
+                mistake: res.data.mistake,
+                total: 0
+              }
+              data.total =
+                res.data.count_new +
+                res.data.count_update +
+                res.data.count_mistake
+              this.$emit('upload', data)
+            })
           })
-        })
+          .catch(error => {
+            if (error && error.response && error.response.status === 500) {
+              this.btnClick = 'errorfile'
+              this.dialog = true
+              this.error = true
+              this.errorDialog = this.$t('upload.text25')
+            } else if (
+              error &&
+              error.response &&
+              error.response.status === 401
+            ) {
+              this.btnClick = 'error'
+              this.dialog = true
+              this.error = true
+              this.errorDialog =
+                this.$t('popup.text2') +
+                ' (Error Code ' +
+                error.response.status +
+                ')'
+            }
+          })
       }
+    },
+    save () {
+      let id = document.getElementById('image-uploader-csv')
+      if (id !== null) {
+        let inputCur = id.getElementsByTagName('input')
+        inputCur[0].value = ''
+      }
+      this.dialog = false
+      this.error = false
     },
     add () {
       this.$emit('add', this.active)

@@ -153,6 +153,7 @@ const locales = {
     'upload.text22': 'New user information is invalid',
     'upload.text23': "Couldn't find the information to update",
     'upload.text24': "Can't update Username&Password",
+    'upload.text25': "Can't upload data. Please check the file again.",
 
     'popup.text1': 'Do you want to save data?',
     'popup.text2': "Can't save data. Please contact the administrator",
@@ -325,6 +326,7 @@ const locales = {
     'upload.text22': 'ข้อมูลผู้ใช้งานใหม่ไม่ถูกต้อง',
     'upload.text23': 'ไม่พบข้อมูลที่ต้องการอัปเดต',
     'upload.text24': 'ไม่สามารถอัปเดตข้อมูล Username&Password',
+    'upload.text25': 'ไม่สามารถอัปโหลดข้อมูลได้ โปรดตรวจสอบไฟล์อีกครั้ง',
 
     'popup.text1': 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?',
     'popup.text2': 'ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ',
