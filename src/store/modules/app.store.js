@@ -303,7 +303,7 @@ const store = {
             // router.push('/');
             commit('SetDialogExpire', true)
           } else if (error && error.response && error.response.status === 500) {
-            commit('SetDialogExpire', true)
+            // commit('SetDialogExpire', true)
           }
           reject(error)
         })
@@ -355,7 +355,7 @@ const store = {
             // router.push('/');
             commit('SetDialogExpire', true)
           } else if (error && error.response && error.response.status === 500) {
-            commit('SetDialogExpire', true)
+            // commit('SetDialogExpire', true)
           }
           reject(error)
         })
