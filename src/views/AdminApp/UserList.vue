@@ -902,7 +902,7 @@ export default {
         if (value.length == 0) {
           this.enableBtn = true
         } else {
-          let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_]/g, '')
+          let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_\-]/g, '')
           if (temp.length > 0) {
             this.nameTh = temp
           } else {
@@ -917,7 +917,7 @@ export default {
         if (value.length == 0) {
           this.enableBtn = true
         } else {
-          let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_]/g, '')
+          let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_\-]/g, '')
           if (temp.length > 0) {
             this.nameEn = temp
           } else {
@@ -929,7 +929,7 @@ export default {
     },
     nickname1Th: {
       handler: function (value) {
-        let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_]/g, '')
+        let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_\-]/g, '')
         if (temp.length > 0) {
           this.nickname1Th = temp
         } else {
@@ -940,7 +940,7 @@ export default {
     },
     nickname1En: {
       handler: function (value) {
-        let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_]/g, '')
+        let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_\-]/g, '')
         if (temp.length > 0) {
           this.nickname1En = temp
         } else {
@@ -951,7 +951,7 @@ export default {
     },
     nickname2Th: {
       handler: function (value) {
-        let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_]/g, '')
+        let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_\-]/g, '')
         if (temp.length > 0) {
           this.nickname2Th = temp
         } else {
@@ -962,7 +962,7 @@ export default {
     },
     nickname2En: {
       handler: function (value) {
-        let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_]/g, '')
+        let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_\-]/g, '')
         if (temp.length > 0) {
           this.nickname2En = temp
         } else {
@@ -976,7 +976,7 @@ export default {
         if (value.length == 0) {
           this.enableBtn = true
         } else {
-          let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_]/g, '')
+          let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_\-]/g, '')
           if (temp.length > 0) {
             this.postnameTh = temp
           } else {
@@ -991,7 +991,7 @@ export default {
         if (value.length == 0) {
           this.enableBtn = true
         } else {
-          let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_]/g, '')
+          let temp = value.replace(/[^ก-๙0-9a-zA-Z \[\]\\(\)\{\}\_\-]/g, '')
           if (temp.length > 0) {
             this.postnameEn = temp
           } else {
