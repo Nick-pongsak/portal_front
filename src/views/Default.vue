@@ -25,6 +25,18 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="dialog_error" max-width="350">
+      <v-card class="confirm-dialog">
+        <v-card-title v-text="errorDialog2" :style="{ 'font-weight': '500' }">
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn text @click="closePop()" class="save">
+            {{ $t('btn_close') }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -36,7 +48,8 @@ export default {
   data () {
     return {
       valueLoading: 0,
-      errorDialog: this.$t('popup.text14')
+      errorDialog: this.$t('popup.text14'),
+      errorDialog2: this.$t('popup.text15')
     }
   },
   components: {
@@ -49,6 +62,10 @@ export default {
     },
     dialog_expire () {
       return this.$store.getters.dialog_expire
+    },
+    dialog_error () {
+      this.errorDialog2 = this.$t('popup.text15') + ' (Error Code 500)'
+      return this.$store.getters.dialog_error
     }
   },
   methods: {
@@ -66,6 +83,9 @@ export default {
       this.$store.dispatch('LogOut').then(() => {
         this.$router.push('/')
       })
+    },
+    closePop () {
+      this.$store.commit('SetDialogError', false)
     }
   },
   mounted () {
