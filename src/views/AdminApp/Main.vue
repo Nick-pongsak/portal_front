@@ -117,7 +117,7 @@
             </div>
           </div>
         </div>
-        <div class="body-table">
+        <div class="body-table"  style="height: calc(100% - 90px);">
           <div v-if="list.length == 0" class="no-data">
             {{ $t('popup.text9') }}
           </div>

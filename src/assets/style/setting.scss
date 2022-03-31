@@ -107,7 +107,8 @@
           }
           overflow-x: hidden;
           overflow-y: auto;
-          height: calc(100% - 100px);
+          height: calc(100% - 130px);
+          // height: calc(100% - 100px);
           &::-webkit-scrollbar {
             width: 6px;
           }
