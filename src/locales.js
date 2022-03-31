@@ -169,7 +169,8 @@ const locales = {
     'popup.text11': "Do you want to import new or updated user data?",
     'popup.text12': "Remark - Error data will not be imported into the system.",
     'popup.text13': "The system found user information updated from another administrator. Please check all information and try again.",
-    'popup.text14': "Session expired. Please login again"
+    'popup.text14': "Session expired. Please login again",
+    'popup.text15': "System error. Please contact the administrator.",
 
   },
   'th': {
@@ -343,6 +344,7 @@ const locales = {
     'popup.text12': "หมายเหตุ - ข้อมูลผิดพลาดจะไม่ถูกนำเข้าสู่ระบบ",
     'popup.text13': "ระบบพบข้อมูลผู้ใช้งานถูกอัปเดตจากผู้ดูแลระบบท่านอื่น กรุณาตรวจสอบข้อมูลทั้งหมดและบันทึกอีกครั้ง",
     'popup.text14': "เซสชั่นหมดอายุ โปรดเข้าสู่ระบบอีกครั้ง",
+    'popup.text15': "เกิดข้อผิดพลาด โปรดติดต่อผู้ดูแลระบบ (Error Code xxxx)",
   }
 }
 export default locales
