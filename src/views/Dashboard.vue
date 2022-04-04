@@ -343,7 +343,7 @@ export default {
         let order = res.data.order.split(',')
         for (let i = 0; i < order.length; i++) {
           let index = app.findIndex(h => h.app_id == order[i])
-          if (order[i] == '99999') {
+          if (order[i] == '99999'&& this.info.status_permission == 1) {
             dataTemp.push({
               image: res.data.path + '1645086704.png',
               name_th: 'DHAS PORTAL SETTING',
