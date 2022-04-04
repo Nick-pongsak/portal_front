@@ -389,7 +389,7 @@
                 <input
                   type="text"
                   v-model="username"
-                  @keypress="IsPassword"
+                  @keypress="IsUsername"
                   :placeholder="$t('input_selected')"
                   :disabled="enableInput"
                   :style="{ background: enableInput ? '#D1D1D1' : '' }"
@@ -407,7 +407,8 @@
                 </template>
                 <span style="font-size:13px"
                   >{{ $t('user.text15') }}<br />
-                  {{ $t('user.text16') }}</span
+                  {{ $t('user.text16') }}<br />
+                  {{ $t('user.text18') }}</span
                 >
               </v-tooltip>
             </div>
@@ -1044,7 +1045,7 @@ export default {
         if (value.length < 6 && this.editRow.type_login == 0) {
           this.enableBtn = true
         } else {
-          let temp = value.replace(/[^0-9a-zA-Z]/g, '')
+          let temp = value.replace(/[^0-9a-zA-Z\-\_\@\.]/g, '')
           if (temp.length > 0) {
             this.username = temp
           } else {
@@ -1633,6 +1634,16 @@ export default {
     },
     isNumberPhone (evt) {
       var regex = new RegExp('^[0-9-]+$')
+      var key = String.fromCharCode(!evt.charCode ? evt.which : evt.charCode)
+      if (!regex.test(key)) {
+        evt.preventDefault()
+        return false
+      } else {
+        this.checkBtn()
+      }
+    },
+    IsUsername (evt) {
+      var regex = new RegExp('^[a-zA-Z0-9@_.-]+$')
       var key = String.fromCharCode(!evt.charCode ? evt.which : evt.charCode)
       if (!regex.test(key)) {
         evt.preventDefault()
