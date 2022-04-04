@@ -171,6 +171,8 @@ const locales = {
     'popup.text13': "The system found user information updated from another administrator. Please check all information and try again.",
     'popup.text14': "Session expired. Please login again",
     'popup.text15': "System error. Please contact the administrator.",
+    'popup.text16': "Can't add this application because the application name is duplicate.",
+    'popup.text17': "Can't add this category because the category name is duplicate.",
 
   },
   'th': {
@@ -345,6 +347,8 @@ const locales = {
     'popup.text13': "ระบบพบข้อมูลผู้ใช้งานถูกอัปเดตจากผู้ดูแลระบบท่านอื่น กรุณาตรวจสอบข้อมูลทั้งหมดและบันทึกอีกครั้ง",
     'popup.text14': "เซสชั่นหมดอายุ โปรดเข้าสู่ระบบอีกครั้ง",
     'popup.text15': "เกิดข้อผิดพลาด โปรดติดต่อผู้ดูแลระบบ",
+    'popup.text16': "ไม่สามารถเพิ่มแอปพลิเคชันได้ เนื่องจากชื่อแอปพลิเคชันซ้ำ",
+    'popup.text17': "ไม่สามารถเพิ่มหมวดหมู่ได้ เนื่องจากชื่อหมวดหมู่ซ้ำ",
   }
 }
 export default locales
