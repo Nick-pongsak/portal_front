@@ -244,7 +244,8 @@ export default {
       this.showDragAndDrop = false
       this.onResize()
       if (this.list.length > 0) {
-        let theArray = this.list.filter(word => word.app_id !== 999)
+        // let theArray = this.list.filter(word => word.app_id !== 99999)
+        let theArray = this.list
         let results = theArray.map(a => a.app_id)
         if (results.length > 0) {
           let req = {
@@ -275,7 +276,7 @@ export default {
       this.dialog = false
     },
     openLogin (row) {
-      if (row.app_id == 999) {
+      if (row.app_id == 99999) {
         this.$router.push('/setting')
       } else if (this.showDragAndDrop == false) {
         if (row.status) {
@@ -342,9 +343,24 @@ export default {
         let order = res.data.order.split(',')
         for (let i = 0; i < order.length; i++) {
           let index = app.findIndex(h => h.app_id == order[i])
-          if (index >= 0) {
-            app[index].image = res.data.path + app[index].image
-            dataTemp.push(app[index])
+          if (order[i] == '99999') {
+            dataTemp.push({
+              image: res.data.path + '1645086704.png',
+              name_th: 'DHAS PORTAL SETTING',
+              category_name_th: 'ADMIN',
+              name_en: 'DHAS PORTAL SETTING',
+              category_name_en: 'ADMIN',
+              app_id: 99999,
+              status: true,
+              description_th: 'ตั้งค่าระบบ DHAS PORTAL (Administrator Menu)',
+              description_en:
+                'DHAS PORTAL application settings (Administrator Menu)'
+            })
+          } else {
+            if (index >= 0) {
+              app[index].image = res.data.path + app[index].image
+              dataTemp.push(app[index])
+            }
           }
         }
         for (let i = 0; i < app.length; i++) {
@@ -354,20 +370,20 @@ export default {
             dataTemp.push(app[i])
           }
         }
-        if (this.info.status_permission == 1) {
-          dataTemp.push({
-            image: res.data.path + '1645086704.png',
-            name_th: 'DHAS PORTAL SETTING',
-            category_name_th: 'ADMIN',
-            name_en: 'DHAS PORTAL SETTING',
-            category_name_en: 'ADMIN',
-            app_id: 999,
-            status: true,
-            description_th: 'ตั้งค่าระบบ DHAS PORTAL (Administrator Menu)',
-            description_en:
-              'DHAS PORTAL application settings (Administrator Menu)'
-          })
-        }
+        // if (this.info.status_permission == 1) {
+        //   dataTemp.push({
+        //     image: res.data.path + '1645086704.png',
+        //     name_th: 'DHAS PORTAL SETTING',
+        //     category_name_th: 'ADMIN',
+        //     name_en: 'DHAS PORTAL SETTING',
+        //     category_name_en: 'ADMIN',
+        //     app_id: 99999,
+        //     status: true,
+        //     description_th: 'ตั้งค่าระบบ DHAS PORTAL (Administrator Menu)',
+        //     description_en:
+        //       'DHAS PORTAL application settings (Administrator Menu)'
+        //   })
+        // }
         this.list = dataTemp
       })
     }
