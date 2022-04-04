@@ -941,8 +941,8 @@ export default {
             if (res.status == 213) {
               this.btnClick = 'error'
               this.dialog = true
-              this.errorDialog =
-                this.$t('popup.text2') + ' (Error Code ' + res.status + ')'
+              this.errorDialog = this.$t('popup.text16')
+              // this.$t('popup.text2') + ' (Error Code ' + res.status + ')'
               this.error = true
             } else {
               this.dialog = false
@@ -980,8 +980,8 @@ export default {
               this.btnClick = 'error'
               this.dialog = true
               this.error = true
-              this.errorDialog =
-                this.$t('popup.text2') + ' (Error Code ' + res.status + ')'
+              this.errorDialog = this.$t('popup.text17')
+              // this.$t('popup.text2') + ' (Error Code ' + res.status + ')'
             } else {
               this.modeAdd = null
               this.editMode = false
