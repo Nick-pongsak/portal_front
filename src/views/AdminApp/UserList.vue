@@ -384,70 +384,85 @@
             <div style="width:40%" class="rows-name">
               {{ $t('manageapp.text6') }}
             </div>
-            <div style="width:60%;display:flex" class="rows-input">
-              <div class="input-with-icon" style="margin-right:10px">
-                <input
-                  type="text"
-                  v-model="username"
-                  @keypress="IsUsername"
-                  :placeholder="$t('input_selected')"
-                  :disabled="enableInput"
-                  :style="{ background: enableInput ? '#D1D1D1' : '' }"
-                />
+            <div style="width:60%" class="rows-input">
+              <div style="display:flex">
+                <div class="input-with-icon" style="margin-right:10px">
+                  <input
+                    type="text"
+                    v-model="username"
+                    @keypress="IsUsername"
+                    :placeholder="$t('input_selected')"
+                    :disabled="enableInput"
+                    :style="{ background: enableInput ? '#D1D1D1' : '' }"
+                    @blur="checkPatternUsername()"
+                  />
+                </div>
+                <v-tooltip bottom color="red">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon
+                      v-bind="attrs"
+                      v-on="on"
+                      v-text="'mdi-alert-circle'"
+                      style="color:#CE1212"
+                      size="20"
+                    ></v-icon>
+                  </template>
+                  <span style="font-size:13px"
+                    >{{ $t('user.text15') }}<br />
+                    {{ $t('user.text16') }}<br />
+                    {{ $t('user.text18') }}</span
+                  >
+                </v-tooltip>
               </div>
-              <v-tooltip bottom color="red">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-icon
-                    v-bind="attrs"
-                    v-on="on"
-                    v-text="'mdi-alert-circle'"
-                    style="color:#CE1212"
-                    size="20"
-                  ></v-icon>
-                </template>
-                <span style="font-size:13px"
-                  >{{ $t('user.text15') }}<br />
-                  {{ $t('user.text16') }}<br />
-                  {{ $t('user.text18') }}</span
-                >
-              </v-tooltip>
+              <div
+                v-show="usernameWarning"
+                style="color:#CE1212;font-size:8px;padding-top:5px"
+              >
+                {{ $t('user.text19') }}
+              </div>
             </div>
           </div>
           <div style="width:50%;;display: flex;">
             <div style="width:40%" class="rows-name">
               {{ $t('manageapp.text7') }}
             </div>
-            <div
-              style="width:60%;padding-right:25px;display:flex;"
-              class="rows-input"
-            >
-              <div class="input-with-icon" style="margin-right:10px">
-                <input
-                  type="password"
-                  v-model="password"
-                  :placeholder="$t('input_selected')"
-                  :disabled="enableInput"
-                  @keypress="IsPassword"
-                  :style="{ background: enableInput ? '#D1D1D1' : '' }"
-                />
+            <div style="width:60%;padding-right:25px" class="rows-input">
+              <div style="display:flex">
+                <div class="input-with-icon" style="margin-right:10px">
+                  <input
+                    type="password"
+                    v-model="password"
+                    :placeholder="$t('input_selected')"
+                    :disabled="enableInput"
+                    @keypress="IsPassword"
+                    @blur="checkPatternPwd()"
+                    :style="{ background: enableInput ? '#D1D1D1' : '' }"
+                  />
+                </div>
+                <v-tooltip bottom color="red">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon
+                      v-bind="attrs"
+                      v-on="on"
+                      v-text="'mdi-alert-circle'"
+                      style="color:#CE1212"
+                      size="20"
+                    ></v-icon>
+                  </template>
+                  <span style="font-size:13px"
+                    >{{ $t('pwd.text9') }}<br />
+                    {{ $t('pwd.text7') }}<br />
+                    {{ $t('pwd.text8') }}<br />
+                    {{ $t('pwd.text10') }}
+                  </span>
+                </v-tooltip>
               </div>
-              <v-tooltip bottom color="red">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-icon
-                    v-bind="attrs"
-                    v-on="on"
-                    v-text="'mdi-alert-circle'"
-                    style="color:#CE1212"
-                    size="20"
-                  ></v-icon>
-                </template>
-                <span style="font-size:13px"
-                  >{{ $t('pwd.text9') }}<br />
-                  {{ $t('pwd.text7') }}<br />
-                  {{ $t('pwd.text8') }}<br />
-                  {{ $t('pwd.text10') }}
-                </span>
-              </v-tooltip>
+              <div
+                v-show="passwordWarning"
+                style="color:#CE1212;font-size:8px;padding-top:5px"
+              >
+                {{ $t('user.text20') }}
+              </div>
             </div>
           </div>
         </div>
@@ -832,7 +847,9 @@ export default {
       cxInput: this.data.cx,
       phone: this.data.phone,
       username: this.data.username,
-      password: this.data.password
+      password: this.data.password,
+      usernameWarning: false,
+      passwordWarning: false
     }
   },
   computed: {
@@ -1670,6 +1687,39 @@ export default {
         return false
       } else {
         this.checkBtn()
+      }
+    },
+    checkPatternUsername () {
+      if (this.username.trim().length > 5) {
+        this.usernameWarning = false
+      } else if (
+        this.username.trim().length > 0 &&
+        this.username.trim().length < 6
+      ) {
+        this.usernameWarning = true
+      } else {
+        this.usernameWarning = false
+      }
+    },
+    checkPatternPwd () {
+      let pwd = this.password.trim()
+      let condChar = /[a-zA-Z]*$/
+      let condNum = /[0-9]*$/
+      let conRsChar = pwd.search(condChar)
+      let conRsNum = pwd.search(condNum)
+      if (this.password.trim().length > 5) {
+        if (conRsChar > 0 && conRsNum > 0) {
+          this.passwordWarning = false
+        } else {
+          this.passwordWarning = true
+        }
+      } else if (
+        this.password.trim().length > 0 &&
+        this.password.trim().length < 6
+      ) {
+        this.passwordWarning = true
+      } else {
+        this.passwordWarning = false
       }
     }
   },
