@@ -447,12 +447,16 @@ export default {
     fetchData (item) {
       let str1 = 'LDAP(AD)'
       let str2 = 'ผู้ใช้งานบนแอปพลิเคชัน'
+      let str3 = 'DHAS PORTAL USER'
       let search = this.searchApp.trim()
       let type = null
       if (search.length > 0) {
         if (str1.indexOf(search.toUpperCase()) >= 0) {
           type = 1
-        } else if (str2.indexOf(search.toUpperCase()) >= 0) {
+        } else if (
+          str2.indexOf(search.toUpperCase()) >= 0 ||
+          str3.indexOf(search.toUpperCase()) >= 0
+        ) {
           type = 0
         }
       }
