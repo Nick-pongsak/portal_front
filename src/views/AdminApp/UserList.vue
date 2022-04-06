@@ -1062,13 +1062,21 @@ export default {
         if (value.length < 6 && this.editRow.type_login == 0) {
           this.enableBtn = true
         } else {
-          let temp = value.replace(/[^0-9a-zA-Z\-\_\@\.]/g, '')
-          if (temp.length > 0) {
-            this.username = temp
+          let condChar2 = /[a-zA-Z]/g
+          let conRsChar2 = value.match(condChar2)
+          let condNum2 = /[0-9]/g
+          let conRsNum2 = value.match(condNum2)
+          if (conRsChar2 == null && conRsNum2 == null) {
+            this.enableBtn = true
           } else {
-            this.username = ''
+            let temp = value.replace(/[^0-9a-zA-Z\-\_\@\.]/g, '')
+            if (temp.length > 0) {
+              this.username = temp
+            } else {
+              this.username = ''
+            }
+            this.checkBtn()
           }
-          this.checkBtn()
         }
       }
     },
@@ -1085,11 +1093,19 @@ export default {
           let conRsNum = temp.search(condNum)
 
           if (temp.length > 0) {
-            this.password = temp
-            if (conRsChar <= 0 || conRsNum <= 0) {
+            let condChar2 = /[a-zA-Z]/g
+            let conRsChar2 = temp.match(condChar2)
+            let condNum2 = /[0-9]/g
+            let conRsNum2 = temp.match(condNum2)
+            if (conRsChar2 == null && conRsNum2 == null) {
               this.enableBtn = true
-            } else if (conRsChar >= 0 && conRsNum >= 0) {
-              this.checkBtn()
+            } else {
+              this.password = temp
+              if (conRsChar <= 0 || conRsNum <= 0) {
+                this.enableBtn = true
+              } else if (conRsChar >= 0 && conRsNum >= 0) {
+                this.checkBtn()
+              }
             }
           } else {
             this.password = ''
@@ -1691,7 +1707,15 @@ export default {
     },
     checkPatternUsername () {
       if (this.username.trim().length > 5) {
-        this.usernameWarning = false
+        let condChar = /[a-zA-Z]/g
+        let conRsChar = this.username.match(condChar)
+        let condNum = /[0-9]/g
+        let conRsNum = this.username.match(condNum)
+        if (conRsChar == null && conRsNum == null) {
+          this.usernameWarning = true
+        } else {
+          this.usernameWarning = false
+        }
       } else if (
         this.username.trim().length > 0 &&
         this.username.trim().length < 6
@@ -1708,7 +1732,13 @@ export default {
       let conRsChar = pwd.search(condChar)
       let conRsNum = pwd.search(condNum)
       if (this.password.trim().length > 5) {
-        if (conRsChar > 0 && conRsNum > 0) {
+        let condChar2 = /[a-zA-Z]/g
+        let conRsChar2 = pwd.match(condChar2)
+        let condNum2 = /[0-9]/g
+        let conRsNum2 = pwd.match(condNum2)
+        if (conRsChar2 == null && conRsNum2 == null) {
+          this.passwordWarning = true
+        } else if (conRsChar > 0 && conRsNum > 0) {
           this.passwordWarning = false
         } else {
           this.passwordWarning = true
