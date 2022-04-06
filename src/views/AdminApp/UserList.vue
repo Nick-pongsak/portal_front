@@ -1736,7 +1736,13 @@ export default {
         let conRsChar2 = pwd.match(condChar2)
         let condNum2 = /[0-9]/g
         let conRsNum2 = pwd.match(condNum2)
+        let condSpec2 = /[\!\@\#\$]/g
+        let conRsSpec2 = pwd.match(condSpec2)
         if (conRsChar2 == null && conRsNum2 == null) {
+          this.passwordWarning = true
+        } else if (conRsChar2 == null && conRsSpec2 != null) {
+          this.passwordWarning = true
+        } else if (conRsNum2 == null && conRsSpec2 != null) {
           this.passwordWarning = true
         } else if (conRsChar > 0 && conRsNum > 0) {
           this.passwordWarning = false
