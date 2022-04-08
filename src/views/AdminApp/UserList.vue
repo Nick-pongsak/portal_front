@@ -428,9 +428,12 @@
             </div>
             <div style="width:60%;padding-right:25px" class="rows-input">
               <div style="display:flex">
-                <div class="input-with-icon" style="margin-right:10px">
+                <div
+                  class="input-with-icon"
+                  style="margin-right:10px;display:flex"
+                >
                   <input
-                    type="password"
+                    :type="showPassword ? 'text' : 'password'"
                     v-model="password"
                     :placeholder="$t('input_selected')"
                     :disabled="enableInput"
@@ -438,6 +441,26 @@
                     @blur="checkPatternPwd()"
                     :style="{ background: enableInput ? '#D1D1D1' : '' }"
                   />
+                  <div
+                    @click="showPasswordEvt()"
+                    :style="{
+                      'padding-top': '3px',
+                      cursor: editRow.mode == 'add' ? 'pointer' : 'deafult'
+                    }"
+                  >
+                    <v-icon
+                      v-text="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+                      :style="{
+                        color:
+                          editRow.mode == 'add'
+                            ? '#000000'
+                            : 'rgb(209, 209, 209)',
+                        opacity: editRow.mode == 'add' ? '0.5' : '0.8',
+                        'padding-right': '8px'
+                      }"
+                      size="20"
+                    ></v-icon>
+                  </div>
                 </div>
                 <v-tooltip bottom color="red">
                   <template v-slot:activator="{ on, attrs }">
@@ -849,7 +872,8 @@ export default {
       username: this.data.username,
       password: this.data.password,
       usernameWarning: false,
-      passwordWarning: false
+      passwordWarning: false,
+      showPassword: false
     }
   },
   computed: {
@@ -1116,6 +1140,11 @@ export default {
     }
   },
   methods: {
+    showPasswordEvt () {
+      if (this.editRow.mode == 'add') {
+        this.showPassword = !this.showPassword
+      }
+    },
     checkBtn () {
       let item = JSON.parse(JSON.stringify(this.editRow))
       let group_id = item.group_id.toString()
@@ -1731,7 +1760,7 @@ export default {
       let condNum = /[0-9]*$/
       let conRsChar = pwd.search(condChar)
       let conRsNum = pwd.search(condNum)
-      
+
       var pwdCrypt = this.password
       if (this.password == this.defaultPassword) {
         pwdCrypt = this.oldPassword

@@ -316,16 +316,26 @@
               </div>
               <div
                 class="input-with-icon"
-                style="width:70%;"
+                style="width:70%;display:flex"
                 :class="{ active: errorPwd }"
               >
                 <input
                   style="width:100%"
-                  type="password"
+                  :type="showPassword ? 'text' : 'password'"
                   v-model="password"
                   @keypress="IsNumber"
                   :placeholder="$t('input_selected')"
                 />
+                <div
+                  @click="showPassword = !showPassword"
+                  style="padding-top: 5px;cursor:pointer"
+                >
+                  <v-icon
+                    v-text="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+                    style="color:#000000;opacity:0.5;padding-right:8px;"
+                    size="20"
+                  ></v-icon>
+                </div>
               </div>
             </div>
           </div>
@@ -345,17 +355,27 @@
               </div>
               <div
                 class="input-with-icon"
-                style="width:60%"
+                style="width:60%;display:flex"
                 :class="{ active: errorNewPassword }"
               >
                 <input
                   style="width:100%"
-                  type="password"
+                  :type="showNewPassword ? 'text' : 'password'"
                   v-model="newPassword"
                   :placeholder="$t('input_selected')"
                   @keypress="IsNumber"
                   @keyup="InCondition1"
                 />
+                <div
+                  @click="showNewPassword = !showNewPassword"
+                  style="padding-top: 5px;cursor:pointer"
+                >
+                  <v-icon
+                    v-text="showNewPassword ? 'mdi-eye-off' : 'mdi-eye'"
+                    style="color:#000000;opacity:0.5;padding-right:8px;"
+                    size="20"
+                  ></v-icon>
+                </div>
               </div>
             </div>
           </div>
@@ -366,17 +386,27 @@
               </div>
               <div
                 class="input-with-icon"
-                style="width:60%"
+                style="width:60%;display:flex"
                 :class="{ active: errorCfNewPassword }"
               >
                 <input
                   style="width:100%"
-                  type="password"
+                  :type="showCfNewPassword ? 'text' : 'password'"
                   v-model="cfNewPassword"
                   @keypress="IsNumber"
                   @keyup="InCondition2"
                   :placeholder="$t('input_selected')"
                 />
+                <div
+                  @click="showCfNewPassword = !showCfNewPassword"
+                  style="padding-top: 5px;cursor:pointer"
+                >
+                  <v-icon
+                    v-text="showCfNewPassword ? 'mdi-eye-off' : 'mdi-eye'"
+                    style="color:#000000;opacity:0.5;padding-right:8px;"
+                    size="20"
+                  ></v-icon>
+                </div>
               </div>
             </div>
           </div>
@@ -1131,7 +1161,10 @@ export default {
       postnameEn: '',
       emailInput: '',
       cxInput: '',
-      phone: ''
+      phone: '',
+      showPassword: false,
+      showNewPassword: false,
+      showCfNewPassword: false
     }
   },
   watch: {
