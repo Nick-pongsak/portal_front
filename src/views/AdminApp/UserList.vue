@@ -1731,38 +1731,29 @@ export default {
       let condNum = /[0-9]*$/
       let conRsChar = pwd.search(condChar)
       let conRsNum = pwd.search(condNum)
-
-      let str1 =
-        this.editRow.mode == 'add'
-          ? JSON.stringify(this.master)
-          : this.masterEdit
-      let result = JSON.parse(JSON.stringify(this.editRow))
-      result.emp_code = this.empCode
-      result.name_th = this.nameTh
-      result.name_en = this.nameEn
-      result.nickname1_th = this.nickname1Th
-      result.nickname1_en = this.nickname1En
-      result.nickname2_th = this.nickname2Th
-      result.nickname2_en = this.nickname2En
-      result.postname_th = this.postnameTh
-      result.postname_en = this.postnameEn
-      result.email = this.emailInput
-      result.cx = this.cxInput
-      result.phone = this.phone
-      result.username = this.username
-      result.password = this.password
-      let str2 = JSON.stringify(result)
-
-      if (str1 == str2) {
-        this.passwordWarning = false
+      
+      var pwdCrypt = this.password
+      if (this.password == this.defaultPassword) {
+        pwdCrypt = this.oldPassword
       } else {
-        if (this.password.trim().length > 5) {
-          let condChar2 = /[a-zA-Z]/g
-          let conRsChar2 = pwd.match(condChar2)
-          let condNum2 = /[0-9]/g
-          let conRsNum2 = pwd.match(condNum2)
-          let condSpec2 = /[\!\@\#\$]/g
-          let conRsSpec2 = pwd.match(condSpec2)
+        if (this.password !== this.oldPassword) {
+          pwdCrypt = bcrypt.hashSync(this.password, 10)
+        }
+      }
+
+      if (this.password.trim().length > 5) {
+        let condChar2 = /[a-zA-Z]/g
+        let conRsChar2 = pwd.match(condChar2)
+        let condNum2 = /[0-9]/g
+        let conRsNum2 = pwd.match(condNum2)
+        let condSpec2 = /[\!\@\#\$]/g
+        let conRsSpec2 = pwd.match(condSpec2)
+        if (
+          pwdCrypt == this.editRow.origin_password &&
+          this.editRow.mode == 'edit'
+        ) {
+          this.passwordWarning = false
+        } else {
           if (conRsChar2 == null && conRsNum2 == null) {
             this.passwordWarning = true
           } else if (conRsChar2 == null && conRsSpec2 != null) {
@@ -1774,14 +1765,14 @@ export default {
           } else {
             this.passwordWarning = true
           }
-        } else if (
-          this.password.trim().length > 0 &&
-          this.password.trim().length < 6
-        ) {
-          this.passwordWarning = true
-        } else {
-          this.passwordWarning = false
         }
+      } else if (
+        this.password.trim().length > 0 &&
+        this.password.trim().length < 6
+      ) {
+        this.passwordWarning = true
+      } else {
+        this.passwordWarning = false
       }
     }
   },
