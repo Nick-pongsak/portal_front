@@ -444,7 +444,7 @@
                   <div
                     @click="showPasswordEvt()"
                     :style="{
-                      'padding-top': '3px',
+                      'padding-top': '2.5px',
                       cursor: editRow.mode == 'add' ? 'pointer' : 'deafult'
                     }"
                   >
