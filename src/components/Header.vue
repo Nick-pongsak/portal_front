@@ -1501,21 +1501,21 @@ export default {
       }
       if (this.viewListData.key_app == 'SalesOpsKEY') {
         obj.url = '/auth/access-app?'
-        obj.host = '10.7.200.158:82'
+        obj.host = '10.7.200.162:82'
         obj.api = 'check-authen-app'
       } else if (
         this.viewListData.key_app == 'CorporateAndRollingSecretKeysAES'
       ) {
         let strKeyEn = keyapp.substring(0, 16)
         obj.url = '/api/auth/verify'
-        obj.host = 'dep-corp-plan.dhas.com'
+        obj.host = 'corp-plan.dhas.com'
         obj.password = aesEcb.encrypt(strKeyEn, data)
         obj.api = 'check-authen-corp'
       } else if (this.viewListData.key_app == 'mktopskey') {
         // username:nattaphat
         // password:Dh@sP@ssw0rd
         obj.url = '/api/login'
-        obj.host = 'dep-ppmweb.dhas.com'
+        obj.host = 'mkt.dhas.com'
         obj.password = CryptoJS.AES.encrypt(data, keyapp).toString()
         obj.api = 'check-authen-mktops'
       }
