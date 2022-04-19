@@ -1206,6 +1206,7 @@ export default {
     },
     selectedPermission (evt) {
       this.statusPermission = this.editRow.status_permission
+      this.editRow.admin_menu = 0
       this.checkBtn()
     },
     selectedType (value) {
