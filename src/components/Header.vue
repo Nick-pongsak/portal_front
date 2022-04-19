@@ -557,6 +557,7 @@
                       style="display: flex;width: 200px;height: 30px;margin-right:10px"
                     >
                       <input
+                        :disabled="true"
                         type="text"
                         v-model="item.username"
                         :placeholder="$t('input_selected')"
