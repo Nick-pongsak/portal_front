@@ -136,7 +136,8 @@
               <div
                 class="body-table"
                 :style="{
-                  'overflow-y': editRow.app.length == 0 ? 'hidden' : 'auto'
+                  'overflow-y': editRow.app.length == 0 ? 'hidden' : 'auto',
+                  height: 'calc(100% - 150px)'
                 }"
               >
                 <div v-if="editRow.app.length == 0" class="no-data">
@@ -476,7 +477,7 @@ export default {
     },
     nameTh: {
       handler: function (todos) {
-       let temp = todos.replace(/[`"']/g, '')
+        let temp = todos.replace(/[`"']/g, '')
         if (temp.length > 0) {
           this.nameTh = temp
         } else {
@@ -671,7 +672,7 @@ export default {
       result.name_th = this.nameTh
       result.name_en = this.nameEn
       let str2 = JSON.stringify(result)
-      
+
       if (str1 == str2) {
         this.cancel()
       } else {
