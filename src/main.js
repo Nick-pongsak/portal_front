@@ -14,6 +14,7 @@ Vue.prototype.$axios = Axios;
 const EventBus = new Vue();
 Vue.prototype.$eventbus = EventBus;
 
+import '@mdi/font/css/materialdesignicons.css'
 
 import 'vue-dnd-zone/vue-dnd-zone.css'
 import VueDndZone from 'vue-dnd-zone'
