@@ -13,7 +13,7 @@
             <input
               type="text"
               v-model="user.username"
-              placeholder="User Name"
+              placeholder="Username"
             />
             <v-icon
               v-text="'mdi-account'"
