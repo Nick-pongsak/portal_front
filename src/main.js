@@ -36,6 +36,12 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 // var bcrypt = require('bcryptjs');
 // Vue.use(bcrypt)
+import FontRoboto from './assets/fonts/fontRoboto.css'
+import FontLato from './assets/fonts/fontLato.css'
+import FontKanit from './assets/fonts/fontKanit.css'
+Vue.use(FontRoboto)
+Vue.use(FontLato)
+Vue.use(FontKanit)
 
 import './filters';
 import './global';
