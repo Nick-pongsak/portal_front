@@ -436,6 +436,7 @@
         <v-card-actions class="justify-center" style="padding-top:80px">
           <v-btn
             text
+            id="btn-1"
             @click="ClosePwdDialogs()"
             class="ok-btn"
             :style="{ 'margin-right': stepChangePwd == 2 ? '0px' : '35px' }"
