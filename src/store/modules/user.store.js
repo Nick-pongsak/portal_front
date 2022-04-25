@@ -41,6 +41,7 @@ const store = {
       return new Promise((resolve, reject) => {
         sessionStorage.removeItem("token_seesion")
         sessionStorage.removeItem("info")
+        sessionStorage.removeItem("googleanylytics")
         commit('SetAccessToken', '');
         commit('SetUser', {});
         resolve();
