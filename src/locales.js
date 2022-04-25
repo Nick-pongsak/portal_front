@@ -63,7 +63,7 @@ const locales = {
     'manageapp.text3': 'System Only',
     'manageapp.text4': 'Username :',
     'manageapp.text5': 'Please verify your identity with username and password this application.',
-    'manageapp.text6': 'username',
+    'manageapp.text6': 'Username',
     'manageapp.text7': 'Password',
     'manageapp.text8': 'Application List',
     'pwd.text1': 'Please verify your identity.',
