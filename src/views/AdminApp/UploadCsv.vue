@@ -379,6 +379,7 @@ export default {
       if (temp !== undefined) {
         temp.innerHTML = this.$t('upload.text19')
       }
+      this.columnDefs[9].field = 'group_name_' + this.$i18n.locale
     },
     tabs (item) {
       if (this.active.code !== item.code) {
