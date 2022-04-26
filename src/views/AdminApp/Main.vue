@@ -401,6 +401,13 @@ export default {
                 : 1
             )
           }
+          let temp = []
+          let masterTemp = JSON.parse(JSON.stringify(this.list))
+          for (let i = 0; i < masterTemp.length; i++) {
+            masterTemp[i].index = i
+            temp.push(masterTemp[i])
+          }
+          this.list = temp
         } else {
           this.fetchData()
         }

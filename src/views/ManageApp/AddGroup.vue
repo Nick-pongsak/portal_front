@@ -524,11 +524,11 @@ export default {
       if (feild == 'index' || feild == 'type_login' || feild == 'status') {
         if (this.mainSort.orderby) {
           this.editRow.app = table.sort(function (a, b) {
-            return b.index - a.index
+            return b[feild] - a[feild]
           })
         } else {
           this.editRow.app = table.sort(function (a, b) {
-            return a.index - b.index
+            return a[feild] - b[feild]
           })
         }
         this.mainSort.orderby = !this.mainSort.orderby

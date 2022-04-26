@@ -180,11 +180,7 @@
               size="22"
             ></v-icon>
           </div>
-          <div
-            class="head"
-            style="width:10%;"
-            @click="sort( headCol2[2], 2)"
-          >
+          <div class="head" style="width:10%;" @click="sort(headCol2[2], 2)">
             <div class="column-name">{{ $t('group.text11') }}</div>
             <v-icon
               v-text="sortNo == 1 ? 'mdi-menu-up' : 'mdi-menu-down'"
@@ -431,6 +427,13 @@ export default {
           })
         }
         this.mainSort.orderby = !this.mainSort.orderby
+        let temp = []
+        let masterTemp = JSON.parse(JSON.stringify(this.list))
+        for (let i = 0; i < masterTemp.length; i++) {
+          masterTemp[i].index = i
+          temp.push(masterTemp[i])
+        }
+        this.list = temp
       } else if (feild == 'total_app') {
         if (this.mainSort.orderby) {
           this.list = this.list.sort(function (a, b) {
@@ -442,6 +445,14 @@ export default {
           })
         }
         this.mainSort.orderby = !this.mainSort.orderby
+
+        let temp = []
+        let masterTemp = JSON.parse(JSON.stringify(this.list))
+        for (let i = 0; i < masterTemp.length; i++) {
+          masterTemp[i].index = i
+          temp.push(masterTemp[i])
+        }
+        this.list = temp
       } else {
         if (this.mainSort.feild == feild) {
           this.mainSort.orderby = !this.mainSort.orderby
