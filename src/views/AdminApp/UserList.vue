@@ -526,7 +526,7 @@
                 <div
                   class="head"
                   style="width:10%"
-                  @click="sort2(headCol2[0], 0)"
+                  @click="sort2('name_' + $i18n.locale, 0)"
                 >
                   <div class="column-name">{{ $t('set.list_col1') }}</div>
                   <v-icon
@@ -1336,6 +1336,13 @@ export default {
           )
         }
       }
+      let temp = []
+      let masterTemp = JSON.parse(JSON.stringify(this.applist))
+      for (let i = 0; i < masterTemp.length; i++) {
+        masterTemp[i].index = i
+        temp.push(masterTemp[i])
+      }
+      this.applist = temp
     },
     sort (feild, index) {
       this.sortNo = this.sortNo == index ? null : index

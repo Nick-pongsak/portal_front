@@ -506,7 +506,7 @@
                 <div
                   class="head"
                   style="width:30%"
-                  @click="sort(headCol[1], 1)"
+                  @click="sort('name_' + $i18n.locale, 1)"
                 >
                   <div class="column-name">{{ $t('manageapp.text1') }}</div>
                   <v-icon
@@ -1734,6 +1734,13 @@ export default {
           )
         }
       }
+      let temp = []
+      let masterTemp = JSON.parse(JSON.stringify(this.list))
+      for (let i = 0; i < masterTemp.length; i++) {
+        masterTemp[i].index = i
+        temp.push(masterTemp[i])
+      }
+      this.list = temp
     },
     SettingApp () {
       this.viewListApp = true
