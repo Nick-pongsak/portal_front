@@ -57,7 +57,7 @@
           <div
             class="head"
             style="width:25%;padding-left:8px"
-            @click="sort(headCol[1], 1)"
+            @click="sort('name_' + $i18n.locale, 1)"
           >
             <div class="column-name">{{ $t('set.list_col2') }}</div>
             <v-icon
@@ -66,7 +66,11 @@
               size="22"
             ></v-icon>
           </div>
-          <div class="head" style="width:22%" @click="sort(headCol[2], 2)">
+          <div
+            class="head"
+            style="width:22%"
+            @click="sort('category_name_' + $i18n.locale, 2)"
+          >
             <div class="column-name">
               {{ $t('set.list_col3') }}
             </div>
@@ -167,7 +171,7 @@
           <div
             class="head"
             style="width:30%;padding-left:8px"
-            @click="sort(headCol2[1], 1)"
+            @click="sort('name_' + $i18n.locale, 1)"
           >
             <div class="column-name">{{ $t('group.text5') }}</div>
             <v-icon
@@ -391,7 +395,7 @@ export default {
         this.$emit('tabs', item)
         this.sortNo = null
         this.mainSort = {
-          feild: 'name_th',
+          feild: 'name_' + this.$i18n.locale,
           orderby: true
         }
         this.fetchData(item)
@@ -423,6 +427,13 @@ export default {
           })
         }
         this.mainSort.orderby = !this.mainSort.orderby
+        let temp = []
+        let masterTemp = JSON.parse(JSON.stringify(this.list))
+        for (let i = 0; i < masterTemp.length; i++) {
+          masterTemp[i].index = i
+          temp.push(masterTemp[i])
+        }
+        this.list = temp
       } else if (feild == 'total_app') {
         if (this.mainSort.orderby) {
           this.list = this.list.sort(function (a, b) {
@@ -434,6 +445,14 @@ export default {
           })
         }
         this.mainSort.orderby = !this.mainSort.orderby
+
+        let temp = []
+        let masterTemp = JSON.parse(JSON.stringify(this.list))
+        for (let i = 0; i < masterTemp.length; i++) {
+          masterTemp[i].index = i
+          temp.push(masterTemp[i])
+        }
+        this.list = temp
       } else {
         if (this.mainSort.feild == feild) {
           this.mainSort.orderby = !this.mainSort.orderby

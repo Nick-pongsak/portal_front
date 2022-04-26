@@ -81,7 +81,7 @@
                 <div
                   class="head"
                   style="width:30%"
-                  @click="sort(headCol[1], 1)"
+                  @click="sort('name_' + $i18n.locale, 1)"
                 >
                   <div class="column-name">{{ $t('manageapp.text1') }}</div>
                   <v-icon
@@ -93,7 +93,7 @@
                 <div
                   class="head"
                   style="width:20%"
-                  @click="sort(headCol[2], 2)"
+                  @click="sort('category_name_' + $i18n.locale, 2)"
                 >
                   <div class="column-name">
                     {{ $t('app.text1') }}
@@ -279,7 +279,7 @@
                 <div
                   class="head"
                   style="width:30%"
-                  @click="sort2(headCol[1], 1)"
+                  @click="sort2('name_' + $i18n.locale, 1)"
                 >
                   <div class="column-name">{{ $t('manageapp.text1') }}</div>
                   <v-icon
@@ -291,7 +291,7 @@
                 <div
                   class="head"
                   style="width:20%"
-                  @click="sort2(headCol[2], 2)"
+                  @click="sort2('category_name_' + $i18n.locale, 2)"
                 >
                   <div class="column-name">
                     {{ $t('app.text1') }}
@@ -524,11 +524,11 @@ export default {
       if (feild == 'index' || feild == 'type_login' || feild == 'status') {
         if (this.mainSort.orderby) {
           this.editRow.app = table.sort(function (a, b) {
-            return b.index - a.index
+            return b[feild] - a[feild]
           })
         } else {
           this.editRow.app = table.sort(function (a, b) {
-            return a.index - b.index
+            return a[feild] - b[feild]
           })
         }
         this.mainSort.orderby = !this.mainSort.orderby
@@ -554,6 +554,13 @@ export default {
           )
         }
       }
+      let temp = []
+      let masterTemp = JSON.parse(JSON.stringify(this.editRow.app))
+      for (let i = 0; i < masterTemp.length; i++) {
+        masterTemp[i].index = i
+        temp.push(masterTemp[i])
+      }
+      this.editRow.app = temp
     },
     sort2 (feild, index) {
       this.sortNo2 = this.sortNo2 == index ? null : index

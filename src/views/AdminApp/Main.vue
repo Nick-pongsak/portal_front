@@ -61,7 +61,11 @@
               size="22"
             ></v-icon>
           </div>
-          <div class="head" style="width:17%" @click="sort(headCol[2], 2)">
+          <div
+            class="head"
+            style="width:17%"
+            @click="sort('name_' + $i18n.locale, 2)"
+          >
             <div class="column-name">
               {{ $t('user.text1') }}
             </div>
@@ -71,7 +75,11 @@
               size="22"
             ></v-icon>
           </div>
-          <div class="head" style="width:18%" @click="sort(headCol[3], 3)">
+          <div
+            class="head"
+            style="width:18%"
+            @click="sort('postname_' + $i18n.locale, 3)"
+          >
             <div class="column-name">
               {{ $t('user.text2') }}
             </div>
@@ -81,7 +89,11 @@
               size="22"
             ></v-icon>
           </div>
-          <div class="head" style="width:17%" @click="sort(headCol[4], 4)">
+          <div
+            class="head"
+            style="width:17%"
+            @click="sort('group_name_' + $i18n.locale, 4)"
+          >
             <div class="column-name">
               {{ $t('user.text3') }}
             </div>
@@ -375,7 +387,7 @@ export default {
           this.mainSort.orderby = false
         }
         this.mainSort.feild = feild
-        if (feild == 'group_name_th') {
+        if (feild == 'group_name_' + this.$i18n.locale) {
           if (this.mainSort.orderby) {
             this.list = this.list.sort((a, b) =>
               String(a[feild]).toLowerCase() < String(b[feild]).toLowerCase()
@@ -389,6 +401,13 @@ export default {
                 : 1
             )
           }
+          let temp = []
+          let masterTemp = JSON.parse(JSON.stringify(this.list))
+          for (let i = 0; i < masterTemp.length; i++) {
+            masterTemp[i].index = i
+            temp.push(masterTemp[i])
+          }
+          this.list = temp
         } else {
           this.fetchData()
         }
