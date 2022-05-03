@@ -319,7 +319,10 @@
             >
               <div
                 class="head-menu3 center-vh"
-                :style="{ width: pwdResize ? '100%' : '30%' }"
+                :style="{
+                  width: pwdResize ? '100%' : '30%',
+                  'justify-content': pwdResize ? 'start' : 'center'
+                }"
               >
                 {{ $t('pwd.text2') }}
               </div>
@@ -497,9 +500,9 @@
               class="ok-btn"
               :style="{
                 'margin-right': stepChangePwd == 2 ? '0px' : '10%',
-                width: pwdDialogSize < 550 ? '110px' : '200px',
-                'padding-left': pwdResize ? '5%' : 'unset',
-                'padding-right': pwdResize ? '5%' : 'unset'
+                width: pwdDialogSize < 500 ? 'auto' : '200px',
+                'padding-left': pwdDialogSize < 500 ? '5%' : 'unset',
+                'padding-right': pwdDialogSize < 500 ? '5%' : 'unset'
               }"
             >
               {{ stepChangePwd == 2 ? $t('btn_close') : $t('btn_cancel') }}
@@ -513,9 +516,9 @@
               :style="{
                 background: disPwdBtn ? '#CE1212' : '',
                 opacity: disPwdBtn ? '0.51' : '',
-                width: pwdDialogSize < 550 ? '110px' : '200px',
-                'padding-left': pwdResize ? '5%' : 'unset',
-                'padding-right': pwdResize ? '5%' : 'unset'
+                width: pwdDialogSize < 500 ? 'auto' : '200px',
+                'padding-left': pwdDialogSize < 500 ? '5%' : 'unset',
+                'padding-right': pwdDialogSize < 500 ? '5%' : 'unset'
               }"
             >
               {{
