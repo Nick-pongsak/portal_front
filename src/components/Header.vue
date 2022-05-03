@@ -1893,7 +1893,7 @@ export default {
       }
       if (this.pwdDialog) {
         this.pwdDialogSize = x
-        console.log(x)
+        // console.log(x)
         if (x < 550) {
           this.pwdResize = true
         } else {
