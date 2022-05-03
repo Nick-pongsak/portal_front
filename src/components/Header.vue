@@ -603,7 +603,12 @@
                   ></v-icon>
                 </div>
               </div>
-              <div class="body-table">
+              <div
+                class="body-table"
+                :style="{
+                  width: setAppDialogSize < 550 ? '100%' : '100%'
+                }"
+              >
                 <div v-if="list.length == 0" class="no-data">
                   {{ $t('popup.text9') }}
                 </div>
@@ -611,7 +616,9 @@
                   class="body-row"
                   v-for="(item, index) in list"
                   :key="'setapp' + index"
-                  style="padding-top:3px"
+                  :style="{
+                    'padding-top': '3px'
+                  }"
                 >
                   <div
                     class="body"
@@ -633,7 +640,7 @@
                       <div style="font-weight:500;padding-top:5px">
                         {{ item.username }}
                       </div>
-                      <div style="margin-left:18%;height:18px">
+                      <div style="margin-left:10%;height:18px">
                         <v-icon
                           v-show="item.status_sso == 1 && !item.type_login"
                           @click="edit(item, index)"
@@ -1904,6 +1911,13 @@ export default {
       this.enableInput = true
     },
     openProfile () {
+      let x = window.innerWidth
+      let scr = this.enableInput ? 700 : 1000
+      if (x < scr) {
+        this.profileResize = true
+      } else {
+        this.profileResize = false
+      }
       this.profileDialog = true
       this.profileView = false
       this.enableInput = true
@@ -2061,6 +2075,7 @@ export default {
         }
         this.list = temp
         this.masterList = temp
+        this.setAppDialogSize = window.innerWidth
         this.setAppDialog = true
       })
     },
@@ -2264,6 +2279,12 @@ export default {
       this.errorNewPassword = false
       this.cfNewPassword = ''
       this.errorCfNewPassword = false
+      this.pwdDialogSize = window.innerWidth
+      if (window.innerWidth < 550) {
+        this.pwdResize = true
+      } else {
+        this.pwdResize = false
+      }
       this.pwdDialog = true
     },
     renderProfileDesc () {
