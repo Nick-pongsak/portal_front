@@ -483,7 +483,13 @@
           :style="{ 'padding-top': '80px' }"
         >
           <!-- pwdDialogSize -->
-          <div :style="{ display: pwdDialogSize < 550 ? 'contents' : 'flex' , width:'100%'}"  class="justify-center">
+          <div
+            :style="{
+              display: pwdDialogSize < 550 ? 'contents' : 'flex',
+              width: '100%'
+            }"
+            class="justify-center"
+          >
             <v-btn
               text
               id="btn-1"
@@ -541,7 +547,10 @@
           </div>
           <div class="line-page" style="margin-top:8px"></div>
           <div style="width:100%;margin-top:15px">
-            <div class="input-with-icon search-form">
+            <div
+              class="input-with-icon search-form"
+              :style="{ width: setAppDialogSize < 550 ? '90%' : '300px' }"
+            >
               <v-icon v-text="'mdi-magnify'" size="20"></v-icon>
               <input
                 style="width:100%"
@@ -599,6 +608,7 @@
                   class="body-row"
                   v-for="(item, index) in list"
                   :key="'setapp' + index"
+                  style="padding-top:3px"
                 >
                   <div
                     class="body"
@@ -610,31 +620,26 @@
                     {{ item['name_' + $i18n.locale] }}
                   </div>
                   <div class="body" style="width:60%;display:flex">
-                    <div style="padding-top:5px;margin-right:15px">
+                    <div style="margin-right:5%;padding-top:5px">
                       {{ renderText(item) }}
                     </div>
                     <div
                       v-show="item.status_sso == 1 && item.type_login == 0"
-                      :class="'input-with-icon disabled-input'"
-                      style="display: flex;width: 200px;height: 30px;margin-right:10px"
+                      style="display: flex;width: 40%"
                     >
-                      <input
-                        :disabled="true"
-                        type="text"
-                        v-model="item.username"
-                        :placeholder="$t('input_selected')"
-                      />
+                      <div style="font-weight:500;padding-top:5px">
+                        {{ item.username }}
+                      </div>
+                      <div style="margin-left:18%;height:18px">
+                        <v-icon
+                          v-show="item.status_sso == 1 && !item.type_login"
+                          @click="edit(item, index)"
+                          v-text="'mdi-pencil'"
+                          style="color:#CE1212"
+                          size="18"
+                        ></v-icon>
+                      </div>
                     </div>
-                    <v-btn
-                      v-show="item.status_sso == 1 && !item.type_login"
-                      text
-                      @click="edit(item, index)"
-                      class="cancel-btn"
-                    >
-                      {{
-                        item.username == '' ? $t('btn_add') : $t('btn_change')
-                      }}
-                    </v-btn>
                   </div>
                 </div>
               </div>
@@ -660,12 +665,37 @@
         >
           {{ viewListData['name_' + $i18n.locale] }}
         </div>
-        <div class="rows" style="margin-bottom:30px;width:100%;display: flex;">
-          <div style="width:20%;padding-top:3px" class="rows-name">
+        <div
+          class="rows"
+          :style="{
+            width: '100%',
+            display: setAppDialogSize < 520 ? 'contents' : 'flex',
+            'margin-bottom': '30px'
+          }"
+        >
+          <div
+            :style="{
+              width: setAppDialogSize < 520 ? '100%' : '20%',
+              'margin-bottom': setAppDialogSize < 520 ? '8px' : '0px',
+              'padding-top': '3px'
+            }"
+            class="rows-name"
+          >
             {{ $t('manageapp.text6') }}
           </div>
-          <div style="width:80%" class="rows-input">
-            <div class="input-with-icon">
+          <div
+            :style="{
+              width: setAppDialogSize < 520 ? '100%' : '80%',
+              'margin-bottom': setAppDialogSize < 520 ? '8px' : '0px'
+            }"
+            class="rows-input"
+          >
+            <div
+              class="input-with-icon"
+              :style="{
+                width: setAppDialogSize < 520 ? '100%' : '330px'
+              }"
+            >
               <input
                 style="width:100%"
                 type="text"
@@ -675,12 +705,32 @@
             </div>
           </div>
         </div>
-        <div class="rows" style="width:100%;display: flex;">
-          <div style="width:20%" class="rows-name">
+        <div
+          class="rows"
+          :style="{
+            width: '100%',
+            display: setAppDialogSize < 520 ? 'contents' : 'flex'
+          }"
+        >
+          <div
+            :style="{
+              width: setAppDialogSize < 520 ? '100%' : '20%',
+              'margin-bottom': setAppDialogSize < 520 ? '8px' : '0px'
+            }"
+            class="rows-name"
+          >
             {{ $t('manageapp.text7') }}
           </div>
-          <div style="width:80%" class="rows-input">
-            <div class="input-with-icon">
+          <div
+            :style="{ width: setAppDialogSize < 520 ? '100%' : '80%' }"
+            class="rows-input"
+          >
+            <div
+              class="input-with-icon"
+              :style="{
+                width: setAppDialogSize < 520 ? '100%' : '330px'
+              }"
+            >
               <input
                 style="width:100%"
                 type="password"
@@ -701,26 +751,41 @@
           class="center-vh"
           style="margin-top:50px;margin-bottom:20px;display:flex"
         >
-          <v-btn
-            text
-            @click="CloseSetAppDialogs()"
-            class="ok-btn"
-            :style="{ 'margin-right': '35px', width: '200px' }"
-          >
-            {{ $t('btn_cancel') }}
-          </v-btn>
-          <v-btn
-            :disabled="disPwdBtnList"
-            @click="ConfirmUsername()"
-            class="cancel-btn"
+          <div
             :style="{
-              background: disPwdBtnList ? '#CE1212' : '',
-              opacity: disPwdBtnList ? '0.51' : '',
-              width: '200px'
+              display: setAppDialogSize < 550 ? 'contents' : 'flex',
+              width: '100%'
             }"
+            class="justify-center"
           >
-            {{ $t('btn_confirm') }}
-          </v-btn>
+            <v-btn
+              text
+              @click="CloseSetAppDialogs()"
+              class="ok-btn"
+              :style="{
+                'margin-right': '35px',
+                width: setAppDialogSize < 550 ? '110px' : '200px',
+                'padding-left': setAppDialogSize < 550 ? '5%' : 'unset',
+                'padding-right': setAppDialogSize < 550 ? '5%' : 'unset'
+              }"
+            >
+              {{ $t('btn_cancel') }}
+            </v-btn>
+            <v-btn
+              :disabled="disPwdBtnList"
+              @click="ConfirmUsername()"
+              class="cancel-btn"
+              :style="{
+                background: disPwdBtnList ? '#CE1212' : '',
+                opacity: disPwdBtnList ? '0.51' : '',
+                width: setAppDialogSize < 550 ? '110px' : '200px',
+                'padding-left': setAppDialogSize < 550 ? '5%' : 'unset',
+                'padding-right': setAppDialogSize < 550 ? '5%' : 'unset'
+              }"
+            >
+              {{ $t('btn_confirm') }}
+            </v-btn>
+          </div>
         </div>
       </v-card>
     </v-dialog>
@@ -1382,7 +1447,8 @@ export default {
       showCfNewPassword: false,
       profileResize: false,
       pwdResize: false,
-      pwdDialogSize: 560
+      pwdDialogSize: 560,
+      setAppDialogSize: 560
     }
   },
   watch: {
@@ -1893,12 +1959,14 @@ export default {
       }
       if (this.pwdDialog) {
         this.pwdDialogSize = x
-        // console.log(x)
         if (x < 550) {
           this.pwdResize = true
         } else {
           this.pwdResize = false
         }
+      }
+      if (this.setAppDialog) {
+        this.setAppDialogSize = x
       }
     },
     goHome () {
