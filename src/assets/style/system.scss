@@ -767,8 +767,8 @@
     }
   }
   #set-app-dialogs {
-    overflow-y: scroll;
-    height: calc(100vh - 150px);
+    // overflow-y: scroll;
+    // height: calc(100vh - 150px);
     .set-app-dialog-actions {
       justify-content: center;
       align-items: center;
@@ -858,6 +858,7 @@
     }
   }
   #set-app-dialogs {
+    overflow-y: auto;
     .set-app-dialog-actions {
       display: block;
       text-align: center;
