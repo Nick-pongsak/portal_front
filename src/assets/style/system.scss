@@ -579,7 +579,8 @@
   overflow-x: hidden;
   overflow-y: auto;
   .scroll-auto {
-    height: 390px;
+    // height: calc(100vh - 150px);
+    // height: 390px;
     overflow-x: hidden;
     &::-webkit-scrollbar {
       width: 6px;
@@ -643,4 +644,227 @@
 }
 .v-dialog {
   overflow-y: hidden !important;
+}
+
+/* iPads (landscape) ----------- */
+@media only screen and (max-device-width: 480px) and (orientation: landscape) {
+  /* Styles */
+  #pwd-dialogs {
+    height: calc(100vh - 100px);
+    overflow-y: scroll;
+    .pwd-dialogs-actions {
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      padding-top: 80px;
+      #pwd-dialogs-actions-btn-1 {
+        margin-right: 10%;
+      }
+      // display: contents;
+    }
+  }
+  #account-menu-body {
+    height: calc(100vh - 110px);
+    overflow-y: scroll;
+  }
+  #profile-dialogs {
+    overflow-y: scroll;
+    height: calc(100vh - 150px);
+    .profile-dialogs-actions {
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      margin-top: 30px;
+      margin-bottom: 20px;
+      .ok-btn {
+        margin-right: 5%;
+      }
+    }
+  }
+  #set-app-dialogs {
+    overflow-y: scroll;
+    height: calc(100vh - 150px);
+    .set-app-dialog-actions {
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      margin-top: 50px;
+      .ok-btn {
+        margin-right: 5%;
+      }
+    }
+  }
+}
+@media only screen and (min-device-width: 481px) and (max-device-width: 900px) and (orientation: landscape) {
+  /* Styles */
+  #pwd-dialogs {
+    height: calc(100vh - 100px);
+    overflow-y: scroll;
+    .pwd-dialogs-actions {
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      padding-top: 80px;
+      #pwd-dialogs-actions-btn-1 {
+        margin-right: 10%;
+      }
+    }
+  }
+  #account-menu-body {
+    height: calc(100vh - 110px);
+    overflow-y: scroll;
+  }
+  #profile-dialogs {
+    overflow-y: scroll;
+    height: calc(100vh - 150px);
+    .profile-dialogs-actions {
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      margin-top: 30px;
+      margin-bottom: 20px;
+      .ok-btn {
+        margin-right: 5%;
+      }
+    }
+  }
+  #set-app-dialogs {
+    overflow-y: scroll;
+    height: calc(100vh - 150px);
+    .set-app-dialog-actions {
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      margin-top: 50px;
+      .ok-btn {
+        margin-right: 5%;
+      }
+    }
+  }
+}
+@media only screen and (min-device-width: 901px) and (orientation: landscape) {
+  /* Styles */
+  #pwd-dialogs {
+    .pwd-dialogs-actions {
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      padding-top: 80px;
+      #pwd-dialogs-actions-btn-1 {
+        margin-right: 10%;
+      }
+    }
+  }
+  #profile-dialogs {
+    .profile-dialogs-actions {
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      margin-top: 50px;
+      .ok-btn {
+        margin-right: 5%;
+      }
+    }
+  }
+  #set-app-dialogs {
+    overflow-y: scroll;
+    height: calc(100vh - 150px);
+    .set-app-dialog-actions {
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      margin-top: 50px;
+      .ok-btn {
+        margin-right: 5%;
+      }
+    }
+  }
+}
+
+/* iPads (portrait) ----------- */
+@media only screen and (max-device-width: 480px) and (orientation: portrait) {
+  /* Styles */
+  #pwd-dialogs {
+    height: 100%;
+    .pwd-dialogs-actions {
+      text-align: center;
+      padding-top: 80px;
+      .ok-btn {
+        margin-right: 0%;
+      }
+      .cancel-btn {
+        margin-top: 10px;
+      }
+    }
+  }
+  #profile-dialogs {
+    padding: 20px 10px 20px 20px;
+    overflow-y: scroll;
+    height: calc(100vh - 150px);
+
+    .profile-dialogs-actions {
+      // justify-content: center;
+      // align-items: center;
+      // display: flex;
+      display: block;
+      text-align: center;
+      .cancel-btn {
+        margin-top: 10px;
+      }
+    }
+  }
+  #set-app-dialogs {
+    .set-app-dialog-actions {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      .cancel-btn {
+        margin-top: 10px;
+      }
+    }
+  }
+}
+@media only screen and (min-device-width: 481px) and (max-device-width: 900px) and (orientation: portrait) {
+  /* Styles */
+  #pwd-dialogs {
+    height: calc(100vh - 100px);
+    overflow-y: scroll;
+    .pwd-dialogs-actions {
+      padding-top: 80px;
+    }
+  }
+  #profile-dialogs {
+    padding: 20px 20px 20px 20px;
+    overflow-y: scroll;
+    height: calc(100vh - 150px);
+  }
+  #set-app-dialogs {
+    .set-app-dialog-actions {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      .cancel-btn {
+        margin-top: 10px;
+      }
+    }
+  }
+}
+@media only screen and (min-device-width: 901px) and (orientation: portrait) {
+  /* Styles */
+  #pwd-dialogs {
+    height: 100%;
+    .pwd-dialogs-actions {
+      padding-top: 80px;
+    }
+  }
+  #set-app-dialogs {
+    .set-app-dialog-actions {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      .cancel-btn {
+        margin-top: 10px;
+      }
+    }
+  }
 }

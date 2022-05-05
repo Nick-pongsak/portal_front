@@ -155,7 +155,14 @@
 
     <!---Dialogs-->
     <v-dialog v-model="picDialog" width="600" :no-click-animation="false">
-      <v-card id="change-pic-dialogs">
+      <v-card
+        id="change-pic-dialogs"
+        :style="{
+          height: picDialogSize < 1000 ? 'calc(100vh - 150px)' : '100%',
+          'overflow-y': 'auto'
+        }"
+      >
+        {{ picDialogSize }}
         <v-card-text style="padding:unset">
           <div class="justify-end" style="display: flex;">
             <v-icon
@@ -305,6 +312,11 @@
 
     <v-dialog v-model="pwdDialog" width="650" :no-click-animation="false">
       <v-card id="pwd-dialogs">
+        <!-- {{ pwdDialogSize }} -->
+        <!-- :style="{
+          height: pwdDialogSize < 900 ? 'calc(100vh - 150px)' : '100%',
+          'overflow-y': pwdDialogSize < 900 ? 'scroll':'auto'
+        }" -->
         <v-card-text v-if="stepChangePwd == 0" style="padding:unset">
           <div class="head-menu7  center-vh" style="display:flex;">
             {{ $t('pwd.text1') }}
@@ -481,11 +493,37 @@
             </div>
           </div>
         </v-card-text>
-        <v-card-actions
+        <div :style="{ width: '100%' }" class="pwd-dialogs-actions">
+          <v-btn
+            text
+            id="pwd-dialogs-actions-btn-1"
+            @click="ClosePwdDialogs()"
+            :class="'ok-btn'"
+            :style="{
+              width: '200px'
+            }"
+          >
+            {{ stepChangePwd == 2 ? $t('btn_close') : $t('btn_cancel') }}
+          </v-btn>
+
+          <v-btn
+            :disabled="disPwdBtn"
+            v-show="stepChangePwd < 2"
+            @click="ConfirmDialogs()"
+            :class="'cancel-btn'"
+            :style="{
+              background: disPwdBtn ? '#CE1212' : '',
+              opacity: disPwdBtn ? '0.51' : '',
+              width: '200px'
+            }"
+          >
+            {{ stepChangePwd == 0 ? $t('btn_confirm') : $t('btn_change_pwd') }}
+          </v-btn>
+        </div>
+        <!-- <v-card-actions
           class="justify-center"
           :style="{ 'padding-top': '80px' }"
         >
-          <!-- pwdDialogSize -->
           <div
             :style="{
               display: pwdDialogSize < 550 ? 'contents' : 'flex',
@@ -526,16 +564,34 @@
               }}
             </v-btn>
           </div>
-        </v-card-actions>
+        </v-card-actions> -->
       </v-card>
     </v-dialog>
 
     <v-dialog
       v-model="setAppDialog"
-      :width="viewListApp ? 800 : 600"
+      :width="viewListApp ? (setAppDialogSize < 600 ? 500 : 800) : 600"
       :no-click-animation="false"
+      :style="{
+        'overflow-x': viewListApp
+          ? setAppDialogSize < 600
+            ? 'scroll'
+            : 'auto'
+          : 'auto'
+      }"
     >
-      <v-card v-if="viewListApp">
+      
+      <v-card
+        v-if="viewListApp"
+        :style="{
+          padding:
+            setAppDialogSize < 600
+              ? '20px 10px 20px 10px'
+              : '20px 50px 20px 50px',
+          width: setAppDialogSize < 600 ? '500px' : '100%',
+          'min-width': '500px'
+        }"
+      >
         <div class="justify-end" style="display: flex">
           <v-icon
             @click="CloseSetAppDialogs()"
@@ -562,11 +618,19 @@
                 :placeholder="$t('input_search')"
               />
             </div>
-            <div class="table">
+            <div
+              class="table"
+              :style="{
+                'overflow-x': setAppDialogSize < 600 ? 'hidden' : 'hidden',
+                width: setAppDialogSize < 600 ? '480px' : '100%'
+              }"
+            >
               <div class="head-table">
                 <div
                   class="head"
-                  style="width:10%"
+                  :style="{
+                    width: setAppDialogSize < 600 ? '15%' : '15%'
+                  }"
                   @click="sort(headCol[0], 0)"
                 >
                   <div class="column-name">{{ $t('manageapp.text0') }}</div>
@@ -578,7 +642,9 @@
                 </div>
                 <div
                   class="head"
-                  style="width:30%"
+                  :style="{
+                    width: setAppDialogSize < 600 ? '30%' : '30%'
+                  }"
                   @click="sort('name_' + $i18n.locale, 1)"
                 >
                   <div class="column-name">{{ $t('manageapp.text1') }}</div>
@@ -590,7 +656,9 @@
                 </div>
                 <div
                   class="head"
-                  style="width:60%"
+                  :style="{
+                    width: setAppDialogSize < 600 ? '55%' : '55%'
+                  }"
                   @click="sort(headCol[2], 2)"
                 >
                   <div class="column-name">
@@ -606,7 +674,8 @@
               <div
                 class="body-table"
                 :style="{
-                  width: setAppDialogSize < 550 ? '100%' : '100%'
+                  width: setAppDialogSize < 600 ? '100%' : '100%',
+                  height: 'calc(100vh - 250px)'
                 }"
               >
                 <div v-if="list.length == 0" class="no-data">
@@ -622,14 +691,31 @@
                 >
                   <div
                     class="body"
-                    style="width:10%;padding-left:5px;padding-top:5px"
+                    :style="{
+                      width: setAppDialogSize < 600 ? '15%' : '15%',
+                      'padding-left': '5px',
+                      'padding-top': '5px'
+                    }"
                   >
                     {{ item.index + 1 }}
                   </div>
-                  <div class="body" style="width:30%;padding-top:5px">
+                  <div
+                    class="body"
+                    :style="{
+                      width: setAppDialogSize < 600 ? '30%' : '30%',
+                      'padding-top': '5px'
+                    }"
+                  >
                     {{ item['name_' + $i18n.locale] }}
                   </div>
-                  <div class="body" style="width:60%;display:flex">
+                  <div
+                    class="body"
+                    :style="{
+                      width: setAppDialogSize < 600 ? '55%' : '55%',
+                      'padding-top': '5px',
+                      display: 'flex'
+                    }"
+                  >
                     <div style="margin-right:5%;padding-top:5px">
                       {{ renderText(item) }}
                     </div>
@@ -657,7 +743,8 @@
           </div>
         </div>
       </v-card>
-      <v-card v-else>
+      <v-card v-else id="set-app-dialogs">
+        <!-- {{ setAppDialogSize }} -->
         <div
           class="head-menu6 center-vh"
           style="display: flex;
@@ -757,45 +844,35 @@
             </div>
           </div>
         </div>
+
         <div
-          class="center-vh"
-          style="margin-top:50px;margin-bottom:20px;display:flex"
+          class="set-app-dialog-actions"
+          :style="{
+            width: '100%'
+          }"
         >
-          <div
+          <v-btn
+            text
+            @click="CloseSetAppDialogs()"
+            class="ok-btn"
             :style="{
-              display: setAppDialogSize < 550 ? 'contents' : 'flex',
-              width: '100%'
+              width: '200px'
             }"
-            class="justify-center"
           >
-            <v-btn
-              text
-              @click="CloseSetAppDialogs()"
-              class="ok-btn"
-              :style="{
-                'margin-right': '35px',
-                width: setAppDialogSize < 550 ? '110px' : '200px',
-                'padding-left': setAppDialogSize < 550 ? '5%' : 'unset',
-                'padding-right': setAppDialogSize < 550 ? '5%' : 'unset'
-              }"
-            >
-              {{ $t('btn_cancel') }}
-            </v-btn>
-            <v-btn
-              :disabled="disPwdBtnList"
-              @click="ConfirmUsername()"
-              class="cancel-btn"
-              :style="{
-                background: disPwdBtnList ? '#CE1212' : '',
-                opacity: disPwdBtnList ? '0.51' : '',
-                width: setAppDialogSize < 550 ? '110px' : '200px',
-                'padding-left': setAppDialogSize < 550 ? '5%' : 'unset',
-                'padding-right': setAppDialogSize < 550 ? '5%' : 'unset'
-              }"
-            >
-              {{ $t('btn_confirm') }}
-            </v-btn>
-          </div>
+            {{ $t('btn_cancel') }}
+          </v-btn>
+          <v-btn
+            :disabled="disPwdBtnList"
+            @click="ConfirmUsername()"
+            class="cancel-btn"
+            :style="{
+              background: disPwdBtnList ? '#CE1212' : '',
+              opacity: disPwdBtnList ? '0.51' : '',
+              width: '200px'
+            }"
+          >
+            {{ $t('btn_confirm') }}
+          </v-btn>
         </div>
       </v-card>
     </v-dialog>
@@ -1303,11 +1380,7 @@
                 }"
               ></div>
             </div>
-            <div
-              class="rows justify-center"
-              v-if="!profileView"
-              style="margin-top:30px;margin-bottom:20px"
-            >
+            <div v-if="!profileView" class="rows profile-dialogs-actions">
               <v-btn
                 v-show="enableInput"
                 text
@@ -1327,7 +1400,7 @@
                 text
                 @click="closeProfile()"
                 class="ok-btn"
-                style="width:200px;margin-right: 15px"
+                style="width:200px;"
               >
                 {{ $t('btn_cancel') }}
               </v-btn>
@@ -1458,7 +1531,9 @@ export default {
       profileResize: false,
       pwdResize: false,
       pwdDialogSize: 560,
-      setAppDialogSize: 560
+      setAppDialogSize: 560,
+      picDialogSize: 560,
+      profileSize: 560
     }
   },
   watch: {
@@ -1913,6 +1988,7 @@ export default {
     openProfile () {
       let x = window.innerWidth
       let scr = this.enableInput ? 700 : 1000
+      this.profileSize = x
       if (x < scr) {
         this.profileResize = true
       } else {
@@ -2336,6 +2412,7 @@ export default {
       })
     },
     UploadPic () {
+      this.picDialogSize = window.innerWidth
       this.picDialog = true
     },
     CloseDialogs () {
