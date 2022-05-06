@@ -83,7 +83,15 @@
             </div>
             <div :style="{ 'margin-left': '14px' }" v-show="resizeHeader">
               <div class="account-name">{{ info['name_' + $i18n.locale] }}</div>
-              <div class="account-name" style="padding-top:1px">
+              <div
+                class="account-name"
+                style="padding-top:1px;
+                      max-width:120px;
+                      white-space: nowrap;
+                      text-overflow: ellipsis;
+                      display: block;
+                      overflow: hidden"
+              >
                 {{ info['postname_' + $i18n.locale] }}
               </div>
             </div>
@@ -162,7 +170,7 @@
           'overflow-y': 'auto'
         }"
       >
-        {{ picDialogSize }}
+        <!-- {{ picDialogSize }} -->
         <v-card-text style="padding:unset">
           <div class="justify-end" style="display: flex;">
             <v-icon
@@ -222,11 +230,9 @@
           >
             <!-- {{ '* หากระบุข้อมูลดังกล่าวจะเป็นสาธารณะ' }} -->
           </div>
-          <div
-            v-if="stepChangePic == 0"
-            style="margin-top:70px;margin-bottom:30px;display:flex"
-            class="justify-center"
-          >
+          <div v-if="stepChangePic == 0" class="change-pic-dialogs-actions">
+            <!-- style="margin-top:70px;margin-bottom:30px;display:flex"
+            class="justify-center" -->
             <v-btn text @click="ChangePic()" class="cancel-btn">
               <v-icon
                 v-text="'mdi-pencil'"
@@ -236,17 +242,15 @@
               {{ $t('btn_change') }}
             </v-btn>
           </div>
-          <div
-            v-if="stepChangePic == 1"
-            style="margin-top:70px;margin-bottom:30px;display:flex"
-            class="justify-center"
-          >
+          <div v-if="stepChangePic == 1" class="change-pic-dialogs-actions">
+            <!-- style="margin-top:70px;margin-bottom:30px;display:flex"
+            class="justify-center" -->
             <v-btn
               text
               @click="stepChangePic = 2"
               class="ok-btn"
-              :style="{ 'margin-right': '35px' }"
             >
+              <!-- :style="{ 'margin-right': '35px' }" -->
               <v-icon
                 v-text="'mdi-delete'"
                 style="color:#CE1212;margin-right:5px;"
@@ -265,15 +269,16 @@
           </div>
           <div
             v-else-if="stepChangePic == 2"
-            style="margin-top:70px;margin-bottom:30px;display:flex"
-            class="justify-center"
+            class="change-pic-dialogs-actions"
           >
+            <!-- style="margin-top:70px;margin-bottom:30px;display:flex"
+            class="justify-center" -->
             <v-btn
               text
               @click="stepChangePic = 0"
               class="ok-btn"
-              :style="{ 'margin-right': '35px' }"
             >
+              <!-- :style="{ 'margin-right': '35px' }" -->
               {{ $t('btn_cancel') }}
             </v-btn>
             <v-btn text @click="DeletePic()" class="cancel-btn">
@@ -282,24 +287,26 @@
           </div>
           <div
             v-else-if="stepChangePic == 3 || stepChangePic == 5"
-            style="margin-top:70px;margin-bottom:30px;display:flex"
-            class="justify-center"
+            class="change-pic-dialogs-actions"
           >
+            <!-- style="margin-top:70px;margin-bottom:30px;display:flex"
+            class="justify-center" -->
             <v-btn text @click="CloseDialogs()" class="ok-btn">
               {{ $t('btn_close') }}
             </v-btn>
           </div>
           <div
             v-else-if="stepChangePic == 4"
-            style="margin-top:70px;margin-bottom:30px;display:flex"
-            class="justify-center"
+            class="change-pic-dialogs-actions"
           >
+            <!-- style="margin-top:70px;margin-bottom:30px;display:flex"
+            class="justify-center" -->
             <v-btn
               text
               @click="stepChangePic = 0"
               class="ok-btn"
-              :style="{ 'margin-right': '35px' }"
             >
+              <!-- :style="{ 'margin-right': '35px' }" -->
               {{ $t('btn_cancel') }}
             </v-btn>
             <v-btn class="cancel-btn" @click="onButtonClick">
@@ -378,11 +385,11 @@
         <v-card-text v-else style="padding:unset">
           <div
             v-show="stepChangePwd == 1"
-            :style="{ 'margin-bottom': pwdDialogSize < 400 ? '10px' : '0px' }"
+            :style="{ 'margin-bottom': pwdDialogSize < 500 ? '10px' : '0px' }"
           >
             <div
               :style="{
-                display: pwdDialogSize < 400 ? 'contents' : 'flex',
+                display: pwdDialogSize < 500 ? 'contents' : 'flex',
                 width: '100%'
               }"
             >
@@ -390,7 +397,7 @@
                 class="head-menu3"
                 :style="{
                   'padding-top': '4px',
-                  width: pwdDialogSize < 400 ? '100%' : '40%'
+                  width: pwdDialogSize < 500 ? '100%' : '40%'
                 }"
               >
                 {{ $t('pwd.text3') }}
@@ -399,7 +406,7 @@
                 class="input-with-icon"
                 :style="{
                   display: 'flex',
-                  width: pwdDialogSize < 400 ? '100%' : '60%'
+                  width: pwdDialogSize < 500 ? '100%' : '60%'
                 }"
                 :class="{ active: errorNewPassword }"
               >
@@ -428,7 +435,7 @@
             <div
               :style="{
                 'padding-top': '30px',
-                display: pwdDialogSize < 400 ? 'contents' : 'flex',
+                display: pwdDialogSize < 500 ? 'contents' : 'flex',
                 width: '100%'
               }"
             >
@@ -436,7 +443,7 @@
                 class="head-menu3"
                 :style="{
                   'padding-top': '6px',
-                  width: pwdDialogSize < 400 ? '100%' : '40%'
+                  width: pwdDialogSize < 500 ? '100%' : '40%'
                 }"
               >
                 {{ $t('pwd.text4') }}
@@ -445,7 +452,7 @@
                 class="input-with-icon"
                 :style="{
                   display: 'flex',
-                  width: pwdDialogSize < 400 ? '100%' : '60%'
+                  width: pwdDialogSize < 500 ? '100%' : '60%'
                 }"
                 :class="{ active: errorCfNewPassword }"
               >
@@ -580,7 +587,6 @@
           : 'auto'
       }"
     >
-      
       <v-card
         v-if="viewListApp"
         :style="{
@@ -592,6 +598,7 @@
           'min-width': '500px'
         }"
       >
+        <!-- {{ setAppDialogSize }} -->
         <div class="justify-end" style="display: flex">
           <v-icon
             @click="CloseSetAppDialogs()"
@@ -1987,7 +1994,7 @@ export default {
     },
     openProfile () {
       let x = window.innerWidth
-      let scr = this.enableInput ? 700 : 1000
+      let scr = this.enableInput ? 800 : 1000
       this.profileSize = x
       if (x < scr) {
         this.profileResize = true
@@ -2037,13 +2044,14 @@ export default {
       } else {
         this.sysName = '20px'
       }
-      if (x <= 690) {
+      if (x <= 780) {
+        // if (x <= 690) {
         this.resizeHeader = false
       } else {
         this.resizeHeader = true
       }
       if (this.profileDialog) {
-        let scr = this.enableInput ? 700 : 1000
+        let scr = this.enableInput ? 800 : 1000
         if (x < scr) {
           this.profileResize = true
         } else {
@@ -2152,6 +2160,7 @@ export default {
         this.list = temp
         this.masterList = temp
         this.setAppDialogSize = window.innerWidth
+        this.searchApp = ''
         this.setAppDialog = true
       })
     },

@@ -134,6 +134,7 @@
       :style="{ transform: tranformScale }"
     >
       <v-card id="detail-dashboard-dialogs">
+        <!-- {{ dialogSize }} -->
         <div class="justify-end" style="display: flex;">
           <v-icon
             @click="CloseDialogs()"
@@ -161,14 +162,14 @@
               ')'
           }}
         </div>
-        <div class="details">
+        <div class="details" style="margin-bottom: 30px;">
           <textarea
             v-model="selectedRow['description_' + $i18n.locale]"
           ></textarea>
         </div>
-        <v-card-actions
-          class="justify-center"
-          style="padding-bottom:20px;padding-top:20px"
+        <div
+          class="detail-dashboard-dialogs"
+          style="padding-bottom:20px;padding-top:20px;text-align:center"
         >
           <v-btn
             text
@@ -180,7 +181,7 @@
               selectedRow.status == 1 ? $t('btn_signin') : $t('btn_maintenance')
             }}
           </v-btn>
-        </v-card-actions>
+        </div>
       </v-card>
     </v-dialog>
   </div>
@@ -198,7 +199,8 @@ export default {
       selectedRow: {},
       showDragAndDrop: false,
       tranformScale: 'scale(1)',
-      group: {}
+      group: {},
+      dialogSize: 560
     }
   },
   computed: {
@@ -270,6 +272,7 @@ export default {
       if (this.showDragAndDrop == false) {
         this.selectedRow = row
         this.dialog = true
+        this.dialogSize = window.innerWidth
       }
     },
     CloseDialogs () {

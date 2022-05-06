@@ -682,13 +682,34 @@
     }
   }
   #set-app-dialogs {
-    overflow-y: scroll;
+    overflow-y: auto;
     height: calc(100vh - 150px);
     .set-app-dialog-actions {
       justify-content: center;
       align-items: center;
       display: flex;
       margin-top: 50px;
+      .ok-btn {
+        margin-right: 5%;
+      }
+    }
+  }
+  #detail-dashboard-dialogs {
+    overflow-y: scroll;
+    height: calc(100vh - 150px);
+    .detail-dashboard-dialogs-actions {
+      margin-top: 20px;
+      text-align: center;
+      display: block;
+      // margin-top: 50px;
+    }
+  }
+  #change-pic-dialogs {
+    .change-pic-dialogs-actions {
+      margin-top: 70px;
+      margin-bottom: 30px;
+      display: block;
+      text-align: center;
       .ok-btn {
         margin-right: 5%;
       }
@@ -741,6 +762,26 @@
       }
     }
   }
+  #detail-dashboard-dialogs {
+    overflow-y: auto;
+    height: calc(100vh - 150px);
+    .detail-dashboard-dialogs-actions {
+      text-align: center;
+      display: block;
+      // margin-top: 50px;
+    }
+  }
+  #change-pic-dialogs {
+    .change-pic-dialogs-actions {
+      margin-top: 70px;
+      margin-bottom: 30px;
+      display: block;
+      text-align: center;
+      .ok-btn {
+        margin-right: 5%;
+      }
+    }
+  }
 }
 @media only screen and (min-device-width: 901px) and (orientation: landscape) {
   /* Styles */
@@ -774,6 +815,29 @@
       align-items: center;
       display: flex;
       margin-top: 50px;
+      .ok-btn {
+        margin-right: 5%;
+      }
+    }
+  }
+  #detail-dashboard-dialogs {
+    // overflow-y: auto;
+    // height: calc(100vh - 150px);
+    overflow-y: auto;
+    height: 100%;
+    .detail-dashboard-dialogs-actions {
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      // margin-top: 50px;
+    }
+  }
+  #change-pic-dialogs {
+    .change-pic-dialogs-actions {
+      margin-top: 70px;
+      margin-bottom: 30px;
+      display: block;
+      text-align: center;
       .ok-btn {
         margin-right: 5%;
       }
@@ -814,6 +878,8 @@
     }
   }
   #set-app-dialogs {
+    overflow-y: scroll;
+    height: calc(100vh - 150px);
     .set-app-dialog-actions {
       display: block;
       text-align: center;
@@ -821,6 +887,26 @@
       .cancel-btn {
         margin-top: 10px;
       }
+    }
+  }
+  #change-pic-dialogs {
+    .change-pic-dialogs-actions {
+      margin-top: 70px;
+      margin-bottom: 30px;
+      display: block;
+      text-align: center;
+      .cancel-btn {
+        margin-top: 10px;
+      }
+      // .ok-btn {
+      //   margin-right: 5%;
+      // }
+    }
+  }
+  #detail-dashboard-dialogs {
+    overflow-y: auto;
+    height: 100%;
+    .detail-dashboard-dialogs-actions {
     }
   }
 }
@@ -831,12 +917,31 @@
     overflow-y: scroll;
     .pwd-dialogs-actions {
       padding-top: 80px;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      .ok-btn {
+        margin-right: 5%;
+      }
     }
+    
   }
   #profile-dialogs {
     padding: 20px 20px 20px 20px;
+    // height: 100%;
+    // overflow-y: auto;
     overflow-y: scroll;
     height: calc(100vh - 150px);
+    .profile-dialogs-actions {
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      margin-top: 30px;
+      margin-bottom: 20px;
+      .ok-btn {
+        margin-right: 5%;
+      }
+    }
   }
   #set-app-dialogs {
     .set-app-dialog-actions {
@@ -844,8 +949,32 @@
       text-align: center;
       margin-top: 30px;
       .cancel-btn {
-        margin-top: 10px;
+        // margin-top: 10px;
       }
+      .ok-btn {
+        margin-right: 5%;
+      }
+    }
+  }
+  #change-pic-dialogs {
+    .change-pic-dialogs-actions {
+      margin-top: 70px;
+      margin-bottom: 30px;
+      display: block;
+      text-align: center;
+      // .cancel-btn {
+      //   margin-top: 10px;
+      // }
+      .ok-btn {
+        margin-right: 5%;
+      }
+    }
+  }
+  #detail-dashboard-dialogs {
+    overflow-y: auto;
+    height: 100%;
+    .detail-dashboard-dialogs-actions {
+      // padding-top: 50px;
     }
   }
 }
@@ -866,6 +995,26 @@
       .cancel-btn {
         margin-top: 10px;
       }
+    }
+  }
+  #change-pic-dialogs {
+    .change-pic-dialogs-actions {
+      margin-top: 70px;
+      margin-bottom: 30px;
+      display: block;
+      text-align: center;
+      // .cancel-btn {
+      //   margin-top: 10px;
+      // }
+      .ok-btn {
+        margin-right: 5%;
+      }
+    }
+  }
+  #detail-dashboard-dialogs {
+    overflow-y: auto;
+    height: 100%;
+    .detail-dashboard-dialogs-actions {
     }
   }
 }
