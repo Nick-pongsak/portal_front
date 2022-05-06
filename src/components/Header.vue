@@ -682,9 +682,9 @@
                 class="body-table"
                 :style="{
                   width: setAppDialogSize < 600 ? '100%' : '100%',
-                  height: 'calc(100vh - 250px)'
                 }"
               >
+                  <!-- height: 'calc(100vh - 250px)' -->
                 <div v-if="list.length == 0" class="no-data">
                   {{ $t('popup.text9') }}
                 </div>
