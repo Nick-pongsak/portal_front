@@ -245,11 +245,7 @@
           <div v-if="stepChangePic == 1" class="change-pic-dialogs-actions">
             <!-- style="margin-top:70px;margin-bottom:30px;display:flex"
             class="justify-center" -->
-            <v-btn
-              text
-              @click="stepChangePic = 2"
-              class="ok-btn"
-            >
+            <v-btn text @click="stepChangePic = 2" class="ok-btn">
               <!-- :style="{ 'margin-right': '35px' }" -->
               <v-icon
                 v-text="'mdi-delete'"
@@ -273,11 +269,7 @@
           >
             <!-- style="margin-top:70px;margin-bottom:30px;display:flex"
             class="justify-center" -->
-            <v-btn
-              text
-              @click="stepChangePic = 0"
-              class="ok-btn"
-            >
+            <v-btn text @click="stepChangePic = 0" class="ok-btn">
               <!-- :style="{ 'margin-right': '35px' }" -->
               {{ $t('btn_cancel') }}
             </v-btn>
@@ -301,11 +293,7 @@
           >
             <!-- style="margin-top:70px;margin-bottom:30px;display:flex"
             class="justify-center" -->
-            <v-btn
-              text
-              @click="stepChangePic = 0"
-              class="ok-btn"
-            >
+            <v-btn text @click="stepChangePic = 0" class="ok-btn">
               <!-- :style="{ 'margin-right': '35px' }" -->
               {{ $t('btn_cancel') }}
             </v-btn>
@@ -682,9 +670,9 @@
                 class="body-table"
                 :style="{
                   width: setAppDialogSize < 600 ? '100%' : '100%',
+                  height: 'calc(100vh - 250px)'
                 }"
               >
-                  <!-- height: 'calc(100vh - 250px)' -->
                 <div v-if="list.length == 0" class="no-data">
                   {{ $t('popup.text9') }}
                 </div>
@@ -1612,7 +1600,7 @@ export default {
           let str2 = tempData[i].name_th + type + tempData[i].name_en
           let str = str2.toUpperCase()
           if (str.indexOf(keyword.toUpperCase()) >= 0) {
-            tempData[i].index = i
+            tempData[i].index = temp.length
             temp.push(tempData[i])
           }
         }
@@ -2139,7 +2127,9 @@ export default {
       let temp = []
       let masterTemp = JSON.parse(JSON.stringify(this.list))
       for (let i = 0; i < masterTemp.length; i++) {
-        masterTemp[i].index = i
+        if (feild !== 'index') {
+          masterTemp[i].index = i
+        }
         temp.push(masterTemp[i])
       }
       this.list = temp
