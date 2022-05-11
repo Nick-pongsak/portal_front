@@ -913,8 +913,8 @@
 @media only screen and (min-device-width: 481px) and (max-device-width: 900px) and (orientation: portrait) {
   /* Styles */
   #pwd-dialogs {
-    height: calc(100vh - 100px);
-    overflow-y: scroll;
+    // height: calc(100vh - 100px);
+    // overflow-y: scroll;
     .pwd-dialogs-actions {
       padding-top: 80px;
       justify-content: center;
@@ -924,14 +924,13 @@
         margin-right: 5%;
       }
     }
-    
   }
   #profile-dialogs {
     padding: 20px 20px 20px 20px;
     // height: 100%;
     // overflow-y: auto;
-    overflow-y: scroll;
-    height: calc(100vh - 150px);
+    // overflow-y: scroll;
+    // height: calc(100vh - 150px);
     .profile-dialogs-actions {
       justify-content: center;
       align-items: center;
@@ -981,19 +980,36 @@
 @media only screen and (min-device-width: 901px) and (orientation: portrait) {
   /* Styles */
   #pwd-dialogs {
-    height: 100%;
+    // height: 100%;
     .pwd-dialogs-actions {
       padding-top: 80px;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      .ok-btn {
+        margin-right: 5%;
+      }
     }
   }
   #set-app-dialogs {
     overflow-y: auto;
+    // .set-app-dialog-actions {
+    //   display: block;
+    //   text-align: center;
+    //   margin-top: 30px;
+    //   .cancel-btn {
+    //     margin-top: 10px;
+    //   }
+    // }
     .set-app-dialog-actions {
       display: block;
       text-align: center;
       margin-top: 30px;
       .cancel-btn {
-        margin-top: 10px;
+        // margin-top: 10px;
+      }
+      .ok-btn {
+        margin-right: 5%;
       }
     }
   }
@@ -1015,6 +1031,17 @@
     overflow-y: auto;
     height: 100%;
     .detail-dashboard-dialogs-actions {
+    }
+  }
+  #profile-dialogs {
+    // height: fit-content;
+    .profile-dialogs-actions {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      .ok-btn {
+        margin-right: 5%;
+      }
     }
   }
 }

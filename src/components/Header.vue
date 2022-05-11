@@ -193,7 +193,7 @@
                   :preview="true"
                   :maxHeight="768"
                   :className="['fileinput', { 'fileinput--loaded': hasImage }]"
-                  capture="environment"
+                  :capture="false"
                   :debug="1"
                   accept="image/jpeg,.png"
                   :autoRotate="true"
@@ -495,7 +495,8 @@
             @click="ClosePwdDialogs()"
             :class="'ok-btn'"
             :style="{
-              width: '200px'
+              width: '200px',
+              'margin-right': stepChangePwd == 2 ? '0px' : '5%'
             }"
           >
             {{ stepChangePwd == 2 ? $t('btn_close') : $t('btn_cancel') }}
@@ -670,9 +671,9 @@
                 class="body-table"
                 :style="{
                   width: setAppDialogSize < 600 ? '100%' : '100%',
-                  height: 'calc(100vh - 250px)'
                 }"
               >
+                  <!-- height: 'calc(100vh - 250px)' -->
                 <div v-if="list.length == 0" class="no-data">
                   {{ $t('popup.text9') }}
                 </div>
@@ -874,7 +875,7 @@
 
     <v-dialog
       v-model="profileDialog"
-      :width="profileView ? 500 : 1000"
+      :width="profileView ? 650 : 1000"
       :no-click-animation="false"
     >
       <v-card id="profile-dialogs">
@@ -1982,9 +1983,10 @@ export default {
     },
     openProfile () {
       let x = window.innerWidth
-      let scr = this.enableInput ? 800 : 1000
+      // let scr = this.enableInput ? 800 : 1000
       this.profileSize = x
-      if (x < scr) {
+      if (x < 1200) {
+        // if (x < scr) {
         this.profileResize = true
       } else {
         this.profileResize = false
@@ -2032,14 +2034,14 @@ export default {
       } else {
         this.sysName = '20px'
       }
-      if (x <= 780) {
+      if (x <= 1200) {
         // if (x <= 690) {
         this.resizeHeader = false
       } else {
         this.resizeHeader = true
       }
       if (this.profileDialog) {
-        let scr = this.enableInput ? 800 : 1000
+        let scr = this.enableInput ? 1200 : 1000
         if (x < scr) {
           this.profileResize = true
         } else {
