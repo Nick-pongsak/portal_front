@@ -705,6 +705,8 @@
     }
   }
   #change-pic-dialogs {
+    overflow-y: scroll;
+    height: calc(100vh - 150px);
     .change-pic-dialogs-actions {
       margin-top: 70px;
       margin-bottom: 30px;
@@ -772,6 +774,8 @@
     }
   }
   #change-pic-dialogs {
+    overflow-y: scroll;
+    height: calc(100vh - 150px);
     .change-pic-dialogs-actions {
       margin-top: 70px;
       margin-bottom: 30px;
@@ -987,7 +991,7 @@
       align-items: center;
       display: flex;
       .ok-btn {
-        margin-right: 5%;
+        // margin-right: 5%;
       }
     }
   }

@@ -163,10 +163,10 @@
 
     <!---Dialogs-->
     <v-dialog v-model="picDialog" width="600" :no-click-animation="false">
+      <!-- height: picDialogSize < 1000 ? 'calc(100vh - 150px)' : '100%', -->
       <v-card
         id="change-pic-dialogs"
         :style="{
-          height: picDialogSize < 1000 ? 'calc(100vh - 150px)' : '100%',
           'overflow-y': 'auto'
         }"
       >
@@ -196,7 +196,7 @@
                   :capture="false"
                   :debug="1"
                   accept="image/jpeg,.png"
-                  :autoRotate="true"
+                  :autoRotate="false"
                   outputFormat="blob"
                   @input="setImage"
                 >
@@ -670,10 +670,10 @@
               <div
                 class="body-table"
                 :style="{
-                  width: setAppDialogSize < 600 ? '100%' : '100%',
+                  width: setAppDialogSize < 600 ? '100%' : '100%'
                 }"
               >
-                  <!-- height: 'calc(100vh - 250px)' -->
+                <!-- height: 'calc(100vh - 250px)' -->
                 <div v-if="list.length == 0" class="no-data">
                   {{ $t('popup.text9') }}
                 </div>
