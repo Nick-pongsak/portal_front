@@ -83,7 +83,15 @@
             </div>
             <div :style="{ 'margin-left': '14px' }" v-show="resizeHeader">
               <div class="account-name">{{ info['name_' + $i18n.locale] }}</div>
-              <div class="account-name" style="padding-top:1px">
+              <div
+                class="account-name"
+                style="padding-top:1px;
+                      max-width:120px;
+                      white-space: nowrap;
+                      text-overflow: ellipsis;
+                      display: block;
+                      overflow: hidden"
+              >
                 {{ info['postname_' + $i18n.locale] }}
               </div>
             </div>
@@ -155,7 +163,14 @@
 
     <!---Dialogs-->
     <v-dialog v-model="picDialog" width="600" :no-click-animation="false">
-      <v-card id="change-pic-dialogs">
+      <!-- height: picDialogSize < 1000 ? 'calc(100vh - 150px)' : '100%', -->
+      <v-card
+        id="change-pic-dialogs"
+        :style="{
+          'overflow-y': 'auto'
+        }"
+      >
+        <!-- {{ picDialogSize }} -->
         <v-card-text style="padding:unset">
           <div class="justify-end" style="display: flex;">
             <v-icon
@@ -178,10 +193,10 @@
                   :preview="true"
                   :maxHeight="768"
                   :className="['fileinput', { 'fileinput--loaded': hasImage }]"
-                  capture="environment"
+                  :capture="false"
                   :debug="1"
                   accept="image/jpeg,.png"
-                  :autoRotate="true"
+                  :autoRotate="false"
                   outputFormat="blob"
                   @input="setImage"
                 >
@@ -215,11 +230,9 @@
           >
             <!-- {{ '* หากระบุข้อมูลดังกล่าวจะเป็นสาธารณะ' }} -->
           </div>
-          <div
-            v-if="stepChangePic == 0"
-            style="margin-top:70px;margin-bottom:30px;display:flex"
-            class="justify-center"
-          >
+          <div v-if="stepChangePic == 0" class="change-pic-dialogs-actions">
+            <!-- style="margin-top:70px;margin-bottom:30px;display:flex"
+            class="justify-center" -->
             <v-btn text @click="ChangePic()" class="cancel-btn">
               <v-icon
                 v-text="'mdi-pencil'"
@@ -229,17 +242,11 @@
               {{ $t('btn_change') }}
             </v-btn>
           </div>
-          <div
-            v-if="stepChangePic == 1"
-            style="margin-top:70px;margin-bottom:30px;display:flex"
-            class="justify-center"
-          >
-            <v-btn
-              text
-              @click="stepChangePic = 2"
-              class="ok-btn"
-              :style="{ 'margin-right': '35px' }"
-            >
+          <div v-if="stepChangePic == 1" class="change-pic-dialogs-actions">
+            <!-- style="margin-top:70px;margin-bottom:30px;display:flex"
+            class="justify-center" -->
+            <v-btn text @click="stepChangePic = 2" class="ok-btn">
+              <!-- :style="{ 'margin-right': '35px' }" -->
               <v-icon
                 v-text="'mdi-delete'"
                 style="color:#CE1212;margin-right:5px;"
@@ -258,15 +265,12 @@
           </div>
           <div
             v-else-if="stepChangePic == 2"
-            style="margin-top:70px;margin-bottom:30px;display:flex"
-            class="justify-center"
+            class="change-pic-dialogs-actions"
           >
-            <v-btn
-              text
-              @click="stepChangePic = 0"
-              class="ok-btn"
-              :style="{ 'margin-right': '35px' }"
-            >
+            <!-- style="margin-top:70px;margin-bottom:30px;display:flex"
+            class="justify-center" -->
+            <v-btn text @click="stepChangePic = 0" class="ok-btn">
+              <!-- :style="{ 'margin-right': '35px' }" -->
               {{ $t('btn_cancel') }}
             </v-btn>
             <v-btn text @click="DeletePic()" class="cancel-btn">
@@ -275,24 +279,22 @@
           </div>
           <div
             v-else-if="stepChangePic == 3 || stepChangePic == 5"
-            style="margin-top:70px;margin-bottom:30px;display:flex"
-            class="justify-center"
+            class="change-pic-dialogs-actions"
           >
+            <!-- style="margin-top:70px;margin-bottom:30px;display:flex"
+            class="justify-center" -->
             <v-btn text @click="CloseDialogs()" class="ok-btn">
               {{ $t('btn_close') }}
             </v-btn>
           </div>
           <div
             v-else-if="stepChangePic == 4"
-            style="margin-top:70px;margin-bottom:30px;display:flex"
-            class="justify-center"
+            class="change-pic-dialogs-actions"
           >
-            <v-btn
-              text
-              @click="stepChangePic = 0"
-              class="ok-btn"
-              :style="{ 'margin-right': '35px' }"
-            >
+            <!-- style="margin-top:70px;margin-bottom:30px;display:flex"
+            class="justify-center" -->
+            <v-btn text @click="stepChangePic = 0" class="ok-btn">
+              <!-- :style="{ 'margin-right': '35px' }" -->
               {{ $t('btn_cancel') }}
             </v-btn>
             <v-btn class="cancel-btn" @click="onButtonClick">
@@ -305,18 +307,39 @@
 
     <v-dialog v-model="pwdDialog" width="650" :no-click-animation="false">
       <v-card id="pwd-dialogs">
+        <!-- {{ pwdDialogSize }} -->
+        <!-- :style="{
+          height: pwdDialogSize < 900 ? 'calc(100vh - 150px)' : '100%',
+          'overflow-y': pwdDialogSize < 900 ? 'scroll':'auto'
+        }" -->
         <v-card-text v-if="stepChangePwd == 0" style="padding:unset">
           <div class="head-menu7  center-vh" style="display:flex;">
             {{ $t('pwd.text1') }}
           </div>
-          <div style="margin-top:90px">
-            <div style="display:flex;width:100%;padding-right:30px">
-              <div class="head-menu3 center-vh" style="width:30%">
+          <div :style="{ 'margin-top': '90px', width: '100%' }">
+            <div
+              :style="{
+                display: pwdResize ? 'contents' : 'flex',
+                width: '100%',
+                'padding-right': '30px'
+              }"
+            >
+              <div
+                class="head-menu3 center-vh"
+                :style="{
+                  width: pwdResize ? '100%' : '30%',
+                  'justify-content': pwdResize ? 'start' : 'center'
+                }"
+              >
                 {{ $t('pwd.text2') }}
               </div>
               <div
                 class="input-with-icon"
-                style="width:70%;display:flex"
+                :style="{
+                  width: pwdResize ? '100%' : '70%',
+                  display: 'flex',
+                  'margin-top': pwdResize ? '10px' : '0px'
+                }"
                 :class="{ active: errorPwd }"
               >
                 <input
@@ -348,14 +371,31 @@
           </div>
         </v-card-text>
         <v-card-text v-else style="padding:unset">
-          <div v-show="stepChangePwd == 1">
-            <div style="display:flex;width:100%">
-              <div class="head-menu3" style="padding-top:4px;width:40%">
+          <div
+            v-show="stepChangePwd == 1"
+            :style="{ 'margin-bottom': pwdDialogSize < 500 ? '10px' : '0px' }"
+          >
+            <div
+              :style="{
+                display: pwdDialogSize < 500 ? 'contents' : 'flex',
+                width: '100%'
+              }"
+            >
+              <div
+                class="head-menu3"
+                :style="{
+                  'padding-top': '4px',
+                  width: pwdDialogSize < 500 ? '100%' : '40%'
+                }"
+              >
                 {{ $t('pwd.text3') }}
               </div>
               <div
                 class="input-with-icon"
-                style="width:60%;display:flex"
+                :style="{
+                  display: 'flex',
+                  width: pwdDialogSize < 500 ? '100%' : '60%'
+                }"
                 :class="{ active: errorNewPassword }"
               >
                 <input
@@ -380,13 +420,28 @@
             </div>
           </div>
           <div v-show="stepChangePwd == 1">
-            <div style="padding-top:30px;display:flex;width:100%">
-              <div class="head-menu3" style="padding-top:6px;width:40%">
+            <div
+              :style="{
+                'padding-top': '30px',
+                display: pwdDialogSize < 500 ? 'contents' : 'flex',
+                width: '100%'
+              }"
+            >
+              <div
+                class="head-menu3"
+                :style="{
+                  'padding-top': '6px',
+                  width: pwdDialogSize < 500 ? '100%' : '40%'
+                }"
+              >
                 {{ $t('pwd.text4') }}
               </div>
               <div
                 class="input-with-icon"
-                style="width:60%;display:flex"
+                :style="{
+                  display: 'flex',
+                  width: pwdDialogSize < 500 ? '100%' : '60%'
+                }"
                 :class="{ active: errorCfNewPassword }"
               >
                 <input
@@ -433,13 +488,16 @@
             </div>
           </div>
         </v-card-text>
-        <v-card-actions class="justify-center" style="padding-top:80px">
+        <div :style="{ width: '100%' }" class="pwd-dialogs-actions">
           <v-btn
             text
-            id="btn-1"
+            id="pwd-dialogs-actions-btn-1"
             @click="ClosePwdDialogs()"
-            class="ok-btn"
-            :style="{ 'margin-right': stepChangePwd == 2 ? '0px' : '35px' }"
+            :class="'ok-btn'"
+            :style="{
+              width: '200px',
+              'margin-right': stepChangePwd == 2 ? '0px' : '5%'
+            }"
           >
             {{ stepChangePwd == 2 ? $t('btn_close') : $t('btn_cancel') }}
           </v-btn>
@@ -448,24 +506,88 @@
             :disabled="disPwdBtn"
             v-show="stepChangePwd < 2"
             @click="ConfirmDialogs()"
-            class="cancel-btn"
+            :class="'cancel-btn'"
             :style="{
               background: disPwdBtn ? '#CE1212' : '',
-              opacity: disPwdBtn ? '0.51' : ''
+              opacity: disPwdBtn ? '0.51' : '',
+              width: '200px'
             }"
           >
             {{ stepChangePwd == 0 ? $t('btn_confirm') : $t('btn_change_pwd') }}
           </v-btn>
-        </v-card-actions>
+        </div>
+        <!-- <v-card-actions
+          class="justify-center"
+          :style="{ 'padding-top': '80px' }"
+        >
+          <div
+            :style="{
+              display: pwdDialogSize < 550 ? 'contents' : 'flex',
+              width: '100%'
+            }"
+            class="justify-center"
+          >
+            <v-btn
+              text
+              id="btn-1"
+              @click="ClosePwdDialogs()"
+              class="ok-btn"
+              :style="{
+                'margin-right': stepChangePwd == 2 ? '0px' : '10%',
+                width: pwdDialogSize < 500 ? 'auto' : '200px',
+                'padding-left': pwdDialogSize < 500 ? '5%' : 'unset',
+                'padding-right': pwdDialogSize < 500 ? '5%' : 'unset'
+              }"
+            >
+              {{ stepChangePwd == 2 ? $t('btn_close') : $t('btn_cancel') }}
+            </v-btn>
+
+            <v-btn
+              :disabled="disPwdBtn"
+              v-show="stepChangePwd < 2"
+              @click="ConfirmDialogs()"
+              class="cancel-btn"
+              :style="{
+                background: disPwdBtn ? '#CE1212' : '',
+                opacity: disPwdBtn ? '0.51' : '',
+                width: pwdDialogSize < 500 ? 'auto' : '200px',
+                'padding-left': pwdDialogSize < 500 ? '5%' : 'unset',
+                'padding-right': pwdDialogSize < 500 ? '5%' : 'unset'
+              }"
+            >
+              {{
+                stepChangePwd == 0 ? $t('btn_confirm') : $t('btn_change_pwd')
+              }}
+            </v-btn>
+          </div>
+        </v-card-actions> -->
       </v-card>
     </v-dialog>
 
     <v-dialog
       v-model="setAppDialog"
-      :width="viewListApp ? 800 : 600"
+      :width="viewListApp ? (setAppDialogSize < 600 ? 500 : 800) : 600"
       :no-click-animation="false"
+      :style="{
+        'overflow-x': viewListApp
+          ? setAppDialogSize < 600
+            ? 'scroll'
+            : 'auto'
+          : 'auto'
+      }"
     >
-      <v-card v-if="viewListApp">
+      <v-card
+        v-if="viewListApp"
+        :style="{
+          padding:
+            setAppDialogSize < 600
+              ? '20px 10px 20px 10px'
+              : '20px 50px 20px 50px',
+          width: setAppDialogSize < 600 ? '500px' : '100%',
+          'min-width': '500px'
+        }"
+      >
+        <!-- {{ setAppDialogSize }} -->
         <div class="justify-end" style="display: flex">
           <v-icon
             @click="CloseSetAppDialogs()"
@@ -480,7 +602,10 @@
           </div>
           <div class="line-page" style="margin-top:8px"></div>
           <div style="width:100%;margin-top:15px">
-            <div class="input-with-icon search-form">
+            <div
+              class="input-with-icon search-form"
+              :style="{ width: setAppDialogSize < 550 ? '90%' : '300px' }"
+            >
               <v-icon v-text="'mdi-magnify'" size="20"></v-icon>
               <input
                 style="width:100%"
@@ -489,11 +614,19 @@
                 :placeholder="$t('input_search')"
               />
             </div>
-            <div class="table">
+            <div
+              class="table"
+              :style="{
+                'overflow-x': setAppDialogSize < 600 ? 'hidden' : 'hidden',
+                width: setAppDialogSize < 600 ? '480px' : '100%'
+              }"
+            >
               <div class="head-table">
                 <div
                   class="head"
-                  style="width:10%"
+                  :style="{
+                    width: setAppDialogSize < 600 ? '15%' : '15%'
+                  }"
                   @click="sort(headCol[0], 0)"
                 >
                   <div class="column-name">{{ $t('manageapp.text0') }}</div>
@@ -505,7 +638,9 @@
                 </div>
                 <div
                   class="head"
-                  style="width:30%"
+                  :style="{
+                    width: setAppDialogSize < 600 ? '30%' : '30%'
+                  }"
                   @click="sort('name_' + $i18n.locale, 1)"
                 >
                   <div class="column-name">{{ $t('manageapp.text1') }}</div>
@@ -517,7 +652,9 @@
                 </div>
                 <div
                   class="head"
-                  style="width:60%"
+                  :style="{
+                    width: setAppDialogSize < 600 ? '55%' : '55%'
+                  }"
                   @click="sort(headCol[2], 2)"
                 >
                   <div class="column-name">
@@ -530,7 +667,13 @@
                   ></v-icon>
                 </div>
               </div>
-              <div class="body-table">
+              <div
+                class="body-table"
+                :style="{
+                  width: setAppDialogSize < 600 ? '100%' : '100%'
+                }"
+              >
+                <!-- height: 'calc(100vh - 250px)' -->
                 <div v-if="list.length == 0" class="no-data">
                   {{ $t('popup.text9') }}
                 </div>
@@ -538,42 +681,57 @@
                   class="body-row"
                   v-for="(item, index) in list"
                   :key="'setapp' + index"
+                  :style="{
+                    'padding-top': '3px'
+                  }"
                 >
                   <div
                     class="body"
-                    style="width:10%;padding-left:5px;padding-top:5px"
+                    :style="{
+                      width: setAppDialogSize < 600 ? '15%' : '15%',
+                      'padding-left': '5px',
+                      'padding-top': '5px'
+                    }"
                   >
                     {{ item.index + 1 }}
                   </div>
-                  <div class="body" style="width:30%;padding-top:5px">
+                  <div
+                    class="body"
+                    :style="{
+                      width: setAppDialogSize < 600 ? '30%' : '30%',
+                      'padding-top': '5px'
+                    }"
+                  >
                     {{ item['name_' + $i18n.locale] }}
                   </div>
-                  <div class="body" style="width:60%;display:flex">
-                    <div style="padding-top:5px;margin-right:15px">
+                  <div
+                    class="body"
+                    :style="{
+                      width: setAppDialogSize < 600 ? '55%' : '55%',
+                      'padding-top': '5px',
+                      display: 'flex'
+                    }"
+                  >
+                    <div style="margin-right:5%;padding-top:5px">
                       {{ renderText(item) }}
                     </div>
                     <div
                       v-show="item.status_sso == 1 && item.type_login == 0"
-                      :class="'input-with-icon disabled-input'"
-                      style="display: flex;width: 200px;height: 30px;margin-right:10px"
+                      style="display: flex;width: 40%"
                     >
-                      <input
-                        :disabled="true"
-                        type="text"
-                        v-model="item.username"
-                        :placeholder="$t('input_selected')"
-                      />
+                      <div style="font-weight:500;padding-top:5px">
+                        {{ item.username }}
+                      </div>
+                      <div style="margin-left:10%;height:18px">
+                        <v-icon
+                          v-show="item.status_sso == 1 && !item.type_login"
+                          @click="edit(item, index)"
+                          v-text="'mdi-pencil'"
+                          style="color:#CE1212"
+                          size="18"
+                        ></v-icon>
+                      </div>
                     </div>
-                    <v-btn
-                      v-show="item.status_sso == 1 && !item.type_login"
-                      text
-                      @click="edit(item, index)"
-                      class="cancel-btn"
-                    >
-                      {{
-                        item.username == '' ? $t('btn_add') : $t('btn_change')
-                      }}
-                    </v-btn>
                   </div>
                 </div>
               </div>
@@ -581,7 +739,8 @@
           </div>
         </div>
       </v-card>
-      <v-card v-else>
+      <v-card v-else id="set-app-dialogs">
+        <!-- {{ setAppDialogSize }} -->
         <div
           class="head-menu6 center-vh"
           style="display: flex;
@@ -599,12 +758,37 @@
         >
           {{ viewListData['name_' + $i18n.locale] }}
         </div>
-        <div class="rows" style="margin-bottom:30px;width:100%;display: flex;">
-          <div style="width:20%;padding-top:3px" class="rows-name">
+        <div
+          class="rows"
+          :style="{
+            width: '100%',
+            display: setAppDialogSize < 520 ? 'contents' : 'flex',
+            'margin-bottom': '30px'
+          }"
+        >
+          <div
+            :style="{
+              width: setAppDialogSize < 520 ? '100%' : '20%',
+              'margin-bottom': setAppDialogSize < 520 ? '8px' : '0px',
+              'padding-top': '3px'
+            }"
+            class="rows-name"
+          >
             {{ $t('manageapp.text6') }}
           </div>
-          <div style="width:80%" class="rows-input">
-            <div class="input-with-icon">
+          <div
+            :style="{
+              width: setAppDialogSize < 520 ? '100%' : '80%',
+              'margin-bottom': setAppDialogSize < 520 ? '8px' : '0px'
+            }"
+            class="rows-input"
+          >
+            <div
+              class="input-with-icon"
+              :style="{
+                width: setAppDialogSize < 520 ? '100%' : '330px'
+              }"
+            >
               <input
                 style="width:100%"
                 type="text"
@@ -614,12 +798,32 @@
             </div>
           </div>
         </div>
-        <div class="rows" style="width:100%;display: flex;">
-          <div style="width:20%" class="rows-name">
+        <div
+          class="rows"
+          :style="{
+            width: '100%',
+            display: setAppDialogSize < 520 ? 'contents' : 'flex'
+          }"
+        >
+          <div
+            :style="{
+              width: setAppDialogSize < 520 ? '100%' : '20%',
+              'margin-bottom': setAppDialogSize < 520 ? '8px' : '0px'
+            }"
+            class="rows-name"
+          >
             {{ $t('manageapp.text7') }}
           </div>
-          <div style="width:80%" class="rows-input">
-            <div class="input-with-icon">
+          <div
+            :style="{ width: setAppDialogSize < 520 ? '100%' : '80%' }"
+            class="rows-input"
+          >
+            <div
+              class="input-with-icon"
+              :style="{
+                width: setAppDialogSize < 520 ? '100%' : '330px'
+              }"
+            >
               <input
                 style="width:100%"
                 type="password"
@@ -636,15 +840,20 @@
             </div>
           </div>
         </div>
+
         <div
-          class="center-vh"
-          style="margin-top:50px;margin-bottom:20px;display:flex"
+          class="set-app-dialog-actions"
+          :style="{
+            width: '100%'
+          }"
         >
           <v-btn
             text
             @click="CloseSetAppDialogs()"
             class="ok-btn"
-            :style="{ 'margin-right': '35px', width: '200px' }"
+            :style="{
+              width: '200px'
+            }"
           >
             {{ $t('btn_cancel') }}
           </v-btn>
@@ -666,7 +875,7 @@
 
     <v-dialog
       v-model="profileDialog"
-      :width="profileView ? 500 : 1000"
+      :width="profileView ? 650 : 1000"
       :no-click-animation="false"
     >
       <v-card id="profile-dialogs">
@@ -712,45 +921,83 @@
               </div>
               <div class="line-page" style="margin-top:8px;"></div>
             </div>
-            <div class="rows" style="margin-top:18px">
-              <div style="width:20%" class="rows-name">
-                {{ $t('profile.account_2') }}
-              </div>
+            <div
+              class="rows"
+              :style="{
+                display: profileResize ? 'contents' : 'flex',
+                'margin-top': '18px'
+              }"
+            >
               <div
                 :style="{
-                  width: '80%',
-                  'padding-left': '8px',
-                  color: '#414141'
+                  width: profileResize ? '100%' : '50%',
+                  'margin-top': profileResize ? '10px' : '0px',
+                  'margin-bottom': profileResize ? '8px' : '0px',
+                  display: 'flex'
                 }"
-                class="rows-name"
               >
-                {{
-                  profile.type_login == 0
-                    ? $t('master.type_login_0')
-                    : $t('master.type_login_1')
-                }}
-              </div>
-            </div>
-            <div class="rows">
-              <div style="width:20%" class="rows-name">
-                {{ $t('profile.account_3') }}
-              </div>
-              <div style="width:80%" class="rows-input">
+                <div style="width:40%" class="rows-name">
+                  {{ $t('profile.account_2') }}
+                </div>
                 <div
-                  class="input-with-icon"
-                  :style="{ 'box-shadow': 'unset', width: ' 250px' }"
+                  :style="{
+                    width: '60%',
+                    'padding-left': '8px',
+                    color: '#414141'
+                  }"
+                  class="rows-name"
                 >
-                  <input
-                    type="text"
-                    v-model="profile.emp_code"
-                    :placeholder="$t('input_selected')"
-                    :readonly="true"
-                  />
+                  {{
+                    profile.type_login == 0
+                      ? $t('master.type_login_0')
+                      : $t('master.type_login_1')
+                  }}
                 </div>
               </div>
             </div>
-            <div class="rows">
-              <div style="width:50%;display: flex;">
+            <div
+              class="rows"
+              :style="{ display: profileResize ? 'contents' : 'flex' }"
+            >
+              <div
+                :style="{
+                  width: profileResize ? '100%' : '50%',
+                  'margin-bottom': profileResize ? '8px' : '0px',
+                  display: 'flex'
+                }"
+              >
+                <div style="width:40%" class="rows-name">
+                  {{ $t('profile.account_3') }}
+                </div>
+                <div style="width:60%" class="rows-input">
+                  <div
+                    class="input-with-icon"
+                    :style="{
+                      'box-shadow': 'unset',
+                      width: profileResize ? '95%' : ' 250px'
+                    }"
+                  >
+                    <input
+                      type="text"
+                      v-model="profile.emp_code"
+                      :placeholder="$t('input_selected')"
+                      :readonly="true"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="rows"
+              :style="{ display: profileResize ? 'contents' : 'flex' }"
+            >
+              <div
+                :style="{
+                  width: profileResize ? '100%' : '50%',
+                  'margin-bottom': profileResize ? '8px' : '0px',
+                  display: 'flex'
+                }"
+              >
                 <div style="width:40%" class="rows-name">
                   {{ $t('profile.account_4') }}
                 </div>
@@ -759,7 +1006,7 @@
                     class="input-with-icon"
                     :style="{
                       'box-shadow': enableInput ? 'unset' : colInput,
-                      width: ' 250px'
+                      width: profileResize ? '95%' : ' 250px'
                     }"
                   >
                     <input
@@ -771,16 +1018,28 @@
                   </div>
                 </div>
               </div>
-              <div style="width:50%;;display: flex;">
+              <div
+                :style="{
+                  width: profileResize ? '100%' : '50%',
+                  'margin-bottom': profileResize ? '8px' : '0px',
+                  display: 'flex'
+                }"
+              >
                 <div style="width:40%" class="rows-name">
                   {{ $t('profile.account_5') }}
                 </div>
-                <div style="width:60%;padding-right:25px" class="rows-input">
+                <div
+                  :style="{
+                    width: '60%',
+                    'padding-right': profileResize ? '0px' : '25px'
+                  }"
+                  class="rows-input"
+                >
                   <div
                     class="input-with-icon"
                     :style="{
                       'box-shadow': enableInput ? 'unset' : colInput,
-                      width: ' 250px'
+                      width: profileResize ? '95%' : ' 250px'
                     }"
                   >
                     <input
@@ -793,8 +1052,17 @@
                 </div>
               </div>
             </div>
-            <div class="rows">
-              <div style="width:50%;display: flex;">
+            <div
+              class="rows"
+              :style="{ display: profileResize ? 'contents' : 'flex' }"
+            >
+              <div
+                :style="{
+                  width: profileResize ? '100%' : '50%',
+                  'margin-bottom': profileResize ? '8px' : '0px',
+                  display: 'flex'
+                }"
+              >
                 <div style="width:40%" class="rows-name">
                   {{ $t('profile.account_6') }}
                 </div>
@@ -803,7 +1071,7 @@
                     class="input-with-icon"
                     :style="{
                       'box-shadow': enableInput ? 'unset' : colInput,
-                      width: ' 250px'
+                      width: profileResize ? '95%' : ' 250px'
                     }"
                   >
                     <input
@@ -817,16 +1085,28 @@
                   </div>
                 </div>
               </div>
-              <div style="width:50%;;display: flex;">
+              <div
+                :style="{
+                  width: profileResize ? '100%' : '50%',
+                  'margin-bottom': profileResize ? '8px' : '0px',
+                  display: 'flex'
+                }"
+              >
                 <div style="width:40%" class="rows-name">
                   {{ $t('profile.account_7') }}
                 </div>
-                <div style="width:60%;padding-right:25px" class="rows-input">
+                <div
+                  :style="{
+                    width: '60%',
+                    'padding-right': profileResize ? '0px' : '25px'
+                  }"
+                  class="rows-input"
+                >
                   <div
                     class="input-with-icon"
                     :style="{
                       'box-shadow': enableInput ? 'unset' : colInput,
-                      width: ' 250px'
+                      width: profileResize ? '95%' : ' 250px'
                     }"
                   >
                     <input
@@ -841,8 +1121,17 @@
                 </div>
               </div>
             </div>
-            <div class="rows">
-              <div style="width:50%;display: flex;">
+            <div
+              class="rows"
+              :style="{ display: profileResize ? 'contents' : 'flex' }"
+            >
+              <div
+                :style="{
+                  width: profileResize ? '100%' : '50%',
+                  'margin-bottom': profileResize ? '8px' : '0px',
+                  display: 'flex'
+                }"
+              >
                 <div style="width:40%" class="rows-name">
                   {{ $t('profile.account_8') }}
                 </div>
@@ -851,7 +1140,7 @@
                     class="input-with-icon"
                     :style="{
                       'box-shadow': enableInput ? 'unset' : colInput,
-                      width: ' 250px'
+                      width: profileResize ? '95%' : ' 250px'
                     }"
                   >
                     <input
@@ -865,16 +1154,28 @@
                   </div>
                 </div>
               </div>
-              <div style="width:50%;;display: flex;">
+              <div
+                :style="{
+                  width: profileResize ? '100%' : '50%',
+                  'margin-bottom': profileResize ? '8px' : '0px',
+                  display: 'flex'
+                }"
+              >
                 <div style="width:40%" class="rows-name">
                   {{ $t('profile.account_9') }}
                 </div>
-                <div style="width:60%;padding-right:25px" class="rows-input">
+                <div
+                  :style="{
+                    width: '60%',
+                    'padding-right': profileResize ? '0px' : '25px'
+                  }"
+                  class="rows-input"
+                >
                   <div
                     class="input-with-icon"
                     :style="{
                       'box-shadow': enableInput ? 'unset' : colInput,
-                      width: ' 250px'
+                      width: profileResize ? '95%' : ' 250px'
                     }"
                   >
                     <input
@@ -889,8 +1190,17 @@
                 </div>
               </div>
             </div>
-            <div class="rows">
-              <div style="width:50%;display: flex;">
+            <div
+              class="rows"
+              :style="{ display: profileResize ? 'contents' : 'flex' }"
+            >
+              <div
+                :style="{
+                  width: profileResize ? '100%' : '50%',
+                  'margin-bottom': profileResize ? '8px' : '0px',
+                  display: 'flex'
+                }"
+              >
                 <div style="width:40%" class="rows-name">
                   {{ $t('profile.account_10') }}
                 </div>
@@ -899,7 +1209,7 @@
                     class="input-with-icon"
                     :style="{
                       'box-shadow': enableInput ? 'unset' : colInput,
-                      width: ' 250px'
+                      width: profileResize ? '95%' : ' 250px'
                     }"
                   >
                     <input
@@ -911,16 +1221,28 @@
                   </div>
                 </div>
               </div>
-              <div style="width:50%;;display: flex;">
+              <div
+                :style="{
+                  width: profileResize ? '100%' : '50%',
+                  'margin-bottom': profileResize ? '8px' : '0px',
+                  display: 'flex'
+                }"
+              >
                 <div style="width:40%" class="rows-name">
                   {{ $t('profile.account_11') }}
                 </div>
-                <div style="width:60%;padding-right:25px" class="rows-input">
+                <div
+                  :style="{
+                    width: '60%',
+                    'padding-right': profileResize ? '0px' : '25px'
+                  }"
+                  class="rows-input"
+                >
                   <div
                     class="input-with-icon"
                     :style="{
                       'box-shadow': enableInput ? 'unset' : colInput,
-                      width: ' 250px'
+                      width: profileResize ? '95%' : ' 250px'
                     }"
                   >
                     <input
@@ -933,8 +1255,17 @@
                 </div>
               </div>
             </div>
-            <div class="rows">
-              <div style="width:50%;display: flex;">
+            <div
+              class="rows"
+              :style="{ display: profileResize ? 'contents' : 'flex' }"
+            >
+              <div
+                :style="{
+                  width: profileResize ? '100%' : '50%',
+                  'margin-bottom': profileResize ? '8px' : '0px',
+                  display: 'flex'
+                }"
+              >
                 <div style="width:40%" class="rows-name">
                   {{ $t('profile.account_12') }}
                 </div>
@@ -943,7 +1274,7 @@
                     class="input-with-icon"
                     :style="{
                       'box-shadow': renderEmail('shadow'),
-                      width: ' 250px'
+                      width: profileResize ? '95%' : ' 250px'
                     }"
                   >
                     <input
@@ -960,16 +1291,28 @@
                   </div>
                 </div>
               </div>
-              <div style="width:50%;;display: flex;">
+              <div
+                :style="{
+                  width: profileResize ? '100%' : '50%',
+                  'margin-bottom': profileResize ? '8px' : '0px',
+                  display: 'flex'
+                }"
+              >
                 <div style="width:40%" class="rows-name">
                   {{ $t('profile.account_13') }}
                 </div>
-                <div style="width:60%;padding-right:25px" class="rows-input">
+                <div
+                  :style="{
+                    width: '60%',
+                    'padding-right': profileResize ? '0px' : '25px'
+                  }"
+                  class="rows-input"
+                >
                   <div
                     class="input-with-icon"
                     :style="{
                       'box-shadow': enableInput ? 'unset' : colInput,
-                      width: ' 250px'
+                      width: profileResize ? '95%' : ' 250px'
                     }"
                   >
                     <input
@@ -985,8 +1328,20 @@
                 </div>
               </div>
             </div>
-            <div class="rows" style="padding-bottom:3px">
-              <div style="width:50%;display: flex;">
+            <div
+              class="rows"
+              :style="{
+                display: profileResize ? 'contents' : 'flex',
+                'padding-bottom': '3px'
+              }"
+            >
+              <div
+                :style="{
+                  width: profileResize ? '100%' : '50%',
+                  'margin-bottom': profileResize ? '8px' : '0px',
+                  display: 'flex'
+                }"
+              >
                 <div style="width:40%;height:28px" class="rows-name">
                   {{ $t('profile.account_14') }}
                 </div>
@@ -995,7 +1350,7 @@
                     class="input-with-icon"
                     :style="{
                       'box-shadow': enableInput ? 'unset' : colInput,
-                      width: ' 250px'
+                      width: profileResize ? '95%' : ' 250px'
                     }"
                   >
                     <input
@@ -1013,13 +1368,15 @@
                   </div>
                 </div>
               </div>
-              <div style="width:50%;;display: flex;"></div>
+              <div
+                :style="{
+                  width: profileResize ? '100%' : '50%',
+                  'margin-bottom': profileResize ? '8px' : '0px',
+                  display: 'flex'
+                }"
+              ></div>
             </div>
-            <div
-              class="rows justify-center"
-              v-if="!profileView"
-              style="margin-top:30px;margin-bottom:20px"
-            >
+            <div v-if="!profileView" class="rows profile-dialogs-actions">
               <v-btn
                 v-show="enableInput"
                 text
@@ -1039,7 +1396,7 @@
                 text
                 @click="closeProfile()"
                 class="ok-btn"
-                style="width:200px;margin-right: 15px"
+                style="width:200px;"
               >
                 {{ $t('btn_cancel') }}
               </v-btn>
@@ -1166,7 +1523,13 @@ export default {
       phone: '',
       showPassword: false,
       showNewPassword: false,
-      showCfNewPassword: false
+      showCfNewPassword: false,
+      profileResize: false,
+      pwdResize: false,
+      pwdDialogSize: 560,
+      setAppDialogSize: 560,
+      picDialogSize: 560,
+      profileSize: 560
     }
   },
   watch: {
@@ -1238,7 +1601,7 @@ export default {
           let str2 = tempData[i].name_th + type + tempData[i].name_en
           let str = str2.toUpperCase()
           if (str.indexOf(keyword.toUpperCase()) >= 0) {
-            tempData[i].index = i
+            tempData[i].index = temp.length
             temp.push(tempData[i])
           }
         }
@@ -1619,6 +1982,15 @@ export default {
       this.enableInput = true
     },
     openProfile () {
+      let x = window.innerWidth
+      // let scr = this.enableInput ? 800 : 1000
+      this.profileSize = x
+      if (x < 1200) {
+        // if (x < scr) {
+        this.profileResize = true
+      } else {
+        this.profileResize = false
+      }
       this.profileDialog = true
       this.profileView = false
       this.enableInput = true
@@ -1662,10 +2034,30 @@ export default {
       } else {
         this.sysName = '20px'
       }
-      if (x <= 690) {
+      if (x <= 1200) {
+        // if (x <= 690) {
         this.resizeHeader = false
       } else {
         this.resizeHeader = true
+      }
+      if (this.profileDialog) {
+        let scr = this.enableInput ? 1200 : 1000
+        if (x < scr) {
+          this.profileResize = true
+        } else {
+          this.profileResize = false
+        }
+      }
+      if (this.pwdDialog) {
+        this.pwdDialogSize = x
+        if (x < 550) {
+          this.pwdResize = true
+        } else {
+          this.pwdResize = false
+        }
+      }
+      if (this.setAppDialog) {
+        this.setAppDialogSize = x
       }
     },
     goHome () {
@@ -1737,7 +2129,9 @@ export default {
       let temp = []
       let masterTemp = JSON.parse(JSON.stringify(this.list))
       for (let i = 0; i < masterTemp.length; i++) {
-        masterTemp[i].index = i
+        if (feild !== 'index') {
+          masterTemp[i].index = i
+        }
         temp.push(masterTemp[i])
       }
       this.list = temp
@@ -1757,6 +2151,8 @@ export default {
         }
         this.list = temp
         this.masterList = temp
+        this.setAppDialogSize = window.innerWidth
+        this.searchApp = ''
         this.setAppDialog = true
       })
     },
@@ -1960,6 +2356,12 @@ export default {
       this.errorNewPassword = false
       this.cfNewPassword = ''
       this.errorCfNewPassword = false
+      this.pwdDialogSize = window.innerWidth
+      if (window.innerWidth < 550) {
+        this.pwdResize = true
+      } else {
+        this.pwdResize = false
+      }
       this.pwdDialog = true
     },
     renderProfileDesc () {
@@ -2011,6 +2413,7 @@ export default {
       })
     },
     UploadPic () {
+      this.picDialogSize = window.innerWidth
       this.picDialog = true
     },
     CloseDialogs () {

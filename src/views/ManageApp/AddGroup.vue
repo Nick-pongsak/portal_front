@@ -557,7 +557,9 @@ export default {
       let temp = []
       let masterTemp = JSON.parse(JSON.stringify(this.editRow.app))
       for (let i = 0; i < masterTemp.length; i++) {
-        masterTemp[i].index = i
+        if (feild !== 'index') {
+          masterTemp[i].index = i
+        }
         temp.push(masterTemp[i])
       }
       this.editRow.app = temp
