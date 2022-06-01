@@ -286,7 +286,11 @@ export default {
   methods: {
     termsConfirm () {
       this.termsDialog = false
-      console.log(this.termsChk)
+      let req = {
+        user_id: this.info.user_id,
+        con_id: this.info.condition.con_id
+      }
+      this.$store.dispatch('acceptTerms', req).then(() => {})
     },
     CloseTermsDialogs () {
       this.$store.dispatch('LogOut').then(() => {
