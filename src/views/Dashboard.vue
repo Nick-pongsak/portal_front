@@ -203,9 +203,7 @@
         <div class="title" style="font-family: kanit !important">
           {{ $t('term.text1') }}
         </div>
-        <div class="date-text">
-          {{ termsDetail }}
-        </div>
+        <div class="date-text" v-html="termsDetail"></div>
         <div
           style="display:flex;margin-top: 20px;margin-bottm: 20px;width:100%"
         >

@@ -74,7 +74,7 @@
       <term-list
         v-else-if="currentView.code == '3.1'"
         :data="editRow"
-        :master="masterUser"
+        :master="editRow"
         @cancel="cancelTerm"
         @save="saveTerm"
         @clear="clearTerm"

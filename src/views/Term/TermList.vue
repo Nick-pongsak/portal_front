@@ -203,17 +203,24 @@ export default {
       this.activeTab = item.code
     },
     cancelBtn () {
-      // let result = JSON.parse(JSON.stringify(this.editRow))
-      // let str2 = JSON.stringify(result)
-      // if (str1 == str2) {
-      //   this.cancel()
-      // } else {
-      this.error = false
-      this.btnClick = 'cancel'
-      this.dialog = true
-      this.errorDialog = this.$t('popup.text6')
-      this.rightBtn = this.$t('btn_ok')
-      // }
+      let result = JSON.parse(JSON.stringify(this.master))
+      let str1 = {
+        condition_th: result.condition_th,
+        condition_en: result.condition_en
+      }
+      let str2 = {
+        condition_th: this.conditionTh,
+        condition_en: this.conditionEn
+      }
+      if (str1 == str2) {
+        this.cancel()
+      } else {
+        this.error = false
+        this.btnClick = 'cancel'
+        this.dialog = true
+        this.errorDialog = this.$t('popup.text6')
+        this.rightBtn = this.$t('btn_ok')
+      }
     },
     saveAndActiveBtn () {
       this.btnClick = 'saveActive'
