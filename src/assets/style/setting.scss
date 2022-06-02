@@ -353,6 +353,11 @@
       }
     }
     #term-list {
+      .quill-editor {
+        .ql-toolbar.ql-snow + .ql-container.ql-snow {
+          height: calc(100vh - 350px) !important;
+        }
+      }
     }
   }
 

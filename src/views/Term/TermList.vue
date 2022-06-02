@@ -1,6 +1,6 @@
 <template>
-  <div id="user-list" style="height:calc(100% - 50px);">
-    <v-card style="padding:20px 5px 20px 20px;height: calc(100% - 10px);">
+  <div id="term-list" style="height:calc(100% - 50px);">
+    <v-card style="padding:20px 20px 20px 20px;height: calc(100% - 10px);">
       <div :class="'tab'" style="padding-top:0px;padding-left:0px">
         <div
           :class="'tab-row'"
@@ -14,7 +14,26 @@
         </div>
       </div>
       <div>
-        หหหหหหหหหหหหหห
+        <quill-editor
+          v-if="activeTab == 1"
+          v-model="conditionTh"
+          ref="myQuillEditor"
+          :options="editorOption"
+          @blur="onEditorBlur($event)"
+          @focus="onEditorFocus($event)"
+          @ready="onEditorReady($event)"
+        >
+        </quill-editor>
+        <quill-editor
+          v-if="activeTab == 2"
+          v-model="conditionEn"
+          ref="myQuillEditor"
+          :options="editorOption"
+          @blur="onEditorBlur($event)"
+          @focus="onEditorFocus($event)"
+          @ready="onEditorReady($event)"
+        >
+        </quill-editor>
       </div>
     </v-card>
     <div style="display:flex;padding-top:15px">
@@ -113,6 +132,11 @@
 </template>
 
 <script>
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
+import { quillEditor } from 'vue-quill-editor'
 export default {
   name: 'term-list',
   props: {
@@ -144,16 +168,37 @@ export default {
           text: 'term.text8'
         }
       ],
-      btnClick: ''
+      btnClick: '',
+      conditionTh: this.data.condition_th,
+      conditionEn: this.data.condition_en,
+      editorOption: {
+        // some quill options
+      }
     }
   },
   computed: {
     info () {
       return this.$store.getters.user
+    },
+    editor () {
+      return this.$refs.myQuillEditor.quill
     }
   },
   watch: {},
   methods: {
+    onEditorBlur (quill) {
+      // console.log('editor blur!', quill)
+    },
+    onEditorFocus (quill) {
+      // console.log('editor focus!', quill)
+    },
+    onEditorReady (quill) {
+      // console.log('editor ready!', quill)
+    },
+    onEditorChange ({ quill, html, text }) {
+      // console.log('editor change!', quill, html, text)
+      this.content = html
+    },
     tabs (item) {
       this.activeTab = item.code
     },
@@ -210,23 +255,27 @@ export default {
     },
     save () {
       if (this.btnClick == 'save') {
-        let result = JSON.parse(JSON.stringify(this.editRow))
         let url = this.editRow.mode == 'add' ? 'addTerm' : 'updateTerm'
-        result.event = 'draft'
-
-        // this.$store.dispatch(url, result).then(res => {
-        console.log('save ', result)
-        // this.$emit('cancel', null)
-        // })
+        let req = {
+          event: 'draft',
+          condition_th: this.conditionTh,
+          condition_en: this.conditionEn
+        }
+        this.$store.dispatch(url, req).then(res => {
+          this.$emit('cancel', null)
+        })
       } else if (this.btnClick == 'saveActive') {
-        let result = JSON.parse(JSON.stringify(this.editRow))
         let url = this.editRow.mode == 'add' ? 'addTerm' : 'updateTerm'
-        result.event = 'save-and-active'
+        let req = {
+          con_id: this.editRow.con_id,
+          event: 'save-and-active',
+          condition_th: this.conditionTh,
+          condition_en: this.conditionEn
+        }
 
-        // this.$store.dispatch(url, result).then(res => {
-        console.log('save and active', result)
-        // this.$emit('cancel', null)
-        // })
+        this.$store.dispatch(url, req).then(res => {
+          this.$emit('cancel', null)
+        })
       } else if (this.btnClick == 'clear') {
         this.clear()
       } else if (this.btnClick == 'cancel') {
@@ -263,6 +312,14 @@ export default {
       console.log(this.editRow)
     }
   },
-  mounted () {}
+  components: {
+    quillEditor
+  },
+  mounted () {
+    // if (process.browser) {
+    //   const VueQuillEditor = require('vue-quill-editor/dist/ssr')
+    //   Vue.use(VueQuillEditor /* { default global options } */)
+    // }
+  }
 }
 </script>
