@@ -201,7 +201,7 @@
           ></v-icon>
         </div>
         <div class="title" style="font-family: kanit !important">
-          {{ $t('terms.text1') }}
+          {{ $t('term.text1') }}
         </div>
         <div class="date-text">
           {{ termsDetail }}
@@ -215,7 +215,7 @@
               v-model="termsChk"
               hide-details
             ></v-checkbox>
-            <div>{{ $t('terms.text2') }}</div>
+            <div>{{ $t('term.text2') }}</div>
           </div>
           <div style="width:20%">
             <v-btn
@@ -290,7 +290,7 @@ export default {
         user_id: this.info.user_id,
         con_id: this.info.condition.con_id
       }
-      this.$store.dispatch('acceptTerms', req).then(() => {})
+      this.$store.dispatch('acceptTerm', req).then(() => {})
     },
     CloseTermsDialogs () {
       this.$store.dispatch('LogOut').then(() => {

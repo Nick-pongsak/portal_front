@@ -352,39 +352,13 @@ const store = {
         }).catch(error => {
           commit('SetLoading', false)
           if (error && error.response && error.response.status === 401) {
-            // router.push('/');
-            commit('SetDialogExpire', true)
-          } else if (error && error.response && error.response.status === 500) {
-            // commit('SetDialogExpire', true)
-          }
-          reject(error)
-        })
-      })
-    },
-    acceptTerms({ commit }, data) {
-      commit('SetLoading', true)
-      if (debug == 'debug') {
-        console.log("user-accept ==>")
-      }
-      return new Promise((resolve, reject) => {
-        axios.post(`${url}/apiweb/api/user-accept`, data, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.getters.access_token}`
-          }
-        }).then(res => {
-          commit('SetLoading', false)
-          resolve(res.data.success)
-        }).catch(error => {
-          commit('SetLoading', false)
-          if (error && error.response && error.response.status === 401) {
             commit('SetDialogExpire', true)
           } else if (error && error.response && error.response.status === 500) {
           }
           reject(error)
         })
       })
-    },
+    }
   },
   getters: {
     isLoading(state) {

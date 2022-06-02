@@ -65,6 +65,20 @@
         @clear="clearApp"
         :data="editRow2"
       />
+      <main-term
+        v-if="currentView.code == '3'"
+        @add="addTerm"
+        @edit="editTerm"
+        @view="viewTerm"
+      />
+      <term-list
+        v-else-if="currentView.code == '3.1'"
+        :data="editRow"
+        :master="masterUser"
+        @cancel="cancelTerm"
+        @save="saveTerm"
+        @clear="clearTerm"
+      />
     </div>
   </div>
 </template>
@@ -76,6 +90,8 @@ import MainAdminApp from './AdminApp/Main'
 import MainListApp from './ManageApp/Main'
 import AddApp from './ManageApp/AddApp'
 import AddGroup from './ManageApp/AddGroup'
+import TermList from './Term/TermList'
+import MainTerm from './Term/Main'
 export default {
   name: 'setting',
   data () {
@@ -158,6 +174,36 @@ export default {
   },
   watch: {},
   methods: {
+    clearTerm (value) {
+      this.currentView = this.menu[2]
+    },
+    cancelTerm (value) {
+      this.currentView = this.menu[2]
+    },
+    saveTerm (value) {
+      this.currentView = this.menu[2]
+    },
+    addTerm (value) {
+      this.currentView = {
+        code: '3.1',
+        text: 'term.text1'
+      }
+      this.editRow = value
+    },
+    editTerm (value) {
+      this.currentView = {
+        code: '3.1',
+        text: 'term.text1'
+      }
+      this.editRow = value
+    },
+    viewTerm (value) {
+      this.currentView = {
+        code: '3.1',
+        text: 'term.text1'
+      }
+      this.editRow = value
+    },
     uploadCSV (value) {
       this.currentView = {
         code: '1.2',
@@ -294,6 +340,11 @@ export default {
               text: 'set.app_tab1'
             }
           ]
+        },
+        {
+          code: '3',
+          text: 'term.text1',
+          child: []
         }
       ]
       if (this.info.admin_menu == 0) {
@@ -317,7 +368,9 @@ export default {
     AddGroup,
     UserList,
     MainAdminApp,
-    UploadCsv
+    UploadCsv,
+    TermList,
+    MainTerm
   },
   mounted () {}
 }
