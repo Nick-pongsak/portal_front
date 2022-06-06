@@ -306,7 +306,9 @@ export default {
         user_id: this.info.user_id,
         con_id: this.info.condition.con_id
       }
-      this.$store.dispatch('acceptTerm', req).then(() => {})
+      this.$store.dispatch('acceptTerm', req).then(() => {
+        this.termsDialog = false
+      })
     },
     CloseTermsDialogs () {
       this.$store.dispatch('LogOut').then(() => {

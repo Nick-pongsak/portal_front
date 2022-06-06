@@ -1,7 +1,7 @@
 <template>
   <div id="term-list" style="height:calc(100% - 50px);">
-    <v-card style="padding:20px 20px 20px 20px;height: calc(100% - 10px);">
-      <div style="display:flex;width:100%">
+    <v-card style="height: calc(100% - 10px);">
+      <div style="display:flex;width:100%;padding:20px 20px 0px 20px;">
         <div
           :class="'tab'"
           style="padding-top:0px;padding-left:0px;padding-bottom:3px;"
@@ -37,7 +37,7 @@
           </span>
         </div>
       </div>
-      <div>
+      <div style="padding-left:15px;padding-right:15px;">
         <quill-editor
           :disabled="
             (editRow.mode == 'edit' && editRow.active == 1) ||
@@ -85,7 +85,7 @@
           class="ok-btn"
           style="margin-right:6px;height: 22px;"
         >
-          {{ editRow.mode == 'view' ? $t('btn_close') : $t('btn_cancel') }}
+          {{ editRow.mode == 'view' ? $t('btn_back') : $t('btn_cancel') }}
         </v-btn>
         <v-btn
           v-if="
