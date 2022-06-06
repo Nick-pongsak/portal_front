@@ -44,7 +44,7 @@
           <div
             class="head"
             style="width:20%;padding-left:5px"
-            @click="sort('name_' + $i18n.locale, 2)"
+            @click="sort('name_' + $i18n.locale, 1)"
           >
             <div class="column-name">{{ $t('term.text3') }}</div>
             <v-icon

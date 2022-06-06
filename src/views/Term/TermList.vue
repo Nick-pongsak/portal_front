@@ -216,7 +216,22 @@ export default {
       return this.$refs.myQuillEditor.quill
     }
   },
-  watch: {},
+  watch: {
+    conditionTh: {
+      handler: function (todos) {
+        if (todos.trim().length == 0) {
+          this.enableBtn = true
+        }
+      }
+    },
+    conditionEn: {
+      handler: function (todos) {
+        if (todos.trim().length == 0) {
+          this.enableBtn = true
+        }
+      }
+    }
+  },
   methods: {
     onEditorBlur (quill) {
       // console.log('editor blur!', quill)
