@@ -321,6 +321,9 @@ export default {
           condition_th: this.conditionTh,
           condition_en: this.conditionEn
         }
+        if (this.editRow.mode == 'edit') {
+          req.con_id = this.editRow.con_id
+        }
         this.$store.dispatch(url, req).then(res => {
           this.$emit('cancel', null)
         })
