@@ -189,6 +189,7 @@
       v-model="termsDialog"
       max-width="800"
       :no-click-animation="false"
+      v-click-outside="onClickOutside"
       :style="{ transform: tranformScale }"
     >
       <v-card id="terms-dialogs" style="font-family: kanit !important">
@@ -296,6 +297,9 @@ export default {
     }
   },
   methods: {
+    onClickOutside () {
+      this.termsDialog = true
+    },
     termsConfirm () {
       this.termsDialog = false
       let req = {

@@ -85,7 +85,7 @@
           class="ok-btn"
           style="margin-right:6px;height: 22px;"
         >
-          {{ $t('btn_cancel') }}
+          {{ editRow.mode == 'view' ? $t('btn_close') : $t('btn_cancel') }}
         </v-btn>
         <v-btn
           v-if="
@@ -249,7 +249,7 @@ export default {
           condition_en: this.conditionEn,
           mode: result.mode
         }
-        
+
         if (JSON.stringify(str1) == JSON.stringify(str2)) {
           this.cancel()
         } else {
