@@ -224,7 +224,7 @@
             ></v-checkbox>
             <div>{{ $t('term.text2') }}</div>
           </div>
-          <div style="width:20%">
+          <div style="width:20%; padding-left:20px">
             <v-btn
               text
               @click="termsConfirm()"
@@ -237,7 +237,7 @@
                 height: '23px'
               }"
             >
-              {{ $t('btn_ok') }}
+              {{ $t('btn_consent') }}
             </v-btn>
           </div>
         </div>
@@ -298,7 +298,9 @@ export default {
   },
   methods: {
     onClickOutside () {
-      this.termsDialog = true
+      if (this.termsDialog) {
+        this.termsDialog = true
+      }
     },
     termsConfirm () {
       this.termsDialog = false

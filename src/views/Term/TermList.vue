@@ -269,7 +269,8 @@ export default {
           this.error = false
           this.dialog = true
           this.errorDialog = this.$t('term.text14')
-          this.rightBtn = this.$t('btn_save')
+          this.rightBtn = this.$t('term.text15')
+          // this.rightBtn = this.$t('btn_save')
         } else {
           console.log('saveInActive...', item)
         }

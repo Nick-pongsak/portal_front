@@ -65,7 +65,7 @@
           </div>
           <div class="head" style="width:20%" @click="sort(headCol[3], 3)">
             <div class="column-name">
-              {{ $t('user.text2') }}
+              {{ $t('set.list_col5') }}
             </div>
             <v-icon
               v-text="sortNo == 3 ? 'mdi-menu-up' : 'mdi-menu-down'"
