@@ -151,6 +151,14 @@
     margin-bottom: 10px;
   }
   .date-text {
+    .quill-editor {
+      .ql-toolbar {
+        display: none;
+      }
+      .ql-container {
+        border: unset;
+      }
+    }
     padding-right: 50px;
     font-size: 13px;
     color: #767676;

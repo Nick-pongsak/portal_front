@@ -203,7 +203,15 @@
         <div class="title" style="font-family: kanit !important">
           {{ $t('term.text1') }}
         </div>
-        <div class="date-text" v-html="termsDetail"></div>
+        <!-- <div class="date-text" v-html="termsDetail"></div> -->
+        <div class="date-text">
+          <quill-editor
+            :disabled="true"
+            v-model="termsDetail"
+            ref="myQuillEditor"
+          >
+          </quill-editor>
+        </div>
         <div
           style="display:flex;margin-top: 20px;margin-bottm: 20px;width:100%"
         >
@@ -238,6 +246,12 @@
 </template>
 
 <script>
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
+import { quillEditor } from 'vue-quill-editor'
+
 var CryptoJS = require('crypto-js')
 var aesEcb = require('aes-ecb')
 export default {
@@ -459,6 +473,9 @@ export default {
         this.list = dataTemp
       })
     }
+  },
+  components: {
+    quillEditor
   },
   created () {
     if (

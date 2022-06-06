@@ -1,20 +1,48 @@
 <template>
   <div id="term-list" style="height:calc(100% - 50px);">
     <v-card style="padding:20px 20px 20px 20px;height: calc(100% - 10px);">
-      <div :class="'tab'" style="padding-top:0px;padding-left:0px">
+      <div style="display:flex;width:100%">
         <div
-          :class="'tab-row'"
-          v-for="item in menu"
-          :key="item.code"
-          @click="tabs(item)"
-          :id="'tab' + item.code"
+          :class="'tab'"
+          style="padding-top:0px;padding-left:0px;padding-bottom:3px;"
         >
-          {{ $t(item.text) }}
-          <div v-show="activeTab == item.code" class="line-active"></div>
+          <div
+            :class="'tab-row'"
+            v-for="item in menu"
+            :key="item.code"
+            @click="tabs(item)"
+            :id="'tab' + item.code"
+          >
+            {{ $t(item.text) }}
+            <div v-show="activeTab == item.code" class="line-active"></div>
+          </div>
+        </div>
+        <div style="width:20%;color:#66BB6A;font-size:14px;text-align: end;">
+          <v-icon
+            v-show="
+              (editRow.mode == 'edit' && editRow.active == 1) ||
+                (editRow.mode == 'view' && editRow.active == 1)
+            "
+            v-text="'mdi-checkbox-marked-circle'"
+            style="color:#66BB6A;margin-right:7px"
+            size="19"
+          ></v-icon>
+          <span
+            v-show="
+              (editRow.mode == 'edit' && editRow.active == 1) ||
+                (editRow.mode == 'view' && editRow.active == 1)
+            "
+          >
+            {{ $t('user.text7') }}
+          </span>
         </div>
       </div>
       <div>
         <quill-editor
+          :disabled="
+            (editRow.mode == 'edit' && editRow.active == 1) ||
+              editRow.mode == 'view'
+          "
           v-if="activeTab == 1"
           v-model="conditionTh"
           ref="myQuillEditor"
@@ -25,6 +53,10 @@
         >
         </quill-editor>
         <quill-editor
+          :disabled="
+            (editRow.mode == 'edit' && editRow.active == 1) ||
+              editRow.mode == 'view'
+          "
           v-if="activeTab == 2"
           v-model="conditionEn"
           ref="myQuillEditor"
@@ -66,7 +98,7 @@
             'margin-right': '6px',
             height: '22px'
           }"
-          :disabled="enableBtn"
+          :disabled="enableBtn || conditionEn == '' || conditionTh == ''"
         >
           {{ $t('btn_save') }}
         </v-btn>
@@ -77,7 +109,7 @@
           "
           @click="saveAndActiveBtn()"
           :class="'cancel-btn'"
-          :disabled="enableBtn"
+          :disabled="enableBtn || conditionEn == '' || conditionTh == ''"
           style="height: 22px;width:180px"
         >
           {{ $t('term.text6') }}
@@ -203,35 +235,55 @@ export default {
       this.activeTab = item.code
     },
     cancelBtn () {
-      let result = JSON.parse(JSON.stringify(this.master))
-      let str1 = {
-        condition_th: result.condition_th,
-        condition_en: result.condition_en
-      }
-      let str2 = {
-        condition_th: this.conditionTh,
-        condition_en: this.conditionEn
-      }
-      if (str1 == str2) {
+      if (this.editRow.mode == 'view') {
         this.cancel()
       } else {
-        this.error = false
-        this.btnClick = 'cancel'
-        this.dialog = true
-        this.errorDialog = this.$t('popup.text6')
-        this.rightBtn = this.$t('btn_ok')
+        let result = JSON.parse(JSON.stringify(this.master))
+        let str1 = {
+          condition_th: result.condition_th,
+          condition_en: result.condition_en,
+          mode: result.mode
+        }
+        let str2 = {
+          condition_th: this.conditionTh,
+          condition_en: this.conditionEn,
+          mode: result.mode
+        }
+        
+        if (JSON.stringify(str1) == JSON.stringify(str2)) {
+          this.cancel()
+        } else {
+          this.error = false
+          this.btnClick = 'cancel'
+          this.dialog = true
+          this.errorDialog = this.$t('popup.text6')
+          this.rightBtn = this.$t('btn_ok')
+        }
       }
     },
     saveAndActiveBtn () {
-      this.btnClick = 'saveActive'
-      let item = this.editRow
-      if (this.enableBtn == false) {
-        this.error = false
-        this.dialog = true
-        this.errorDialog = this.$t('term.text9')
-        this.rightBtn = this.$t('btn_save')
+      if (this.editRow.active == 1) {
+        this.btnClick = 'saveInActive'
+        let item = this.editRow
+        if (this.enableBtn == false) {
+          this.error = false
+          this.dialog = true
+          this.errorDialog = this.$t('term.text14')
+          this.rightBtn = this.$t('btn_save')
+        } else {
+          console.log('saveInActive...', item)
+        }
       } else {
-        console.log('saveBtn...', item)
+        this.btnClick = 'saveActive'
+        let item = this.editRow
+        if (this.enableBtn == false) {
+          this.error = false
+          this.dialog = true
+          this.errorDialog = this.$t('term.text9')
+          this.rightBtn = this.$t('btn_save')
+        } else {
+          console.log('saveActive...', item)
+        }
       }
     },
     cancel () {
@@ -276,6 +328,18 @@ export default {
         let req = {
           con_id: this.editRow.con_id,
           event: 'save-and-active',
+          condition_th: this.conditionTh,
+          condition_en: this.conditionEn
+        }
+
+        this.$store.dispatch(url, req).then(res => {
+          this.$emit('cancel', null)
+        })
+      } else if (this.btnClick == 'saveInActive') {
+        let url = 'updateTerm'
+        let req = {
+          con_id: this.editRow.con_id,
+          event: 'inactive',
           condition_th: this.conditionTh,
           condition_en: this.conditionEn
         }

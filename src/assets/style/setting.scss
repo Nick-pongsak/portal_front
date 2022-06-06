@@ -353,6 +353,24 @@
       }
     }
     #term-list {
+      .ql-editor {
+        &::-webkit-scrollbar {
+          width: 6px;
+        }
+        &::-webkit-scrollbar:horizontal {
+          height: 8px;
+        }
+        &::-webkit-scrollbar-track {
+          background: #efefef;
+        }
+        &::-webkit-scrollbar-thumb {
+          border-radius: 8px;
+          background: #a8a8a8;
+        }
+        &::-webkit-scrollbar-thumb:hover {
+          background: rgb(145, 145, 145);
+        }
+      }
       .quill-editor {
         .ql-toolbar.ql-snow + .ql-container.ql-snow {
           height: calc(100vh - 350px) !important;
