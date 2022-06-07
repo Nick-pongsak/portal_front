@@ -170,7 +170,7 @@ export default {
         'status'
       ],
       mainSort: {
-        feild: 'emp_code',
+        feild: 'name_'+this.$i18n.locale,
         orderby: true
       }
     }
