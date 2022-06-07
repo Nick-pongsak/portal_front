@@ -543,7 +543,126 @@ const store = {
         })
       })
     },
-
+    acceptTerm({ commit }, data) {
+      commit('SetLoading', true)
+      if (debug == 'debug') {
+        console.log("user-accept ==>")
+      }
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/user-accept`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          commit('SetLoading', false)
+          resolve(res.data.success)
+        }).catch(error => {
+          commit('SetLoading', false)
+          if (error && error.response && error.response.status === 401) {
+            commit('SetDialogExpire', true)
+          } else if (error && error.response && error.response.status === 500) {
+          }
+          reject(error)
+        })
+      })
+    },
+    fetchTerm({ commit }, data) {
+      commit('SetLoading', true)
+      if (debug == 'debug') {
+        console.log("condition-list ==>")
+      }
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/condition-list`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          commit('SetLoading', false)
+          resolve(res.data.success)
+        }).catch(error => {
+          commit('SetLoading', false)
+          if (error && error.response && error.response.status === 401) {
+            commit('SetDialogExpire', true)
+          } else if (error && error.response && error.response.status === 500) {
+          }
+          reject(error)
+        })
+      })
+    },
+    deleteTerm({ commit }, data) {
+      commit('SetLoading', true)
+      if (debug == 'debug') {
+        console.log("delete-condition ==>")
+      }
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/delete-condition`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          commit('SetLoading', false)
+          resolve(res.data.success)
+        }).catch(error => {
+          commit('SetLoading', false)
+          if (error && error.response && error.response.status === 401) {
+            commit('SetDialogExpire', true)
+          } else if (error && error.response && error.response.status === 500) {
+          }
+          reject(error)
+        })
+      })
+    },
+    addTerm({ commit }, data) {
+      commit('SetLoading', true)
+      if (debug == 'debug') {
+        console.log("add-condition ==>")
+      }
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/add-condition`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          commit('SetLoading', false)
+          resolve(res.data.success)
+        }).catch(error => {
+          commit('SetLoading', false)
+          if (error && error.response && error.response.status === 401) {
+            commit('SetDialogExpire', true)
+          } else if (error && error.response && error.response.status === 500) {
+          }
+          reject(error)
+        })
+      })
+    },
+    updateTerm({ commit }, data) {
+      commit('SetLoading', true)
+      if (debug == 'debug') {
+        console.log("update-condition ==>")
+      }
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/update-condition`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.getters.access_token}`
+          }
+        }).then(res => {
+          commit('SetLoading', false)
+          resolve(res.data.success)
+        }).catch(error => {
+          commit('SetLoading', false)
+          if (error && error.response && error.response.status === 401) {
+            commit('SetDialogExpire', true)
+          } else if (error && error.response && error.response.status === 500) {
+          }
+          reject(error)
+        })
+      })
+    },
   },
   getters: {
     dialog_profile(state) {

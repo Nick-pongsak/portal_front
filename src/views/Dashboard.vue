@@ -184,10 +184,75 @@
         </div>
       </v-card>
     </v-dialog>
+
+    <v-dialog
+      v-model="termsDialog"
+      max-width="800"
+      :no-click-animation="false"
+      v-click-outside="onClickOutside"
+      :style="{ transform: tranformScale }"
+    >
+      <v-card id="terms-dialogs" style="font-family: kanit !important">
+        <div class="justify-end" style="display: flex;">
+          <v-icon
+            @click="CloseTermsDialogs()"
+            v-text="'mdi-close'"
+            style="color:#797979;"
+            size="22"
+          ></v-icon>
+        </div>
+        <div class="title" style="font-family: kanit !important">
+          {{ $t('term.text1') }}
+        </div>
+        <!-- <div class="date-text" v-html="termsDetail"></div> -->
+        <div class="date-text">
+          <quill-editor
+            :disabled="true"
+            v-model="termsDetail"
+            ref="myQuillEditor"
+          >
+          </quill-editor>
+        </div>
+        <div
+          style="display:flex;margin-top: 20px;margin-bottm: 20px;width:100%"
+        >
+          <div style="width:80%;display:flex">
+            <v-checkbox
+              color="red"
+              v-model="termsChk"
+              hide-details
+            ></v-checkbox>
+            <div>{{ $t('term.text2') }}</div>
+          </div>
+          <div style="width:20%; padding-left:20px">
+            <v-btn
+              text
+              @click="termsConfirm()"
+              class="cancel-btn"
+              :disabled="termsChk ? false : true"
+              :style="{
+                background: termsChk ? '' : '#CE1212',
+                opacity: termsChk ? '' : '0.51',
+                'font-size': '13px',
+                height: '23px'
+              }"
+            >
+              {{ $t('btn_consent') }}
+            </v-btn>
+          </div>
+        </div>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
+import { quillEditor } from 'vue-quill-editor'
+
 var CryptoJS = require('crypto-js')
 var aesEcb = require('aes-ecb')
 export default {
@@ -200,7 +265,10 @@ export default {
       showDragAndDrop: false,
       tranformScale: 'scale(1)',
       group: {},
-      dialogSize: 560
+      dialogSize: 560,
+      termsDialog: false,
+      termsDetail: '',
+      termsChk: false
     }
   },
   computed: {
@@ -229,6 +297,26 @@ export default {
     }
   },
   methods: {
+    onClickOutside () {
+      if (this.termsDialog) {
+        this.termsDialog = true
+      }
+    },
+    termsConfirm () {
+      this.termsDialog = false
+      let req = {
+        user_id: this.info.user_id,
+        con_id: this.info.condition.con_id
+      }
+      this.$store.dispatch('acceptTerm', req).then(() => {
+        this.termsDialog = false
+      })
+    },
+    CloseTermsDialogs () {
+      this.$store.dispatch('LogOut').then(() => {
+        this.$router.push('/')
+      })
+    },
     onResize () {
       let x = window.innerWidth
       let y = window.innerHeight
@@ -393,6 +481,9 @@ export default {
       })
     }
   },
+  components: {
+    quillEditor
+  },
   created () {
     if (
       this.$store.getters.access_token === '' &&
@@ -406,6 +497,12 @@ export default {
         'SetAccessToken',
         sessionStorage.getItem('token_seesion')
       )
+      if (this.info.condition.length == 0) {
+      } else {
+        this.termsDialog = true
+        let feildTerms = 'condition_' + this.$i18n.locale
+        this.termsDetail = this.info.condition[feildTerms]
+      }
       this.onResize()
       this.fetchData()
     }
