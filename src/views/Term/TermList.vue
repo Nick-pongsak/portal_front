@@ -109,7 +109,9 @@
           "
           @click="saveAndActiveBtn()"
           :class="'cancel-btn'"
-          :disabled="enableBtn || conditionEn == '' || conditionTh == ''"
+          :disabled="
+            enableBtn || conditionEn.length == 0 || conditionTh.length == 0
+          "
           style="height: 22px;width:180px"
         >
           {{ $t('term.text6') }}
@@ -219,15 +221,21 @@ export default {
   watch: {
     conditionTh: {
       handler: function (todos) {
+        console.log(todos.trim().length)
         if (todos.trim().length == 0) {
           this.enableBtn = true
+        } else {
+          this.enableBtn = false
         }
       }
     },
     conditionEn: {
       handler: function (todos) {
+        console.log(todos.trim().length)
         if (todos.trim().length == 0) {
           this.enableBtn = true
+        } else {
+          this.enableBtn = false
         }
       }
     }
@@ -339,9 +347,32 @@ export default {
         if (this.editRow.mode == 'edit') {
           req.con_id = this.editRow.con_id
         }
-        this.$store.dispatch(url, req).then(res => {
-          this.$emit('cancel', null)
-        })
+        this.$store
+          .dispatch(url, req)
+          .then(res => {
+            this.$emit('cancel', null)
+          })
+          .catch(error => {
+            if (error && error.response && error.response.status === 500) {
+              this.btnClick = 'close'
+              this.error = true
+              this.dialog = true
+              this.errorDialog = this.$t('term.text16')
+            } else if (
+              error &&
+              error.response &&
+              error.response.status === 401
+            ) {
+              this.btnClick = 'close'
+              this.error = true
+              this.dialog = true
+              this.errorDialog =
+                this.$t('popup.text2') +
+                ' (Error Code ' +
+                error.response.status +
+                ')'
+            }
+          })
       } else if (this.btnClick == 'saveActive') {
         let url = this.editRow.mode == 'add' ? 'addTerm' : 'updateTerm'
         let req = {
@@ -351,9 +382,34 @@ export default {
           condition_en: this.conditionEn
         }
 
-        this.$store.dispatch(url, req).then(res => {
-          this.$emit('cancel', null)
-        })
+        this.$store
+          .dispatch(url, req)
+          .then(res => {
+            this.$emit('cancel', null)
+          })
+          .catch(error => {
+            if (error && error.response && error.response.status === 500) {
+              this.btnClick = 'close'
+              this.error = false
+              this.dialog = true
+              this.errorDialog = this.$t('term.text16')
+              this.rightBtn = this.$t('btn_close')
+            } else if (
+              error &&
+              error.response &&
+              error.response.status === 401
+            ) {
+              this.btnClick = 'close'
+              this.error = false
+              this.dialog = true
+              this.errorDialog =
+                this.$t('popup.text2') +
+                ' (Error Code ' +
+                error.response.status +
+                ')'
+              this.rightBtn = this.$t('btn_close')
+            }
+          })
       } else if (this.btnClick == 'saveInActive') {
         let url = 'updateTerm'
         let req = {
