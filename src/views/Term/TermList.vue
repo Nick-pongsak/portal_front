@@ -221,7 +221,6 @@ export default {
   watch: {
     conditionTh: {
       handler: function (todos) {
-        console.log(todos.trim().length)
         if (todos.trim().length == 0) {
           this.enableBtn = true
         } else {
@@ -231,7 +230,6 @@ export default {
     },
     conditionEn: {
       handler: function (todos) {
-        console.log(todos.trim().length)
         if (todos.trim().length == 0) {
           this.enableBtn = true
         } else {
@@ -385,6 +383,10 @@ export default {
         this.$store
           .dispatch(url, req)
           .then(res => {
+            let data = JSON.parse(JSON.stringify(this.info))
+            data.condition = []
+            this.$store.commit('SetUser', data)
+            sessionStorage.setItem('info', JSON.stringify(data))
             this.$emit('cancel', null)
           })
           .catch(error => {

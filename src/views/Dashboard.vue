@@ -204,7 +204,6 @@
         <div class="title" style="font-family: kanit !important">
           {{ $t('term.text1') }}
         </div>
-        <!-- <div class="date-text" v-html="termsDetail"></div> -->
         <div class="date-text">
           <quill-editor
             :disabled="true"
@@ -243,6 +242,22 @@
         </div>
       </v-card>
     </v-dialog>
+
+    <v-dialog v-model="dialogCF" max-width="350">
+      <v-card class="confirm-dialog">
+        <v-card-title
+          v-text="$t('term.text17')"
+          :style="{ 'font-weight': '500' }"
+        >
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn text @click="saveCF()" class="save">
+            {{ $t('btn_ok') }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -268,7 +283,8 @@ export default {
       dialogSize: 560,
       termsDialog: false,
       termsDetail: '',
-      termsChk: false
+      termsChk: false,
+      dialogCF: false
     }
   },
   computed: {
@@ -303,14 +319,39 @@ export default {
       }
     },
     termsConfirm () {
-      this.termsDialog = false
+      // this.termsDialog = false
       let req = {
         user_id: this.info.user_id,
         con_id: this.info.condition.con_id
       }
-      this.$store.dispatch('acceptTerm', req).then(() => {
-        this.termsDialog = false
+      this.$store.dispatch('acceptTerm', req).then(res => {
+        let data = JSON.parse(JSON.stringify(this.info))
+        if (res.data.condition.length == 0) {
+          this.termsDialog = false
+          data.condition = []
+          this.$store.commit('SetUser', data)
+          sessionStorage.setItem('info', JSON.stringify(data))
+        } else {
+          if (res.data.condition.con_id == req.con_id) {
+            this.termsDialog = false
+            data.condition = []
+            this.$store.commit('SetUser', data)
+            sessionStorage.setItem('info', JSON.stringify(data))
+          } else {
+            this.dialogCF = true
+            data.condition = res.data.condition
+            this.$store.commit('SetUser', data)
+            sessionStorage.setItem('info', JSON.stringify(data))
+          }
+        }
       })
+    },
+    saveCF () {
+      this.dialogCF = false
+      this.termsChk = false
+      this.termsDialog = true
+      let feildTerms = 'condition_' + this.$i18n.locale
+      this.termsDetail = this.info.condition[feildTerms]
     },
     CloseTermsDialogs () {
       this.$store.dispatch('LogOut').then(() => {
@@ -523,29 +564,20 @@ export default {
     }
     let googleanylytics = sessionStorage.getItem('googleanylytics')
     if (googleanylytics === null) {
-      // insert head
-      // let sciHead2 = document.getElementsByTagName('script')
-      // if (sciHead2.length < 3) {
       var script = document.createElement('script')
       let str = unescape(
         "(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-K5BVKGB')"
       )
-      // script.src = unescape("(function (w, d, s, l, i) { w[l] = w[l] || []; w[l].push({'gtm.start':new Date().getTime(), event: 'gtm.js'});var f = d.getElementsByTagName(s)[0],j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src ='https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);})(window, document, 'script', 'dataLayer', 'GTM-PVDSH95')")
-      //  console.log(script)
+
       script.innerHTML = str
       document.getElementsByTagName('head')[0].appendChild(script)
-      // document.getElementsByTagName('head')[0].appendChild(unescape(script))
-      // }
 
-      // insert body
       let bodyHtml =
         '<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K5BVKGB"height="0" width="0" style="display:none;visibility:hidden"></iframe>'
       // let nos = document.getElementsByTagName('noscript')[0]
       var noscript = document.createElement('noscript')
       noscript.innerHTML = bodyHtml
       document.getElementsByTagName('body')[0].appendChild(noscript)
-      // if (subNos.length == 1) {
-      // nos.append(bodyHtml)
     }
   }
 }
