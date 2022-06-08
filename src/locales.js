@@ -195,6 +195,7 @@ const locales = {
     'term.text14': 'You want to disable the "Terms and Conditions" or not?',
     'term.text15': 'Inactive',
     'term.text16': "Can't use special characters",
+    'term.text17': 'Found a new version of the Terms and Conditions. Please kick "OK" button to load the data again.',
   },
   'th': {
     'btn_add': 'เพิ่ม',
@@ -392,6 +393,7 @@ const locales = {
     'term.text14': 'คุณต้องการปิดใช้งาน "ข้อตกลงและเงื่อนไขการใช้บริการ" ดังกล่าวใช่หรือไม่ ?',
     'term.text15': 'ปิดใช้งาน',
     'term.text16': 'ไม่สามารถใช้ตัวอักษรหรืออักขระพิเศษได้',
+    'term.text17': 'พบข้อตกลงและเงื่อนไขการใช้บริการเวอร์ชันใหม่ โปรดกดปุ่ม "ตกลง" เพื่อโหลดข้อมูลอีกครั้ง',
   }
 }
 export default locales
