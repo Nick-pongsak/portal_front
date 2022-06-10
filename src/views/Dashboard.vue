@@ -184,10 +184,90 @@
         </div>
       </v-card>
     </v-dialog>
+
+    <v-dialog
+      v-model="termsDialog"
+      max-width="800"
+      :no-click-animation="false"
+      v-click-outside="onClickOutside"
+      :style="{ transform: tranformScale }"
+    >
+      <v-card id="terms-dialogs" style="font-family: kanit !important">
+        <div class="justify-end" style="display: flex;">
+          <v-icon
+            @click="CloseTermsDialogs()"
+            v-text="'mdi-close'"
+            style="color:#797979;"
+            size="22"
+          ></v-icon>
+        </div>
+        <div class="title" style="font-family: kanit !important">
+          {{ $t('term.text1') }}
+        </div>
+        <div class="date-text">
+          <quill-editor
+            :disabled="true"
+            v-model="termsDetail"
+            ref="myQuillEditor"
+          >
+          </quill-editor>
+        </div>
+        <div
+          style="display:flex;margin-top: 20px;margin-bottm: 20px;width:100%"
+        >
+          <div style="width:80%;display:flex">
+            <v-checkbox
+              color="red"
+              v-model="termsChk"
+              hide-details
+            ></v-checkbox>
+            <div>{{ $t('term.text2') }}</div>
+          </div>
+          <div style="width:20%; padding-left:20px">
+            <v-btn
+              text
+              @click="termsConfirm()"
+              class="cancel-btn"
+              :disabled="termsChk ? false : true"
+              :style="{
+                background: termsChk ? '' : '#CE1212',
+                opacity: termsChk ? '' : '0.51',
+                'font-size': '13px',
+                height: '23px'
+              }"
+            >
+              {{ $t('btn_consent') }}
+            </v-btn>
+          </div>
+        </div>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="dialogCF" max-width="350">
+      <v-card class="confirm-dialog">
+        <v-card-title
+          v-text="$t('term.text17')"
+          :style="{ 'font-weight': '500' }"
+        >
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn text @click="saveCF()" class="save">
+            {{ $t('btn_ok') }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
+import { quillEditor } from 'vue-quill-editor'
+
 var CryptoJS = require('crypto-js')
 var aesEcb = require('aes-ecb')
 export default {
@@ -200,7 +280,11 @@ export default {
       showDragAndDrop: false,
       tranformScale: 'scale(1)',
       group: {},
-      dialogSize: 560
+      dialogSize: 560,
+      termsDialog: false,
+      termsDetail: '',
+      termsChk: false,
+      dialogCF: false
     }
   },
   computed: {
@@ -229,6 +313,51 @@ export default {
     }
   },
   methods: {
+    onClickOutside () {
+      if (this.termsDialog) {
+        this.termsDialog = true
+      }
+    },
+    termsConfirm () {
+      // this.termsDialog = false
+      let req = {
+        user_id: this.info.user_id,
+        con_id: this.info.condition.con_id
+      }
+      this.$store.dispatch('acceptTerm', req).then(res => {
+        let data = JSON.parse(JSON.stringify(this.info))
+        if (res.data.condition.length == 0) {
+          this.termsDialog = false
+          data.condition = []
+          this.$store.commit('SetUser', data)
+          sessionStorage.setItem('info', JSON.stringify(data))
+        } else {
+          if (res.data.condition.con_id == req.con_id) {
+            this.termsDialog = false
+            data.condition = []
+            this.$store.commit('SetUser', data)
+            sessionStorage.setItem('info', JSON.stringify(data))
+          } else {
+            this.dialogCF = true
+            data.condition = res.data.condition
+            this.$store.commit('SetUser', data)
+            sessionStorage.setItem('info', JSON.stringify(data))
+          }
+        }
+      })
+    },
+    saveCF () {
+      this.dialogCF = false
+      this.termsChk = false
+      this.termsDialog = true
+      let feildTerms = 'condition_' + this.$i18n.locale
+      this.termsDetail = this.info.condition[feildTerms]
+    },
+    CloseTermsDialogs () {
+      this.$store.dispatch('LogOut').then(() => {
+        this.$router.push('/')
+      })
+    },
     onResize () {
       let x = window.innerWidth
       let y = window.innerHeight
@@ -393,6 +522,9 @@ export default {
       })
     }
   },
+  components: {
+    quillEditor
+  },
   created () {
     if (
       this.$store.getters.access_token === '' &&
@@ -406,6 +538,12 @@ export default {
         'SetAccessToken',
         sessionStorage.getItem('token_seesion')
       )
+      if (this.info.condition.length == 0) {
+      } else {
+        this.termsDialog = true
+        let feildTerms = 'condition_' + this.$i18n.locale
+        this.termsDetail = this.info.condition[feildTerms]
+      }
       this.onResize()
       this.fetchData()
     }
@@ -426,29 +564,20 @@ export default {
     }
     let googleanylytics = sessionStorage.getItem('googleanylytics')
     if (googleanylytics === null) {
-      // insert head
-      // let sciHead2 = document.getElementsByTagName('script')
-      // if (sciHead2.length < 3) {
       var script = document.createElement('script')
       let str = unescape(
         "(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-K79C9J3')"
       )
-      // script.src = unescape("(function (w, d, s, l, i) { w[l] = w[l] || []; w[l].push({'gtm.start':new Date().getTime(), event: 'gtm.js'});var f = d.getElementsByTagName(s)[0],j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src ='https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);})(window, document, 'script', 'dataLayer', 'GTM-PVDSH95')")
-      //  console.log(script)
+
       script.innerHTML = str
       document.getElementsByTagName('head')[0].appendChild(script)
-      // document.getElementsByTagName('head')[0].appendChild(unescape(script))
-      // }
 
-      // insert body
       let bodyHtml =
         '<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K79C9J3"height="0" width="0" style="display:none;visibility:hidden"></iframe>'
       // let nos = document.getElementsByTagName('noscript')[0]
       var noscript = document.createElement('noscript')
       noscript.innerHTML = bodyHtml
       document.getElementsByTagName('body')[0].appendChild(noscript)
-      // if (subNos.length == 1) {
-      // nos.append(bodyHtml)
     }
   }
 }
