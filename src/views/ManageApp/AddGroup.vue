@@ -519,8 +519,8 @@ export default {
       this.enableBtnSave()
     },
     selectedCHK ($event, item) {
-      console.log($event)
-      console.log(item)
+      // console.log($event)
+      // console.log(item)
       var result = this.tempList.findIndex(row => row.app_id == item.app_id)
       if (result >= 0) {
         if ($event) {
