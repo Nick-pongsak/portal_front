@@ -506,8 +506,11 @@ export default {
         results[i].index = i
         data.push(results[i])
       }
+      console.log('case 1')
       this.editRow.app = data
       this.groupDialog = false
+      this.searchApp = ''
+      this.list = []
       this.enableBtnSave()
     },
     CloseGroup () {
