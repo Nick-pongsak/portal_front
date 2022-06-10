@@ -343,6 +343,7 @@
                   <div class="body" style="width:10%;padding-left:5px">
                     <v-checkbox
                       color="red"
+                      @click="setSelected(item)"
                       v-model="item.selected"
                       hide-details
                     ></v-checkbox>
@@ -436,7 +437,8 @@ export default {
       masterList: [],
       masterEdit: {},
       nameTh: this.data.name_th,
-      nameEn: this.data.name_en
+      nameEn: this.data.name_en,
+      tempList : []
     }
   },
   computed: {},
@@ -500,16 +502,18 @@ export default {
   },
   methods: {
     SaveGroup () {
-      let results = this.list.filter(a => a.selected)
+      let results = this.masterList.filter(a => a.selected)
+      // let results = this.list.filter(a => a.selected)
       let data = []
       for (let i = 0; i < results.length; i++) {
         results[i].index = i
         data.push(results[i])
       }
-      console.log('case 1')
+      // console.log('case 1')
       this.editRow.app = data
       this.groupDialog = false
       this.searchApp = ''
+      this.masterList = []
       this.list = []
       this.enableBtnSave()
     },
@@ -596,6 +600,15 @@ export default {
         this.$store.dispatch('getAppList', req).then(res => {
           this.mapList(res)
         })
+      }
+    },
+    setSelected (item) {
+      var result = this.masterList.findIndex(row => row.app_id == item.app_id)
+      if (result >= 0) {
+        this.masterList[result].selected = !this.masterList[result].selected
+      } else {
+        item.selected = true
+        this.masterList.push(item)
       }
     },
     mapList (res) {
