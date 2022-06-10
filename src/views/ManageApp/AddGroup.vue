@@ -519,17 +519,30 @@ export default {
       this.enableBtnSave()
     },
     selectedCHK ($event, item) {
-      // console.log($event)
-      // console.log(item)
+      console.log($event)
+      console.log(item)
       var result = this.tempList.findIndex(row => row.app_id == item.app_id)
       if (result >= 0) {
         if ($event) {
+          // console.log('1 >>>')
         } else {
+          // console.log('2 >>>')
           this.tempList = this.tempList.filter(a => a.app_id !== item.app_id)
+          var result = this.masterList.findIndex(
+            row => row.app_id == item.app_id
+          )
+          if (result >= 0) {
+            this.masterList[result].selected = false
+          }
         }
         // this.tempList[result].selected = true
       } else {
+        // console.log('3 >>>')
         this.tempList.push(item)
+        var result = this.masterList.findIndex(row => row.app_id == item.app_id)
+        if (result >= 0) {
+          this.masterList[result].selected = true
+        }
       }
     },
     CloseGroup () {
