@@ -344,6 +344,7 @@
                     <v-checkbox
                       color="red"
                       v-model="item.selected"
+                      @change="selectedCHK($event, item)"
                       hide-details
                     ></v-checkbox>
                   </div>
@@ -436,7 +437,8 @@ export default {
       masterList: [],
       masterEdit: {},
       nameTh: this.data.name_th,
-      nameEn: this.data.name_en
+      nameEn: this.data.name_en,
+      tempList: []
     }
   },
   computed: {},
@@ -500,7 +502,8 @@ export default {
   },
   methods: {
     SaveGroup () {
-      let results = this.list.filter(a => a.selected)
+      let results = this.tempList.filter(a => a.selected)
+      // let results = this.list.filter(a => a.selected)
       let data = []
       for (let i = 0; i < results.length; i++) {
         results[i].index = i
@@ -508,7 +511,39 @@ export default {
       }
       this.editRow.app = data
       this.groupDialog = false
+      this.searchApp = ''
+      this.masterList = []
+      console.log(this.tempList)
+      this.tempList = []
+      this.list = []
       this.enableBtnSave()
+    },
+    selectedCHK ($event, item) {
+      // console.log($event)
+      // console.log(item)
+      var result = this.tempList.findIndex(row => row.app_id == item.app_id)
+      if (result >= 0) {
+        if ($event) {
+          // console.log('1 >>>')
+        } else {
+          // console.log('2 >>>')
+          this.tempList = this.tempList.filter(a => a.app_id !== item.app_id)
+          var result = this.masterList.findIndex(
+            row => row.app_id == item.app_id
+          )
+          if (result >= 0) {
+            this.masterList[result].selected = false
+          }
+        }
+        // this.tempList[result].selected = true
+      } else {
+        // console.log('3 >>>')
+        this.tempList.push(item)
+        var result = this.masterList.findIndex(row => row.app_id == item.app_id)
+        if (result >= 0) {
+          this.masterList[result].selected = true
+        }
+      }
     },
     CloseGroup () {
       this.groupDialog = false
@@ -591,15 +626,14 @@ export default {
           sort: this.mainSort2.orderby ? 'asc' : 'desc'
         }
         this.$store.dispatch('getAppList', req).then(res => {
-          this.mapList(res)
+          this.mapList(res, 'sort')
         })
       }
     },
-    mapList (res) {
-      for (let i = 0; i < this.editRow.app.length; i++) {
-        var result = res.data.findIndex(
-          row => row.app_id == this.editRow.app[i].app_id
-        )
+    mapList (res, mode) {
+      let temp = mode == 'open' ? this.editRow.app : this.tempList
+      for (let i = 0; i < temp.length; i++) {
+        var result = res.data.findIndex(row => row.app_id == temp[i].app_id)
         if (result >= 0) {
           res.data[result].selected = true
         }
@@ -613,7 +647,8 @@ export default {
         sort: this.mainSort2.orderby ? 'asc' : 'desc'
       }
       this.$store.dispatch('getAppList', req).then(res => {
-        this.mapList(res)
+        this.mapList(res, 'open')
+        this.tempList = this.list.filter(a => a.selected)
         this.masterList = res.data
         this.groupDialog = true
       })
